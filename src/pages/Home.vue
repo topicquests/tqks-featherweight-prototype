@@ -13,9 +13,9 @@
             <div class="auto"><img src="~assets/quasar-logo.png"></div>
             <div class="auto">
               <h3>
-                </br>
+                <br/>
                 <router-link to="/signin">Sign In</router-link> or <router-link to="/register">Register</router-link> to see the power of Quasar and Feathers
-                </br></br>
+                <br/><br/>
               </h3>
             </div>
             <div class="auto"><img src="~assets/feathers-logo.png"></div>
@@ -35,25 +35,25 @@
 </template>
 
 <script>
-  export default {
-    props: ['user'],
-    data () {
-      return {
-        isPrivate: false
-      }
-    },
-    computed: {
-      authenticated () {
-        return this.user !== null
-      }
-    },
-    methods: {
-    },
-    mounted () {
-    },
-    beforeDestroy () {
+export default {
+  props: ['user'],
+  data () {
+    return {
+      isPrivate: false
     }
+  },
+  computed: {
+    authenticated () {
+      return this.user !== null
+    }
+  },
+  methods: {
+  },
+  mounted () {
+  },
+  beforeDestroy () {
   }
+}
 </script>
 
 <style lang="styl">

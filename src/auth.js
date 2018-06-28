@@ -10,7 +10,6 @@ const auth = {
   },
 
   fetchUser (accessToken) {
-
     return api.passport.verifyJWT(accessToken)
       .then(payload => {
         return api.service('users').get(payload.userId)
@@ -66,7 +65,6 @@ const auth = {
   },
 
   onLogout (callback) {
-
     api.on('logout', () => {
       console.log('onLogout')
 
@@ -77,7 +75,6 @@ const auth = {
   },
 
   onAuthenticated (callback) {
-
     api.on('authenticated', response => {
       console.log('onAuthenticate', response)
 

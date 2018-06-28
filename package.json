@@ -7,7 +7,7 @@
   "author": "",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext --fix .js,.vue src",
+    "lint": "eslint --fix --ext  .js,.vue src",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {

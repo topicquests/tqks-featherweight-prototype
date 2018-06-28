@@ -32,17 +32,16 @@ export default {
   computed: {
   },
   methods: {
-    goHome() {
+    goHome () {
       this.$router.push({ name: 'home' })
     },
-    onHide() {
+    onHide () {
       // Workaround needed because of timing issues (sequencing of 'hide' and 'ok' events) ...
       setTimeout(() => {
         this.goHome()
       }, 50)
-
     },
-    onOk(data) {
+    onOk (data) {
       if (this.isRegistration()) {
         this.register(this.email, this.password)
           .then(() => {
@@ -73,7 +72,7 @@ export default {
       return auth.register(email, password)
     },
     login (email, password) {
-      return auth.login (email, password)
+      return auth.login(email, password)
     }
   },
   mounted () {

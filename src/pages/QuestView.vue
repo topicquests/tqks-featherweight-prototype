@@ -6,17 +6,15 @@
     </q-page>
 </template>
 <script>
-  import api from 'src/api';
-
-  export default {
-    data () {
-      return {
-        label: "",
-        details: ""
-      }
+// import api from 'src/api'
+export default {
+  data () {
+    return {
+      label: '',
+      details: ''
     }
   }
-  
+}
 </script>
 
 <style>

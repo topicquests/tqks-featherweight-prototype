@@ -122,7 +122,7 @@ export default {
           this.$q.notify({type: 'positive', message: 'You are now logged out, sign in again to continue to work'})
         })
         .catch(() => {
-            this.$q.notify({type: 'positive', message: 'Cannot logout, please check again in a few minutes'})
+          this.$q.notify({type: 'positive', message: 'Cannot logout, please check again in a few minutes'})
         })
     },
     setUser (user) {
@@ -132,14 +132,14 @@ export default {
   mounted () {
     // Check if there is already a session running
     auth.authenticate()
-    .then((user) => {
-      this.setUser(user)
-      this.$q.notify({type: 'positive', message: 'Restoring previous session'})
-    })
-    .catch(_ => {
-      this.setUser(null)
-      this.$router.push({ name: 'home' })
-    })
+      .then((user) => {
+        this.setUser(user)
+        this.$q.notify({type: 'positive', message: 'Restoring previous session'})
+      })
+      .catch(_ => {
+        this.setUser(null)
+        this.$router.push({ name: 'home' })
+      })
 
     // On successful login
     auth.onAuthenticated((user) => {

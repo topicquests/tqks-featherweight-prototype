@@ -23,7 +23,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-
   if (!to.meta.requiresAuth || auth.authenticated()) {
     next()
   } else {
