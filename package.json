@@ -1,0 +1,49 @@
+{
+  "name": "tqks-featherweight-prototype",
+  "version": "0.0.1",
+  "description": "Quasar Client for FeatherWeight",
+  "productName": "Quasar App",
+  "cordovaId": "org.cordova.quasar.app",
+  "author": "",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext --fix .js,.vue src",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@feathersjs/authentication-client": "^1.0.2",
+    "@feathersjs/feathers": "^3.1.7",
+    "@feathersjs/socketio-client": "^1.0.2",
+    "engine.io-client": "^3.1.4",
+    "isarray": "^2.0.2",
+    "moment": "^2.22.2",
+    "socket.io-client": "^1.7.3",
+    "socket.io-parser": "^3.1.2",
+    "uuid": "^3.3.0",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "eslint": "^4.18.2",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "quasar-cli": "^0.15.20"
+  },
+  "engines": {
+    "node": ">= 9.4.0",
+    "npm": ">= 5.6.0"
+  },
+  
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ]
+}
