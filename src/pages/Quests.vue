@@ -3,9 +3,13 @@
         <h3> Quests</h3>
         <!-- "to="/questedit"-->
         <q-btn v-if="isAuthenticated" label="New Quest" @click="$router.replace('/questedit')" />
-        <div v-for="quest in myQuests" v-bind:key="quest">
-          <a> href="/questview/{{ quest.id }}">{{ quest.label }}</a> <br/>
-        </div>
+        <q-scroll-area style="width: 800px; height: 800px;">
+          <q-list v-for="quest in myQuests" v-bind:key="quest">
+            <q-item>
+              <a :href="`/questview/${quest.id}`">{{ quest.label }}</a>
+            </q-item>
+          </q-list>
+        </q-scroll-area>
     </q-page>
 </template>
 
@@ -32,7 +36,6 @@ export default {
       }
     })
       .then((response) => {
-        // We want the latest messages but in the reversed order
         this.$data.myQuests = response.data
       })
   }

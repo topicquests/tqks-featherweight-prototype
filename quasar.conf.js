@@ -67,7 +67,8 @@ module.exports = function (ctx) {
         'QCollapsible',
         'QPageSticky',
         'QField',
-        'QEditor'
+        'QEditor',
+        'QScrollArea'
       ],
       directives: [
         'Ripple'
