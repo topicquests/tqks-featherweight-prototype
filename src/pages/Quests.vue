@@ -1,12 +1,12 @@
 <template>
     <q-page>
         <h3> Quests</h3>
-        <!-- "to="/questedit"-->
         <q-btn v-if="isAuthenticated" label="New Quest" @click="$router.replace('/questedit')" />
         <q-scroll-area style="width: 800px; height: 800px;">
-          <q-list v-for="quest in myQuests" v-bind:key="quest">
+          <q-list v-for="quest in myQuests" :key="quest.id">
             <q-item>
-              <a :href="`/questview/${quest.id}`">{{ quest.label }}</a>
+              <!-- NOTE: adding /index.html# makes this work, but it's a hack -->
+              <a :href="`/index.html#/questview/${quest.id}`">{{ quest.label }}</a>
             </q-item>
           </q-list>
         </q-scroll-area>
@@ -23,10 +23,7 @@ export default {
     }
   },
   methods: {
-    listQuests: function () {
-      console.log('ListQuests')
-      return ['foo', 'bar']
-    }
+
   },
   mounted () {
     const quests = api.service('quests')

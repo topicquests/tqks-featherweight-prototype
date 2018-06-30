@@ -10,7 +10,7 @@ export default [
       { path: '/history', name: 'history', component: () => import('pages/History') },
       { path: '/quests', name: 'quests', component: () => import('pages/Quests') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },
-      { path: '/questview', name: 'questview', component: () => import('pages/QuestView') }
+      { path: '/questview/:id', name: 'questview', component: () => import('pages/QuestView'), props: true }
 
     ]
   },
