@@ -26,6 +26,7 @@
                 <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
           </div>
         </div>
+
         <div class="datacontainer">
           <q-list class="datacolumn" v-for="question in questions" :key="question.id">
             <q-item class="node">
@@ -135,7 +136,8 @@ export default {
 }
 
 .headerimage {
-  vertical-align: middle;
+  float: left;
+
   margin-right: 4px;
 }
 
