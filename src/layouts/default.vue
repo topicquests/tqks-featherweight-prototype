@@ -77,7 +77,7 @@
 
         <q-collapsible icon="info" label="About">
           <p style="padding: 25px;" class="text-grey-7">
-            This is a template project combining the power of Quasar and Feathers to create real-time web apps.
+            This is a prototype <i>Structured Conversation</i> system.
           </p>
         </q-collapsible>
 
