@@ -20,6 +20,7 @@
 import api from 'src/api'
 const uuidv4 = require('uuid/v4')
 const quests = api.service('quests')
+var router
 
 export default {
   data () {
@@ -38,13 +39,15 @@ export default {
       json.details = this.details
       json.img = 'statics/images/publication.png'
       json.imgsm = 'statics/images/publication_sm.png'
-      alert(JSON.stringify(json))
+      // alert(JSON.stringify(json))
       quests.create(json).then((response) => {
-        alert(JSON.stringify(response))
+        // alert(JSON.stringify(response))
+        router.push('/quests')
       })
     }
   },
   mounted () {
+    router = this.$router
   }
 }
 </script>
