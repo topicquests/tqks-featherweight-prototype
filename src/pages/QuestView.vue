@@ -13,8 +13,7 @@
 import api from 'src/api'
 var x = { props: ['id'] }
 console.log(x.props[0])
-var id = this.id
-// this.$router.params.id
+// 
 export default {
   data () {
     return {
@@ -23,6 +22,7 @@ export default {
     }
   },
   mounted () {
+    const id = this.$router.params.id;
     const quests = api.service('quests')
     quests.get({ 'id': id })
       .then((response) => {
