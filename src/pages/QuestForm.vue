@@ -36,6 +36,8 @@ export default {
       json.id = uuidv4()
       json.label = this.label
       json.details = this.details
+      json.img = 'statics/images/publication.png'
+      json.imgsm = 'statics/images/publication_sm.png'
       alert(JSON.stringify(json))
       quests.create(json).then((response) => {
         alert(JSON.stringify(response))

@@ -1,8 +1,7 @@
 <template>
     <q-page>
       <div id="topbox">
-        <h3> Quest</h3>
-        <span><h4>{{ label }}</h4></span>
+        <h4><img style="margin-right:4px;" :src="image">{{ label }}</h4>
         <q-scroll-area style="width: 960px; height: 400px;">
           <span v-html="details"></span>
         </q-scroll-area>
@@ -58,6 +57,7 @@ export default {
   data () {
     return {
       isAuthenticated: true,
+      image: '',
       label: '',
       details: '',
       questions: [],
@@ -75,6 +75,7 @@ export default {
         var x = response.data[0]
         this.$data.label = x.label
         this.$data.details = x.details
+        this.$data.image = x.img
       })
   }
 }
