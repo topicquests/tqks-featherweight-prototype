@@ -10,20 +10,23 @@
         <div class="columncontainer">
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-                <!-- TODO: image needs an @click to jump to an editor for a new node -->
-                <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${id}`">
+                <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/position.png">Ideas
-                <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${id}`">
+                <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-                <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${id}`">
+                <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/minus.png">Con
-                <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${id}`">
+                <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
         </div>
 
