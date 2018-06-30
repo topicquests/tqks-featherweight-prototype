@@ -6,15 +6,7 @@
     </q-page>
 </template>
 <script>
-// TODO the process of acquiring the passed parameter 'id'
-// is not working. It looks like we are forced to look at Vuex
-// because the Vue and Quasar literature and all examples completely
-// ignore this issue
 import api from 'src/api'
-var x = { props: ['id'] }
-console.log(x.props[0])
-var id = this.id
-// this.$router.params.id
 export default {
   data () {
     return {
@@ -23,12 +15,19 @@ export default {
     }
   },
   mounted () {
+    const id = this.$route.params.id
     const quests = api.service('quests')
-    quests.get({ 'id': id })
+    quests.find({ 'id': id })
       .then((response) => {
         console.log(response)
-        this.$data.label = response.label
-        this.$data.details = response.details
+        // TODO this is a hack to pluck a hit out of 5 hits
+        // which means that query is not working.
+        // A stored quest looks like this:
+        // {"id":"e601cafc-7565-4058-aec3-229be2eada26","label":"Another test","details":"Yup","_id":"RFNf5Pb7CNG9vN6S"}
+        // and the query against 'id' seems to be failing
+        var x = response.data[0]
+        this.$data.label = x.label
+        this.$data.details = x.details
       })
   }
 }
