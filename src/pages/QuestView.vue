@@ -8,20 +8,20 @@
       </div>
       <div class="columnscroller">
         <div class="columncontainer">
-          <div class="column" style="text-align: center;">
+          <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/issue.png">Questions
                 <!-- TODO: image needs an @click to jump to an editor for a new node -->
                 <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
           </div>
-          <div class="column" style="text-align: center;">
+          <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/position.png">Ideas
                 <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
           </div>
-          <div class="column" style="text-align: center;">
+          <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/plus.png">Pro
                 <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
           </div>
-          <div class="column" style="text-align: center;">
+          <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/minus.png">Con
                 <img v-if="isAuthenticated" class="respond" src="statics/images/respond_sm.png">
           </div>
@@ -61,6 +61,7 @@ export default {
       isAuthenticated: false,
       image: '',
       label: '',
+      id: '',
       details: '',
       questions: [],
       answers: [],
@@ -81,6 +82,7 @@ export default {
         this.$data.label = x.label
         this.$data.details = x.details
         this.$data.image = x.img
+        this.$data.id = x.id
       })
   }
 }
@@ -110,7 +112,7 @@ export default {
   width: 1200px;
 }
 
-.column {
+.columnx {
   float:left;
   white-space:normal;
   border: 1px solid black;
@@ -141,7 +143,7 @@ export default {
 
 .headerimage {
   float: left;
-
+  vertical-align: middle;
   margin-right: 4px;
 }
 
