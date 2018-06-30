@@ -16,9 +16,10 @@
 <script>
 import api from 'src/api'
 export default {
+  props: [ 'user' ],
   data () {
     return {
-      isAuthenticated: true,
+      isAuthenticated: false,
       myQuests: []
     }
   },
@@ -27,6 +28,9 @@ export default {
   },
   mounted () {
     const quests = api.service('quests')
+    if (this.user) {
+      this.$data.isAuthenticated = true
+    }
     quests.find({
       query: {
         $limit: 25

@@ -12,7 +12,7 @@
           round
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
-          v-show="authenticated"
+
         >
           <q-icon name="menu" />
         </q-btn>
@@ -21,10 +21,10 @@
           FeatherWeight Prototype
         </q-toolbar-title>
 
-        <q-btn flat @click="goTo('signin')" v-show="!authenticated">
+        <q-btn v-if="!authenticated" flat @click="goTo('signin')">
           Sign In
         </q-btn>
-        <q-btn flat @click="goTo('register')" v-show="!authenticated">
+        <q-btn v-if="!authenticated" flat @click="goTo('register')">
           Register
         </q-btn>
         <q-btn flat round @click="goTo('home')" v-show="authenticated">
@@ -45,7 +45,7 @@
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      v-show="authenticated"
+
       no-hide-on-route-change
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
 
@@ -70,7 +70,7 @@
           <q-item-main label="Quests" />
         </q-item>
 
-        <q-item to="/chat">
+        <q-item v-if="isAuthenticated" to="/chat">
           <q-item-side icon="chat" />
           <q-item-main label="Chat" />
         </q-item>
@@ -104,6 +104,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
+      isAuthenticated: false,
       user: null
     }
   },
@@ -119,6 +120,7 @@ export default {
     signout () {
       auth.signout()
         .then(() => {
+          this.$data.isAuthenticated = false
           this.$q.notify({type: 'positive', message: 'You are now logged out, sign in again to continue to work'})
         })
         .catch(() => {
@@ -135,21 +137,25 @@ export default {
       .then((user) => {
         this.setUser(user)
         this.$q.notify({type: 'positive', message: 'Restoring previous session'})
+        this.$data.isAuthenticated = true
       })
       .catch(_ => {
         this.setUser(null)
+        this.$data.isAuthenticated = false
         this.$router.push({ name: 'home' })
       })
 
     // On successful login
     auth.onAuthenticated((user) => {
       this.setUser(user)
+      this.$data.isAuthenticated = true
       this.$router.push({ name: 'home' })
     })
 
     // On logout
     auth.onLogout(() => {
       this.setUser(null)
+      this.$data.isAuthenticated = false
       this.$router.push({ name: 'home' })
     })
   },

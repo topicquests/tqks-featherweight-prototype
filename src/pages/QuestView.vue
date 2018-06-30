@@ -55,9 +55,10 @@
 <script>
 import api from 'src/api'
 export default {
+  props: [ 'user' ],
   data () {
     return {
-      isAuthenticated: true,
+      isAuthenticated: false,
       image: '',
       label: '',
       details: '',
@@ -68,6 +69,9 @@ export default {
     }
   },
   mounted () {
+    if (this.user) {
+      this.$data.isAuthenticated = true
+    }
     const id = this.$route.params.id
     const quests = api.service('quests')
     quests.find({ query: { 'id': id } })

@@ -8,19 +8,7 @@
   <q-page class="flex flex-center">
     <div>
       <div class="layout-padding">
-        <div v-if="!authenticated">
-          <div class="column items-center">
-            <div class="auto"><img src="~assets/quasar-logo.png"></div>
-            <div class="auto">
-              <h3>
-                <br/>
-                <router-link to="/signin">Sign In</router-link> or <router-link to="/register">Register</router-link> to see the power of Quasar and Feathers
-                <br/><br/>
-              </h3>
-            </div>
-          </div>
-        </div>
-        <div v-else class="column items-center">
+        <div class="column items-center">
           <h3>FeatherWeight Prototype</h3>
           <img src="statics/images/earthrise2.png" >
           <h5>

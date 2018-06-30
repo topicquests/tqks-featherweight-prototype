@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import routes from './routes'
-import auth from 'src/auth'
+// import auth from 'src/auth'
+import config from '../../config'
 
 Vue.use(VueRouter)
 
@@ -23,12 +24,13 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!to.meta.requiresAuth || auth.authenticated()) {
+  if (!config.isPrivatePortal) {
+    // next({ path: '/home' })
     next()
   } else {
     console.log('Not authenticated')
-
-    next({ path: '/home' })
+    next({ path: '/signin' })
+    // next({ path: '/home' })
   }
 })
 

@@ -1,6 +1,9 @@
 var path = require('path')
 
 module.exports = {
+  // portal
+  isPrivatePortal: false,
+  requiresInvite: false,
   // Webpack aliases
   aliases: {
     quasar: path.resolve(__dirname, '../node_modules/quasar-framework/'),
