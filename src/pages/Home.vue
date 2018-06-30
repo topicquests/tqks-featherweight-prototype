@@ -18,12 +18,11 @@
                 <br/><br/>
               </h3>
             </div>
-            <div class="auto"><img src="~assets/feathers-logo.png"></div>
           </div>
         </div>
         <div v-else class="column items-center">
           <h3>FeatherWeight Prototype</h3>
-          <img src="assets/earthrise2.png" >
+          <img src="statics/images/earthrise2.png" >
           <h5>
             To make this demo work correctly first register your avatar to <a href="https://www.gravatar.com">https://www.gravatar.com</a>
             then go to the <router-link to="/chat">Chat</router-link>
