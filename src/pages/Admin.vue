@@ -2,15 +2,24 @@
     <q-page class="flex flex-left">
         <div>
             <h2>Admin</h2>
-            <q-btn label="List Invitations" @click="listInvites" />
-            <q-scroll-area style="width: 200px; height: 100px;">
-                <q-list v-for="inv in invites" :key="inv.email">
-                    {{ inv.email }}
-                </q-list>
-            </q-scroll-area>
-            <h5>Add One Email to Invitations</h5>
-            <q-input  v-model="inviteEmail" />
-            <q-btn label="Add Invitation" @click="addInvite" />
+            <div class="box">
+                <q-btn label="List Invitations" @click="listInvites" />
+                <q-scroll-area style="width: 200px; height: 100px;">
+                    <q-list v-for="inv in invites" :key="inv.email">
+                        {{ inv.email }}
+                    </q-list>
+                </q-scroll-area>
+            </div>
+            <div class="box">
+                <h5>Add One Email to Invitations</h5>
+                <q-input  v-model="inviteEmail" />
+                <q-btn label="Add Invitation" @click="addInvite" />
+            </div>
+            <div class="box">
+                <h5>Remove One Email from Invitations</h5>
+                <q-input  v-model="removeEmail" />
+                <q-btn label="Remove Invitation" @click="removeInvite" />
+            </div>
         </div>
     </q-page>
 </template>
@@ -23,7 +32,8 @@ export default {
   data () {
     return {
       invites: ['None'],
-      inviteEmail: '' // possibly a space-delimited collection
+      inviteEmail: '',
+      removeEmail: ''
     }
   },
   methods: {
@@ -47,6 +57,25 @@ export default {
         this.$q.notify({type: 'negative', message: 'Error ' + error})
       })
       this.$data.inviteEmail = ''
+    },
+
+    removeInvite () {
+      var ems = this.$data.removeEmail.trim()
+      if (ems === '') {
+        return
+      }
+      var json = {}
+      json.email = ems
+      invites.find(json).then((response) => {
+        invites.remove(response.data[0]._id).then((response) => {
+          this.$q.notify({type: 'positive', message: 'Invitations removed'})
+        }).catch((error) => {
+          this.$q.notify({type: 'negative', message: 'Error-1 ' + error})
+        })
+      }).catch((error) => {
+        this.$q.notify({type: 'negative', message: 'Error-2 ' + error})
+      })
+      this.$data.removeEmail = ''
     }
 
   }
@@ -54,4 +83,11 @@ export default {
 </script>
 
 <style>
+.box {
+  border: 1px solid black;
+  background: white;
+  margin: 12px;
+  font-family:pragmatica-web,sans-serif;
+  border-radius: 3px;
+}
 </style>

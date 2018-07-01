@@ -1,2 +1,7 @@
 {"email":"json@example.com","_id":"4TYbOCoi1SUBcyoT"}
 {"email":"foo@bar.org","_id":"05JnnlXf4RGG70jQ"}
+{"$$deleted":true,"_id":"05JnnlXf4RGG70jQ"}
+{"$$deleted":true,"_id":"4TYbOCoi1SUBcyoT"}
+{"email":"json@example.com","_id":"x1ZkA5RAvBhvLyTH"}
+{"$$deleted":true,"_id":"x1ZkA5RAvBhvLyTH"}
+{"email":"json@example.com","_id":"T0U9qPLojziwn7qe"}
