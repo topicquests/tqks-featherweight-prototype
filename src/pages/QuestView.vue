@@ -97,6 +97,10 @@ export default {
             this.$data.answers = this.populateChildList(conversation, x.answers)
             this.$data.pros = this.populateChildList(conversation, x.pros)
             this.$data.cons = this.populateChildList(conversation, x.cons)
+            // alert(JSON.stringify(x.answers))
+            // alert(JSON.stringify(x.questions))
+            // alert(JSON.stringify(x.pros))
+            // alert(JSON.stringify(x.cons))
           } catch (er) {
             alert('ERROR ' + er)
           }
