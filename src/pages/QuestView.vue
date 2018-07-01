@@ -10,22 +10,22 @@
         <div class="columncontainer">
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${id}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${ptype}/${pid}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/position.png">Ideas
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${id}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${ptype}/${pid}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${id}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${ptype}/${pid}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/minus.png">Con
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${id}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${ptype}/${pid}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
         </div>
@@ -46,7 +46,7 @@
               <a style="margin-left:4px;" :href="`/index.html#/questview/${pro.id}`">{{ pro.label }}</a>
             </q-item>
           </q-list>
-          <q-list class="datacolumn" v-for="con in con" :key="con.id">
+          <q-list class="datacolumn" v-for="con in cons" :key="con.id">
             <q-item class="node">
               <a style="margin-left:4px;" :href="`/index.html#/questview/${con.id}`">{{ con.label }}</a>
             </q-item>
@@ -64,12 +64,45 @@ export default {
       isAuthenticated: false,
       image: '',
       label: '',
-      id: '',
+      pid: '',
+      ptype: '',
       details: '',
       questions: [],
       answers: [],
       pros: [],
       cons: []
+    }
+  },
+  methods: {
+    loadNode: function (service, jsonQuery, callback) {
+      // alert(JSON.stringify(jsonQuery))
+      service.find(jsonQuery)
+        .then((response) => {
+          var x = response.data[0]
+          // alert(JSON.stringify(x))
+          return callback(x)
+        })
+        .catch((error) => {
+          alert('LOADERROR ' + error)
+          console.log(error)
+          return null
+        })
+    },
+    populateChildList: function (service, nodeList) {
+      var result = []
+      var jsonQuery = {}
+      var idq = {}
+      for (var id in nodeList) {
+        idq.id = nodeList[id]
+        jsonQuery.query = idq
+        this.loadNode(service, jsonQuery, function (data) {
+          if (data) {
+            result.push(data)
+          }
+        })
+      }
+      // alert('RETURNING ' + result)
+      return result
     }
   },
   mounted () {
@@ -78,14 +111,55 @@ export default {
     }
     const id = this.$route.params.id
     const quests = api.service('quests')
+    const conversation = api.service('conversation')
+    var x
+    alert('FETCHING ' + id)
+    /***************/
+    // What's going on here is this
+    // we are using the same page view to load both Quest nodes and
+    // conversation nodes.
+    // THIS IS MESSY.
+    // A Design change would entail this:
+    //   Make Quest nodes IBIS Map nodes instead of something else
+    //  Then, we only have one kind of node to load
+    /***************/
     quests.find({ query: { 'id': id } })
       .then((response) => {
-        // console.log(response)
-        var x = response.data[0]
-        this.$data.label = x.label
-        this.$data.details = x.details
-        this.$data.image = x.img
-        this.$data.id = x.id
+        x = response.data[0]
+        // alert('R1 ' + x)
+        if (x) {
+          this.$data.label = x.label
+          this.$data.details = x.details
+          this.$data.image = x.img
+          this.$data.pid = x.id
+          this.$data.ptype = x.type
+          // alert(x.questions)
+          this.$data.questions = this.populateChildList(conversation, x.questions)
+          this.$data.answers = this.populateChildList(conversation, x.answers)
+          this.$data.pros = this.populateChildList(conversation, x.pros)
+          this.$data.cons = this.populateChildList(conversation, x.cons)
+        } else {
+          conversation.find({ query: { 'id': id } })
+            .then((response) => {
+              x = response.data[0]
+              alert('R2 ' + JSON.stringify(x))
+              this.$data.label = x.label
+              this.$data.details = x.details
+              this.$data.image = x.img
+              this.$data.pid = x.id
+              this.$data.ptype = x.type
+              /*
+              alert(x.questions)
+              try {
+                this.$data.questions = this.populateChildList(conversation, x.questions)
+                this.$data.answers = this.populateChildList(conversation, x.answers)
+                this.$data.pros = this.populateChildList(conversation, x.pros)
+                this.$data.cons = this.populateChildList(conversation, x.cons)
+              } catch (er) {
+                alert('ERROR ' + er)
+              } */
+            })
+        }
       })
   }
 }

@@ -35,6 +35,7 @@ export default {
       // alert(this.details);
       var json = {}
       json.id = uuidv4()
+      json.type = 'quest'
       json.label = this.label
       json.details = this.details
       json.img = 'statics/images/publication.png'
