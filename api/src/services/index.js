@@ -10,6 +10,8 @@ const quests = require('./quests/quests.service.js');
 
 const conversation = require('./conversation/conversation.service.js');
 
+const invitations = require('./invitations/invitations.service.js');
+
 module.exports = function() {
   const app = this; // eslint-disable-line no-unused-vars
 
@@ -19,4 +21,5 @@ module.exports = function() {
   app.configure(history);
   app.configure(quests);
   app.configure(conversation);
+  app.configure(invitations);
 };
