@@ -33,22 +33,22 @@
         <div class="datacontainer">
           <q-list class="datacolumn" v-for="question in questions" :key="question.id">
             <q-item class="node">
-              <a style="margin-left:4px;" :href="`/index.html#/questview/${question.id}`">{{ question.label }}</a>
+              <a style="margin-left:4px;" v-on:click="doClick(question.id)">{{ question.label }}</a>
             </q-item>
           </q-list>
           <q-list class="datacolumn" v-for="answer in answers" :key="answer.id">
             <q-item class="node">
-              <a style="margin-left:4px;" :href="`/index.html#/questview/${answer.id}`">{{ answer.label }}</a>
+              <a style="margin-left:4px;" v-on:click="doClick(answer.id)">{{ answer.label }}</a>
             </q-item>
           </q-list>
           <q-list class="datacolumn" v-for="pro in pros" :key="pro.id">
             <q-item class="node">
-              <a style="margin-left:4px;" :href="`/index.html#/questview/${pro.id}`">{{ pro.label }}</a>
+              <a style="margin-left:4px;" v-on:click="doClick(pro.id)">{{ pro.label }}</a>
             </q-item>
           </q-list>
           <q-list class="datacolumn" v-for="con in cons" :key="con.id">
             <q-item class="node">
-              <a style="margin-left:4px;" :href="`/index.html#/questview/${con.id}`">{{ con.label }}</a>
+              <a style="margin-left:4px;" v-on:click="doClick(con.id)">{{ con.label }}</a>
             </q-item>
           </q-list>
         </div>
@@ -57,6 +57,7 @@
 </template>
 <script>
 import api from 'src/api'
+var conversation
 export default {
   props: [ 'user' ],
   data () {
@@ -74,6 +75,27 @@ export default {
     }
   },
   methods: {
+    doClick: function (id) {
+      // alert('ClICKED ' + id)
+      conversation.find({ query: { 'id': id } })
+        .then((response) => {
+          var x = response.data[0]
+          // alert('R2 ' + JSON.stringify(x))
+          this.$data.label = x.label
+          this.$data.details = x.details
+          this.$data.image = x.img
+          this.$data.pid = x.id
+          this.$data.ptype = x.type
+          try {
+            this.$data.questions = this.populateChildList(conversation, x.questions)
+            this.$data.answers = this.populateChildList(conversation, x.answers)
+            this.$data.pros = this.populateChildList(conversation, x.pros)
+            this.$data.cons = this.populateChildList(conversation, x.cons)
+          } catch (er) {
+            alert('ERROR ' + er)
+          }
+        })
+    },
     loadNode: function (service, jsonQuery, callback) {
       // alert(JSON.stringify(jsonQuery))
       service.find(jsonQuery)
@@ -111,55 +133,19 @@ export default {
     }
     const id = this.$route.params.id
     const quests = api.service('quests')
-    const conversation = api.service('conversation')
-    var x
-    alert('FETCHING ' + id)
-    /***************/
-    // What's going on here is this
-    // we are using the same page view to load both Quest nodes and
-    // conversation nodes.
-    // THIS IS MESSY.
-    // A Design change would entail this:
-    //   Make Quest nodes IBIS Map nodes instead of something else
-    //  Then, we only have one kind of node to load
-    /***************/
+    conversation = api.service('conversation')
     quests.find({ query: { 'id': id } })
       .then((response) => {
-        x = response.data[0]
-        // alert('R1 ' + x)
-        if (x) {
-          this.$data.label = x.label
-          this.$data.details = x.details
-          this.$data.image = x.img
-          this.$data.pid = x.id
-          this.$data.ptype = x.type
-          // alert(x.questions)
-          this.$data.questions = this.populateChildList(conversation, x.questions)
-          this.$data.answers = this.populateChildList(conversation, x.answers)
-          this.$data.pros = this.populateChildList(conversation, x.pros)
-          this.$data.cons = this.populateChildList(conversation, x.cons)
-        } else {
-          conversation.find({ query: { 'id': id } })
-            .then((response) => {
-              x = response.data[0]
-              alert('R2 ' + JSON.stringify(x))
-              this.$data.label = x.label
-              this.$data.details = x.details
-              this.$data.image = x.img
-              this.$data.pid = x.id
-              this.$data.ptype = x.type
-              /*
-              alert(x.questions)
-              try {
-                this.$data.questions = this.populateChildList(conversation, x.questions)
-                this.$data.answers = this.populateChildList(conversation, x.answers)
-                this.$data.pros = this.populateChildList(conversation, x.pros)
-                this.$data.cons = this.populateChildList(conversation, x.cons)
-              } catch (er) {
-                alert('ERROR ' + er)
-              } */
-            })
-        }
+        var x = response.data[0]
+        this.$data.label = x.label
+        this.$data.details = x.details
+        this.$data.image = x.img
+        this.$data.pid = x.id
+        this.$data.ptype = x.type
+        this.$data.questions = this.populateChildList(conversation, x.questions)
+        this.$data.answers = this.populateChildList(conversation, x.answers)
+        this.$data.pros = this.populateChildList(conversation, x.pros)
+        this.$data.cons = this.populateChildList(conversation, x.cons)
       })
   }
 }
