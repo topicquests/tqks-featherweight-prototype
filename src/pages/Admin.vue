@@ -1,7 +1,7 @@
 <template>
     <q-page class="flex flex-left">
         <div>
-            <h2>Channels</h2>
+            <h2>Admin</h2>
         </div>
     </q-page>
 </template>
@@ -20,4 +20,3 @@ export default {
 
 <style>
 </style>
-

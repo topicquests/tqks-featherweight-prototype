@@ -7,6 +7,7 @@ export default [
       { path: '/signin', name: 'signin', component: () => import('pages/SignIn') },
       { path: '/register', name: 'register', component: () => import('pages/SignIn') },
       { path: '/chat', name: 'chat', component: () => import('pages/Chat'), meta: { requiresAuth: true } },
+      { path: '/admin', name: 'admin', component: () => import('pages/Admin') },
       { path: '/history', name: 'history', component: () => import('pages/History') },
       { path: '/quests', name: 'quests', component: () => import('pages/Quests') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },

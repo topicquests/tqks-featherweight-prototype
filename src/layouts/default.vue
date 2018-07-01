@@ -70,6 +70,11 @@
           <q-item-main label="Quests" />
         </q-item>
 
+        <q-item v-if="isAdmin" to="/admin">
+          <q-item-side icon="settings" />
+          <q-item-main label="Admin" />
+        </q-item>
+
         <q-item v-if="isAuthenticated" to="/chat">
           <q-item-side icon="chat" />
           <q-item-main label="Chat" />
@@ -96,7 +101,7 @@
 
 <script>
 import auth from 'src/auth'
-
+import config from '../../config'
 export default {
   name: 'index',
   components: {
@@ -105,6 +110,7 @@ export default {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
       isAuthenticated: false,
+      isAdmin: false,
       user: null
     }
   },
@@ -121,6 +127,7 @@ export default {
       auth.signout()
         .then(() => {
           this.$data.isAuthenticated = false
+          this.checkAdmin()
           this.$q.notify({type: 'positive', message: 'You are now logged out, sign in again to continue to work'})
         })
         .catch(() => {
@@ -129,6 +136,12 @@ export default {
     },
     setUser (user) {
       this.$data.user = user
+    },
+    checkAdmin () {
+      var email = this.$data.user.email
+      var admin = config.adminEmail
+      this.$data.isAdmin = (email === admin && this.$data.isAuthenticated)
+      alert(email)
     }
   },
   mounted () {
@@ -149,6 +162,7 @@ export default {
     auth.onAuthenticated((user) => {
       this.setUser(user)
       this.$data.isAuthenticated = true
+      this.checkAdmin()
       this.$router.push({ name: 'home' })
     })
 
