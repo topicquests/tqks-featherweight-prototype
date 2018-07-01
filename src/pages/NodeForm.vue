@@ -24,24 +24,30 @@ const conversation = api.service('conversation')
 var router
 
 export default {
+  props: [ 'user' ],
   data () {
     return {
       label: '',
       details: '',
       type: '',
       parentId: '',
-      parentType: ''
+      parentType: '',
+      parentLabel: ''
     }
   },
   methods: {
     doSubmit: function () {
-      alert(this.label)
+      // alert(this.label)
       // alert(this.details);
       var typ = this.$data.type
       var json = {}
       json.id = uuidv4()
       json.label = this.label
       json.details = this.details
+      json.creator = this.user._id
+      json.date = new Date()
+      json.type = typ
+
       if (typ === 'question') {
         json.img = 'statics/images/ibis/issue.png'
         json.imgsm = 'statics/images/ibis/issue_sm.png'
@@ -56,6 +62,7 @@ export default {
         json.imgsm = 'statics/images/ibis/minus_sm.png'
       }
       json.parentId = this.$data.parentId
+      json.parentLabel = this.$data.parentLabel
       // TODO add creatorId, date
       // alert(JSON.stringify(json))
       conversation.create(json).then((response) => {
@@ -123,7 +130,7 @@ export default {
               }
               conversation.update(x._id, x)
                 .then((response) => {
-                  router.push('/questview/' + this.$data.parentId)
+                  router.go(-1)
                 })
             })
         }
@@ -136,7 +143,8 @@ export default {
     this.$data.type = this.$route.params.type
     this.$data.parentId = this.$route.params.id
     this.$data.parentType = this.$route.params.parentType
-    alert(this.$data.type + ' ' + this.$data.parentType + ' ' + this.$data.parentId)
+    this.$data.parentLabel = this.$route.params.label
+    // alert(this.$data.type + ' ' + this.$data.parentType + ' ' + this.$data.parentId)
   }
 }
 </script>

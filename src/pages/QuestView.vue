@@ -2,6 +2,10 @@
     <q-page>
       <div id="topbox">
         <h4><img style="margin-right:4px;" :src="image">{{ label }}</h4>
+        <span v-if="parentLabel"><b>Responds to </b>
+          <a v-on:click="doClick(pid)">{{ parentLabel }}</a>
+        </span>
+        <hr/>
         <q-scroll-area style="width: 960px; height: 400px;">
           <span v-html="details"></span>
         </q-scroll-area>
@@ -10,22 +14,22 @@
         <div class="columncontainer">
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${ptype}/${pid}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${ptype}/${pid}/${label}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/position.png">Ideas
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${ptype}/${pid}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${ptype}/${pid}/${label}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${ptype}/${pid}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${ptype}/${pid}/${label}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/minus.png">Con
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${ptype}/${pid}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${ptype}/${pid}/${label}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
         </div>
@@ -66,6 +70,7 @@ export default {
       image: '',
       label: '',
       pid: '',
+      parentLabel: '',
       ptype: '',
       details: '',
       questions: [],
@@ -80,12 +85,13 @@ export default {
       conversation.find({ query: { 'id': id } })
         .then((response) => {
           var x = response.data[0]
-          // alert('R2 ' + JSON.stringify(x))
+          // alert('F ' + JSON.stringify(x))
           this.$data.label = x.label
           this.$data.details = x.details
           this.$data.image = x.img
           this.$data.pid = x.id
           this.$data.ptype = x.type
+          this.$data.parentLabel = x.parentLabel
           try {
             this.$data.questions = this.populateChildList(conversation, x.questions)
             this.$data.answers = this.populateChildList(conversation, x.answers)
@@ -142,6 +148,7 @@ export default {
         this.$data.image = x.img
         this.$data.pid = x.id
         this.$data.ptype = x.type
+        this.$parentLabel = x.parentLabel
         this.$data.questions = this.populateChildList(conversation, x.questions)
         this.$data.answers = this.populateChildList(conversation, x.answers)
         this.$data.pros = this.populateChildList(conversation, x.pros)

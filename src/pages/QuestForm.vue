@@ -23,6 +23,7 @@ const quests = api.service('quests')
 var router
 
 export default {
+  props: [ 'user' ],
   data () {
     return {
       label: '',
@@ -40,6 +41,8 @@ export default {
       json.details = this.details
       json.img = 'statics/images/publication.png'
       json.imgsm = 'statics/images/publication_sm.png'
+      json.creator = this.user._id
+      json.date = new Date()
       // TODO add creatorId, date
       // alert(JSON.stringify(json))
       quests.create(json).then((response) => {
