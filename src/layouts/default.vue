@@ -66,7 +66,7 @@
         </q-item>
 
         <q-item to="/quests">
-          <q-item-side icon="rowing" />
+          <q-item-side icon="explore" />
           <q-item-main label="Quests" />
         </q-item>
 
