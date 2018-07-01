@@ -12,7 +12,7 @@ export default [
       { path: '/quests', name: 'quests', component: () => import('pages/Quests') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },
       { path: '/questview/:id', name: 'questview', component: () => import('pages/QuestView'), props: true },
-      { path: '/nodeedit/:type/:parentType/:id/:label', name: 'questview', component: () => import('pages/NodeForm'), props: true }
+      { path: '/nodeedit/:type/:parentType/:id/:label', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true }
 
     ]
   },
