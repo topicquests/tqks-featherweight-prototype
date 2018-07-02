@@ -6,7 +6,7 @@ module.exports = {
   isPrivatePortal: false,
   // When true, for an email to signup, it must be on an invitation list
   // An admin handles the invitation list
-  requiresInvite: false,
+  requiresInvite: true,
   // This email defines which account is the first Admin
   // Admins might be able to assign roles to other accounts
   adminEmail: 'joe@sixpack.com',

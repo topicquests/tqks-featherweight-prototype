@@ -35,26 +35,36 @@
         </div>
 
         <div class="datacontainer">
-          <q-list class="datacolumn" v-for="question in questions" :key="question.id">
-            <q-item class="node">
+          <table style="float:left;">
+            <tr>
+              <th class="hiddencolumn">foo</th>
+              <th class="hiddencolumn">foo</th>
+              <th class="hiddencolumn">foo<th>
+              <th class="hiddencolumn">foo</th>
+            </tr>
+            <tr>
+              <td class="datacolumn" v-for="question in questions" :key="question.id">
+            <div class="node">
               <a style="margin-left:4px;" v-on:click="doClick(question.id)">{{ question.label }}</a>
-            </q-item>
-          </q-list>
-          <q-list class="datacolumn" v-for="answer in answers" :key="answer.id">
-            <q-item class="node">
+            </div>
+              </td>
+              <td class="datacolumn" v-for="answer in answers" :key="answer.id">
+            <div class="node">
               <a style="margin-left:4px;" v-on:click="doClick(answer.id)">{{ answer.label }}</a>
-            </q-item>
-          </q-list>
-          <q-list class="datacolumn" v-for="pro in pros" :key="pro.id">
-            <q-item class="node">
+            </div>
+              </td>
+              <td class="datacolumn" v-for="pro in pros" :key="pro.id">
+            <div class="node">
               <a style="margin-left:4px;" v-on:click="doClick(pro.id)">{{ pro.label }}</a>
-            </q-item>
-          </q-list>
-          <q-list class="datacolumn" v-for="con in cons" :key="con.id">
-            <q-item class="node">
+            </div>
+              </td>
+              <td class="datacolumn" v-for="con in cons" :key="con.id">
+            <div class="node">
               <a style="margin-left:4px;" v-on:click="doClick(con.id)">{{ con.label }}</a>
-            </q-item>
-          </q-list>
+            </div>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </q-page>
@@ -80,27 +90,34 @@ export default {
     }
   },
   methods: {
+    showLists: function () {
+      var msg = 'SL ' + JSON.stringify(this.questions) + '\n' +
+      JSON.stringify(this.answers) + '\n' +
+      JSON.stringify(this.pros) + '\n' +
+      JSON.stringify(this.cons)
+      alert(msg)
+    },
     setQuestions: function (data) {
-      // alert('SQ ' + JSON.stringify(data))
       if (data) {
+        alert('SQ ' + JSON.stringify(data))
         this.questions = data
       }
     },
     setAnswers: function (data) {
-      // alert('SA ' + JSON.stringify(data))
       if (data) {
+        alert('SA ' + JSON.stringify(data))
         this.answers = data
       }
     },
     setPros: function (data) {
-      // alert('SP ' + JSON.stringify(data))
       if (data) {
+        alert('SP ' + JSON.stringify(data))
         this.pros = data
       }
     },
     setCons: function (data) {
-      // alert('SC ' + JSON.stringify(data))
       if (data) {
+        alert('SC ' + JSON.stringify(data))
         this.cons = data
       }
     },
@@ -128,11 +145,8 @@ export default {
                 })
               })
             })
+            self.showLists()
           })
-          // this.questions = this.populateChildList(conversation, x.questions)
-          // this.answers = this.populateChildList(conversation, x.answers)
-          // this.pros = this.populateChildList(conversation, x.pros)
-          // this.cons = this.populateChildList(conversation, x.cons)
         })
     },
 
@@ -189,12 +203,16 @@ export default {
         // alert('A ' + this.$data.label)
         this.populateChildList(conversation, x.questions, function (data) {
           self.setQuestions(data)
+          // self.showLists()
           self.populateChildList(conversation, x.answers, function (data) {
             self.setAnswers(data)
+            // self.showLists()
             self.populateChildList(conversation, x.pros, function (data) {
               self.setPros(data)
+              // self.showLists()
               self.populateChildList(conversation, x.cons, function (data) {
                 self.setCons(data)
+                // self.showLists()
               })
             })
           })
@@ -254,6 +272,13 @@ export default {
   margin-right: 4px;
 }
 
+.hiddencolumn {
+  height: 2px;
+  float:left;
+  width: 270px;
+  visibility: hidden;
+}
+
 .datacontainer {
   width: 1200px;
 }
@@ -264,13 +289,19 @@ export default {
   margin-right: 4px;
 }
 
+.blanknode {
+  visibility: hidden;
+  width: 270px;
+  height: 2p;
+}
 .node {
   margin-top: 4px;
   float: top;
   border: 1px solid black;
   border-radius: 3px;
   min-height: 40px;
-  word-wrap: normal;
+  width: 270px;
+  word-wrap: break-word;
   font-family:pragmatica-web,sans-serif;
 }
 .node:hover {

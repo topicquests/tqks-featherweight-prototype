@@ -140,7 +140,7 @@ export default {
     checkAdmin () {
       var email = this.$data.user.email
       var admin = config.adminEmail
-      this.$data.isAdmin = (email === admin && this.$data.isAuthenticated)
+      this.isAdmin = (email === admin && this.isAuthenticated)
       // alert(email)
     }
   },

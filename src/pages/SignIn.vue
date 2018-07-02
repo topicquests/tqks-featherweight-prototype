@@ -26,7 +26,7 @@ export default {
       showDialog: true,
       email: null,
       password: null,
-      title: null
+      title: 'SignIn'
     }
   },
   computed: {
@@ -42,41 +42,20 @@ export default {
       }, 50)
     },
     onOk (data) {
-      if (this.isRegistration()) {
-        this.register(this.email, this.password)
-          .then(() => {
-            return this.login(this.email, this.password)
-          })
-          .then(_ => {
-            this.$q.notify({type: 'positive', message: 'You are now logged in'})
-          })
-          .catch(_ => {
-            this.$q.notify({type: 'positive', message: 'Cannot register, please check your e-mail or password'})
-            this.goHome()
-          })
-      } else {
-        this.login(this.email, this.password)
-          .then(_ => {
-            this.$q.notify({type: 'positive', message: 'You are now logged in'})
-          })
-          .catch(_ => {
-            this.$q.notify({type: 'positive', message: 'Cannot sign in, please check your e-mail or password'})
-            this.goHome()
-          })
-      }
-    },
-    isRegistration () {
-      return this.$route.name === 'register'
-    },
-    register (email, password) {
-      return auth.register(email, password)
+      this.login(this.email, this.password)
+        .then(_ => {
+          this.$q.notify({type: 'positive', message: 'You are now logged in'})
+        })
+        .catch(_ => {
+          this.$q.notify({type: 'positive', message: 'Cannot sign in, please check your e-mail or password'})
+          this.goHome()
+        })
     },
     login (email, password) {
       return auth.login(email, password)
     }
   },
   mounted () {
-    this.title = this.isRegistration() ? 'Register' : 'Sign In'
   },
   beforeDestroy () {
   }

@@ -28,7 +28,7 @@
     "shelljs": "^0.7.0"
   },
   "dependencies": {
-    "@feathersjs/authentication": "^2.1.6",
+    "@feathersjs/authentication": "^2.1.7",
     "@feathersjs/authentication-jwt": "^2.0.1",
     "@feathersjs/authentication-local": "^1.2.1",
     "@feathersjs/configuration": "^1.0.2",
@@ -44,6 +44,7 @@
     "helmet": "^3.12.1",
     "http-proxy-middleware": "^0.17.4",
     "nedb": "^1.8.0",
+    "npm": "^6.1.0",
     "winston": "^2.4.3"
   }
 }

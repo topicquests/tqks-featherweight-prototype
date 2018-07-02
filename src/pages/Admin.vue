@@ -20,6 +20,12 @@
                 <q-input  v-model="removeEmail" />
                 <q-btn label="Remove Invitation" @click="removeInvite" />
             </div>
+            <div class="box">
+              <h5>Display a User</h5>
+              <q-input  v-model="displayEmail" />
+              <q-btn label="Display User" @click="displayUser" />
+            </div>
+
         </div>
     </q-page>
 </template>
@@ -27,13 +33,15 @@
 <script>
 import api from 'src/api'
 const invites = api.service('invitations')
+const users = api.service('users')
 
 export default {
   data () {
     return {
       invites: ['None'],
       inviteEmail: '',
-      removeEmail: ''
+      removeEmail: '',
+      displayEmail: ''
     }
   },
   methods: {
@@ -76,9 +84,24 @@ export default {
         this.$q.notify({type: 'negative', message: 'Error-2 ' + error})
       })
       this.$data.removeEmail = ''
+    },
+    displayUser () {
+      var ems = this.$data.displayEmail.trim()
+      alert(ems)
+      if (ems === '') {
+        return
+      }
+      var json = {}
+      var x = {}
+      x.email = ems
+      json.query = x
+      users.find(json).then((response) => {
+        alert(JSON.stringify(response))
+        this.displayEmail = ''
+      })
     }
-
   }
+
 }
 </script>
 
