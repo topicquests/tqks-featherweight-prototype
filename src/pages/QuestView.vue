@@ -1,5 +1,6 @@
 <template>
     <q-page>
+      <span style="visability: hidden;">{{thepage}}</span>
       <div id="topbox">
         <h4><img style="margin-right:4px;" :src="image">{{ label }}</h4>
         <span v-if="parentLabel"><b>Responds to </b>
@@ -35,24 +36,25 @@
         </div>
 
         <div class="datacontainer">
-          <q-list class="datacolumn" v-for="question in questions" :key="question.id">
-            <q-item class="node">
-              <a style="margin-left:4px;" v-on:click="doClick(question.id)">{{ question.label }}</a>
+          <q-list class="datacolumn">
+            <q-item class="node" v-for="question in questions" :key="question.id">
+              <router-link :to="{ name: 'questview', params: { id: question.id }}">{{ question.label }}</router-link>
+              <!-- <a class="q" style="margin-left:4px;" v-on:click="doClick(question.id)">{{ question.label }}</a> -->
             </q-item>
           </q-list>
-          <q-list class="datacolumn" v-for="answer in answers" :key="answer.id">
-            <q-item class="node">
-              <a style="margin-left:4px;" v-on:click="doClick(answer.id)">{{ answer.label }}</a>
+          <q-list class="datacolumn">
+            <q-item class="node" v-for="answer in answers" :key="answer.id">
+              <a class="a" style="margin-left:4px;" v-on:click="doClick(answer.id)">{{ answer.label }}</a>
             </q-item>
           </q-list>
-          <q-list class="datacolumn" v-for="pro in pros" :key="pro.id">
-            <q-item class="node">
-              <a style="margin-left:4px;" v-on:click="doClick(pro.id)">{{ pro.label }}</a>
+          <q-list class="datacolumn">
+            <q-item class="node" v-for="pro in pros" :key="pro.id">
+              <a class="p" style="margin-left:4px;" v-on:click="doClick(pro.id)">{{ pro.label }}</a>
             </q-item>
           </q-list>
-          <q-list class="datacolumn" v-for="con in cons" :key="con.id">
-            <q-item class="node">
-              <a style="margin-left:4px;" v-on:click="doClick(con.id)">{{ con.label }}</a>
+          <q-list class="datacolumn">
+            <q-item class="node" v-for="con in cons" :key="con.id">
+              <a class="c" style="margin-left:4px;" v-on:click="doClick(con.id)">{{ con.label }}</a>
             </q-item>
           </q-list>
         </div>
@@ -64,6 +66,32 @@ import api from 'src/api'
 var conversation
 export default {
   props: [ 'user' ],
+    computed: {
+      questState: {
+        // THEORY
+        //  This fires first to load the page
+        //  The rest must wait for that to finish
+        //  TODO figure out how to make that work
+        thePage () {
+          return this.$store.getters.thePage(this.$route.params.id)
+        },
+        ...mapGetters ([
+          image,
+          label,
+          details,
+          parentLabel,
+          ptype,
+          pid
+        ]),
+        isAuthenticated () {
+          return this.$store.getters.isAuthenticated
+        }
+      }
+    }
+  }
+
+
+/**
   data () {
     return {
       isAuthenticated: false,
@@ -80,6 +108,44 @@ export default {
     }
   },
   methods: {
+    initialize () {
+      return new Promise((resolve, reject) => {
+        console.info('Initialize', 'start')
+        if (this.user) {
+          this.$data.isAuthenticated = true
+        }
+        const id = this.$route.params.id
+        const quests = api.service('quests')
+        conversation = api.service('conversation')
+        quests.find({ query: { 'id': id } })
+          .then((response) => {
+            var self = this
+            var x = response.data[0]
+            // alert(JSON.stringify(x))
+            this.$data.label = x.label
+            this.$data.details = x.details
+            this.$data.image = x.img
+            this.$data.pid = x.id
+            this.$data.ptype = x.type
+            this.$parentLabel = x.parentLabel
+            // alert('A ' + this.$data.label)
+            this.populateChildList(conversation, x.questions, function (data) {
+              self.setQuestions(data)
+              self.populateChildList(conversation, x.answers, function (data) {
+                self.setAnswers(data)
+                self.populateChildList(conversation, x.pros, function (data) {
+                  self.setPros(data)
+                  self.populateChildList(conversation, x.cons, function (data) {
+                    self.setCons(data)
+                    console.info('Initialize', 'done')
+                    resolve()
+                  })
+                })
+              })
+            })
+          })
+      })
+    },
     setQuestions: function (data) {
       // alert('SQ ' + JSON.stringify(data))
       if (data) {
@@ -168,40 +234,21 @@ export default {
       })
     }
   },
-  mounted () {
-    if (this.user) {
-      this.$data.isAuthenticated = true
-    }
-    const id = this.$route.params.id
-    const quests = api.service('quests')
-    conversation = api.service('conversation')
-    quests.find({ query: { 'id': id } })
-      .then((response) => {
-        var self = this
-        var x = response.data[0]
-        // alert(JSON.stringify(x))
-        this.$data.label = x.label
-        this.$data.details = x.details
-        this.$data.image = x.img
-        this.$data.pid = x.id
-        this.$data.ptype = x.type
-        this.$parentLabel = x.parentLabel
-        // alert('A ' + this.$data.label)
-        this.populateChildList(conversation, x.questions, function (data) {
-          self.setQuestions(data)
-          self.populateChildList(conversation, x.answers, function (data) {
-            self.setAnswers(data)
-            self.populateChildList(conversation, x.pros, function (data) {
-              self.setPros(data)
-              self.populateChildList(conversation, x.cons, function (data) {
-                self.setCons(data)
-              })
-            })
-          })
-        })
+  beforeRouterUpdate () {
+    console.info('Router', 'start')
+    setTimeout(() => {
+      this.initialize.apply(this).then(() => {
+        console.info('Router', 'done')
+        // next()
       })
+    }, 500)
+  },
+  mounted () {
+    alert('Mounted')
+    this.initialize()
   }
 }
+*/
 </script>
 
 <style>
