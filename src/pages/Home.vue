@@ -7,16 +7,16 @@
 <template>
   <q-page class="flex flex-center">
     <div>
-      <!-- <div class="layout-padding"> -->
-        <!-- <div class="column items-center"> -->
+      <div class="layout-padding">
+        <div class="column items-center">
           <h3>FeatherWeight Prototype</h3>
           <img src="statics/images/earthrise2.png" >
           <h5>
             To make this demo work correctly first register your avatar to <a href="https://www.gravatar.com">https://www.gravatar.com</a>
             then go to the <router-link to="/chat">Chat</router-link>
           </h5>
-        <!-- </div> -->
-      <!-- </div> -->
+        </div>
+      </div>
     </div>
   </q-page>
 </template>
