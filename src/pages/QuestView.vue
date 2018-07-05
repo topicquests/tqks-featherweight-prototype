@@ -114,26 +114,6 @@ export default {
       isAuthenticated () {
         return this.$store.getters.isAuthenticated
       }
-      // questState: {
-      //   // THEORY
-      //   //  This fires first to load the page
-      //   //  The rest must wait for that to finish
-      //   //  TODO figure out how to make that work
-      //   thePage () {
-      //     return this.$store.getters.thePage(this.$route.params.id)
-      //   },
-      //   // ...mapGetters ([
-      //   //   image,
-      //   //   label,
-      //   //   details,
-      //   //   parentLabel,
-      //   //   ptype,
-      //   //   pid
-      //   // ]),
-      //   isAuthenticated () {
-      //     return this.$store.getters.isAuthenticated
-      //   }
-      // }
     }
   }
 

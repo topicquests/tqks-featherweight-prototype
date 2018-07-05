@@ -19,7 +19,7 @@
 <script>
 import api from 'src/api'
 const uuidv4 = require('uuid/v4')
-const quests = api.service('quests')
+const conversation = api.service('conversation')
 var router
 
 export default {
@@ -39,13 +39,14 @@ export default {
       json.type = 'quest'
       json.label = this.label
       json.details = this.details
-      json.img = 'statics/images/publication.png'
-      json.imgsm = 'statics/images/publication_sm.png'
+      json.img = 'statics/images/Map.png'
+      json.imgsm = 'statics/images/map_sm.png'
       json.creator = this.user._id
       json.date = new Date()
+      json.type = "map"
       // TODO add creatorId, date
       // alert(JSON.stringify(json))
-      quests.create(json).then((response) => {
+      conversation.create(json).then((response) => {
         // alert(JSON.stringify(response))
         router.push('/quests')
       })

@@ -27,13 +27,14 @@ export default {
 
   },
   mounted () {
-    const quests = api.service('quests')
+    const conversation = api.service('conversation')
     if (this.user) {
       this.$data.isAuthenticated = true
     }
-    quests.find({
+    conversation.find({
       query: {
-        $limit: 25
+        $limit: 25,
+        'type': 'map'
       }
     })
       .then((response) => {

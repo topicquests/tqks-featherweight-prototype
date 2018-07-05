@@ -11,7 +11,6 @@ const api = feathers()
 
 api.service('/users')
 api.service('/messages')
-api.service('/quests')
 api.service('/conversations')
 
 export default api
