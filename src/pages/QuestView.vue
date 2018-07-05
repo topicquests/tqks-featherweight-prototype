@@ -1,68 +1,67 @@
 <template>
-    <q-page v-if="!!q">
-      <div  id="topbox">
-        <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
-        <span v-if="q.parentLabel"><b>Responds to </b>
-          <router-link :to="{ name: 'questview', params: { id: q.id }}">{{ q.parentLabel }}</router-link>
-        </span>
-        <hr/>
-        <q-scroll-area style="width: 960px; height: 400px;">
-          <span v-html="q.details"></span>
-        </q-scroll-area>
+  <q-page v-if="!!q">
+    <div  id="topbox">
+      <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
+      <span v-if="q.parentLabel"><b>Responds to </b>
+        <router-link :to="{ name: 'questview', params: { id: q.id }}">{{ q.parentLabel }}</router-link>
+      </span>
+      <hr/>
+      <q-scroll-area style="width: 960px; height: 400px;">
+        <span v-html="q.details"></span>
+      </q-scroll-area>
+    </div>
+    <div class="columnscroller">
+      <div class="columncontainer">
+        <div class="columnx" style="text-align: center;">
+              <img class="headerimage" src="statics/images/ibis/issue.png">Questions
+              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${q.type}/${q.id}/${q.label}`">
+              <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
+        <div class="columnx" style="text-align: center;">
+              <img class="headerimage" src="statics/images/ibis/position.png">Ideas
+              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}/${q.label}`">
+              <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
+        <div class="columnx" style="text-align: center;">
+              <img class="headerimage" src="statics/images/ibis/plus.png">Pro
+              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}/${q.label}`">
+              <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
+        <div class="columnx" style="text-align: center;">
+              <img class="headerimage" src="statics/images/ibis/minus.png">Con
+              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${q.type}/${q.id}/${q.label}`">
+              <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
       </div>
-      <div class="columnscroller">
-        <div class="columncontainer">
-          <div class="columnx" style="text-align: center;">
-                <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/question/${q.id}/${q.label}`">
-                <img class="respond" src="statics/images/respond_sm.png"></a>
-          </div>
-          <div class="columnx" style="text-align: center;">
-                <img class="headerimage" src="statics/images/ibis/position.png">Ideas
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}/${q.label}`">
-                <img class="respond" src="statics/images/respond_sm.png"></a>
-          </div>
-          <div class="columnx" style="text-align: center;">
-                <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}/${q.label}`">
-                <img class="respond" src="statics/images/respond_sm.png"></a>
-          </div>
-          <div class="columnx" style="text-align: center;">
-                <img class="headerimage" src="statics/images/ibis/minus.png">Con
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${q.type}/${q.id}/${q.label}`">
-                <img class="respond" src="statics/images/respond_sm.png"></a>
-          </div>
-        </div>
-        <div class="datacontainer">
-          <q-list class="datacolumn">
-            <q-item class="node" v-for="question in q.questions" :key="question.id">
-              <router-link :to="{ name: 'questview', params: { id: question.id }}">{{ question.label }}</router-link>
+      <div class="datacontainer">
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="question in q.questions" :key="question.id">
+            <router-link :to="{ name: 'questview', params: { id: question.id }}">{{ question.label }}</router-link>
           </q-item>
-          </q-list>
-          <q-list class="datacolumn">
-            <q-item class="node" v-for="answer in q.answers" :key="answer.id">
-              <router-link :to="{ name: 'questview', params: { id: answer.id }}">{{ answer.label }}</router-link>
-            </q-item>
-          </q-list>
-          <q-list class="datacolumn">
-            <q-item class="node" v-for="pro in q.pros" :key="pro.id">
-              <router-link :to="{ name: 'questview', params: { id: pro.id }}">{{ pro.label }}</router-link>
-            </q-item>
-          </q-list>
-          <q-list class="datacolumn">
-            <q-item class="node" v-for="con in q.cons" :key="con.id">
-              <router-link :to="{ name: 'questview', params: { id: con.id }}">{{ con.label }}</router-link>
+        </q-list>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="answer in q.answers" :key="answer.id">
+            <router-link :to="{ name: 'questview', params: { id: answer.id }}">{{ answer.label }}</router-link>
           </q-item>
-          </q-list>
-          </div>
-        </div>
-
-    </q-page>
+        </q-list>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="pro in q.pros" :key="pro.id">
+            <router-link :to="{ name: 'questview', params: { id: pro.id }}">{{ pro.label }}</router-link>
+          </q-item>
+        </q-list>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="con in q.cons" :key="con.id">
+            <router-link :to="{ name: 'questview', params: { id: con.id }}">{{ con.label }}</router-link>
+          </q-item>
+        </q-list>
+      </div>
+    </div>
+  </q-page>
 </template>
 <script>
 import api from 'src/api'
 import { mapGetters } from 'vuex';
-var conversation
+// var conversation
 export default {
   props: [ 'user' ],
     beforeRouterUpdate () {
@@ -99,9 +98,7 @@ export default {
           id = id || this.$route.params.id;
           console.info('Initialize', 'fetching data for ', id);
           try {
-            // const results = await this.$store.dispatch('quests/find', {query: { id }});
-            // const { data: [ { _id } ] } = results;
-            const single = await this.$store.dispatch('quests/get', [id, { depth: 1 }]);
+            const single = await this.$store.dispatch('conversation/get', [id, { depth: 1 }]);
             console.info('Initialize', 'fetching data for ', id, 'success');
           } catch (e) {
             console.info('Initialize', 'fetching data for ', id, 'error', e);
@@ -110,172 +107,13 @@ export default {
     },
 
     computed: {
-      ...mapGetters({q: 'quests/current'}),
+      ...mapGetters({q: 'conversation/current'}),
       isAuthenticated () {
         return this.$store.getters.isAuthenticated
       }
     }
   }
 
-
-/**
-  data () {
-    return {
-      isAuthenticated: false,
-      image: '',
-      label: '',
-      pid: '',
-      parentLabel: '',
-      ptype: '',
-      details: '',
-      questions: [],
-      answers: [],
-      pros: [],
-      cons: []
-    }
-  },
-  methods: {
-    initialize () {
-      return new Promise((resolve, reject) => {
-        console.info('Initialize', 'start')
-        if (this.user) {
-          this.$data.isAuthenticated = true
-        }
-        const id = this.$route.params.id
-        const quests = api.service('quests')
-        conversation = api.service('conversation')
-        quests.find({ query: { 'id': id } })
-          .then((response) => {
-            var self = this
-            var x = response.data[0]
-            // alert(JSON.stringify(x))
-            this.$data.label = x.label
-            this.$data.details = x.details
-            this.$data.image = x.img
-            this.$data.pid = x.id
-            this.$data.ptype = x.type
-            this.$parentLabel = x.parentLabel
-            // alert('A ' + this.$data.label)
-            this.populateChildList(conversation, x.questions, function (data) {
-              self.setQuestions(data)
-              self.populateChildList(conversation, x.answers, function (data) {
-                self.setAnswers(data)
-                self.populateChildList(conversation, x.pros, function (data) {
-                  self.setPros(data)
-                  self.populateChildList(conversation, x.cons, function (data) {
-                    self.setCons(data)
-                    console.info('Initialize', 'done')
-                    resolve()
-                  })
-                })
-              })
-            })
-          })
-      })
-    },
-    setQuestions: function (data) {
-      // alert('SQ ' + JSON.stringify(data))
-      if (data) {
-        this.questions = data
-      }
-    },
-    setAnswers: function (data) {
-      // alert('SA ' + JSON.stringify(data))
-      if (data) {
-        this.answers = data
-      }
-    },
-    setPros: function (data) {
-      // alert('SP ' + JSON.stringify(data))
-      if (data) {
-        this.pros = data
-      }
-    },
-    setCons: function (data) {
-      // alert('SC ' + JSON.stringify(data))
-      if (data) {
-        this.cons = data
-      }
-    },
-    doClick: function (id) {
-      // alert('ClICKED ' + id)
-      conversation.find({ query: { 'id': id } })
-        .then((response) => {
-          var x = response.data[0]
-          // alert('F ' + JSON.stringify(x))
-          this.label = x.label
-          this.details = x.details
-          this.image = x.img
-          this.pid = x.id
-          this.ptype = x.type
-          this.parentLabel = x.parentLabel
-          var self = this
-          this.populateChildList(conversation, x.questions, function (data) {
-            self.setQuestions(data)
-            self.populateChildList(conversation, x.answers, function (data) {
-              self.setAnswers(data)
-              self.populateChildList(conversation, x.pros, function (data) {
-                self.setPros(data)
-                self.populateChildList(conversation, x.cons, function (data) {
-                  self.setCons(data)
-                })
-              })
-            })
-          })
-          // this.questions = this.populateChildList(conversation, x.questions)
-          // this.answers = this.populateChildList(conversation, x.answers)
-          // this.pros = this.populateChildList(conversation, x.pros)
-          // this.cons = this.populateChildList(conversation, x.cons)
-        })
-    },
-
-    recursiveFetch: function (service, nodeList, cursor, result, callback) {
-      // alert(JSON.stringify(nodeList) + ' ' + cursor + ' ' + JSON.stringify(result))
-      var jsonQuery = {}
-      var idq = {}
-      idq.id = nodeList[cursor++]
-      jsonQuery.query = idq
-      // alert('Q ' + JSON.stringify(jsonQuery))
-      service.find(jsonQuery)
-        .then((response) => {
-          var x = response.data[0]
-          // alert('L ' + JSON.stringify(x))
-          result.push(x)
-          if (nodeList.length === cursor) {
-            // alert('R ' + JSON.stringify(result))
-            return callback(result)
-          } else {
-            this.recursiveFetch(service, nodeList, cursor, result, callback)
-          }
-        })
-    },
-    populateChildList: function (service, nodeList, callback) {
-      // alert(JSON.stringify(nodeList))
-      var result = []
-      if (!nodeList) {
-        return callback(result)
-      }
-      this.recursiveFetch(service, nodeList, 0, result, function (data) {
-        // alert('R2 ' + JSON.stringify(data))
-        return callback(data)
-      })
-    }
-  },
-  beforeRouterUpdate () {
-    console.info('Router', 'start')
-    setTimeout(() => {
-      this.initialize.apply(this).then(() => {
-        console.info('Router', 'done')
-        // next()
-      })
-    }, 500)
-  },
-  mounted () {
-    alert('Mounted')
-    this.initialize()
-  }
-}
-*/
 </script>
 
 <style>

@@ -25,7 +25,7 @@ const store = new Vuex.Store({
     quests
   },
   plugins: [
-    service("quests", { idField: 'id'})
+    service('conversation', { idField: 'id'})
   ]
 })
 export default store

@@ -65,10 +65,11 @@ export default {
       // TODO add creatorId, date
       // alert(JSON.stringify(json))
       conversation.create(json).then((response) => {
-        // It's a conversation node
-        conversation.find({ query: { 'id': this.$data.parentId } })
+        const id = this.$data.parentId
+        // alert(this.$data.parentId)
+        conversation.find({ query: { 'id': id } })
           .then((response) => {
-            // console.log(response)
+            // alert(JSON.stringify(response))
             var x = response.data[0]
             var kids = []
             if (typ === 'question') {
@@ -93,9 +94,11 @@ export default {
             } else if (typ === 'question') {
               x.cons = kids
             }
-            conversation.update(x._id, x)
+            // alert(JSON.stringify(x))
+            conversation.update(id, x)
               .then((response) => {
-                router.go(-1)
+                const { id } = response;
+                router.push({name: 'questview', params: {id}})
               })
           })
         // alert(JSON.stringify(response))

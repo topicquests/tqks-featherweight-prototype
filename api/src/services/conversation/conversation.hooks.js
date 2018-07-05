@@ -28,11 +28,18 @@ const populateHook = async function (hook) {
   return hook
 }
 
+const afind = function () {
+  console.info('####finding')
+}
+
+const aget = function () {
+  console.info('####getting')
+}
 module.exports = {
   before: {
     all: [],
-    find: [],
-    get: [],
+    find: [afind],
+    get: [aget],
     create: [ authenticate('jwt') ],
     update: [ authenticate('jwt') ],
     patch: [ authenticate('jwt') ],

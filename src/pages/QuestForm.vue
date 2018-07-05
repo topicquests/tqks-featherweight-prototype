@@ -39,8 +39,8 @@ export default {
       json.type = 'quest'
       json.label = this.label
       json.details = this.details
-      json.img = 'statics/images/Map.png'
-      json.imgsm = 'statics/images/map_sm.png'
+      json.img = 'statics/images/ibis/map.png'
+      json.imgsm = 'statics/images/ibis/map_sm.png'
       json.creator = this.user._id
       json.date = new Date()
       json.type = "map"

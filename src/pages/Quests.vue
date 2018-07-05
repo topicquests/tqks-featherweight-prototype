@@ -34,10 +34,14 @@ export default {
     conversation.find({
       query: {
         $limit: 25,
+        $sort: {
+          date: -1
+        },
         'type': 'map'
       }
     })
       .then((response) => {
+        // alert(JSON.stringify(response.data))
         this.$data.myQuests = response.data
       })
   }
