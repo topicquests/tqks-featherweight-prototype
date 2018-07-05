@@ -68,7 +68,8 @@ module.exports = function (ctx) {
         'QPageSticky',
         'QField',
         'QEditor',
-        'QScrollArea'
+        'QScrollArea',
+        'QPagination'
       ],
       directives: [
         'Ripple'

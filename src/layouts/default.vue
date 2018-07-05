@@ -168,6 +168,7 @@ export default {
 
     // On logout
     auth.onLogout(() => {
+      alert('Logout')
       this.setUser(null)
       this.$data.isAuthenticated = false
       this.$router.push({ name: 'home' })
