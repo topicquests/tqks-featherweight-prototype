@@ -4,8 +4,8 @@
         <q-scroll-area style="width: 800px; height: 800px;">
           <q-list v-for="quest in rawData" :key="quest.id">
             <q-item>
-              <!-- NOTE: adding /index.html# makes this work, but it's a hack -->
-              <a :href="`/index.html#/questview/${quest.id}`"><img style="margin-right: 4px" src="quest.imgsm">{{ quest.label }}</a>
+              <!-- NOTE: adding /index.html# makes this work, but it's a hack style="margin-right: 4px"-->
+              <a :href="`/index.html#/questview/${quest.id}`"><i  style="margin-right: 4px" :class="quest.type"/>{{ quest.label }}</a>
             </q-item>
           </q-list>
         </q-scroll-area>
@@ -42,4 +42,20 @@ export default {
 </script>
 
 <style>
+
+i.map {
+    background-image: url("../statics/images/ibis/map_sm.png");
+}
+i.question {
+    background-image: url("../statics/images/ibis/issue_sm.png");
+}
+i.answer {
+    background-image: url("../statics/images/ibis/position_sm.png");
+}
+i.pro {
+    background-image: url("../statics/images/ibis/plus_sm.png");
+}
+i.con {
+    background-image: url("../statics/images/ibis/minus_sm.png");
+}
 </style>
