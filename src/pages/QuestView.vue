@@ -1,92 +1,139 @@
 <template>
-    <q-page>
-      <span style="visability: hidden;">{{thepage}}</span>
-      <div id="topbox">
-        <h4><img style="margin-right:4px;" :src="image">{{ label }}</h4>
-        <span v-if="parentLabel"><b>Responds to </b>
-          <a v-on:click="doClick(pid)">{{ parentLabel }}</a>
+    <q-page v-if="!!q">
+      <div  id="topbox">
+        <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
+        <span v-if="q.parentLabel"><b>Responds to </b>
+          <router-link :to="{ name: 'questview', params: { id: q.id }}">{{ q.parentLabel }}</router-link>
         </span>
         <hr/>
         <q-scroll-area style="width: 960px; height: 400px;">
-          <span v-html="details"></span>
+          <span v-html="q.details"></span>
         </q-scroll-area>
       </div>
       <div class="columnscroller">
         <div class="columncontainer">
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${ptype}/${pid}/${label}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/question/${q.id}/${q.label}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/position.png">Ideas
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${ptype}/${pid}/${label}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}/${q.label}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${ptype}/${pid}/${label}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}/${q.label}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
           <div class="columnx" style="text-align: center;">
                 <img class="headerimage" src="statics/images/ibis/minus.png">Con
-                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${ptype}/${pid}/${label}`">
+                <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${q.type}/${q.id}/${q.label}`">
                 <img class="respond" src="statics/images/respond_sm.png"></a>
           </div>
         </div>
-
         <div class="datacontainer">
           <q-list class="datacolumn">
-            <q-item class="node" v-for="question in questions" :key="question.id">
+            <q-item class="node" v-for="question in q.questions" :key="question.id">
               <router-link :to="{ name: 'questview', params: { id: question.id }}">{{ question.label }}</router-link>
-              <!-- <a class="q" style="margin-left:4px;" v-on:click="doClick(question.id)">{{ question.label }}</a> -->
+          </q-item>
+          </q-list>
+          <q-list class="datacolumn">
+            <q-item class="node" v-for="answer in q.answers" :key="answer.id">
+              <router-link :to="{ name: 'questview', params: { id: answer.id }}">{{ answer.label }}</router-link>
             </q-item>
           </q-list>
           <q-list class="datacolumn">
-            <q-item class="node" v-for="answer in answers" :key="answer.id">
-              <a class="a" style="margin-left:4px;" v-on:click="doClick(answer.id)">{{ answer.label }}</a>
+            <q-item class="node" v-for="pro in q.pros" :key="pro.id">
+              <router-link :to="{ name: 'questview', params: { id: pro.id }}">{{ pro.label }}</router-link>
             </q-item>
           </q-list>
           <q-list class="datacolumn">
-            <q-item class="node" v-for="pro in pros" :key="pro.id">
-              <a class="p" style="margin-left:4px;" v-on:click="doClick(pro.id)">{{ pro.label }}</a>
-            </q-item>
+            <q-item class="node" v-for="con in q.cons" :key="con.id">
+              <router-link :to="{ name: 'questview', params: { id: con.id }}">{{ con.label }}</router-link>
+          </q-item>
           </q-list>
-          <q-list class="datacolumn">
-            <q-item class="node" v-for="con in cons" :key="con.id">
-              <a class="c" style="margin-left:4px;" v-on:click="doClick(con.id)">{{ con.label }}</a>
-            </q-item>
-          </q-list>
+          </div>
         </div>
-      </div>
+
     </q-page>
 </template>
 <script>
 import api from 'src/api'
+import { mapGetters } from 'vuex';
 var conversation
 export default {
   props: [ 'user' ],
-    computed: {
-      questState: {
-        // THEORY
-        //  This fires first to load the page
-        //  The rest must wait for that to finish
-        //  TODO figure out how to make that work
-        thePage () {
-          return this.$store.getters.thePage(this.$route.params.id)
-        },
-        ...mapGetters ([
-          image,
-          label,
-          details,
-          parentLabel,
-          ptype,
-          pid
-        ]),
-        isAuthenticated () {
-          return this.$store.getters.isAuthenticated
+    beforeRouterUpdate () {
+      alert('Ssx')
+      console.info('Router', 'start')
+      setTimeout(() => {
+        this.initialize.apply(this).then(() => {
+          console.info('Router', 'done')
+          // next()
+        })
+      }, 500)
+    },
+    mounted () {
+      this.initialize()
+    },
+    watch: {
+      '$route' (to, from) {
+        console.info('Going ',from,'to',to);
+        try {
+          const { name, params: {id} } = to;
+          if (name === 'questview' && id) {
+            this.initialize(id);
+          }
+
+        } catch (e) {
+
         }
+        // react to route changes...
       }
+    },
+    methods: {
+      // Pass id, or it will take it from current $route context
+      async initialize (id = null) {
+          id = id || this.$route.params.id;
+          console.info('Initialize', 'fetching data for ', id);
+          try {
+            // const results = await this.$store.dispatch('quests/find', {query: { id }});
+            // const { data: [ { _id } ] } = results;
+            const single = await this.$store.dispatch('quests/get', [id, { depth: 1 }]);
+            console.info('Initialize', 'fetching data for ', id, 'success');
+          } catch (e) {
+            console.info('Initialize', 'fetching data for ', id, 'error', e);
+          }
+      }
+    },
+
+    computed: {
+      ...mapGetters({q: 'quests/current'}),
+      isAuthenticated () {
+        return this.$store.getters.isAuthenticated
+      }
+      // questState: {
+      //   // THEORY
+      //   //  This fires first to load the page
+      //   //  The rest must wait for that to finish
+      //   //  TODO figure out how to make that work
+      //   thePage () {
+      //     return this.$store.getters.thePage(this.$route.params.id)
+      //   },
+      //   // ...mapGetters ([
+      //   //   image,
+      //   //   label,
+      //   //   details,
+      //   //   parentLabel,
+      //   //   ptype,
+      //   //   pid
+      //   // ]),
+      //   isAuthenticated () {
+      //     return this.$store.getters.isAuthenticated
+      //   }
+      // }
     }
   }
 

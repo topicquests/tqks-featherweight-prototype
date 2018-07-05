@@ -1,5 +1,5 @@
 export default {
-  isAuthenticated: false,
+  isAuthenticated: true,
   isAdmin: false,
   image: '',
   label: '',
