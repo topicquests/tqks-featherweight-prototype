@@ -1,4 +1,4 @@
-import api from 'src/api'
+import api from './api'
 // import { Promise } from 'es6-promise'
 
 const auth = {
@@ -53,9 +53,11 @@ const auth = {
 
     return api.logout()
       .then(() => {
-        console.log('signout successful')
+        console.log('XXX signout successful')
 
         this.user = null
+        return
+        // return Promise.onLogout
       })
       .catch((err) => {
         console.log('signout failed', err)

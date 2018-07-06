@@ -126,11 +126,12 @@ export default {
     signout () {
       auth.signout()
         .then(() => {
-          this.$data.isAuthenticated = false
-          this.checkAdmin()
+          this.user = null
+          this.isAuthenticated = false
+          this.isAdmin = false
           this.$q.notify({type: 'positive', message: 'You are now logged out, sign in again to continue to work'})
         })
-        .catch(() => {
+        .catch((err) => {
           this.$q.notify({type: 'positive', message: 'Cannot logout, please check again in a few minutes'})
         })
     },
@@ -168,7 +169,7 @@ export default {
 
     // On logout
     auth.onLogout(() => {
-      alert('Logout')
+      // alert('Logout')
       this.setUser(null)
       this.$data.isAuthenticated = false
       this.$router.push({ name: 'home' })

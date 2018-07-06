@@ -68,32 +68,36 @@ export default {
         json.query = x
         invites.find(json)
           .then((response) => {
-            alert(JSON.stringify(response))
+            // alert(JSON.stringify(response))
             if (response.total === 0) {
               result = false
             }
-            alert(result)
+            // alert(result)
             return callback(result)
           }) // TODO should catch
       }
     },
     onOk (data) {
-      this.canRegister(this.email, function (truth) {
+      const self = this
+      this.canRegister(self.email, function (truth) {
+        
         if (truth) {
-          this.register(this.email, this.password, this.fullName, this.handle)
+          self.register(self.email, self.password, self.fullName, self.handle)
             .then(() => {
-              return this.login(this.email, this.password)
+              return self.login(self.email, self.password)
             })
             .then(_ => {
-              this.$q.notify({type: 'positive', message: 'You are now registered'})
+              self.$q.notify({type: 'positive', message: 'You are now registered'})
             })
             .catch(_ => {
-              this.$q.notify({type: 'positive', message: 'Cannot register, please check your e-mail or password'})
-              this.goHome()
+              // alert('wtf')
+              self.$q.notify({type: 'positive', message: 'Cannot register, please check your e-mail or password'})
+              self.goHome()
             })
         } else {
-          this.$q.notify({type: 'negative', message: 'Cannot register, email not found on invitations list'})
-          this.goHome()
+          // alert('bad')
+          self.$q.notify({type: 'negative', message: 'Cannot register, email not found on invitations list'})
+          self.goHome()
         }
       })
     },

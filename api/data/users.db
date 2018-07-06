@@ -2,3 +2,4 @@
 {"email":"jackpark@gmail.com","password":"$2a$12$y0clOZx7YzSeDPmOU/nFtOhuclo1dLKPoCqvsn3nCzCq2pSclEYce","avatar":"https://s.gravatar.com/avatar/fc08eda05e33e01f277a827e5972c3a0?s=200","_id":"lgig24zYgr8gArLj"}
 {"email":"sara@sixpack.com","password":"$2a$12$/jkELPjclKueTNrrmtzCFO3fmCRsH4sBvCMCNCywRf7bjl4sipU3C","avatar":"https://s.gravatar.com/avatar/b6b6a80fa6f18f7870179f5520ee75f7?s=200","_id":"nqqhWGTBM5PXMStj"}
 {"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}
+{"email":"json@example.com","password":"$2a$13$EE4iRFFjDezfmVo4gbBf..B4mMMEAsu.qngKpQMC4rrSL/a5bm.D6","fullname":"Json Example","handle":"json","avatar":"https://s.gravatar.com/avatar/e7c012d57bbe5b713e3d078533f90184?s=200","_id":"5JZi0QXQmMBno67q"}

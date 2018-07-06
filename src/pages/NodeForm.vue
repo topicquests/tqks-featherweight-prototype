@@ -62,14 +62,13 @@ export default {
       }
       json.parentId = this.$data.parentId
       json.parentLabel = this.$data.parentLabel
-      // TODO add creatorId, date
-      // alert(JSON.stringify(json))
+      const idx = this.$data.parentId
       conversation.create(json).then((response) => {
-        const id = this.$data.parentId
-        // alert(this.$data.parentId)
-        conversation.find({ query: { 'id': id } })
+        alert(JSON.stringify(response))
+        const id= response.id;
+        alert(idx+' '+id)
+        conversation.find({ query: { 'id': idx } })
           .then((response) => {
-            // alert(JSON.stringify(response))
             var x = response.data[0]
             var kids = []
             if (typ === 'question') {
@@ -95,10 +94,10 @@ export default {
               x.cons = kids
             }
             // alert(JSON.stringify(x))
-            conversation.update(id, x)
+            conversation.update(idx, x)
               .then((response) => {
-                const { id } = response;
-                router.push({name: 'questview', params: {id}})
+                // const { id } = response;
+                router.push({name: 'questview', params: { 'id':id }})
               })
           })
         // alert(JSON.stringify(response))

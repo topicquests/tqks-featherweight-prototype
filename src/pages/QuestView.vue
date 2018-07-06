@@ -3,7 +3,7 @@
     <div  id="topbox">
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
       <span v-if="q.parentLabel"><b>Responds to </b>
-        <router-link :to="{ name: 'questview', params: { id: q.id }}">{{ q.parentLabel }}</router-link>
+        <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
       <hr/>
       <q-scroll-area style="width: 960px; height: 400px;">

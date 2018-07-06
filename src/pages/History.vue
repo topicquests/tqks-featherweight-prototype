@@ -34,7 +34,7 @@ export default {
       }
     })
       .then((response) => {
-        alert(JSON.stringify(response.data))
+        // alert(JSON.stringify(response.data))
         this.$data.rawData = response.data
       })
   }

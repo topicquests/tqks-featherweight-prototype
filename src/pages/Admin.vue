@@ -87,7 +87,7 @@ export default {
     },
     displayUser () {
       var ems = this.$data.displayEmail.trim()
-      alert(ems)
+      // alert(ems)
       if (ems === '') {
         return
       }
