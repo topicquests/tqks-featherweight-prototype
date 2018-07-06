@@ -3,3 +3,4 @@
 {"email":"sara@sixpack.com","password":"$2a$12$/jkELPjclKueTNrrmtzCFO3fmCRsH4sBvCMCNCywRf7bjl4sipU3C","avatar":"https://s.gravatar.com/avatar/b6b6a80fa6f18f7870179f5520ee75f7?s=200","_id":"nqqhWGTBM5PXMStj"}
 {"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}
 {"email":"json@example.com","password":"$2a$13$EE4iRFFjDezfmVo4gbBf..B4mMMEAsu.qngKpQMC4rrSL/a5bm.D6","fullname":"Json Example","handle":"json","avatar":"https://s.gravatar.com/avatar/e7c012d57bbe5b713e3d078533f90184?s=200","_id":"5JZi0QXQmMBno67q"}
+{"email":"jake@jake.com","password":"$2a$13$5Cv9UyIa1L3gA.ndew7NNOb1OK/GJ126GEM6S.hntlWjIdjUkjz4u","fullname":"Jake Jake","handle":"jake","avatar":"https://s.gravatar.com/avatar/0bacf8fa837a7bf31d303178cef24fb6?s=200","_id":"UGD81CHuony6fJUy"}

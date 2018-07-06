@@ -24,12 +24,13 @@
       </div>
     <q-input
         class="row col-12 fixed-bottom chat-message"
-        style="z-index: 1001; margin-top: 16px; margin-bottom: 8px;"
+        style="z-index: 1001; margin-top: 16px; margin-bottom: 80px; width: 300px"
         v-model="message"
         v-on:keyup.enter="send"
         type="textarea"
         float-label="Enter your message"
-        :min-rows="1"
+        :max-height="20"
+        rows="3"
       />
   </q-page>
 </template>
