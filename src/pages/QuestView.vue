@@ -60,7 +60,7 @@
 </template>
 <script>
 import api from 'src/api'
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 // var conversation
 export default {
   props: [ 'user' ],
@@ -79,15 +79,15 @@ export default {
     },
     watch: {
       '$route' (to, from) {
-        console.info('Going ',from,'to',to);
+        console.info('Going ',from,'to',to)
         try {
-          const { name, params: {id} } = to;
+          const { name, params: { id } } = to
           if (name === 'questview' && id) {
             this.initialize(id);
           }
 
         } catch (e) {
-
+          console.error(e)
         }
         // react to route changes...
       }
@@ -95,13 +95,13 @@ export default {
     methods: {
       // Pass id, or it will take it from current $route context
       async initialize (id = null) {
-          id = id || this.$route.params.id;
-          console.info('Initialize', 'fetching data for ', id);
+          id = id || this.$route.params.id
+          console.info('Initialize', 'fetching data for ', id)
           try {
-            const single = await this.$store.dispatch('conversation/get', [id, { depth: 1 }]);
-            console.info('Initialize', 'fetching data for ', id, 'success');
+            const single = await this.$store.dispatch('conversation/get', [id, { depth: 1 }])
+            console.info('Initialize', 'fetching data for ', id, 'success')
           } catch (e) {
-            console.info('Initialize', 'fetching data for ', id, 'error', e);
+            console.info('Initialize', 'fetching data for ', id, 'error', e)
           }
       }
     },

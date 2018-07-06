@@ -2,24 +2,25 @@ const { authenticate } = require('@feathersjs/authentication').hooks
 
 // Check if a response has answers, questions, pros, cons
 const populateHook = async function (hook) {
+  console.info('PopHook')
   const toCheck = ['answers', 'questions', 'pros', 'cons']
-  const { conversation } = hook.app.services;
+  const { conversation } = hook.app.services
+  // Walk along child node types
   for (let i = 0; i < toCheck.length; i++) {
     let type = toCheck[i]
-
     // If it's there and has some elements
     if (typeof hook.result[type] !== 'undefined' && hook.result[type].length > 0) {
       const promises = hook.result[type].map(async (id) => {
-        console.info('Fetching child id', id);
-        const { data } = await conversation.find({query: {id}});
-        console.info('Fetching child found', id, data);
-        return data && data[0];
+        console.info('Fetching child id', id)
+        const { data } = await conversation.find({ query: { id } })
+        console.info('Fetching child found', id, data)
+        return data && data[0]
       })
       try {
-        console.info('Populate', type, hook.result.id, 'fetching');
+        console.info('Populate', type, hook.result.id, 'fetching')
         const result = await Promise.all(promises)
-        hook.result[type] = result;
-        
+        // Replace a list of node id values with a list of nodes
+        hook.result[type] = result
       } catch (e) {
         console.error('Populate', hook.result.id)
       }
@@ -27,11 +28,10 @@ const populateHook = async function (hook) {
   }
   return hook
 }
-
+// diagnostic tools to watch what this hook is doing
 const afind = function () {
   console.info('####finding')
 }
-
 const aget = function () {
   console.info('####getting')
 }
@@ -65,4 +65,4 @@ module.exports = {
     patch: [],
     remove: []
   }
-};
+}

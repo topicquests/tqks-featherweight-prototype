@@ -64,9 +64,9 @@ export default {
       json.parentLabel = this.$data.parentLabel
       const idx = this.$data.parentId
       conversation.create(json).then((response) => {
-        alert(JSON.stringify(response))
+        // alert(JSON.stringify(response))
         const id= response.id;
-        alert(idx+' '+id)
+        // alert(idx+' '+id)
         conversation.find({ query: { 'id': idx } })
           .then((response) => {
             var x = response.data[0]
