@@ -61,7 +61,7 @@ module.exports = {
 
   after: {
     all: [],
-    find: [],
+    find: [populateHook],
     get: [populateHook],
     create: [],
     update: [],
