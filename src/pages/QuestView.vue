@@ -10,6 +10,9 @@
         <span v-html="q.details"></span>
       </q-scroll-area>
     </div>
+    <!-- Edit and other controls go here -->
+    <router-link v-if="canEdit" style="margin-left:20px;" :to="{ name: 'nodeupdate', params: { type: 'update', id: q.id }}"><b>Edit This Node</b></router-link>
+
     <div class="columnscroller">
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
@@ -61,9 +64,8 @@
 <script>
 import api from 'src/api'
 import { mapGetters } from 'vuex'
-// var conversation
+
 export default {
-  props: [ 'user' ],
     beforeRouterUpdate () {
       alert('Ssx')
       console.info('Router', 'start')
@@ -95,6 +97,7 @@ export default {
     methods: {
       // Pass id, or it will take it from current $route context
       async initialize (id = null) {
+        console.info('QV-1', id)
           id = id || this.$route.params.id
           console.info('Initialize', 'fetching data for ', id)
           try {
@@ -107,9 +110,31 @@ export default {
     },
 
     computed: {
+      
       ...mapGetters({q: 'conversation/current'}),
       isAuthenticated () {
         return this.$store.getters.isAuthenticated
+      },
+      canEdit () {
+        let result = this.$store.getters.isAdmin
+        console.info('CE-1', result)
+        let cid
+        let uid
+        let usx = this.$store.getters.user
+        if (usx) {
+          cid = this.$store.getters.node.creator
+          uid = usx._id
+        }
+        console.info('CE-2', cid, uid)
+        if (result) {
+          return result
+        } else if (!usx) {
+          return false
+        } else if (cid === uid) {
+          return true
+        } else {
+          return false
+        }
       }
     }
   }

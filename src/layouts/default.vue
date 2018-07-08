@@ -108,15 +108,18 @@ export default {
   },
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
-      isAuthenticated: false,
-      isAdmin: false,
-      user: null
+      leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
   computed: {
     authenticated () {
-      return this.$data.user !== null
+      let a = this.$store.getters.user !== null
+      console.info('DA', a)
+      console.info('DB', this.$store.getters.user)
+      return a
+    },
+    user () {
+      return this.$store.getters.user
     }
   },
   methods: {
@@ -126,9 +129,9 @@ export default {
     signout () {
       auth.signout()
         .then(() => {
-          this.user = null
-          this.isAuthenticated = false
-          this.isAdmin = false
+          this.$store.commit('usr', null)
+          this.$store.commit('authenticate', false)
+          this.$store.commit('admin', false)
           this.$q.notify({type: 'positive', message: 'You are now logged out, sign in again to continue to work'})
         })
         .catch((err) => {
@@ -136,14 +139,24 @@ export default {
         })
     },
     setUser (user) {
-      this.$data.user = user
+      this.$store.commit('usr', user)
     },
     checkAdmin () {
-      var email = this.$data.user.email
-      var admin = config.adminEmail
-      this.isAdmin = (email === admin && this.isAuthenticated)
-      // alert(email)
+      let usx = this.$store.getters.user
+      if (usx) {
+        var email = usx.email
+        var admin = config.adminEmail
+        var isAuth = this.$store.getters.isAuthenticated
+        this.$store.commit('admin', (email === admin && isAuth))
+      }
+    },
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
+    },
+    isAdmin () {
+      return this.$store.getters.isAdmin
     }
+    
   },
   mounted () {
     // Check if there is already a session running
@@ -151,18 +164,20 @@ export default {
       .then((user) => {
         this.setUser(user)
         this.$q.notify({type: 'positive', message: 'Restoring previous session'})
-        this.$data.isAuthenticated = true
+        this.$store.commit('authenticate', true)
+        this.$store.commit('admin', false)
       })
       .catch(_ => {
         this.setUser(null)
-        this.$data.isAuthenticated = false
+        this.$store.commit('authenticate', false)
         this.$router.push({ name: 'home' })
+        this.$store.commit('admin', false)
       })
 
     // On successful login
     auth.onAuthenticated((user) => {
       this.setUser(user)
-      this.$data.isAuthenticated = true
+      this.$store.commit('authenticate', true)
       this.checkAdmin()
       // this.$router.push({ name: 'home' })
     })
@@ -171,7 +186,7 @@ export default {
     auth.onLogout(() => {
       // alert('Logout')
       this.setUser(null)
-      this.$data.isAuthenticated = false
+      this.$store.commit('authenticate', false)
       this.$router.push({ name: 'home' })
     })
   },

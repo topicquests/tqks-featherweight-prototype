@@ -23,15 +23,13 @@
 
 <script>
 export default {
-  props: ['user'],
   data () {
     return {
-      isPrivate: false
     }
   },
   computed: {
     authenticated () {
-      return this.user !== null
+      return this.$store.getters.user !== null
     }
   },
   methods: {

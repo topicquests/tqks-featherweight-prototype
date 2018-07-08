@@ -4,7 +4,7 @@ import feathersVuex from 'feathers-vuex'
 
 
 // we first import the module
-import quests from './quests'
+// import quests from './quests'
 
 // Initialize Feathers Vuex
 import feathersClient from '../api';
@@ -15,14 +15,32 @@ Vue.use(FeathersVuex)
 
 const store = new Vuex.Store({
   state: {
-    isAuthenticated: true
+    isAuthenticated: true,
+    canEdit: true,
+    isAdmin: true,
+    user: null
   },
   getters: {
-    isAuthenticated: state => state.isAuthenticated
+    isAuthenticated: state => state.isAuthenticated,
+    canEdit: state => state.canEdit,
+    isAdmin: state => state.isAdmin,
+    node: state => state.conversation.copy,
+    user: state => state.user
+  },
+  mutations: {
+    admin (state, t) {
+      state.isAdmin = t
+    },
+    authenticate (state, t) {
+      state.isAuthenticated = t
+    },
+    usr (state, user) {
+      state.user = user
+    }
   },
   modules: {
     // then we reference it
-    quests
+    //quests
   },
   plugins: [
     service('conversation', { idField: 'id'})

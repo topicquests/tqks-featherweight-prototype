@@ -28,6 +28,7 @@ const populateHook = async function (hook) {
         // That is the node which will populate the final array below
       })
       try {
+        console.info('Populating')
         console.info('Populate', type, hook.result.id, 'fetching')
         // Wait for all the fetches in the map return
         const result = await Promise.all(promises)
@@ -61,7 +62,7 @@ module.exports = {
 
   after: {
     all: [],
-    find: [populateHook],
+    find: [],
     get: [populateHook],
     create: [],
     update: [],
