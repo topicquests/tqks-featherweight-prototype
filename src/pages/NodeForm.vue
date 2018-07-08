@@ -56,7 +56,7 @@ export default {
       } else if (typ === 'pro') {
         json.img = 'statics/images/ibis/plus.png'
         json.imgsm = 'statics/images/ibis/plus_sm.png'
-      } else if (typ === 'question') {
+      } else if (typ === 'con') {
         json.img = 'statics/images/ibis/minus.png'
         json.imgsm = 'statics/images/ibis/minus_sm.png'
       }
