@@ -6,7 +6,7 @@
         <div class="layout-padding col-8" style="height: 400px; overflow-y: scroll;">
           <q-chat-message v-for="message in messages" :key="message.id"
             :text="[message.text]"
-            :avatar="message.user.avatar"
+            
             :stamp="messageDate(message)"
             :sent="isSent(message) ? true : false"
           />
@@ -65,7 +65,7 @@ export default {
       return (message.userId === this.user._id)
     },
     messageDate (message) {
-      return moment(message.createdAt).format('MMM Do, hh:mm:ss')
+      return message.user.handle+" "+moment(message.createdAt).format('MMM Do, hh:mm:ss')
     },
     send () {
       if (this.$data.message) {

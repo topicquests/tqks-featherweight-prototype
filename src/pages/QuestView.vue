@@ -6,8 +6,8 @@
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
       <hr/>
-      <q-scroll-area style="width: 960px; height: 400px;">
-        <span v-html="q.details"></span>
+      <q-scroll-area style="width: 960px; height: 400px; overflow-wrap: normal;">
+        <span v-html="q.details" style="overflow-wrap: inherit;"></span>
       </q-scroll-area>
     </div>
     <!-- Edit and other controls go here -->
