@@ -164,7 +164,7 @@ export default {
       this.setUser(user)
       this.$data.isAuthenticated = true
       this.checkAdmin()
-      this.$router.push({ name: 'home' })
+      // this.$router.push({ name: 'home' })
     })
 
     // On logout
