@@ -94,7 +94,7 @@
     </q-page-container>
     <q-layout-footer>
         <a style="float: left;"    href="http://www.topicquests.org/"><img src="assets/TopicQuestsLogo_sm.png"></a>
-        <a style="float: right;" href="https://github.com/KnowledgeGarden/LiteWeight"><img src="assets/github-1.jpg"></a>
+        <a style="float: right;" href="https://github.com/KnowledgeGarden/tqks-featherweight-prototype"><img src="assets/github-1.jpg"></a>
     </q-layout-footer>
   </q-layout>
 </template>
