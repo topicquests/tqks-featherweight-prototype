@@ -1,7 +1,9 @@
 <template>
   <q-page class="flex flex-center">
+    
       <div class="row full-width">
-        <div class="layout-padding col-8" >
+        
+        <div class="layout-padding col-8" style="height: 400px; overflow-y: scroll;">
           <q-chat-message v-for="message in messages" :key="message.id"
             :text="[message.text]"
             :avatar="message.user.avatar"
@@ -9,29 +11,36 @@
             :sent="isSent(message) ? true : false"
           />
         </div>
-        <q-list highlight class="col-auto">
+        
+        
+        <q-list highlight class="col-auto" style="height: 400px; overflow-y: scroll;">
           <q-list-header>People</q-list-header>
           <q-item v-for="user in users" :key="user.id">
             <q-item-side :avatar="user.avatar" />
             <q-item-main>
-              <q-item-tile label>{{user.email}}</q-item-tile>
+              <q-item-tile label>{{user.handle}}</q-item-tile>
             </q-item-main>
             <q-item-side right>
               <q-item-tile icon="chat_bubble" color="green" />
             </q-item-side>
           </q-item>
         </q-list>
+        
+        
       </div>
-    <q-input
-        class="row col-12 fixed-bottom chat-message"
-        style="z-index: 1001; margin-top: 16px; margin-bottom: 80px; width: 300px"
-        v-model="message"
-        v-on:keyup.enter="send"
-        type="textarea"
-        float-label="Enter your message"
-        :max-height="20"
-        rows="3"
-      />
+      
+      <div class="row full-width">
+        <q-input
+          class="row col-12 fixed-bottom chat-message"
+          style="z-index: 1001; margin-top: 16px; margin-bottom: 80px; width: 600px"
+          v-model="message"
+          v-on:keyup.enter="send"
+          type="textarea"
+          float-label="Enter your message"
+          :max-height="20"
+          rows="3"
+        />
+      </div>
   </q-page>
 </template>
 
