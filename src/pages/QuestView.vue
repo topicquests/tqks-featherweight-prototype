@@ -116,7 +116,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="styl">
 /**
  * Enable columns to scroll right and left
  */
