@@ -38,7 +38,7 @@
       </div>
       <div class="datacontainer">
         <q-list class="datacolumn">
-          <q-item class="node" v-for="question in q.questions" :key="question.id">
+          <q-item class="node wordwrap" v-for="question in q.questions" :key="question.id">
             <router-link :to="{ name: 'questview', params: { id: question.id }}">{{ question.label }}</router-link>
           </q-item>
         </q-list>
@@ -189,6 +189,7 @@ export default {
   break-inside: avoid;
   margin-left: 4px;
   margin-right: 4px;
+  overflow-wrap: normal;
 }
 
 .datacontainer {
@@ -207,9 +208,17 @@ export default {
   border: 1px solid black;
   border-radius: 3px;
   min-height: 40px;
-  word-wrap: normal;
+  overflow-wrap: inherit;
   font-family:pragmatica-web,sans-serif;
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+  white-space: normal;
 }
+
 .node:hover {
   background-color: rgba(255, 255, 0, 0.801);
 }
