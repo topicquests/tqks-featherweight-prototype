@@ -84,7 +84,7 @@ export default {
       console.info('Register-1', this.email)
       const self = this
       this.canRegister(self.email, function (truth) {
-        console.info('Register-2', this.truth)
+        console.info('Register-2', truth)
         if (truth) {
           self.register(self.email, self.password, self.fullName, self.handle)
             .then(() => {
