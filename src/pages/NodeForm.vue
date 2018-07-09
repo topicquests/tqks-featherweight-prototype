@@ -1,7 +1,10 @@
 <template>
     <q-page>
         <h3>Node Edit Form</h3>
-        <!-- todo -->
+        <div>
+            <h5>URL (Optional)</h5>
+            <q-input  v-model="url" />
+        </div>
         <div>
             <h5>Subject</h5>
             <q-input  v-model="label" />
@@ -28,6 +31,7 @@ export default {
     return {
       label: '',
       details: '',
+      url: '',
       type: '',
       parentId: '',
       parentType: '',
@@ -44,6 +48,7 @@ export default {
           this.myNode = response
           this.label = response.label
           this.details = response.details
+          this.url = response.url
         })
     },
     doSubmit: function () {
@@ -57,6 +62,7 @@ export default {
             console.info('NF-1', json)
             json.label = this.label
             json.details = this.details
+            json.url = this.url
             console.info('NVU-1', json)
             conversation.update(json.id, json)
                 .then((response) => {
@@ -69,6 +75,7 @@ export default {
         json.id = uuidv4()
         json.label = this.label
         json.details = this.details
+        json.url = this.url
         json.creator = this.user._id
         json.handle = this.user.handle
         json.date = new Date()
