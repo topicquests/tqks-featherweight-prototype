@@ -76,7 +76,7 @@ export default {
             return callback(result)
           })
           .catch ((err) => {
-            console.err('CanEditError', err)
+            console.log('CanRegisterError', err)
           })
       }
     },
