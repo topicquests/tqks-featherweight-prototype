@@ -12,8 +12,8 @@
           <h3>FeatherWeight Prototype</h3>
           <img src="statics/images/earthrise2.png" >
           <h5>
-            To make this demo work correctly first register your avatar to <a href="https://www.gravatar.com">https://www.gravatar.com</a>
-            then go to the <router-link to="/chat">Chat</router-link>
+            For a better experience with FeatherWeight, first register your avatar for the email you will use here at <a href="https://www.gravatar.com">https://www.gravatar.com</a>
+            then signup and go to the <router-link to="/chat">Chat</router-link>
           </h5>
         </div>
       </div>
