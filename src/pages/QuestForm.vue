@@ -23,11 +23,11 @@ const conversation = api.service('conversation')
 var router
 
 export default {
-  props: [ 'user' ],
   data () {
     return {
       label: '',
-      details: ''
+      details: '',
+      user: this.$store.getters.user
     }
   },
   methods: {
@@ -42,8 +42,11 @@ export default {
       json.img = 'statics/images/ibis/map.png'
       json.imgsm = 'statics/images/ibis/map_sm.png'
       json.creator = this.user._id
+      json.handle = this.user.handle
       json.date = new Date()
-      json.type = "map"
+      json.type = 'map'
+      console.info('QF-1', this.user)
+      console.info('QF-2', json)
       // TODO add creatorId, date
       // alert(JSON.stringify(json))
       conversation.create(json).then((response) => {

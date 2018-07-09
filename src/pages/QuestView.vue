@@ -1,6 +1,7 @@
 <template>
   <q-page v-if="!!q">
     <div  id="topbox">
+      <span style="float:right; font-size:small;">{{q.handle}} {{q.date}}</span>
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
       <span v-if="q.parentLabel"><b>Responds to </b>
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>

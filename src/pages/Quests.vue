@@ -1,49 +1,73 @@
 <template>
-    <q-page>
-        <h3> Quests</h3>
-        <q-btn v-if="isAuthenticated" label="New Quest" @click="$router.replace('/questedit')" />
-        <q-scroll-area style="width: 800px; height: 800px;">
-          <q-list v-for="quest in myQuests" :key="quest.id">
-            <q-item>
-              <!-- NOTE: adding /index.html# makes this work, but it's a hack -->
-              <a :href="`/index.html#/questview/${quest.id}`">{{ quest.label }}</a>
-            </q-item>
-          </q-list>
+  <q-page>
+        <h4><img style="margin-right:4px;" src="statics/images/ibis/map.png">Quests</h4>
+        <q-btn v-if="isAuthenticated" style="margin-bottom: 4px;" label="New Quest" @click="$router.replace('/questedit')" />
+        <q-scroll-area style="width: 800px; height: 400px;  margin-top: 1px;">
+        <table class="q-table">
+          <tbody >
+            <tr v-for="quest in serverData" :key="quest.id">
+              <td class="text-left"><img :src="quest.imgsm"></td>
+              <td class="text-left"><a :href="`/index.html#/questview/${quest.id}`">{{ quest.label }}</a></td>
+              <td class="text-left">{{ quest.handle }}</td>
+              <td class="text-left">{{ quest.date }}</td>
+            </tr>
+          </tbody>
+        </table>
         </q-scroll-area>
-    </q-page>
+  </q-page>
 </template>
 
 <script>
 import api from 'src/api'
+const conversation = api.service('conversation')
+
 export default {
   props: [ 'user' ],
   data () {
     return {
       isAuthenticated: false,
-      myQuests: []
+      serverPagination: {},
+      serverData: []
     }
   },
   methods: {
-
+    fill (n) {
+      var jsx = {}
+      jsx.imgsm = n.imgsm
+      jsx.label = `<router-link :to="{ name: 'questview', params: { id: ${ n.id }}">${ n.label }</router-link>`
+      jsx.creator = n.creator
+      jsx.handle = n.handle
+      jsx.date = n.date
+      this.$data.serverData.push(jsx)
+    },
+    request ({ pagination }) {
+      //let skip = this.data.
+      this.$store.dispatch('conversation/find', { 
+        query: {
+          $sort: {
+            date: -1
+          },
+          'type': 'map'
+        }} )
+        .then((response) => {
+          this.$data.serverPagination = pagination
+          var data = response.data
+          // alert(JSON.stringify(data))
+          if (data && data.length > 0) {
+            this.$data.serverData = data
+            // data.map(this.fill)
+          }
+        })
+      }
   },
   mounted () {
-    const conversation = api.service('conversation')
     if (this.user) {
       this.$data.isAuthenticated = true
     }
-    conversation.find({
-      query: {
-        $limit: 25,
-        $sort: {
-          date: -1
-        },
-        'type': 'map'
-      }
+    this.request({
+      pagination: this.serverPagination
     })
-      .then((response) => {
-        // alert(JSON.stringify(response.data))
-        this.$data.myQuests = response.data
-      })
+    
   }
 }
 </script>

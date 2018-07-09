@@ -70,6 +70,7 @@ export default {
         json.label = this.label
         json.details = this.details
         json.creator = this.user._id
+        json.handle = this.user.handle
         json.date = new Date()
         json.type = typ
         if (typ === 'question') {
