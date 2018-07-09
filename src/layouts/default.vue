@@ -70,6 +70,11 @@
           <q-item-main label="Quests" />
         </q-item>
 
+        <q-item to="/ether">
+          <q-item-side icon="language" />
+          <q-item-main label="Etherpad Home" />
+        </q-item>
+
         <q-item v-if="isAdmin" to="/admin">
           <q-item-side icon="settings" />
           <q-item-main label="Admin" />

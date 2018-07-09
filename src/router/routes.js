@@ -10,6 +10,7 @@ export default [
       { path: '/admin', name: 'admin', component: () => import('pages/Admin') },
       { path: '/history', name: 'history', component: () => import('pages/History') },
       { path: '/quests', name: 'quests', component: () => import('pages/Quests') },
+      { path: '/ether', name: 'ether', component: () => import('pages/EtherpadView') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },
       { path: '/questview/:id', name: 'questview', component: () => import('pages/QuestView'), props: true },
       { path: '/userview/:id', name: 'userview', component: () => import('pages/UserView'), props: true },
