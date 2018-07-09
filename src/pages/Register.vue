@@ -74,16 +74,21 @@ export default {
             }
             // alert(result)
             return callback(result)
-          }) // TODO should catch
+          })
+          .catch ((err) => {
+            console.err('CanEditError', err)
+          })
       }
     },
     onOk (data) {
+      console.info('Register-1', this.email)
       const self = this
       this.canRegister(self.email, function (truth) {
-        
+        console.info('Register-2', this.truth)
         if (truth) {
           self.register(self.email, self.password, self.fullName, self.handle)
             .then(() => {
+              console.info('Register-3', self.email)
               return self.login(self.email, self.password)
             })
             .then(_ => {

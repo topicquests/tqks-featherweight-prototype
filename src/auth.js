@@ -20,7 +20,7 @@ const auth = {
   },
 
   authenticate () {
-    console.log('auth')
+    console.log('auth', this.user)
 
     return api.authenticate()
       .then((response) => {

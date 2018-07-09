@@ -29,12 +29,14 @@ const store = new Vuex.Store({
   },
   mutations: {
     admin (state, t) {
+      console.info('CommitAdmin', t)
       state.isAdmin = t
     },
     authenticate (state, t) {
       state.isAuthenticated = t
     },
     usr (state, user) {
+      console.info('CommitUser', user)
       state.user = user
     }
   },

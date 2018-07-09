@@ -113,7 +113,9 @@ export default {
   },
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      isAuthenticated: false,
+      isAdmin: false
     }
   },
   computed: {
@@ -148,22 +150,20 @@ export default {
     },
     checkAdmin () {
       let usx = this.$store.getters.user
+      // alert(JSON.stringify(usx))
       if (usx) {
         var email = usx.email
         var admin = config.adminEmail
         var isAuth = this.$store.getters.isAuthenticated
-        this.$store.commit('admin', (email === admin && isAuth))
+        var truth = (email === admin && isAuth)
+        this.$store.commit('admin', truth)
+        this.isAdmin = truth
       }
-    },
-    isAuthenticated () {
-      return this.$store.getters.isAuthenticated
-    },
-    isAdmin () {
-      return this.$store.getters.isAdmin
     }
     
   },
   mounted () {
+    console.info('MountingDefault', this.$store.getters.user)
     // Check if there is already a session running
     auth.authenticate()
       .then((user) => {
@@ -171,18 +171,25 @@ export default {
         this.$q.notify({type: 'positive', message: 'Restoring previous session'})
         this.$store.commit('authenticate', true)
         this.$store.commit('admin', false)
+        this.isAuthenticated = true
+        this.checkAdmin()
       })
       .catch(_ => {
+        // alert('NotAuth')
         this.setUser(null)
         this.$store.commit('authenticate', false)
-        this.$router.push({ name: 'home' })
         this.$store.commit('admin', false)
+        this.$data.isAuthenticated = false
+        this.$data.isAdmin = false
+        this.$router.push({ name: 'home' })
+        
       })
 
     // On successful login
     auth.onAuthenticated((user) => {
       this.setUser(user)
       this.$store.commit('authenticate', true)
+      this.$data.isAuthenticated = true
       this.checkAdmin()
       // this.$router.push({ name: 'home' })
     })
@@ -193,6 +200,8 @@ export default {
       this.setUser(null)
       this.$store.commit('authenticate', false)
       this.$router.push({ name: 'home' })
+      this.$data.isAuthenticated = false
+      this.$data.isAdmin = false
     })
   },
   beforeDestroy () {
