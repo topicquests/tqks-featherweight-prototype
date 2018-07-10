@@ -6,6 +6,7 @@
         :glossy="false"
         :inverted="$q.theme === 'ios'"
       >
+        
         <q-btn
           flat
           dense
@@ -14,12 +15,17 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
 
         >
-          <q-icon name="menu" />
+        <q-icon name="menu" />
         </q-btn>
 
         <q-toolbar-title>
           FeatherWeight Prototype
         </q-toolbar-title>
+
+        <q-search style="background-color: white;" 
+          v-model="search" 
+          v-on:keyup.13="doSearch"
+        />
 
         <q-btn v-if="!authenticated" flat @click="goTo('signin')">
           Sign In
@@ -115,7 +121,8 @@ export default {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
       isAuthenticated: false,
-      isAdmin: false
+      isAdmin: false,
+      search: ''
     }
   },
   computed: {
@@ -130,6 +137,10 @@ export default {
     }
   },
   methods: {
+    doSearch () {
+      let q = this.search
+      this.$router.push({ name: 'search', params: { q }})
+    },
     goTo (route) {
       this.$router.push({ name: route })
     },

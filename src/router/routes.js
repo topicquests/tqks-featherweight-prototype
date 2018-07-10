@@ -13,6 +13,7 @@ export default [
       { path: '/ether', name: 'ether', component: () => import('pages/EtherpadView') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },
       { path: '/questview/:id', name: 'questview', component: () => import('pages/QuestView'), props: true },
+      { path: '/search/:q', name: 'search', component: () => import('pages/Search'), props: true },
       { path: '/userview/:id', name: 'userview', component: () => import('pages/UserView'), props: true },
       { path: '/nodeedit/:type/:parentType/:id/:label', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
       { path: '/nodeupdate/:type/:id', name: 'nodeupdate', component: () => import('pages/NodeForm'), props: true }

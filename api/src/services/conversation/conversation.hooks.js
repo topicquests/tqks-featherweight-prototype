@@ -1,5 +1,5 @@
 const { authenticate } = require('@feathersjs/authentication').hooks
-
+const search = require('feathers-nedb-fuzzy-search')
 // Check if a response has answers, questions, pros, cons
 // If so, replace the arrays of node identifiers with
 // arrays containing the nodes identified in the found arrays
@@ -42,18 +42,15 @@ const populateHook = async function (hook) {
   }
   return hook
 }
-// diagnostic tools to watch what this hook is doing
-const afind = function () {
-  console.info('####finding')
-}
-const aget = function () {
-  console.info('####getting')
-}
+
 module.exports = {
   before: {
     all: [],
-    find: [afind],
-    get: [aget],
+    find: [search({
+      fields: ['label', 'details'],
+      deep: true
+    })],
+    get: [],
     create: [ authenticate('jwt') ],
     update: [ authenticate('jwt') ],
     patch: [ authenticate('jwt') ],
