@@ -66,7 +66,8 @@
 <script>
 import api from 'src/api'
 import { mapGetters } from 'vuex'
-
+const treeview = api.service('tree-view')
+console.log('QVTV', treeview)
 export default {
     beforeRouterUpdate () {
       alert('Ssx')
@@ -79,6 +80,15 @@ export default {
       }, 500)
     },
     mounted () {
+      let id = this.$route.params.id
+      try {
+        treeview.get(id) 
+          .then((response) => {
+            console.log('TheTree', id, response)
+          })
+      } catch (err) {
+        console.log('QuestViewTreeError', err)
+      }
       this.initialize()
     },
     watch: {

@@ -12,5 +12,6 @@ const api = feathers()
 api.service('/users')
 api.service('/messages')
 api.service('/conversation')
+api.service('/tree-view')
 
 export default api

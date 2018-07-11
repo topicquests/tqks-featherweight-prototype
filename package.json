@@ -1,8 +1,8 @@
 {
   "name": "tqks-featherweight-prototype",
   "version": "0.0.1",
-  "description": "Quasar Client for FeatherWeight",
-  "productName": "Quasar App",
+  "description": "Simple Structured Conversation App",
+  "productName": "FeatherWeight",
   "cordovaId": "org.cordova.quasar.app",
   "author": "",
   "private": true,

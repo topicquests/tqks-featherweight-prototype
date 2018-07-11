@@ -71,7 +71,8 @@ module.exports = function (ctx) {
         'QScrollArea',
         'QPagination',
         'QTable',
-        'QSearch'
+        'QSearch',
+        'QTree'
       ],
       directives: [
         'Ripple'
