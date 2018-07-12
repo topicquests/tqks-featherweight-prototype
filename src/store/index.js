@@ -18,14 +18,16 @@ const store = new Vuex.Store({
     isAuthenticated: true,
     canEdit: true,
     isAdmin: true,
-    user: null
+    user: null,
+    treeView: null
   },
   getters: {
     isAuthenticated: state => state.isAuthenticated,
     canEdit: state => state.canEdit,
     isAdmin: state => state.isAdmin,
     node: state => state.conversation.copy,
-    user: state => state.user
+    user: state => state.user,
+    treeView: state => state.treeView
   },
   mutations: {
     admin (state, t) {
@@ -38,6 +40,9 @@ const store = new Vuex.Store({
     usr (state, user) {
       console.info('CommitUser', user)
       state.user = user
+    },
+    tree (state, tree) {
+      state.treeView == tree
     }
   },
   modules: {

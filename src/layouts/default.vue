@@ -45,6 +45,15 @@
           <q-icon name="exit_to_app" />
           <q-tooltip anchor="bottom middle" self="top middle" :offset="[0, 20]">Signout</q-tooltip>
         </q-btn>
+        <q-btn v-if="isTreeView"
+          flat
+          dense
+          round
+          aria-label="Tree View"
+          @click="rightDrawerOpen = !rightDrawerOpen"
+        >
+        <q-icon name="menu" />
+        </q-btn>
 
       </q-toolbar>
     </q-layout-header>
@@ -170,6 +179,9 @@ export default {
         this.$store.commit('admin', truth)
         this.isAdmin = truth
       }
+    },
+    isTreeView () {
+      return this.$state.getters.treeView
     }
     
   },

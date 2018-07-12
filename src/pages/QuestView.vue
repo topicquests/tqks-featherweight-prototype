@@ -69,6 +69,11 @@ import { mapGetters } from 'vuex'
 const treeview = api.service('tree-view')
 console.log('QVTV', treeview)
 export default {
+  data () {
+    return {
+      rightDrawerOpen: this.$q.platform.is.desktop
+    }
+  },
     beforeRouterUpdate () {
       alert('Ssx')
       console.info('Router', 'start')
@@ -80,12 +85,14 @@ export default {
       }, 500)
     },
     mounted () {
-      let id = this.$route.params.id
+      const id = this.$route.params.id
+      const self = this
       try {
-        treeview.get(id) 
-          .then((response) => {
-            console.log('TheTree', id, response)
-          })
+        treeview.get(id)
+          .then(function (tree) {
+            console.info('QuestTreeView', tree)
+            self.$store.commit('tree', tree)
+          })     
       } catch (err) {
         console.log('QuestViewTreeError', err)
       }
@@ -115,14 +122,13 @@ export default {
           try {
             const single = await this.$store.dispatch('conversation/get', [id, { depth: 1 }])
             console.info('Initialize', 'fetching data for ', id, 'success')
+            console.info('SINGLE', JSON.stringify(single))
           } catch (e) {
             console.info('Initialize', 'fetching data for ', id, 'error', e)
           }
       }
     },
-
     computed: {
-      
       ...mapGetters({q: 'conversation/current'}),
       isAuthenticated () {
         return this.$store.getters.isAuthenticated

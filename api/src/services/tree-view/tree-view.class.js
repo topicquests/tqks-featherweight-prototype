@@ -16,133 +16,69 @@ class Service {
     // console.info('TS', conversation)
   }
 
-  async find (params) {
+  async find () {
     return []
+  }
+
+  populateKids (questionArray, answerArray, proArray, conArray) {
+    let result = [] // always return at least an empty list
+    var i
+    if (questionArray) {
+      for (i in questionArray) {
+        result.push(questionArray[i])
+      }
+    }
+    if (answerArray) {
+      for (i in answerArray) {
+        result.push(answerArray[i])
+      }
+    }
+    if (proArray) {
+      for (i in proArray) {
+        result.push(proArray[i])
+      }
+    }
+    if (conArray) {
+      for (i in conArray) {
+        result.push(conArray[i])
+      }
+    }
+    return result
   }
 
   /**
    * A recursive tree builder
    * @param {*} rootNodeId 
-   * @param {*} callback signature: (err, jsonTree)
+   * @param {*} callback signature: (jsonTree)
    */
-  toJsTree (rootNodeId, callback) {
+  async toJsTree (rootNodeId) {
     var thisNode
     var childArray
-    var childNode
-    var childId
-    var parentKids = undefined
-    var errors = undefined
     console.info('ToJsTree', rootNodeId)
-    var self = this
     // Use find to avoid populating the children
-    conversation.find({query: { id: rootNodeId }})
-      .then((response) => {
-        var node = response.data[0]
-        console.info('TV-1', JSON.stringify(node))
-        thisNode = {}
-        thisNode.label = node.label
-        thisNode.img = node.imgsm
-        childArray = node.questions
-        console.info('TV-2', childArray)
-        if (childArray) {
-          parentKids = []
-          childArray.forEach(function (childId) {
-            console.info('TV-2A', childId)
-            self.toJsTree(childId, function (err, tree) {
-              console.info('TV-2B', err, tree)
-              if (!errors) {
-                errors = err
-              } else {
-                errors += err
-              }
-              if (tree) {
-                parentKids.push(tree)
-              }
-            })
-          })
-        }
-        childArray = node.answers
-        console.info('TV-3', childArray)
-        if (childArray) {
-          if (!parentKids) {
-            parentKids = []
-          }
-          childArray.forEach(function (childId) {
-            self.toJsTree(childId, function (err, tree) {
-              if (!errors) {
-                errors = err
-              } else {
-                errors += err
-              }
-              if (tree) {
-                parentKids.push(tree)
-              }
-            })
-          })
-        }
-        childArray = node.pro
-        console.info('TV-4', childArray)
-        if (childArray) {
-          if (!parentKids) {
-            parentKids = []
-          }
-          childArray.forEach(function (childId) {
-            self.toJsTree(childId, function (err, tree) {
-              if (!errors) {
-                errors = err
-              } else {
-                errors += err
-              }
-              if (tree) {
-                parentKids.push(tree)
-              }
-            })
-          })
-        }
-        childArray = node.con
-        console.info('TV-5', childArray)
-        if (childArray) {
-          if (!parentKids) {
-            parentKids = []
-          }
-          childArray.forEach(function (childId) {
-            self.toJsTree(childId, function (err, tree) {
-              if (!errors) {
-                errors = err
-              } else {
-                errors += err
-              }
-              if (tree) {
-                parentKids.push(tree)
-              }
-            })
-          })
-        }
-        if (parentKids && parentKids.length > 0) {
-          thisNode.children = parentKids
-        }
-        return callback(null, thisNode)
-      })
-      .catch((err) => {
-        console.log('ToJsTreeError', err)
-        return callback(err, null)
-      })
-
+    const respConv = await conversation.find({query: { id: rootNodeId }})
+    const node = respConv.data[0]
+    console.info('TV-1', rootNodeId, JSON.stringify(node))
+    thisNode = {}
+    thisNode.label = node.label
+    thisNode.img = node.imgsm
+    childArray = this.populateKids(node.questions, node.answers, node.pros, node.cons)
+    thisNode.children = []
+    const arrPromises = childArray.map( child => this.toJsTree(child));
+    const children = await Promise.all(arrPromises)
+   
+    thisNode.children = children
+    console.info('Going Back', thisNode)
+    return thisNode;
   }
 
-  async get (id, params) {
-//    let promise = new Promise((resolve, reject) => {
-      this.toJsTree(id, function (err, result) {
-        if (err) {
-          console.log('TreeViewError', JSON.stringify(err))
-        }
-        console.info('TreeViewResult', id, JSON.stringify(result))
-        return result
-      })
-    })
-//    let result = await promise
-//    console.info('TreeViewResult2', id, JSON.stringify(result))
-//    return result
+  async get (id) {
+    try {
+      // A recursive walk down a tree from a root node identified by id
+      return await this.toJsTree(id)   
+    } catch (e) {
+      console.error('Error fetching', e)
+    }
   }
 
   async create (data, params) {
@@ -153,15 +89,15 @@ class Service {
     return data
   }
 
-  async update (id, data, params) {
+  async update (data) {
     return data
   }
 
-  async patch (id, data, params) {
+  async patch (data) {
     return data
   }
 
-  async remove (id, params) {
+  async remove (id) {
     return { id }
   }
 }
