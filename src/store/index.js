@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import feathersVuex from 'feathers-vuex'
-
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 
 // we first import the module
 // import quests from './quests'

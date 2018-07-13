@@ -1,11 +1,12 @@
 <template>
     <q-page :padding="true">
         <h6>Node Edit Form</h6>
+        
         <div>
-            <q-input float-label="URL (Optional)"  v-model="url" />
+            <q-input float-label="Subject" v-model="label" required/>
         </div>
         <div>
-            <q-input float-label="Subject" v-model="label" />
+            <q-input float-label="URL (Optional)"  v-model="url" />
         </div>
         <div>
             <q-editor float-label="Details" v-model="details" />
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 import api from 'src/api'
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
@@ -24,6 +26,10 @@ var router
 
 export default {
   props: [ 'user' ],
+  validations: {
+    url: { required },
+    label: { required },
+  },
   data () {
     return {
       label: '',
