@@ -5,11 +5,10 @@
 
 -->
 <template>
-  <q-page class="flex flex-center">
+  <q-page :padding="true" class="flex flex-center">
     <div>
-      <div class="layout-padding">
         <div class="column items-center">
-          <h3>FeatherWeight Prototype</h3>
+          <h6>FeatherWeight Prototype</h6>
           <img src="statics/images/earthrise2.png" >
           <h5>
             For a better experience with FeatherWeight, first register your avatar for the email you will use here at <a href="https://www.gravatar.com">https://www.gravatar.com</a>
@@ -17,7 +16,6 @@
           </h5>
         </div>
       </div>
-    </div>
   </q-page>
 </template>
 

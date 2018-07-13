@@ -1,7 +1,7 @@
 <template>
     <q-page class="flex flex-left">
         <div>
-            <h2>Admin</h2>
+            <h6>Admin</h6>
             <div class="box">
                 <q-btn label="List Invitations" @click="listInvites" />
                 <q-scroll-area style="width: 200px; height: 100px;">

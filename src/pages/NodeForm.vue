@@ -1,17 +1,14 @@
 <template>
-    <q-page>
-        <h3>Node Edit Form</h3>
+    <q-page :padding="true">
+        <h6>Node Edit Form</h6>
         <div>
-            <h5>URL (Optional)</h5>
-            <q-input  v-model="url" />
+            <q-input float-label="URL (Optional)"  v-model="url" />
         </div>
         <div>
-            <h5>Subject</h5>
-            <q-input  v-model="label" />
+            <q-input float-label="Subject" v-model="label" />
         </div>
         <div>
-            <h5>Details</h5>
-            <q-editor v-model="details" />
+            <q-editor float-label="Details" v-model="details" />
         </div>
         <div>
             <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />

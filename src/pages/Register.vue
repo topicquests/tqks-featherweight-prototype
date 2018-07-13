@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page :padding="true" class="flex flex-center">
     <q-dialog v-model="showDialog" :title="title" @ok="onOk" @hide="onHide" >
       <div slot="body">
         <div class="row q-mb-md">

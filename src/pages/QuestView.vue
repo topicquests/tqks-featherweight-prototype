@@ -1,5 +1,5 @@
 <template>
-  <q-page v-if="!!q">
+  <q-page :padding="true" v-if="!!q">
     <div  id="topbox">
       <span style="float:right; font-size:small;">{{q.handle}} {{q.date}}</span>
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
