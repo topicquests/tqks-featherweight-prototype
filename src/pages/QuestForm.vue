@@ -1,6 +1,6 @@
 <template>
-    <q-page>
-        <h3>Quest Edit Form</h3>
+    <q-page :padding="true">
+        <h6>Quest Edit Form</h6>
         <!-- todo -->
         <div>
             <h5>Subject</h5>

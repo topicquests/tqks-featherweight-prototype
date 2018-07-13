@@ -1,6 +1,6 @@
 <template>
-    <q-page class="flex flex-left">
-        <h2>History</h2>
+    <q-page :padding="true" class="flex flex-left">
+        <h6>History</h6>
         <q-scroll-area style="width: 800px; height: 800px;">
           <q-list v-for="quest in rawData" :key="quest.id">
             <q-item>

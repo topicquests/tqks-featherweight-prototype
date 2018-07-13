@@ -71,6 +71,8 @@ module.exports = function (ctx) {
         'QScrollArea',
         'QPagination',
         'QTable',
+        'QTd',
+        'QTr',
         'QSearch',
         'QTree'
       ],
