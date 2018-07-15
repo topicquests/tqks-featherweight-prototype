@@ -126,7 +126,7 @@ export default {
                 x.answers = kids
               } else if (typ === 'pro') {
                 x.pros = kids
-              } else if (typ === 'question') {
+              } else if (typ === 'con') {
                 x.cons = kids
               }
               // alert(JSON.stringify(x))
