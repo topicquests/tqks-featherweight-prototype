@@ -113,7 +113,7 @@ export default {
                 kids = x.answers
               } else if (typ === 'pro') {
                 kids = x.pros
-              } else if (typ === 'question') {
+              } else if (typ === 'con') {
                 kids = x.cons
               }
               if (!kids) {

@@ -35,6 +35,7 @@ const populateHook = async function (hook) {
         // Replace a list of node id values with a list of nodes
         console.info('PromisesGot', result)
         hook.result[type] = result
+        // console.info('HOOK', hook)
       } catch (e) {
         console.error('Populate', hook.result.id)
       }
