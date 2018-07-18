@@ -12,7 +12,7 @@ const populateChildren = async function (hook, conv) {
         // walk along the node's array carried in the hook
         const promises = conv[type].map(async (id) => {
           console.info('Fetching child id', type, id)
-          const { data } = await conversation.find({ query: { id } })
+          const { data } = await conversation.find({ query: { id }, skippop: true  })
           console.info('Fetching child found', id, data)
           // if this returns nothing, you see empty nodes
           // returning data[0] shows nodes
@@ -53,7 +53,8 @@ const populateHookSingle = async function (hook) {
 
 // Find (GET, PUT, PATCH, REMOVE)
 const populateHookBatch = async function (hook) {
-  if (hook.result.data && hook.result.data.length > 0)
+  console.dir(hook.params);
+  if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0)
   {
     for (let i=0; i<hook.result.data.length; i++) {
       await populateChildren(hook, hook.result.data[i]);
