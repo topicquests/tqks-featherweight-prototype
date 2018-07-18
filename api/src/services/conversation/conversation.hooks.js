@@ -53,7 +53,8 @@ const populateHookSingle = async function (hook) {
 
 // Find (GET, PUT, PATCH, REMOVE)
 const populateHookBatch = async function (hook) {
-  if (hook.result.data && hook.result.data.length > 0)
+  console.dir(hook.params);
+  if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0)
   {
     for (let i=0; i<hook.result.data.length; i++) {
       await populateChildren(hook, hook.result.data[i]);

@@ -51,24 +51,34 @@ class Service {
    * @param {*} rootNodeId 
    * @param {*} callback signature: (jsonTree)
    */
-  async toJsTree (rootNodeId) {
+  async toJsTree (rootNodeId, level = 0) {
     var thisNode
     var childArray
-    console.info('ToJsTree', rootNodeId)
+    level++;
+    
+    console.info('ToJsTree', {level,  rootNodeId })
     // Use find to avoid populating the children
-    const respConv = await conversation.find({query: { id: rootNodeId }})
+    const respConv = await conversation.find({query: { id: rootNodeId }, skippop: true})
+    console.dir(respConv)
+    
+    if (respConv.data.length < 1) {
+      console.info("End", {level});
+      return {};
+    }
+    
+    
     const node = respConv.data[0]
-    console.info('TV-1', rootNodeId, JSON.stringify(node))
+    // console.info('TV-1', rootNodeId, JSON.stringify(node))
     thisNode = {}
     thisNode.label = node.label
     thisNode.img = node.imgsm
     childArray = this.populateKids(node.questions, node.answers, node.pros, node.cons)
     thisNode.children = []
-    const arrPromises = childArray.map( child => this.toJsTree(child));
+    const arrPromises = childArray.map( child => this.toJsTree(child, level));
     const children = await Promise.all(arrPromises)
    
     thisNode.children = children
-    console.info('Going Back', thisNode)
+    // console.info('Going Back', thisNode)
     return thisNode;
   }
 
