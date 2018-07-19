@@ -107,7 +107,7 @@ export default {
   },
   mounted () {
     const vm = this;
-    
+    this.$store.commit('questView', false)
     this.refreshMessages();
     this.refreshUsers();
     

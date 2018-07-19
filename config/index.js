@@ -57,6 +57,13 @@ module.exports = {
       '/api': {
         target: 'http://localhost:8081',
         changeOrigin: true
+      },
+      '/etherpad': {
+        target: 'http://localhost:9001',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/etherpad': ''
+        }
       }
     }
   }

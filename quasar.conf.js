@@ -39,7 +39,20 @@ module.exports = function (ctx) {
     devServer: {
       // https: true,
       // port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8081',
+          changeOrigin: true
+        },
+        '/etherpad': {
+          target: 'http://localhost:9001',
+          changeOrigin: true,
+          pathRewrite: {
+            '^/etherpad': ''
+          }
+        }
+      }
     },
     // framework: 'all' --- includes everything; for dev only!
     framework: {

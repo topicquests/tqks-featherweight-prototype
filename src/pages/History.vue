@@ -26,6 +26,7 @@ export default {
   },
   mounted () {
     const conversation = api.service('conversation')
+    this.$store.commit('questView', false)
     conversation.find({
       query: {
         $limit: 50,

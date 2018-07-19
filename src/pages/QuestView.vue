@@ -1,5 +1,6 @@
 <template>
   <q-page :padding="true" v-if="!!q">
+
     <div  id="topbox">
       <span style="float:right; font-size:small;">{{q.handle}} {{q.date}}</span>
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
@@ -86,12 +87,15 @@ export default {
     },
     mounted () {
       const id = this.$route.params.id
+      this.$data.rightDrawerOpen = false
       const self = this
       try {
         treeview.get(id)
           .then(function (tree) {
             console.info('QuestTreeView', tree)
-            self.$store.commit('tree', tree)
+            const result = []
+            result.push(tree)
+            self.$store.commit('tree', result)
           })     
       } catch (err) {
         console.log('QuestViewTreeError', err)
@@ -116,6 +120,7 @@ export default {
     methods: {
       // Pass id, or it will take it from current $route context
       async initialize (id = null) {
+        this.$store.commit('questView', true)
         console.info('QV-1', id)
           id = id || this.$route.params.id
           console.info('Initialize', 'fetching data for ', id)

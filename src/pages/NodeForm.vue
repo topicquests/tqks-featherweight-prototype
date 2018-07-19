@@ -146,6 +146,7 @@ export default {
     //   Must fetch it
     // Otherwise, this is a node-creation event
     router = this.$router
+    this.$store.commit('questView', false)
     this.$data.type = this.$route.params.type
     if (this.$data.type === 'update') {
       this.$data.isUpdate = true

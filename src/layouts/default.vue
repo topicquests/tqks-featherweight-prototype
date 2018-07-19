@@ -45,20 +45,32 @@
           <q-icon name="exit_to_app" />
           <q-tooltip anchor="bottom middle" self="top middle" :offset="[0, 20]">Signout</q-tooltip>
         </q-btn>
-        <!--<q-btn v-if="isTreeView"
-          flat
-          dense
-          round
+        <q-btn v-if="isQuestView" flat dense round
           aria-label="Tree View"
           @click="rightDrawerOpen = !rightDrawerOpen"
         >
         <q-icon name="menu" />
-        </q-btn>-->
+        </q-btn>
 
       </q-toolbar>
     </q-layout-header>
+    <q-layout-drawer side = "right"
+      v-model="rightDrawerOpen"
 
-    <q-layout-drawer
+      no-hide-on-route-change
+      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
+      <h4>Tree View</h4>
+      <div>
+        <q-tree v-if="simple"
+          :nodes="simple"
+          node-key="id"
+          default-expand-all
+          :selected.sync="selected"
+        />
+        </div>
+    </q-layout-drawer>
+
+    <q-layout-drawer side = "left"
       v-model="leftDrawerOpen"
 
       no-hide-on-route-change
@@ -129,8 +141,10 @@ export default {
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
+      rightDrawerOpen: this.$store.getters.isQuestView,
       isAuthenticated: false,
       isAdmin: false,
+      selected: null,
       search: ''
     }
   },
@@ -143,9 +157,35 @@ export default {
     },
     user () {
       return this.$store.getters.user
+    },
+    isQuestView () {
+      return this.$store.getters.isQuestView
+    },
+    simple () {
+      const tre = this.$store.getters.treeView
+      
+      if (tre) {
+        const nod = tre[0]
+        console.log('NN', nod)
+        const generateHandler = (id) => (id) => this.myClick(id);
+        //tre.map(a => {
+          nod.handler = generateHandler(nod.id)
+        //})
+      }
+      return tre
     }
   },
   methods: {
+    generateHandler (id) {
+      alert('GID', id)
+      return (id) => () => this.myClick(id)
+    },
+    patchTree (node) {
+
+    },
+    myClick (id) {
+      alert("clicked", id)
+    },
     doSearch () {
       let q = this.search
       this.$router.push({ name: 'search', params: { q }})
@@ -179,10 +219,12 @@ export default {
         this.$store.commit('admin', truth)
         this.isAdmin = truth
       }
-    },
-    isTreeView () {
-      return this.$state.getters.treeView
     }
+    /*,
+    isQuestView () {
+      alert(this.$state.getters.isQuestView)
+      return this.$state.getters.isQuestView
+    }*/
     
   },
   mounted () {

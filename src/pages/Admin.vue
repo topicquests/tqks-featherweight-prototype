@@ -44,6 +44,9 @@ export default {
       displayEmail: ''
     }
   },
+  mounted () {
+    self.$store.commit('questView', false)
+  },
   methods: {
     listInvites () {
       // alert('List invites')

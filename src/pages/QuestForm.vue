@@ -57,6 +57,7 @@ export default {
   },
   mounted () {
     router = this.$router
+    this.$store.commit('questView', false)
   }
 }
 </script>

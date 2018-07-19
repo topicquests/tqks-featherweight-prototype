@@ -20,7 +20,8 @@ const store = new Vuex.Store({
     canEdit: true,
     isAdmin: true,
     user: null,
-    treeView: null
+    treeView: null,
+    isQuestView: false
   },
   getters: {
     isAuthenticated: state => state.isAuthenticated,
@@ -28,7 +29,8 @@ const store = new Vuex.Store({
     isAdmin: state => state.isAdmin,
     node: state => state.conversation.copy,
     user: state => state.user,
-    treeView: state => state.treeView
+    treeView: state => state.treeView,
+    isQuestView: state => state.isQuestView
   },
   mutations: {
     admin (state, t) {
@@ -43,7 +45,10 @@ const store = new Vuex.Store({
       state.user = user
     },
     tree (state, tree) {
-      state.treeView == tree
+      state.treeView = tree
+    },
+    questView (state, t) {
+      state.isQuestView = t
     }
   },
   modules: {

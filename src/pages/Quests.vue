@@ -1,6 +1,6 @@
 <template>
   <q-page :padding="true">
-          <q-btn style="margin-bottom: 4px;" label="New Quest" @click="$router.replace('/questedit')" />
+    <q-btn style="margin-bottom: 4px;" label="New Quest" @click="$router.replace('/questedit')" />
 
         <q-table
           title="My Quests"
@@ -126,6 +126,8 @@
       this.request({
         pagination: this.serverPagination
       })
+      
+      this.$store.commit('questView', false)
 
     }
   }

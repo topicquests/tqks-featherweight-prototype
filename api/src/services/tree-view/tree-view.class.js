@@ -70,8 +70,10 @@ class Service {
     const node = respConv.data[0]
     // console.info('TV-1', rootNodeId, JSON.stringify(node))
     thisNode = {}
+    thisNode.id = node.id
     thisNode.label = node.label
     thisNode.img = node.imgsm
+    thisNode.expanded = true
     childArray = this.populateKids(node.questions, node.answers, node.pros, node.cons)
     thisNode.children = []
     const arrPromises = childArray.map( child => this.toJsTree(child, level));
