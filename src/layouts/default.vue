@@ -148,6 +148,11 @@ export default {
       search: ''
     }
   },
+  watch: {
+    selected: function(val, oldVal) {
+      this.$router.push({name: 'questview', params: {id: val}});
+    }
+  },
   computed: {
     authenticated () {
       let a = this.$store.getters.user !== null
@@ -164,27 +169,20 @@ export default {
     simple () {
       const tre = this.$store.getters.treeView
       
-      if (tre) {
-        const nod = tre[0]
-        console.log('NN', nod)
-        const generateHandler = (id) => (id) => this.myClick(id);
-        //tre.map(a => {
-          nod.handler = generateHandler(nod.id)
-        //})
-      }
+      // if (tre) {
+      //   const nod = tre[0]
+      //   console.log('NN', nod)
+      //   const generateHandler = (id) => (id) => this.myClick(id);
+      //   //tre.map(a => {
+      //     nod.handler = generateHandler(nod.id)
+      //   //})
+      // }
       return tre
     }
   },
   methods: {
-    generateHandler (id) {
-      alert('GID', id)
-      return (id) => () => this.myClick(id)
-    },
     patchTree (node) {
 
-    },
-    myClick (id) {
-      alert("clicked", id)
     },
     doSearch () {
       let q = this.search
@@ -275,4 +273,8 @@ export default {
 </script>
 
 <style>
+
+img.q-tree-img.q-mr-sm {
+    height: 20px;
+}
 </style>
