@@ -8,7 +8,13 @@
 </template>
 
 <script>
+// @see https://github.com/ether/etherpad-lite-jquery-plugin/blob/master/js/etherpad.js
 // @see https://github.com/tomassedovic/etherpad-lite-client-js
+// @see https://github.com/ether/etherpad-lite/wiki/HTTP-API
+// Pads belong to a group. To spawn a new pad, first create a group
+// Then create one or more authors
+// Then create a groupPad
+// Then start a session with a group and author
 const api = require('etherpad-lite-client')
 var etherpad
 export default {
@@ -17,18 +23,51 @@ export default {
     }
   },
   methods: {
-    newPad () {
+    newAuthor (id, handle) {
+      //TODO note that ID in the example is a simple integer
       var args = {
-        groupID: 'g.123',
-        padName: 'testpad',
-        text: 'Hello world!',
+        apikey: '7c4ba5773d6ecc8cf7c7b92f50e89bb65c724d4f5825dbf5584b5dfa9d81a3ea',
+        name: handle,
+        authorMapper: id
       }
-      etherpad.createGroupPad(args, function(error, data) {
-        if(error) {
-          console.error('Error creating pad: ' + error.message)
-        } else {
-          console.log('New pad created: ' + data.padID)
-        }
+      etherpad.createAuthorIfNotExistsFor(args, function (err, response) {
+        // Returns authorID to be used elsewhere
+      })
+    },
+    newGroup (id) {
+      //TODO note that ID in the example is a simple integer
+      var args = {
+        apikey: '7c4ba5773d6ecc8cf7c7b92f50e89bb65c724d4f5825dbf5584b5dfa9d81a3ea',
+        groupMapper: id
+      }
+      etherpad.createGroupIfNotExistsFor(args, function (err, response) {
+        // Returns groupID to be used elsewhere
+      })
+    },
+    newGroupPad (groupId, padName, text) {
+      // groupId established in createGroup
+      // padName -- whatever
+      // text -- optional, but not null - could be a title to be edited later
+      var args = {
+        apikey: '7c4ba5773d6ecc8cf7c7b92f50e89bb65c724d4f5825dbf5584b5dfa9d81a3ea',
+        groupId: groupId,
+        padName: padName,
+        text: text
+      }
+      etherpad.createGroupPad(args, function (err, response) {
+        // Returns padID to be used in an index
+      })
+    },
+    createSession (groupId, authorId, validUntil) {
+        var args = {
+        apikey: '7c4ba5773d6ecc8cf7c7b92f50e89bb65c724d4f5825dbf5584b5dfa9d81a3ea',
+        groupId: groupId,
+        authorId: authorId,
+        validUntil: validUntil
+      }
+      etherpad.createSession(args, function (err, response) {
+        // Returns sessionID to be used in an index
+        //Portal places the cookie "sessionID" with the given value on the client and creates an iframe including the pad
       })
     }
   },

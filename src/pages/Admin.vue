@@ -21,9 +21,22 @@
                 <q-btn label="Remove Invitation" @click="removeInvite" />
             </div>
             <div class="box">
+                <q-btn label="List Users" @click="listUsers" /><br/>
+                <q-scroll-area style="width: 200px; height: 100px;">
+                    <q-list v-for="inv in users" :key="inv.email">
+                        {{ inv.email + " " + inv._id }}
+                    </q-list>
+                </q-scroll-area>
+            </div>
+            <div class="box">
               <h5>Display a User</h5>
               <q-input  v-model="displayEmail" />
               <q-btn label="Display User" @click="displayUser" />
+            </div>
+            <div class="box">
+              <h5>Remove a User</h5>
+              <q-input  v-model="removeUserEmail" />
+              <q-btn label="Remove User" @click="removeUser" />
             </div>
 
         </div>
@@ -38,14 +51,16 @@ const users = api.service('users')
 export default {
   data () {
     return {
-      invites: ['None'],
+      invites: [],
       inviteEmail: '',
       removeEmail: '',
-      displayEmail: ''
+      users: [],
+      displayEmail: '',
+      removeUserEmail: ''
     }
   },
   mounted () {
-    self.$store.commit('questView', false)
+    this.$store.commit('questView', false)
   },
   methods: {
     listInvites () {
@@ -69,7 +84,6 @@ export default {
       })
       this.$data.inviteEmail = ''
     },
-
     removeInvite () {
       var ems = this.$data.removeEmail.trim()
       if (ems === '') {
@@ -88,6 +102,10 @@ export default {
       })
       this.$data.removeEmail = ''
     },
+    listUsers () {
+      users.find({ query: { $limit: 100 } })
+        .then((response) => { this.$data.users = response.data })
+    },
     displayUser () {
       var ems = this.$data.displayEmail.trim()
       // alert(ems)
@@ -101,6 +119,27 @@ export default {
       users.find(json).then((response) => {
         alert(JSON.stringify(response))
         this.displayEmail = ''
+      })
+    },
+    removeUser() {
+      var ems = this.$data.removeUserEmail.trim()
+      // alert(ems)
+      if (ems === '') {
+        return
+      }
+      var json = {}
+      var x = {}
+      x.email = ems
+      json.query = x
+      users.find(json).then((response) => {
+        // alert(JSON.stringify(response))
+        const usr = response.data[0]
+        json = {}
+        x._id = usr._id
+        json.query = x
+        users.remove(usr._id).then((foo) => {
+          this.removeUserEmail = ''
+        })       
       })
     }
   }
