@@ -3,16 +3,19 @@
         <h6>Node Edit Form</h6>
         
         <div>
-            <q-input float-label="Subject" v-model="label" required/>
+          <b>Subject</b><br/>
+          <q-input v-model="label" required/>
         </div>
         <div>
-            <q-input float-label="URL (Optional)"  v-model="url" />
+          <b>URL</b> (Optional)<br/>
+          <q-input v-model="url" />
         </div>
         <div>
-            <q-editor float-label="Details" v-model="details" />
+          <b>Details</b><br/>
+          <q-editor v-model="details" />
         </div>
         <div>
-            <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
+          <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
         </div>
     </q-page>
 </template>

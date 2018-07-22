@@ -1,19 +1,22 @@
 <template>
-    <q-page :padding="true">
-        <h6>Quest Edit Form</h6>
-        <!-- todo -->
-        <div>
-            <h5>Subject</h5>
-            <q-input  v-model="label" />
-        </div>
-        <div>
-            <h5>Details</h5>
-            <q-editor v-model="details" />
-        </div>
-        <div>
-            <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
-        </div>
-    </q-page>
+  <q-page :padding="true">
+      <h6>Quest Edit Form</h6>
+      <div>
+        <b>Subject</b><br/>
+        <q-input v-model="label" />
+      </div>
+      <div>
+        <b>URL</b> (Optional)<br/>
+        <q-input  v-model="url" />
+      </div>
+      <div>
+        <b>Details</b><br/>
+        <q-editor v-model="details" />
+      </div>
+      <div>
+        <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
+      </div>
+  </q-page>
 </template>
 
 <script>
@@ -27,6 +30,7 @@ export default {
     return {
       label: '',
       details: '',
+      url: '',
       user: this.$store.getters.user
     }
   },
@@ -38,6 +42,7 @@ export default {
       json.id = uuidv4()
       json.type = 'quest'
       json.label = this.label
+      json.url = this.url
       json.details = this.details
       json.img = 'statics/images/ibis/map.png'
       json.imgsm = 'statics/images/ibis/map_sm.png'
