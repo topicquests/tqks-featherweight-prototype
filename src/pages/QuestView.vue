@@ -9,8 +9,8 @@
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
       <hr/>
-      <q-scroll-area style="width: 960px; height: 400px; overflow-wrap: normal;">
-        <span v-html="q.details" style="overflow-wrap: inherit;"></span>
+      <q-scroll-area style="max-width: 960px; height: 400px; overflow-wrap: normal;">
+        <div class="spanwrap" v-html="q.details"></div>
       </q-scroll-area>
     </div>
     <!-- Edit and other controls go here -->
@@ -165,6 +165,13 @@ export default {
 </script>
 
 <style lang="styl">
+
+.spanwrap {
+  float: left;
+  word-wrap: normal;
+  white-space: normal;
+  overflow-wrap: inherit;
+}
 /**
  * Enable columns to scroll right and left
  */
