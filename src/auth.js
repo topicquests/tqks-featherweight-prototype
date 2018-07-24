@@ -96,12 +96,13 @@ const auth = {
     })
   },
 
-  register (email, password, fullName, handle) {
+  register (email, password, fullName, handle, homepage) {
     return api.service('users').create({
       email: email,
       password: password,
       fullname: fullName,
-      handle: handle
+      handle: handle,
+      homepage: homepage
     })
   },
 

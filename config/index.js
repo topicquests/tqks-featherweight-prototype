@@ -9,7 +9,7 @@ module.exports = {
   requiresInvite: false,
   // This email defines which account is the first Admin
   // Admins might be able to assign roles to other accounts
-  adminEmail: 'joe@sixpack.com',
+  adminEmail: 'sue@sixpack.com',
   // Webpack aliases
   aliases: {
     quasar: path.resolve(__dirname, '../node_modules/quasar-framework/'),

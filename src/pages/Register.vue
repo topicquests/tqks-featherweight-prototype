@@ -1,6 +1,7 @@
 <template>
   <q-page :padding="true" class="flex flex-center">
-    <q-dialog v-model="showDialog" :title="title" @ok="onOk" @hide="onHide" >
+    <div class="panel-body">
+      <h6>Register</h6>
       <div slot="body">
         <div class="row q-mb-md">
           <q-input
@@ -17,18 +18,28 @@
             v-model="handle" type="text" name="handle" stack-label="Handle" class="full-width" autofocus
           />
         </div>
+        <div class="row q-mb-md">
+          <q-input
+            v-model="homepage" type="text" name="homepage" stack-label="Homepage" class="full-width" autofocus
+          />
+        </div>
 
-        <div class="row">
+        <div class="row q-mb-md">
           <q-input
             v-model="password" type="password" name="email" stack-label="Password" class="full-width"
           />
         </div>
       </div>
-    </q-dialog>
+      <div>
+      <q-btn label="Register" @click="doRegister" /><q-btn label="Cancel" @click="$router.replace('/home')" />
+    </div>
+
+    </div>
   </q-page>
 </template>
 
 <script>
+
 import auth from 'src/auth'
 import config from '../../config'
 import api from 'src/api'
@@ -36,15 +47,17 @@ const invites = api.service('invitations')
 
 export default {
   data () {
-    return {
+    return { 
       showDialog: true,
-      email: null,
-      handle: null,
-      fullName: null,
-      password: null,
+        email: null,
+        handle: null,
+        homepage: null,
+        fullName: null,
+        password: null,
       title: 'Register'
     }
   },
+      
   computed: {
   },
   methods: {
@@ -80,19 +93,40 @@ export default {
           })
       }
     },
-    onOk (data) {
-      console.info('Register-1', this.email)
+    doRegister () {
+      console.info('Register-1', this.$data.email)
+      const theEmail = this.$data.email
+      const theHandle = this.$data.handle
+      const theFullName = this.$data.fullName
+      if (!theEmail) {
+        this.$q.notify({type: 'negative', message: 'Missing Email'})
+        return 
+      }
+      if (!theHandle) {
+        this.$q.notify({type: 'negative', message: 'Missing Handle'})
+        return      
+      }
+      if (!theFullName) {
+        this.$q.notify({type: 'negative', message: 'Missing FullName'})
+        return
+      }
+      if (!this.$data.password) {
+        this.$q.notify({type: 'negative', message: 'Missing Password'})
+        return
+      }
+
       const self = this
-      this.canRegister(self.email, function (truth) {
+      this.canRegister(theEmail, function (truth) {
         console.info('Register-2', truth)
         if (truth) {
-          self.register(self.email, self.password, self.fullName, self.handle)
+          self.register(theEmail, self.$data.password, theFullName, theHandle, self.$data.homepage)
             .then(() => {
               console.info('Register-3', self.email)
               return self.login(self.email, self.password)
             })
             .then(_ => {
               self.$q.notify({type: 'positive', message: 'You are now registered'})
+              self.goHome()
             })
             .catch(_ => {
               // alert('wtf')
@@ -106,8 +140,8 @@ export default {
         }
       })
     },
-    register (email, password, fullName, handle) {
-      return auth.register(email, password, fullName, handle)
+    register (email, password, fullName, handle, homepage) {
+      return auth.register(email, password, fullName, handle, homepage)
     },
     login (email, password) {
       return auth.login(email, password)

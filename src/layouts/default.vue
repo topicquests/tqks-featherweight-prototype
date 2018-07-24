@@ -13,7 +13,6 @@
           round
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
-
         >
         <q-icon name="menu" />
         </q-btn>
@@ -56,7 +55,6 @@
     </q-layout-header>
     <q-layout-drawer side = "right"
       v-model="rightDrawerOpen"
-
       no-hide-on-route-change
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
       <h4>Tree View</h4>
@@ -85,6 +83,11 @@
         <q-item to="/home">
           <q-item-side icon="home" />
           <q-item-main label="Home" />
+        </q-item>
+
+        <q-item v-if="isAuthenticated" :to="{ name: 'profile', params: { id:  userId }}">
+          <q-item-side icon="settings" />
+          <q-item-main label="Profile" />
         </q-item>
 
         <q-item to="/history">
@@ -143,6 +146,7 @@ export default {
       leftDrawerOpen: this.$q.platform.is.desktop,
       rightDrawerOpen: this.$store.getters.isQuestView,
       isAuthenticated: false,
+      userId: null,
       isAdmin: false,
       selected: null,
       search: ''
@@ -155,9 +159,13 @@ export default {
   },
   computed: {
     authenticated () {
-      let a = this.$store.getters.user !== null
+      let usx = this.$store.getters.user
+      let a =  usx !== null
       console.info('DA', a)
       console.info('DB', this.$store.getters.user)
+      if (usx) {
+        this.userId = usx._id
+      }
       return a
     },
     user () {
