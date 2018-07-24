@@ -4,7 +4,7 @@
     
     <div>
       <b>Email</b><br/>
-      <q-input v-model="myEmail" /><br/>
+      <q-input v-model="myEmail" type="email"/><br/>
     </div>
     <div>
       <b>Full Name</b><br/>
@@ -13,8 +13,14 @@
 
     <div>
       <b>Homepage URL</b> (Optional)<br/>
-      <q-input  v-model="myUrl" />
+      <q-input  v-model="myUrl" /><br/>
     </div>
+
+    <div>
+      <b>Password</b><br/>
+      <q-input  v-model="myPassword" type="password"/>
+    </div>
+
     <div>
       <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
     </div>
@@ -32,6 +38,7 @@ export default {
       myEmail: '',
       myName: '',
       myUrl: '',
+      myPassword: '',
       thisUser: null
     }
   },
@@ -48,6 +55,9 @@ export default {
       }
       if (usr.fullname !== this.myName) {
         data.fullname = this.myName
+      }
+      if (this.myPassword !== '') {
+        data.password = this.myPassword
       }
       users.patch(usr._id, data)
           .then ((response) => {

@@ -40,6 +40,7 @@
     "compression": "^1.7.2",
     "cors": "^2.8.4",
     "feathers-hooks-common": "^3.0.0-pre.1",
+    "feathers-mailer": "^3.0.1",
     "feathers-nedb": "^3.0.1",
     "feathers-nedb-fuzzy-search": "^1.1.1",
     "helmet": "^3.12.1",
