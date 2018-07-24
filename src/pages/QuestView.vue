@@ -2,7 +2,7 @@
   <q-page :padding="true" v-if="!!q">
 
     <div  id="topbox">
-      <span style="float:right; font-size:small;">{{q.handle}} {{q.date}}</span>
+      <span style="float:right; font-size:small;"><a :href="`/index.html#/userview/${q.creator}`">{{q.handle}}</a> {{q.date}}</span>
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
       <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
       <span v-if="q.parentLabel"><b>Responds to </b>
