@@ -4,7 +4,7 @@
     <div  id="topbox">
       <span style="float:right; font-size:small;">{{q.handle}} {{q.date}}</span>
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
-      <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/></span>
+      <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
       <span v-if="q.parentLabel"><b>Responds to </b>
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
@@ -122,15 +122,15 @@ export default {
       async initialize (id = null) {
         this.$store.commit('questView', true)
         console.info('QV-1', id)
-          id = id || this.$route.params.id
-          console.info('Initialize', 'fetching data for ', id)
-          try {
-            const single = await this.$store.dispatch('conversation/get', [id, { depth: 1 }])
-            console.info('Initialize', 'fetching data for ', id, 'success')
-            console.info('SINGLE', JSON.stringify(single))
-          } catch (e) {
-            console.info('Initialize', 'fetching data for ', id, 'error', e)
-          }
+        id = id || this.$route.params.id
+        console.info('Initialize', 'fetching data for ', id)
+        try {
+          const single = await this.$store.dispatch('conversation/get', [id, { depth: 1 }])
+          console.info('Initialize', 'fetching data for ', id, 'success')
+          console.info('SINGLE', JSON.stringify(single))
+        } catch (e) {
+          console.info('Initialize', 'fetching data for ', id, 'error', e)
+        }
       }
     },
     computed: {

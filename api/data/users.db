@@ -1,9 +1,8 @@
 {"email":"json@example.com","password":"$2a$13$EE4iRFFjDezfmVo4gbBf..B4mMMEAsu.qngKpQMC4rrSL/a5bm.D6","fullname":"Json Example","handle":"json","avatar":"https://s.gravatar.com/avatar/e7c012d57bbe5b713e3d078533f90184?s=200","_id":"5JZi0QXQmMBno67q"}
-{"email":"jake@jake.com","password":"$2a$13$5Cv9UyIa1L3gA.ndew7NNOb1OK/GJ126GEM6S.hntlWjIdjUkjz4u","fullname":"Jake Jake","handle":"jake","avatar":"https://s.gravatar.com/avatar/0bacf8fa837a7bf31d303178cef24fb6?s=200","_id":"UGD81CHuony6fJUy"}
 {"email":"kpsychwave@gmail.com","password":"$2a$13$8Q4O0u3LGjVVP9zZk9LIJOUrVFfKWIxzCYM22I1oCn3bq7QpIuTgW","fullname":"Eyasu","handle":"kpsychwave","avatar":"https://s.gravatar.com/avatar/a191c7df5aac088f988de17193c96392?s=200","_id":"er9b5tzlvnxIYXBp"}
 {"email":"joe@sixpack.com","password":"$2a$12$gXUV5YOSZm25.xevDGVC/uFxSaoEZFKrxPdZG/qvvA55Nf6iF/i8W","avatar":"https://s.gravatar.com/avatar/327fb53704f280f500e38116d1577e0a?s=200","_id":"fPuN19F1E9qenR0H"}
 {"email":"eyasu.kifle@gmail.com","password":"$2a$13$34JaTzCPEDFSo5DuxWeiDeekUtFJM/tfZZ.P1gjeHtKhg5NJcujay","fullname":"Eyasu Kifle","handle":"eyasu","avatar":"https://s.gravatar.com/avatar/0bf65a17aa5adf3bbb3d2953360911a4?s=200","_id":"iFurkmEF8xgcEKot"}
 {"email":"jackpark@gmail.com","password":"$2a$12$y0clOZx7YzSeDPmOU/nFtOhuclo1dLKPoCqvsn3nCzCq2pSclEYce","avatar":"https://s.gravatar.com/avatar/fc08eda05e33e01f277a827e5972c3a0?s=200","_id":"lgig24zYgr8gArLj"}
 {"email":"sara@sixpack.com","password":"$2a$12$/jkELPjclKueTNrrmtzCFO3fmCRsH4sBvCMCNCywRf7bjl4sipU3C","avatar":"https://s.gravatar.com/avatar/b6b6a80fa6f18f7870179f5520ee75f7?s=200","_id":"nqqhWGTBM5PXMStj"}
 {"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}
-{"$$deleted":true,"_id":"UGD81CHuony6fJUy"}
+{"email":"jake@jake.com","password":"$2a$13$zpBmT3oU6amHi5GHpuRsR.LB2S4Z67HT/TY0XEtrEiAssQHC.y6jG","fullname":"Jake","handle":"jake","avatar":"https://s.gravatar.com/avatar/0bacf8fa837a7bf31d303178cef24fb6?s=200","_id":"9wgYSIqYfWgmzr0K"}

@@ -49,19 +49,32 @@ const populateHookSingle = async function (hook) {
 
 // Find (GET, PUT, PATCH, REMOVE)
 const populateHookBatch = async function (hook) {
-  console.dir(hook.params);
+  console.info('HOOK', hook.params)
   if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0)
   {
+    console.info('PopulateHookBatch', hook.params.skippop)
     for (let i=0; i<hook.result.data.length; i++) {
-      await populateChildren(hook, hook.result.data[i]);
+      await populateChildren(hook, hook.result.data[i])
     }
   }
+}
+
+function hookBeforeFind(hook) {
+  // console.info('HOOKING', hook)
+  if (hook && hook.params.query.skippop)
+  {
+    // console.info('FoundSkipPop')
+    hook.params = hook.params || {}
+    hook.params.skippop = true
+    delete hook.params.query.skippop
+  }
+  // return hook
 }
 
 module.exports = {
   before: {
     all: [],
-    find: [search({
+    find: [hookBeforeFind, search({
       fields: ['label', 'details'],
       deep: true
     })],

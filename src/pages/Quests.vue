@@ -95,6 +95,7 @@
         jsx.creator = n.creator
         jsx.handle = n.handle
         jsx.date = n.date
+        // console.info('JSX', jsx)
         this.$data.serverData.push(jsx)
       },
       request({ pagination }) {
@@ -114,6 +115,7 @@
             // alert(JSON.stringify(data))
             if (data && data.length > 0) {
               this.$data.serverData = data
+              // console.info('DATA', JSON.stringify(data))
               // data.map(this.fill)
             }
           })

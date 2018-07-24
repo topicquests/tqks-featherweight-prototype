@@ -108,15 +108,18 @@ export default {
           this.url = response.url
         })
     },
-    doSubmit: function () {
+    async doSubmit () {
       // alert(this.label)
       // alert(this.details);
       var typ = this.$data.type
+      const params = {}
+        params.depth = 0
       if (typ === 'update') {
-         conversation.find({ query: { 'id':this.myId } })
+        
+        conversation.find({ query: { 'id':this.myId, skippop:true } })
           .then ((response) => {
             var json = response.data[0]
-            console.info('NF-1', json)
+            // alert('NF-1', JSON.stringify(json))
             json.label = this.label
             json.details = this.details
             json.url = this.url
@@ -157,9 +160,10 @@ export default {
           // alert(JSON.stringify(response))
           const id= response.id;
           // alert(idx+' '+id)
-          conversation.find({ query: { 'id': idx } })
+          conversation.find({ query: { 'id':this.parentId, skippop:true } })
             .then((response) => {
               var x = response.data[0]
+              // alert(JSON.stringify(x))
               var kids = []
               if (typ === 'question') {
                 kids = x.questions
@@ -203,10 +207,13 @@ export default {
     this.$store.commit('questView', false)
     this.$data.type = this.$route.params.type
     if (this.$data.type === 'update') {
+      // called by the route 'nodeupdate'
       this.$data.isUpdate = true
+      // myId is this node's identity; it's being updated
       this.$data.myId = this.$route.params.id
       this.doUpdate()
     } else {
+      // called by the route 'nodeedit'
       this.$data.parentId = this.$route.params.id
       this.$data.parentType = this.$route.params.parentType
       this.$data.parentLabel = this.$route.params.label

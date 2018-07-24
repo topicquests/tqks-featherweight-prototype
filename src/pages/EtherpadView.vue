@@ -1,9 +1,9 @@
 <template>
   <q-page class="flex flex-left">
     <h4><img style="margin-right:4px;" src="statics/images/etherpad.png">Etherpad Home</h4>
-    <div>
+    <!-- <div>
       <q-btn style="margin-bottom: 4px;" label="New Pad" @click="newPad" />
-    </div>
+    </div> -->
   </q-page>
 </template>
 
