@@ -4,6 +4,7 @@ export default [
     component: () => import('layouts/default'),
     children: [
       { path: '/home', name: 'home', component: () => import('pages/Home') },
+      { path: '/aboutc', name: 'aboutc', component: () => import('pages/AboutConversations') },
       { path: '/signin', name: 'signin', component: () => import('pages/SignIn') },
       { path: '/register', name: 'register', component: () => import('pages/Register') },
       { path: '/chat', name: 'chat', component: () => import('pages/Chat'), meta: { requiresAuth: true } },

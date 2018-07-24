@@ -100,6 +100,11 @@
           <q-item-main label="Quests" />
         </q-item>
 
+        <q-item to="/aboutc">
+          <q-item-side icon="help" />
+          <q-item-main label="Quests Help" />
+        </q-item>
+
         <q-item to="/ether">
           <q-item-side icon="language" />
           <q-item-main label="Etherpad Home" />
