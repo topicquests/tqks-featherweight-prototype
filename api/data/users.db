@@ -6,3 +6,5 @@
 {"email":"sara@sixpack.com","password":"$2a$12$/jkELPjclKueTNrrmtzCFO3fmCRsH4sBvCMCNCywRf7bjl4sipU3C","avatar":"https://s.gravatar.com/avatar/b6b6a80fa6f18f7870179f5520ee75f7?s=200","_id":"nqqhWGTBM5PXMStj"}
 {"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}
 {"email":"jake@jake.com","password":"$2a$13$zpBmT3oU6amHi5GHpuRsR.LB2S4Z67HT/TY0XEtrEiAssQHC.y6jG","fullname":"Jake","handle":"jake","avatar":"https://s.gravatar.com/avatar/0bacf8fa837a7bf31d303178cef24fb6?s=200","_id":"9wgYSIqYfWgmzr0K"}
+{"$$deleted":true,"_id":"9wgYSIqYfWgmzr0K"}
+{"$$deleted":true,"_id":"nqqhWGTBM5PXMStj"}

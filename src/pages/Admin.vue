@@ -91,7 +91,8 @@ export default {
       }
       var json = {}
       json.email = ems
-      invites.find(json).then((response) => {
+      invites.find({ query: { 'email':ems } }).then((response) => {
+        // console.info('INVITE', JSON.stringify(response))
         invites.remove(response.data[0]._id).then((response) => {
           this.$q.notify({type: 'positive', message: 'Invitations removed'})
         }).catch((error) => {
