@@ -59,6 +59,12 @@ const populateHookBatch = async function (hook) {
   }
 }
 
+const compactDB  = async function (hook) {
+  const model = hook.service.Model
+  model.persistence.compactDatafile
+  // console.info('COMPACT', model)
+}
+
 function hookBeforeFind(hook) {
   // console.info('HOOKING', hook)
   if (hook && hook.params.query.skippop)
@@ -90,7 +96,7 @@ module.exports = {
     find: [populateHookBatch],
     get: [populateHookSingle],
     create: [],
-    update: [],
+    update: [compactDB],
     patch: [],
     remove: []
   },
