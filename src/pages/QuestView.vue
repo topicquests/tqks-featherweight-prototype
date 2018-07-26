@@ -24,7 +24,7 @@
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
-              <img class="headerimage" src="statics/images/ibis/position.png">Ideas
+              <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
               <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
