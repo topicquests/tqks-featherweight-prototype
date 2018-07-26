@@ -1,3 +1,4 @@
 {
-  "nedb": "../data"
+  "nedb": "../data",
+  "dump-db-secret": "change-me"
 }

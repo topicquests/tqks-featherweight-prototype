@@ -5,8 +5,7 @@
         color="primary"
         :glossy="false"
         :inverted="$q.theme === 'ios'"
-      >
-        
+      >  
         <q-btn
           flat
           dense
@@ -50,14 +49,14 @@
         >
         <q-icon name="menu" />
         </q-btn>
-
       </q-toolbar>
     </q-layout-header>
     <q-layout-drawer side = "right"
       v-model="rightDrawerOpen"
+      overlay
       no-hide-on-route-change
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
-      <h4>Tree View</h4>
+      <h6>Tree View</h6>
       <div>
         <q-tree v-if="simple"
           :nodes="simple"
@@ -70,7 +69,6 @@
 
     <q-layout-drawer side = "left"
       v-model="leftDrawerOpen"
-
       no-hide-on-route-change
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
 
@@ -125,7 +123,6 @@
             This is a prototype <i>Structured Conversation</i> system.
           </p>
         </q-collapsible>
-
       </q-list>
     </q-layout-drawer>
 

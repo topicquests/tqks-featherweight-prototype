@@ -31,6 +31,7 @@
     "@feathersjs/authentication": "^2.1.7",
     "@feathersjs/authentication-jwt": "^2.0.1",
     "@feathersjs/authentication-local": "^1.2.1",
+    "@feathersjs/cli": "^3.7.6",
     "@feathersjs/configuration": "^1.0.2",
     "@feathersjs/errors": "^3.3.0",
     "@feathersjs/express": "^1.2.3",
@@ -42,11 +43,12 @@
     "feathers-hooks-common": "^3.0.0-pre.1",
     "feathers-mailer": "^3.0.1",
     "feathers-nedb": "^3.0.1",
+    "feathers-nedb-dump": "^1.1.2",
     "feathers-nedb-fuzzy-search": "^1.1.1",
     "helmet": "^3.12.1",
     "http-proxy-middleware": "^0.17.4",
     "nedb": "^1.8.0",
-    "npm": "^6.1.0",
+    "npm": "^6.2.0",
     "winston": "^2.4.3"
   }
 }
