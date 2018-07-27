@@ -12,8 +12,6 @@ const invitations = require('./invitations/invitations.service.js');
 
 const treeView = require('./tree-view/tree-view.service.js');
 
-const dumpService = require('./dump-service/dump-service.service.js');
-
 module.exports = function() {
   const app = this; // eslint-disable-line no-unused-vars
 
@@ -23,6 +21,6 @@ module.exports = function() {
   app.configure(history)
   app.configure(conversation)
   app.configure(invitations)
-  app.configure(treeView);
-  app.configure(dumpService);
-};
+  app.configure(treeView)
+
+}
