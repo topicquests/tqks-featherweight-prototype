@@ -103,9 +103,13 @@ export default {
         treeview.get(id)
           .then(function (tree) {
             console.info('QuestTreeView', tree)
-            const result = []
-            result.push(tree)
-            self.$store.commit('tree', result)
+            const img = tree.img
+            // only show the tree if the root is a map
+            if (img === 'statics/images/ibis/map_sm.png') {
+              const result = []
+              result.push(tree)
+              self.$store.commit('tree', result)
+            }
           })     
       } catch (err) {
         console.log('QuestViewTreeError', err)
