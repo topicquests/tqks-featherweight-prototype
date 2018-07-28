@@ -20,7 +20,7 @@ class Service {
     return []
   }
 
-  populateKids (questionArray, answerArray, proArray, conArray) {
+  populateKids (questionArray, answerArray, proArray, conArray, tagArray) {
     let result = [] // always return at least an empty list
     var i
     if (questionArray) {
@@ -41,6 +41,11 @@ class Service {
     if (conArray) {
       for (i in conArray) {
         result.push(conArray[i])
+      }
+    }
+    if (tagArray) {
+      for (i in tagArray) {
+        result.push(tagArray[i])
       }
     }
     return result
@@ -74,7 +79,7 @@ class Service {
     thisNode.label = node.label
     thisNode.img = node.imgsm
     thisNode.expanded = true
-    childArray = this.populateKids(node.questions, node.answers, node.pros, node.cons)
+    childArray = this.populateKids(node.questions, node.answers, node.pros, node.cons, node.tags)
     thisNode.children = []
     const arrPromises = childArray.map( child => this.toJsTree(child, level));
     const children = await Promise.all(arrPromises)

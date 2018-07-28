@@ -38,6 +38,11 @@
               <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${q.type}/${q.id}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
+        <div class="columnx" style="text-align: center;">
+              <img class="headerimage" src="statics/images/tag.png">Tags
+              <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.id}`">
+              <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
       </div>
       <div class="datacontainer">
         <q-list class="datacolumn">
@@ -58,6 +63,11 @@
         <q-list class="datacolumn">
           <q-item class="node" v-for="con in q.cons" :key="con.id">
             <router-link :to="{ name: 'questview', params: { id: con.id }}">{{ con.label }}</router-link>
+          </q-item>
+        </q-list>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="tag in q.tags" :key="tag.id">
+            <router-link :to="{ name: 'tagview', params: { id: tag.id }}">{{ con.label }}</router-link>
           </q-item>
         </q-list>
       </div>
@@ -192,7 +202,7 @@ export default {
  * The formula seems to be column width * num colums + 100px  2500
  */
 .columncontainer {
-  width: 1200px;
+  width: 1400px;
 }
 
 .columnx {

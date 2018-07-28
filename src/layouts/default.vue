@@ -56,7 +56,7 @@
       overlay
       no-hide-on-route-change
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
-      <h6>Tree View</h6>
+      <h6 @click="rightDrawerOpen = false">Tree View</h6>
       <div>
         <q-tree v-if="simple"
           :nodes="simple"
@@ -101,6 +101,11 @@
         <q-item to="/aboutc">
           <q-item-side icon="help" />
           <q-item-main label="Quests Help" />
+        </q-item>
+
+        <q-item to="/tags">
+          <q-item-side icon="check_box" />
+          <q-item-main label="Tags" />
         </q-item>
 
         <q-item to="/ether">
