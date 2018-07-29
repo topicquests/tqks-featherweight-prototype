@@ -67,7 +67,7 @@
         </q-list>
         <q-list class="datacolumn">
           <q-item class="node" v-for="tag in q.tags" :key="tag.id">
-            <router-link :to="{ name: 'tagview', params: { id: tag.id }}">{{ con.label }}</router-link>
+            <router-link :to="{ name: 'tagview', params: { id: tag.id }}">{{ tag.label }}</router-link>
           </q-item>
         </q-list>
       </div>
@@ -237,7 +237,7 @@ export default {
 }
 
 .datacontainer {
-  width: 1200px;
+  width: 1400px;
 }
 
 .headerimage {

@@ -13,10 +13,12 @@ const populateChildren = async function (hook, conv) {
         const promises = conv[type].map(async (id) => {
           console.info('Fetching child id', type, id)
           var theData
-          if (type === tags) {
+          if (type === 'tags') {
+            console.info('ConversationPopTag', id)
             const { data } = await tags.find({ query: { id }, skippop: true  })
             theData = data
           } else {
+            console.info('ConversationPopCon', id)
             const { data } = await conversation.find({ query: { id }, skippop: true  })
             theData = data
           }

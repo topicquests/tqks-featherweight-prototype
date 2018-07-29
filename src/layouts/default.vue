@@ -196,9 +196,6 @@ export default {
     }
   },
   methods: {
-    patchTree (node) {
-
-    },
     doSearch () {
       let q = this.search
       this.$router.push({ name: 'search', params: { q }})

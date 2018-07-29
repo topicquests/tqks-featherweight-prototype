@@ -6,7 +6,9 @@ module.exports = function (app) {
   const Model = new NeDB({
     filename: path.join(dbPath, 'tags.db'),
     autoload: true
-  });
+  })
+
+  Model.ensureIndex({ fieldName: 'id', unique: true })
 
   return Model;
 };
