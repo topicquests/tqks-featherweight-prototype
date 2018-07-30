@@ -50,18 +50,59 @@ export default {
       // create an array of labels based on the Labels input field
       let ta = this.labels.split(',')
       let len = ta.length
+      console.info('TX', len)
       let labelArray = []
       if (len > 0) {
         for (var i = 0; i < len; i++) {
+          console.info('TY', ta[i])
           labelArray.push(ta[i].trim())
         }
       } else if (ta !== '') {
         labelArray.push(ta.trim())
-      }
+      }      
       console.info('TagProcessLabels', labelArray.length)
       if (labelArray.length > 0) {
         this.findOrCreateTags(labelArray)
       }
+    },
+    grabTag (id, callback) {
+      tags.find({ query: { 'id':id, skippop:true } }) 
+        .then((response) => {
+          return callback(response.data[0])
+        })
+        .catch((err) => {
+          console.info('TagFindeOrCreate Error', err)
+          return callback(undefined)
+        })
+    },
+    findOrCreateTag (label, callback) {
+      console.info('NT', label)
+      // returns a tag, either new or existing
+      let id = this.labelToId(label)
+      console.info('NT-1', id)
+      let self = this
+      this.grabTag(id, function (theTag) {
+        console.info('NT-2', theTag)
+        if (theTag) {
+          return callback(theTag)
+        } else {
+          console.info('NTC')
+          // create a new tag
+          var json = {}
+          json.id = id
+          json.label = label
+          json.creator = self.user._id
+          json.handle = self.user.handle
+          json.date = new Date()
+          json.type = 'tag'
+          tags.create(json)
+            .then((response) => {
+              console.info('TagCreate', response)
+              return callback(response)
+            })
+        }
+      })
+          
     },
     findOrCreateTags (labelArray) {
       // Each label in labelArray will become a tag
@@ -70,41 +111,28 @@ export default {
       // and the node associated with parentId must know about tag
       var theLabel
       var theId
-      var theTag
       let len = labelArray.length
-      for (var i = 0; i < len; i++) {
-        theLabel = labelArray[i]
-        console.info('TagFinding', len, theLabel)
-        theId = this.labelToId(theLabel)
-        tags.find({ query: { 'id':theId, skippop:true } })
-          .then((response) => {
-            console.info('TagGrabX', response)
-            theTag = response.data[0]
-            console.info('TagFindOrCreate', theTag)
-            if (theTag) {
-              this.processTag(theTag)
-            } else {
-              this.createTag(theId, theLabel)
-            }
-          })
-          .catch((err) => {
-          //Do nothing
-          })
+      let self = this
+      function next () {
+        if (labelArray.length === 0) {
+          console.info('TA0')
+          return self.$router.push({name: 'questview', params: { 'id':self.parentId }})
+        } else {
+          theLabel = labelArray.pop()
+          if (theLabel && theLabel !== '') {
+            console.info('TA', theLabel)
+            self.findOrCreateTag(theLabel, function (theTag) {
+              console.info('TB', theTag)
+              self.processTag(theTag)
+              next()
+            })
+          } else {
+            next()
+          }
+        }
       }
-      this.$router.push({name: 'questview', params: { 'id':this.parentId }})
-
-    },
-    grabTag (tagId) {
-      // can return null
-      // get it without populating it
-      tags.find({ query: { 'id':tagId, skippop:true } })
-        .then((response) => {
-          console.info('TagGrab', tagId, response)
-          return response.data[0]
-        })
-        .catch((err) => {
-          //Do nothing
-        })
+      // kickstart
+      next()
     },
     processTag (tag) {
       console.info('TagProcess', tag)
@@ -141,22 +169,6 @@ export default {
               })
           }
           console.info('TagProcess-4')
-        })
-    },
-    createTag (tagId, label) {
-      console.info('TagCreate', tagId)
-      // create a new tag
-      var json = {}
-      json.id = tagId
-      json.label = label
-      json.creator = this.user._id
-      json.handle = this.user.handle
-      json.date = new Date()
-      json.type = 'tag'
-      tags.create(json)
-        .then((response) => {
-          console.info('TagCreate', response)
-          return this.processTag(response)
         })
     }
   },
