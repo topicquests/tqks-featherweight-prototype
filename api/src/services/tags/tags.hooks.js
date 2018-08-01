@@ -6,7 +6,8 @@ const populateChildren = async function (hook, tag) {
   // Walk along child node types
     // If it's there and has some elements
   const mynodes = tag.nodes
-  if (mynodes !== 'undefined' && mynodes.length > 0) {
+  console.info('TagsHooksMyNodes', mynodes)
+  if (mynodes !== undefined && mynodes.length > 0) {
       // walk along the node's array carried in the hook
       const promises = mynodes.map(async (id) => {
         console.info('Fetching child id', id)

@@ -145,11 +145,6 @@ export default {
           console.info('SINGLE', JSON.stringify(single))
         } catch (e) {
           console.info('Initialize', 'fetching data for ', id, 'error', e)
-          // It is likely a tag. We should put '_TAG' on Tag IDs 
-          // to make this easier.
-          // At issue: Search treats everything as a quest, but tags
-          // show up in searches.
-          this.$router.push({ name: 'tagview', params: { id: id }})
         }
       }
     },

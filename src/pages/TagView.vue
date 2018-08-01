@@ -1,5 +1,5 @@
 <template>
-    <q-page :padding="true" class="flex flex-left">
+    <q-page :padding="true" >
       <h4><img style="margin-right:4px;" src="statics/images/tag.png">{{ label }}</h4>
         <q-scroll-area style="width: 800px; height: 800px;">
           <q-list v-if="nodes" v-for="node in nodes" :key="node.id">

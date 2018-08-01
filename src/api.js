@@ -15,5 +15,7 @@ api.service('/users')
 api.service('/messages')
 api.service('/conversation')
 api.service('/tree-view')
+api.service('/tags')
+api.service('/search')
 
 export default api
