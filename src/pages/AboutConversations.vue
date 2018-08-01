@@ -1,7 +1,7 @@
 <template>
     <q-page :padding="true" class="flex flex-left">
     <div style="height:400px; overflow-y:scroll;" id="topbox">
-      <h2>Quests and Structured Conversations</h2>
+      <h3>Quests and Structured Conversations</h3>
       All <i>conversations</i> in FeatherWeight are <i>structured</i>. This means that they take the shape of a 
       <i>rooted tree</i> with possibly many tree branches. 
 

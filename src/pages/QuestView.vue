@@ -105,7 +105,8 @@ export default {
             console.info('QuestTreeView', tree)
             const img = tree.img
             // only show the tree if the root is a map
-            if (img === 'statics/images/ibis/map_sm.png') {
+            if (img === 'statics/images/ibis/map_sm.png' ||
+                img === 'statics/images/bookmark_sm.png') {
               const result = []
               result.push(tree)
               self.$store.commit('tree', result)

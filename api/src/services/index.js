@@ -26,4 +26,5 @@ module.exports = function() {
   app.configure(treeView)
 
   app.configure(tags);
+
 }

@@ -93,6 +93,16 @@
           <q-item-main label="History" />
         </q-item>
 
+        <q-item to="/bookmarks">
+          <q-item-side icon="bookmark" />
+          <q-item-main label="Bookmarks" />
+        </q-item>
+
+        <q-item to="/aboutb">
+          <q-item-side icon="help" />
+          <q-item-main label="Bookmarks Help" />
+        </q-item>
+
         <q-item to="/quests">
           <q-item-side icon="explore" />
           <q-item-main label="Quests" />
@@ -106,6 +116,11 @@
         <q-item to="/tags">
           <q-item-side icon="check_box" />
           <q-item-main label="Tags" />
+        </q-item>
+
+        <q-item to="/aboutt">
+          <q-item-side icon="help" />
+          <q-item-main label="Tags Help" />
         </q-item>
 
         <q-item to="/ether">
