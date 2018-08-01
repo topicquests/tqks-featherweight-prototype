@@ -1,4 +1,5 @@
 const { authenticate } = require('@feathersjs/authentication').hooks
+const search = require('feathers-nedb-fuzzy-search')
 
 const populateChildren = async function (hook, tag) {
   const { conversation } = hook.app.services
@@ -72,7 +73,10 @@ const compactDB  = async function (hook) {
 module.exports = {
   before: {
     all: [],
-    find: [hookBeforeFind],
+    find: [hookBeforeFind, search({
+      fields: ['label'],
+      deep: true
+    })],
     get: [],
     create: [ authenticate('jwt') ],
     update: [ authenticate('jwt') ],

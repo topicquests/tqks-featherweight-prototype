@@ -95,6 +95,8 @@ export default {
           json.handle = self.user.handle
           json.date = new Date()
           json.type = 'tag'
+          json.img = 'statics/images/tag.png'
+          json.imgsm = 'statics/images/tag_sm.png'
           tags.create(json)
             .then((response) => {
               console.info('TagCreate', response)

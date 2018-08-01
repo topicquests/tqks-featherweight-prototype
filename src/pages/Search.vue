@@ -21,6 +21,7 @@
 <script>
 import api from 'src/api'
 const conversation = api.service('conversation')
+const tags = api.service('tags')
 export default {
   data () {
     return {
@@ -30,24 +31,45 @@ export default {
   },
   methods: {
     doSearch () {
+      let result = []
       let q = this.query
-      conversation.find({ query: { $limit: 25, $search: q }})
+      conversation.find({ query: { $limit: 100, $search: q, skippop:true }})
         .then ((response) => {
           // alert(JSON.stringify(response))
           let hits = response.data
-          // alert(JSON.stringify(hits))
+          //alert(JSON.stringify(hits))
+          console.info('SrchCon', JSON.stringify(hits))
           if (hits) {
-            this.hits = hits
-          } else {
-            this.$q.notify({type: 'positive', message: 'No hits found'})
+            for (var i = 0; i < hits.length; i++) {
+              result.push(hits[1])
+            }
+            
           }
+          tags.find({ query: { $limit: 100, $search: q, skippop:true }})
+            .then ((response) => {
+              // alert(JSON.stringify(response))
+              let hits = response.data
+              //alert(JSON.stringify(hits))
+              console.info('SrchTag', JSON.stringify(hits))
+              if (hits) {
+                for (var i = 0; i < hits.length; i++) {
+                  result.push(hits[i])
+                }
+              }
+              console.info('SrchHits', JSON.stringify(result))
+              this.hits = result
+            })
+            .catch ((err) => {
+              console.info('tagSearchError', err)
+            })
         })
         .catch ((err) => {
-          console.log('SearchError', err)
+          console.ingo('ConversationSearchError', err)
         })
     }
   },
   mounted () {
+    this.$store.commit('questView', false)
     let q = this.$route.params.q
     console.info('SRCH',  q)
     this.$data.query = q
