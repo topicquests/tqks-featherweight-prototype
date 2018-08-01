@@ -123,11 +123,11 @@
           <q-item-main label="Tags Help" />
         </q-item>
 
-        <q-item to="/ether">
+    <!--    <q-item to="/ether">
           <q-item-side icon="language" />
           <q-item-main label="Etherpad Home" />
         </q-item>
-
+    -->
         <q-item v-if="isAdmin" to="/admin">
           <q-item-side icon="settings" />
           <q-item-main label="Admin" />
@@ -198,15 +198,6 @@ export default {
     },
     simple () {
       const tre = this.$store.getters.treeView
-      
-      // if (tre) {
-      //   const nod = tre[0]
-      //   console.log('NN', nod)
-      //   const generateHandler = (id) => (id) => this.myClick(id);
-      //   //tre.map(a => {
-      //     nod.handler = generateHandler(nod.id)
-      //   //})
-      // }
       return tre
     }
   },
