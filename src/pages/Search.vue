@@ -9,8 +9,7 @@
       <q-scroll-area style="width: 800px; height: 800px;">
           <q-list v-for="quest in hits" :key="quest.id">
             <q-item>
-              <!-- NOTE: adding /index.html# makes this work, but it's a hack style="margin-right: 4px"-->
-              <a :href="`/index.html#/questview/${quest.id}`"><img  style="margin-right: 4px" :src="quest.imgsm">{{ quest.label }}</a>
+              <router-link :to="{ name: 'questview', params: { id: quest.id }}"><img  style="margin-right: 4px" :src="quest.imgsm">{{ quest.label }}</router-link>
             </q-item>
           </q-list>
         </q-scroll-area>
