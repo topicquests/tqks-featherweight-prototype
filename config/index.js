@@ -56,7 +56,17 @@ module.exports = {
     proxyTable: {
       '/api': {
         target: 'http://localhost:8081',
-        changeOrigin: true
+        pathRewrite: {
+          '^/api': ''
+        },
+        ws: true
+      },
+      '/socket.io': {
+        target: 'http://localhost:8081',
+        // pathRewrite: {
+        //   '^/api': ''
+        // },
+        ws: true
       },
       '/etherpad': {
         target: 'http://localhost:9001',

@@ -3,9 +3,7 @@ import socketio from '@feathersjs/socketio-client'
 import auth from '@feathersjs/authentication-client'
 import io from 'socket.io-client'
 
-const { hostname, protocol } = window.document.location;
-const apiServer = `${protocol}//${hostname}:8081`;
-const socket = io(apiServer, {transports: ['websocket']})
+const socket = io('/', {path: '/socket.io'});
 
 const api = feathers()
   .configure(socketio(socket))

@@ -17,6 +17,7 @@
     "engine.io-client": "^3.1.4",
     "etherpad-lite-client": "^0.8.0",
     "feathers-vuex": "^1.4.8",
+    "http-proxy-middleware": "^0.18.0",
     "isarray": "^2.0.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
