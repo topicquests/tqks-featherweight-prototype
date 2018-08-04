@@ -1,6 +1,6 @@
 <template>
   <q-page :padding="true">
-    <q-btn style="margin-bottom: 4px;" label="New Quest" @click="$router.replace('/questedit')" />
+    <q-btn v-if="isAuthenticated" style="margin-bottom: 4px;" label="New Quest" @click="$router.replace('/questedit')" />
 
         <q-table
           title="My Quests"
@@ -82,7 +82,7 @@
             sortable: true
           },
         ],
-        isAuthenticated: true,
+        isAuthenticated: false,
         serverPagination: {},
         serverData: []
       }
@@ -122,9 +122,8 @@
       }
     },
     mounted() {
-      if (this.user) {
-        this.$data.isAuthenticated = true
-      }
+      this.$data.isAuthenticated = this.$store.getters.isAuthenticated,
+      
       this.request({
         pagination: this.serverPagination
       })

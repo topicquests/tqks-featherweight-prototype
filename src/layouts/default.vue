@@ -45,13 +45,13 @@
         </q-btn>
         <q-btn v-if="isQuestView" flat dense round
           aria-label="Tree View"
-          @click="rightDrawerOpen = !rightDrawerOpen"
+          @click="toggleNav"
         >
         <q-icon name="menu" />
         </q-btn>
       </q-toolbar>
     </q-layout-header>
-    <q-layout-drawer side = "right"
+    <!--<q-layout-drawer side = "right"
       v-model="rightDrawerOpen"
       overlay
       no-hide-on-route-change
@@ -65,7 +65,17 @@
           :selected.sync="selected"
         />
         </div>
-    </q-layout-drawer>
+    </q-layout-drawer>-->
+    <div id="mySidenav" class="sidenav">
+      <div>
+        <q-tree v-if="simple"
+          :nodes="simple"
+          node-key="id"
+          default-expand-all
+          :selected.sync="selected"
+        />
+      </div>
+    </div>
 
     <q-layout-drawer side = "left"
       v-model="leftDrawerOpen"
@@ -202,6 +212,19 @@ export default {
     }
   },
   methods: {
+    toggleNav () {
+      if (this.rightDrawerOpen) {
+        this.closeNav()
+      } else {
+        this.rightDrawerOpen = true
+        document.getElementById("mySidenav").style.width = "450px";
+      }
+    },
+    closeNav () {
+      this.rightDrawerOpen = false
+      document.getElementById("mySidenav").style.width = "0";
+    },
+
     doSearch () {
       let q = this.search
       this.$router.push({ name: 'search', params: { q }})
@@ -291,7 +314,18 @@ export default {
 </script>
 
 <style>
-
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: rgb(218, 212, 212);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
 img.q-tree-img.q-mr-sm {
     height: 20px;
 }
