@@ -10,6 +10,7 @@
       </span>
       <hr/>
       <q-scroll-area v-html="q.details" style="max-width: 960px; height: 400px; overflow-wrap: normal;">
+        <p v-html="q.details"></p>
       </q-scroll-area>
     </div>
     <!-- Edit and other controls go here -->
