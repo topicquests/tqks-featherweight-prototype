@@ -9,8 +9,8 @@
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
       <hr/>
-      <q-scroll-area v-html="q.details" style="max-width: 960px; height: 400px; overflow-wrap: normal;">
-        <p v-html="q.details"></p>
+      <q-scroll-area class="details">
+        <div  v-html="q.details"></div>
       </q-scroll-area>
     </div>
     <!-- Edit and other controls go here -->
@@ -91,7 +91,6 @@ export default {
       setTimeout(() => {
         this.initialize.apply(this).then(() => {
           console.info('Router', 'done')
-          // next()
         })
       }, 500)
     },
@@ -180,7 +179,14 @@ export default {
 </script>
 
 <style lang="styl">
-
+.scroll.relative-position.overflow-hidden.fit.q-touch {
+    user-select: auto !important;
+}
+.details {
+  max-width: 960px; 
+  height: 400px; 
+  overflow-wrap: normal;
+}
 .spanwrap {
   float: left;
   word-wrap: normal;
