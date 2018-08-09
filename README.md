@@ -16,6 +16,20 @@ Two terminals.
 * Root: quasar dev
 * /api: npm run dev
 
+### Production Mode
+```
+npm install -g pm2;
+
+quasar build;
+pm2 start ecosystem.config.js;
+```
+
+### Docker
+```
+docker build -t handle/tqfw:tag   .
+docker run -p 3000:80 handle/tqfw:tag
+```
+
 ### Other than Localhost
 * /config/index.js proxyTable target must reflect the domain, not localhost
 * /src/api.js socket must reflect the domain, not localhost
