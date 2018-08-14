@@ -1,6 +1,6 @@
 <template>
   <q-page :padding="true">
-    <q-btn v-if="isAuthenticated" style="margin-bottom: 4px;" label="New Topic" @click="$router.replace('/questedit')" />
+    <q-btn v-if="isAuthenticated" style="margin-bottom: 4px;" label="New Topic" @click="$router.replace('/topicedit')" />
 
         <q-table
           title="Topics"
@@ -22,7 +22,7 @@
                   {{props.row.date}}
                 </q-td>
                 <q-td key="id" auto-width :props="props">
-                  <router-link :to="{ name: 'questview', params: { id:  props.row.id }}">View</router-link>
+                  <router-link :to="{ name: 'topicview', params: { id:  props.row.id }}">View</router-link>
                 </q-td>
         </q-tr>
         </template>
