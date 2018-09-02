@@ -7,8 +7,12 @@ COPY src /app/src
 COPY api /app/api
 COPY config /app/config
 COPY package.json package-lock.json quasar.conf.js server.js ecosystem.config.js /app/
+COPY docker-start.sh /app/docker-start.sh
 
 ENV NPM_CONFIG_LOGLEVEL warn
+ENV IS_PRIVATE_PORTAL false
+ENV REQUIRES_INVITE false
+ENV ADMIN_EMAIL "sue@sixpack.com"
 
 # Install app dependencies
 RUN npm i -g quasar-cli
@@ -16,7 +20,6 @@ RUN ls -lt
 RUN npm install
 RUN quasar build
 RUN echo "Done with Client"
-RUN cd api && npm install && npm run build
 
 EXPOSE 80
-CMD [ "pm2-runtime", "start", "ecosystem.config.js", "--env", "production" ]
+CMD [ "sh", "docker-start.sh" ]

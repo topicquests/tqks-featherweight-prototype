@@ -1,15 +1,21 @@
 var path = require('path')
 
+const {
+  IS_PRIVATE_PORTAL = false,
+  REQUIRES_INVITE = false,
+  ADMIN_EMAIL = 'sue@sixpack.com'
+} = process.env
+
 module.exports = {
   // PORTAL
   // Portal can be private, in which case, it forces Login
-  isPrivatePortal: false,
+  isPrivatePortal: IS_PRIVATE_PORTAL,
   // When true, for an email to signup, it must be on an invitation list
   // An admin handles the invitation list
-  requiresInvite: false,
+  requiresInvite: REQUIRES_INVITE,
   // This email defines which account is the first Admin
   // Admins might be able to assign roles to other accounts
-  adminEmail: 'sue@sixpack.com',
+  adminEmail: ADMIN_EMAIL,
   // Webpack aliases
   aliases: {
     quasar: path.resolve(__dirname, '../node_modules/quasar-framework/'),
