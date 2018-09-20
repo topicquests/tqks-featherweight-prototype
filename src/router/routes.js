@@ -29,7 +29,7 @@ export default [
       { path: '/userview/:id', name: 'userview', component: () => import('pages/UserView'), props: true },
       { path: '/tagview/:id', name: 'tagview', component: () => import('pages/TagView'), props: true },
       { path: '/tagform/:id', name: 'tagform', component: () => import('pages/TagForm'), props: true },
-      { path: '/nodeedit/:type/:parentType/:id/:label', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
+      { path: '/nodeedit/:type/:parentType/:id', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
       { path: '/nodeupdate/:type/:id', name: 'nodeupdate', component: () => import('pages/NodeForm'), props: true }
 
     ]

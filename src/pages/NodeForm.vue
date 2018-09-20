@@ -154,15 +154,17 @@ export default {
           json.imgsm = 'statics/images/ibis/minus_sm.png'
         }
         json.parentId = this.$data.parentId
-        json.parentLabel = this.$data.parentLabel
+        
         const idx = this.$data.parentId
-        conversation.create(json).then((response) => {
+        conversation.find({ query: { 'id':this.parentId, skippop:true } })
+          .then((response) => {
+            var x = response.data[0]
+            this.$data.parentLabel = x.label
+            json.parentLabel = this.$data.parentLabel
+            conversation.create(json).then((response) => {
           // alert(JSON.stringify(response))
-          const id= response.id;
+              const id= response.id;
           // alert(idx+' '+id)
-          conversation.find({ query: { 'id':this.parentId, skippop:true } })
-            .then((response) => {
-              var x = response.data[0]
               // alert(JSON.stringify(x))
               var kids = []
               if (typ === 'question') {
@@ -216,7 +218,6 @@ export default {
       // called by the route 'nodeedit'
       this.$data.parentId = this.$route.params.id
       this.$data.parentType = this.$route.params.parentType
-      this.$data.parentLabel = this.$route.params.label
     }
   }
 }

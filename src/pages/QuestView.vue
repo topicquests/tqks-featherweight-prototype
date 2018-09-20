@@ -20,22 +20,22 @@
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${q.type}/${q.id}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${q.type}/${q.id}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
-              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/ibis/minus.png">Con
-              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${q.type}/${q.id}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${q.type}/${q.id}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">

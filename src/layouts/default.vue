@@ -128,10 +128,10 @@
           <q-item-main label="Quests Help" />
         </q-item>
 
-        <q-item to="/topics">
+        <!--<q-item to="/topics">
           <q-item-side icon="info" />
           <q-item-main label="Topics" />
-        </q-item>
+        </q-item>-->
 
         <q-item to="/tags">
           <q-item-side icon="check_box" />
