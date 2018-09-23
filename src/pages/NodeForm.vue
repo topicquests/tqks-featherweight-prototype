@@ -8,7 +8,7 @@
         </div>
         <div>
           <b>URL</b> (Optional)<br/>
-          <q-input v-model="url" />
+          <q-input v-model="url" type="url"/>
         </div>
         <div>
           <b>Details</b><br/>
@@ -99,9 +99,21 @@ export default {
     }
   },
   methods: {
+    validateURL () {
+      var urx = this.url
+      if (urx !== '') {
+        if ((!/^https?:\/\//i.test(urx)) || 
+            (!/^ftp:\/\//i.test(urx))) {
+                        urx = 'http://' + urx;
+                        this.url = urx
+                    }
+
+      }
+    },
     doUpdate () {
       conversation.get(this.myId)
         .then ((response ) => {
+          this.validations()
           this.myNode = response
           this.label = response.label
           this.details = response.details
@@ -111,6 +123,7 @@ export default {
     async doSubmit () {
       // alert(this.label)
       // alert(this.details);
+      this.validateURL()
       var typ = this.$data.type
       const params = {}
         params.depth = 0
