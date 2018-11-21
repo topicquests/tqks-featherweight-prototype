@@ -5,7 +5,7 @@
           <q-list v-for="quest in rawData" :key="quest.id">
             <q-item>
               <!-- NOTE: adding /index.html# makes this work, but it's a hack style="margin-right: 4px"-->
-              <a :href="`/index.html#/questview/${quest.id}`"><img  style="margin-right: 4px" :src="quest.imgsm">{{ quest.label }}</a>
+              <a :href="`/index.html#/${historyList(quest.type)}/${quest.id}`"><img  style="margin-right: 4px" :src="quest.imgsm">{{ quest.label }}</a>
             </q-item>
           </q-list>
         </q-scroll-area>
@@ -18,11 +18,7 @@ export default {
   data () {
     return {
         rawData: []
-
     }
-  },
-  methods: {
-
   },
   mounted () {
     const conversation = api.service('conversation')
@@ -39,6 +35,12 @@ export default {
         // alert(JSON.stringify(response.data))
         this.$data.rawData = response.data
       })
+  },
+  methods: {
+    historyList: function(type) {
+      console.log('HX',type)
+      return type === 'topic' ? 'topicView' : 'questView';
+    }
   }
 }
 </script>

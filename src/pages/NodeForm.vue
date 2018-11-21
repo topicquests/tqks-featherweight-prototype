@@ -101,6 +101,7 @@ export default {
   methods: {
     validateURL () {
       var urx = this.url
+      //see to it that, if there is a url, it's valid
       if (urx !== '') {
         if ((!/^https?:\/\//i.test(urx)) || 
             (!/^ftp:\/\//i.test(urx))) {
@@ -127,8 +128,7 @@ export default {
       var typ = this.$data.type
       const params = {}
         params.depth = 0
-      if (typ === 'update') {
-        
+      if (typ === 'update') {        
         conversation.find({ query: { 'id':this.myId, skippop:true } })
           .then ((response) => {
             var json = response.data[0]
@@ -138,10 +138,10 @@ export default {
             json.url = this.url
             console.info('NVU-1', json)
             conversation.update(json.id, json)
-                .then((response) => {
-                  console.info('NVU-2', response)
-                  router.push({name: 'questview', params: { 'id':json.id }})
-                })
+              .then((response) => {
+                console.info('NVU-2', response)
+                router.push({name: 'questview', params: { 'id':json.id }})
+              })
           })
       } else {
         var json = {}

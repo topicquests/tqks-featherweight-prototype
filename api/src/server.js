@@ -18,6 +18,18 @@ const appHooks = require('./main.hooks')
 
 const authentication = require('./authentication')
 
+const configFile = require('../../config/index')
+
+function boot () {
+  let isPrivatePortal = process.env.IS_PRIVATE
+  let requiresInvite = process.env.REQUIRE_INVITE
+  let adminEmail = process.env.ADMIN_EMAIL
+  console.log('Booting Server', isPrivatePortal, requiresInvite, adminEmail, configFile)
+  if (isPrivatePortal || requiresInvite || adminEmail) {
+    //modify the config file
+  }
+}
+
 export class Server {
   constructor() {
     this.app = express(feathers())
@@ -32,6 +44,8 @@ export class Server {
       const staticsPath = path.posix.join(this.app.get('client').dev.publicPath, 'statics/')
       this.app.use(staticsPath, express.static('../client/statics'))
     }
+    // boot config data
+    boot()
 
     // Define HTTP proxies to your custom API backend. See /config/index.js -> proxyTable
     // https://github.com/chimurai/http-proxy-middleware

@@ -21,6 +21,7 @@ export default {
     return {
       label: '',
       id: '',
+      type: '',
       nodes: null
     }
   },

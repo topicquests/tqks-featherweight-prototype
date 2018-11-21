@@ -8,22 +8,22 @@
           :columns="columns"
         >
        <template slot="body" slot-scope="props">
-          <q-tr :props="props">
-               <q-td  key="type" style="width: 30px"  :props="props">
-                      <img :class="ibis-icon" src="statics/images/cogwheel_sm.png" >
-                    </q-td>
-                <q-td key="label" :props="props">
-                  {{props.row.label}}
-                </q-td>
-                <q-td key="handle" :props="props">
-                  {{props.row.handle}}
-                </q-td>
-                <q-td key="date" :props="props">
-                  {{props.row.date}}
-                </q-td>
-                <q-td key="id" auto-width :props="props">
-                  <router-link :to="{ name: 'topicview', params: { id:  props.row.id }}">View</router-link>
-                </q-td>
+        <q-tr :props="props">
+          <q-td  key="type" style="width: 30px"  :props="props">
+            <img  src="statics/images/cogwheel_sm.png" >
+          </q-td>
+          <q-td key="label" :props="props">
+            {{props.row.label}}
+          </q-td>
+          <q-td key="handle" :props="props">
+            {{props.row.handle}}
+          </q-td>
+          <q-td key="date" :props="props">
+            {{props.row.date}}
+          </q-td>
+          <q-td key="id" auto-width :props="props">
+            <router-link :to="{ name: 'topicview', params: { id:  props.row.id }}">View</router-link>
+          </q-td>
         </q-tr>
         </template>
     

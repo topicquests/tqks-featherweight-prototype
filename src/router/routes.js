@@ -21,6 +21,7 @@ export default [
       { path: '/ether', name: 'ether', component: () => import('pages/EtherpadView') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },
       { path: '/topicedit', name: 'topicedit', component: () => import('pages/TopicEdit') },
+      { path: '/topicchild/:id/:type', name: 'topicchild', component: () => import('pages/TopicEdit') },
       { path: '/bookmarkview/:id', name: 'bookmarkview', component: () => import('pages/QuestView'), props: true },
       { path: '/questview/:id', name: 'questview', component: () => import('pages/QuestView'), props: true },
       { path: '/topicview/:id', name: 'topicview', component: () => import('pages/TopicView'), props: true },

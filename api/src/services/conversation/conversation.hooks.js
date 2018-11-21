@@ -2,37 +2,37 @@ const { authenticate } = require('@feathersjs/authentication').hooks
 const search = require('feathers-nedb-fuzzy-search')
 
 const populateChildren = async function (hook, conv) {
-  const toCheck = ['answers', 'questions', 'pros', 'cons', 'tags']
+  const toCheck = ['answers', 'questions', 'pros', 'cons', 'tags', 'subclasses', 'instances']
   const { conversation, tags } = hook.app.services
   // Walk along child node types
   for (let i = 0; i < toCheck.length; i++) {
     let type = toCheck[i]
     // If it's there and has some elements
     if (typeof conv[type] !== 'undefined' && conv[type].length > 0) {
-        // walk along the node's array carried in the hook
-        const promises = conv[type].map(async (id) => {
-          console.info('Fetching child id', type, id)
-          var theData
-          if (type === 'tags') {
-            console.info('ConversationPopTag', id)
-            const { data } = await tags.find({ query: { id }, skippop: true  })
-            theData = data
-          } else {
-            console.info('ConversationPopCon', id)
-            const { data } = await conversation.find({ query: { id }, skippop: true  })
-            theData = data
-          }
-          console.info('Fetching child found', id, theData)
-          // if this returns nothing, you see empty nodes
-          // returning data[0] shows nodes
-          // console.info('foo', data && data[0])
-          // console.info('bar', data)
-          // returning data && data[0] is equivalent to returning data[0]
-          return theData[0]
-          // return data && data[0]
-          // To paint full child nodes, this must return the fetched node
-          // That is the node which will populate the final array below
-        })
+      // walk along the node's array carried in the hook
+      const promises = conv[type].map(async (id) => {
+        console.info('Fetching child id', type, id)
+        var theData
+        if (type === 'tags') {
+          console.info('ConversationPopTag', id)
+          const { data } = await tags.find({ query: { id }, skippop: true  })
+          theData = data
+        } else {
+          console.info('ConversationPopCon', id)
+          const { data } = await conversation.find({ query: { id }, skippop: true  })
+          theData = data
+        }
+        console.info('Fetching child found', id, theData)
+        // if this returns nothing, you see empty nodes
+        // returning data[0] shows nodes
+        // console.info('foo', data && data[0])
+        // console.info('bar', data)
+        // returning data && data[0] is equivalent to returning data[0]
+        return theData[0]
+        // return data && data[0]
+        // To paint full child nodes, this must return the fetched node
+        // That is the node which will populate the final array below
+      })
       
       try {
         console.info('Populating')

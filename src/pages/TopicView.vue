@@ -17,26 +17,24 @@
     </div>
     <!-- Edit and other controls go here -->
     <router-link v-if="canEdit" style="margin-left:20px;" :to="{ name: 'nodeupdate', params: { type: 'update', id: q.id }}"><b>Edit This Node</b></router-link>
-    <!-- TODO add controls for New Subclass -->
-    <!-- TODO enumerate existing subclasses -->
-    <!-- What follows is any conversations around this topic -->
+    <!-- What follows is any child nodes and tags around this topic -->
     <!-- TODO ADD Connections -->
     <div class="columnscroller">
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
-              <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${q.type}/${q.id}`">
-              <img class="respond" src="statics/images/respond_sm.png"></a>
+          <img class="headerimage" src="statics/images/ibis/issue.png">Questions
+          <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${q.type}/${q.id}`">
+          <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
-              <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
-              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}`">
-              <img class="respond" src="statics/images/respond_sm.png"></a>
+          <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
+          <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}`">
+          <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
-              <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}`">
-              <img class="respond" src="statics/images/respond_sm.png"></a>
+          <img class="headerimage" src="statics/images/ibis/plus.png">Pro
+          <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}`">
+          <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/ibis/minus.png">Con
@@ -44,9 +42,19 @@
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
-              <img class="headerimage" src="statics/images/tag.png">Tags
-              <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.id}`">
-              <img class="respond" src="statics/images/respond_sm.png"></a>
+          <img class="headerimage" src="statics/images/cogwheel.png">Subclasses
+          <a v-if="isAuthenticated" :href="`/index.html#/topicchild/${q.id}/subclass`">
+          <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
+        <div class="columnx" style="text-align: center;">
+          <img class="headerimage" src="statics/images/cogwheel.png">Instances
+          <a v-if="isAuthenticated" :href="`/index.html#/topicchild/${q.id}/instance`">
+          <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
+        <div class="columnx" style="text-align: center;">
+          <img class="headerimage" src="statics/images/tag.png">Tags
+          <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.id}`">
+          <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
       </div>
       <div class="datacontainer">
@@ -68,6 +76,16 @@
         <q-list class="datacolumn">
           <q-item class="node" v-for="con in q.cons" :key="con.id">
             <router-link :to="{ name: 'questview', params: { id: con.id }}">{{ con.label }}</router-link>
+          </q-item>
+        </q-list>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="sub in q.subclasses" :key="sub.id">
+            <router-link :to="{ name: 'topicview', params: { id: sub.id }}">{{ sub.label }}</router-link>
+          </q-item>
+        </q-list>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="inst in q.instances" :key="inst.id">
+            <router-link :to="{ name: 'topicview', params: { id: inst.id }}">{{ inst.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
@@ -205,7 +223,6 @@ export default {
  */
 .columnscroller {
   border: 1px solid black;
-  width: 960;
   white-space:nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -217,12 +234,16 @@ export default {
  * width is set to accomodate lots of columns.
  * If they wrap when adding more columns, then
  * width must increase.
- * The formula seems to be column width * num colums + 100px  2500
+ * Lives inside #columnscroller which defaults to the parent width
+ * The formula seems to be column width * num colums + 100px
  */
 .columncontainer {
-  width: 1400px;
+ width: 2000px;
 }
 
+/** 
+ * Individual columns
+ */
 .columnx {
   float:left;
   white-space:normal;
@@ -286,7 +307,7 @@ export default {
   margin-right: 4px;
 }
 /*
- * width: 958px;
+ * 
  */
 #topbox {
   border: 1px solid black;
