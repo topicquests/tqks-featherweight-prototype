@@ -2,7 +2,7 @@ var path = require('path')
 
 const {
   IS_PRIVATE_PORTAL = false,
-  REQUIRES_INVITE = false,
+  REQUIRES_INVITE = true,
   ADMIN_EMAIL = 'sue@sixpack.com'
 } = process.env
 
