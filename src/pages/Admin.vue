@@ -38,6 +38,13 @@
               <q-input  v-model="removeUserEmail" />
               <q-btn label="Remove User" @click="removeUser" />
             </div>
+            <div class="box">
+              <h5>Manage Configuration</h5>
+              <b>Is Private: </b><q-input  v-model="isPrivatePortal" /><br/>
+              <b>Require Invite: </b><q-input  v-model="requiresInvite" /><br/>
+              <b>Admin Email: </b><q-input  v-model="adminEmail" /><br/>
+              <q-btn label="Save Config" @click="saveConfig" />
+            </div>
 
             <div class="box" style="background-color: red;">
               <h5>Change Node Type</h5>
@@ -60,7 +67,8 @@ import api from 'src/api'
 const invites = api.service('invitations')
 const users = api.service('users')
 const conversation = api.service('conversation')
-
+var config = require('../../config/index')
+const configuration = api.service('configuration')
 export default {
   data () {
     return {
@@ -71,13 +79,28 @@ export default {
       displayEmail: '',
       removeUserEmail: '',
       option: '',
-      nodeId: ''
+      nodeId: '',
+      isPrivatePortal: '',
+      requiresInvite: true,
+      adminEmail: ''
     }
   },
   mounted () {
     this.$store.commit('questView', false)
+    this.$data.isPrivatePortal = config.isPrivatePortal
+    this.$data.requiresInvite = config.requiresInvite
+    this.$data.adminEmail = config.adminEmail
   },
   methods: {
+    saveConfig() {
+      console.log("SavingConfig",this.$data.isPrivatePortal,
+        this.$data.requiresInvite,this.$data.adminEmail)
+      var json = {}
+      json.isPrivatePortal = this.$data.isPrivatePortal
+      json.requiresInvite = this.$data.requiresInvite
+      json.adminEmail = this.$data.adminEmail
+      configuration.update('', json, {})
+    },
     doRadio (event) {
       this.$data.option = event
     },
