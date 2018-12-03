@@ -95,11 +95,11 @@ export default {
     saveConfig() {
       console.log("SavingConfig",this.$data.isPrivatePortal,
         this.$data.requiresInvite,this.$data.adminEmail)
-      var json = {}
-      json.isPrivatePortal = this.$data.isPrivatePortal
-      json.requiresInvite = this.$data.requiresInvite
-      json.adminEmail = this.$data.adminEmail
-      configuration.update('', json, {})
+      //var json = {}
+      config.isPrivatePortal = this.$data.isPrivatePortal
+      config.requiresInvite = this.$data.requiresInvite
+      config.adminEmail = this.$data.adminEmail
+      configuration.update('', config, {})
     },
     doRadio (event) {
       this.$data.option = event
