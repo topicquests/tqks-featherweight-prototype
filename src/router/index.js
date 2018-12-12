@@ -27,9 +27,11 @@ router.beforeEach((to, from, next) => {
   if (!config.isPrivatePortal) {
     // next({ path: '/home' })
     next()
+  } else if (to && to.name == 'signin') {
+    next()
   } else {
     console.log('Not authenticated')
-    next({ path: '/signin' })
+    next({ name: 'signin' })
     // next({ path: '/home' })
   }
 })
