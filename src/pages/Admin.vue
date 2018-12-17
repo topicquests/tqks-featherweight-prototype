@@ -64,10 +64,10 @@
 
 <script>
 import api from 'src/api'
+import { mapGetters, mapActions } from 'vuex'
 const invites = api.service('invitations')
 const users = api.service('users')
 const conversation = api.service('conversation')
-var config = require('../../config/index')
 const configuration = api.service('configuration')
 export default {
   data () {
@@ -85,21 +85,37 @@ export default {
       adminEmail: ''
     }
   },
+
+  computed:  {
+    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
+
+  },
   mounted () {
     this.$store.commit('questView', false)
-    this.$data.isPrivatePortal = config.isPrivatePortal
-    this.$data.requiresInvite = config.requiresInvite
-    this.$data.adminEmail = config.adminEmail
+    this.fetchCurrentConfiguration(1).then(
+      (data) => {
+        console.log('Got config', data);
+        const { adminEmail, requiresInvite, isPrivatePortal } = data;
+        this.$data.isPrivatePortal = isPrivatePortal;
+        this.$data.requiresInvite = requiresInvite;
+        this.$data.adminEmail = adminEmail;
+      }
+    )
+ 
   },
   methods: {
+    ...mapActions('configuration', {
+        fetchCurrentConfiguration: 'get',
+        updateConfiguration: 'update'
+      }),
     saveConfig() {
-      console.log("SavingConfig",this.$data.isPrivatePortal,
-        this.$data.requiresInvite,this.$data.adminEmail)
       //var json = {}
+      let config = {};
       config.isPrivatePortal = this.$data.isPrivatePortal
       config.requiresInvite = this.$data.requiresInvite
       config.adminEmail = this.$data.adminEmail
-      configuration.update('', config, {})
+      console.log("SavingConfig", config, this.$data.isPrivatePortal);
+      this.updateConfiguration([1, config]).then(console.log, console.error);
     },
     doRadio (event) {
       this.$data.option = event

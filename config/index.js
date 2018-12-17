@@ -1,4 +1,10 @@
+var overrides = {}
 var path = require('path')
+try {
+  overrides = require('./overrides.json')
+} catch (e) {
+  console.error('Error reading overrides', e)
+}
 
 const {
   IS_PRIVATE_PORTAL = false,
@@ -6,7 +12,7 @@ const {
   ADMIN_EMAIL = 'sue@sixpack.com'
 } = process.env
 
-module.exports = {
+const config = {
   // PORTAL
   // Portal can be private, in which case, it forces Login
   isPrivatePortal: IS_PRIVATE_PORTAL,
@@ -80,6 +86,7 @@ module.exports = {
   }
 }
 
+module.exports = Object.assign({}, config, overrides)
 /*
  * proxyTable example:
  *
