@@ -1,5 +1,5 @@
 // Initializes the `history` service on path `/history`
-const createService = require('feathers-nedb');
+const createService = require('feathers-mongoose');
 const createModel = require('../../models/history.model');
 const hooks = require('./history.hooks');
 
@@ -9,10 +9,8 @@ module.exports = function (app) {
 
   const options = {
     Model,
-    paginate,
-    id: 'id'
+    paginate
   };
-
 
   // Initialize our service with any options it requires
   app.use('/history', createService(options));

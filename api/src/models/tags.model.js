@@ -1,14 +1,15 @@
-const NeDB = require('nedb');
-const path = require('path');
-
+// tags-model.js - A mongoose model
+// 
+// See http://mongoosejs.com/docs/models.html
+// for more of what you can do here.
 module.exports = function (app) {
-  const dbPath = app.get('nedb');
-  const Model = new NeDB({
-    filename: path.join(dbPath, 'tags.db'),
-    autoload: true
-  })
+  const mongooseClient = app.get('mongooseClient');
+  const { Schema } = mongooseClient;
+  const tags = new Schema({
+    text: { type: String, required: true }
+  }, {
+    timestamps: true
+  });
 
-  Model.ensureIndex({ fieldName: 'id', unique: true })
-
-  return Model;
+  return mongooseClient.model('tags', tags);
 };

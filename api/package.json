@@ -1,54 +1,59 @@
 {
   "name": "tqks-featherweight-prototype",
-  "version": "0.0.1",
-  "author": "Your name",
   "description": "Feathers backside for FeatherWeight",
-  "main": "main.js",
-  "scripts": {
-    "dev": "nodemon --watch src --exec npm run debug",
-    "predebug": "npm run build",
-    "debug": "cross-env NODE_ENV=development node --inspect dist/main.js",
-    "clean": "node build/script.clean.js",
-    "build": "babel src -d dist -s",
-    "prod": "cross-env NODE_ENV=production node dist/main.js",
-    "lint": "eslint --ext .js src"
+  "version": "0.0.0",
+  "homepage": "",
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Byron Coughlin",
+    "email": "byroncoughlinsr@gmail.com"
   },
+  "contributors": [],
+  "bugs": {},
   "directories": {
     "lib": "src",
     "test": "test/"
   },
-  "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-plugin-transform-runtime": "^6.0.0",
-    "babel-preset-es2017-node7": "^0.5.2",
-    "colors": "^1.3.0",
-    "cross-env": "^3.1.3",
-    "eslint": "^5.0.0",
-    "nodemon": "^1.17.5",
-    "shelljs": "^0.7.0"
+  "engines": {
+    "node": "^8.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "scripts": {
+    "test": "npm run eslint && npm run mocha",
+    "eslint": "eslint src/. test/. --config .eslintrc.json",
+    "dev": "nodemon src/",
+    "start": "node src/",
+    "mocha": "mocha test/ --recursive --exit"
   },
   "dependencies": {
-    "@feathersjs/authentication": "^2.1.7",
-    "@feathersjs/authentication-jwt": "^2.0.1",
-    "@feathersjs/authentication-local": "^1.2.1",
-    "@feathersjs/cli": "^3.7.6",
-    "@feathersjs/configuration": "^1.0.2",
-    "@feathersjs/errors": "^3.3.0",
-    "@feathersjs/express": "^1.2.3",
-    "@feathersjs/feathers": "^3.1.7",
-    "@feathersjs/socketio": "^3.2.2",
-    "body-parser": "^1.18.3",
-    "compression": "^1.7.2",
-    "cors": "^2.8.4",
-    "feathers-hooks-common": "^3.0.0-pre.1",
-    "feathers-mailer": "^3.0.1",
-    "feathers-nedb": "^3.0.1",
-    "feathers-nedb-dump": "^1.1.2",
-    "feathers-nedb-fuzzy-search": "^1.1.1",
-    "helmet": "^3.12.1",
-    "http-proxy-middleware": "^0.17.4",
-    "nedb": "^1.8.0",
-    "npm": "^6.2.0",
-    "winston": "^2.4.3"
+    "@feathersjs/authentication": "^2.1.15",
+    "@feathersjs/authentication-jwt": "^2.0.9",
+    "@feathersjs/authentication-local": "^1.2.9",
+    "@feathersjs/cli": "^3.9.0",
+    "@feathersjs/configuration": "^2.0.6",
+    "@feathersjs/errors": "^3.3.6",
+    "@feathersjs/express": "^1.3.1",
+    "@feathersjs/feathers": "^3.3.1",
+    "@feathersjs/socketio": "^3.2.9",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "feathers-hooks-common": "^4.19.7",
+    "feathers-mongoose": "^6.2.0",
+    "helmet": "^3.15.0",
+    "mongodb-core": "^3.1.9",
+    "mongoose": "^5.4.0",
+    "npm": "^6.5.0",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.9",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
   }
 }

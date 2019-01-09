@@ -1,12 +1,15 @@
-const NeDB = require('nedb');
-const path = require('path');
-
+// history-model.js - A mongoose model
+// 
+// See http://mongoosejs.com/docs/models.html
+// for more of what you can do here.
 module.exports = function (app) {
-  const dbPath = app.get('nedb');
-  const Model = new NeDB({
-    filename: path.join(dbPath, 'history.db'),
-    autoload: true
+  const mongooseClient = app.get('mongooseClient');
+  const { Schema } = mongooseClient;
+  const history = new Schema({
+    text: { type: String, required: true }
+  }, {
+    timestamps: true
   });
 
-  return Model;
+  return mongooseClient.model('history', history);
 };

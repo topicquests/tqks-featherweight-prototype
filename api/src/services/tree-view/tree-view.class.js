@@ -1,126 +1,134 @@
 /* eslint-disable no-unused-vars */
 
-var conversation = null
+var conversation = null;
 
 class Service {
-  constructor (options) {
-    this.options = options || {}
+  constructor(options) {
+    this.options = options || {};
   }
 
   /**
    * Set the conversation service for fetching tree nodes
-   * @param {} conv 
+   * @param {} conv
    */
-  setConversation (conv) {
-    conversation = conv
+  setConversation(conv) {
+    conversation = conv;
     // console.info('TS', conversation)
   }
 
-  async find () {
-    return []
+  async find() {
+    return [];
   }
 
-  populateKids (questionArray, answerArray, proArray, conArray, tagArray) {
-    let result = [] // always return at least an empty list
-    var i
+  populateKids(questionArray, answerArray, proArray, conArray, tagArray) {
+    let result = []; // always return at least an empty list
+    var i;
     if (questionArray) {
       for (i in questionArray) {
-        result.push(questionArray[i])
+        result.push(questionArray[i]);
       }
     }
     if (answerArray) {
       for (i in answerArray) {
-        result.push(answerArray[i])
+        result.push(answerArray[i]);
       }
     }
     if (proArray) {
       for (i in proArray) {
-        result.push(proArray[i])
+        result.push(proArray[i]);
       }
     }
     if (conArray) {
       for (i in conArray) {
-        result.push(conArray[i])
+        result.push(conArray[i]);
       }
     }
     if (tagArray) {
       for (i in tagArray) {
-        result.push(tagArray[i])
+        result.push(tagArray[i]);
       }
     }
-    return result
+    return result;
   }
 
   /**
    * A recursive tree builder
-   * @param {*} rootNodeId 
+   * @param {*} rootNodeId
    * @param {*} callback signature: (jsonTree)
    */
-  async toJsTree (rootNodeId, level = 0) {
-    var thisNode
-    var childArray
+  async toJsTree(rootNodeId, level = 0) {
+    var thisNode;
+    var childArray;
     level++;
-    
-    console.info('ToJsTree', {level,  rootNodeId })
+
+    console.info("ToJsTree", { level, rootNodeId });
     // Use find to avoid populating the children
-    const respConv = await conversation.find({query: { id: rootNodeId }, skippop: true})
-    console.dir(respConv)
-    
+    const respConv = await conversation.find({
+      query: { id: rootNodeId },
+      skippop: true
+    });
+    console.dir(respConv);
+
     if (respConv.data.length < 1) {
-      console.info("End", {level});
+      console.info("End", { level });
       return {};
     }
-    
-    
-    const node = respConv.data[0]
+
+    const node = respConv.data[0];
     // console.info('TV-1', rootNodeId, JSON.stringify(node))
-    thisNode = {}
-    thisNode.id = node.id
-    thisNode.label = node.label
-    thisNode.img = node.imgsm
-    thisNode.expanded = true
-    childArray = this.populateKids(node.questions, node.answers, node.pros, node.cons, node.tags)
-    thisNode.children = []
-    const arrPromises = childArray.map( child => this.toJsTree(child, level));
-    const children = await Promise.all(arrPromises)
-   
-    thisNode.children = children
+    thisNode = {};
+    thisNode.id = node.id;
+    thisNode.label = node.label;
+    thisNode.img = node.imgsm;
+    thisNode.expanded = true;
+    childArray = this.populateKids(
+      node.questions,
+      node.answers,
+      node.pros,
+      node.cons,
+      node.tags
+    );
+    thisNode.children = [];
+    const arrPromises = childArray.map(child => this.toJsTree(child, level));
+    const children = await Promise.all(arrPromises);
+
+    thisNode.children = children;
     // console.info('Going Back', thisNode)
     return thisNode;
   }
 
-  async get (id) {
+  async get(id) {
     try {
       // A recursive walk down a tree from a root node identified by id
-      return await this.toJsTree(id)   
+      return await this.toJsTree(id);
     } catch (e) {
-      console.error('Error fetching', e)
+      console.error("Error fetching", e);
     }
   }
 
-  async create (data, params) {
+  async create(data, params) {
     if (Array.isArray(data)) {
-      return Promise.all(data.map(current => this.create(current, params)))
+      return Promise.all(data.map(current => this.create(current, params)));
     }
 
-    return data
+    return data;
   }
 
-  async update (data) {
-    return data
+  async update(data) {
+    return data;
   }
 
-  async patch (data) {
-    return data
+  async patch(data) {
+    return data;
   }
 
-  async remove (id) {
-    return { id }
+  async remove(id) {
+    return { id };
   }
 }
 
-module.exports = function (options) {
-  return new Service(options)
+module.exports = function(options) {
+  return new Service(options);
 };
 
-module.exports.Service = Service
+module.exports.Service = Service;

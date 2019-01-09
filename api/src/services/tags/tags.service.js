@@ -1,5 +1,5 @@
 // Initializes the `tags` service on path `/tags`
-const createService = require('feathers-nedb');
+const createService = require('feathers-mongoose');
 const createModel = require('../../models/tags.model');
 const hooks = require('./tags.hooks');
 
@@ -9,8 +9,7 @@ module.exports = function (app) {
 
   const options = {
     Model,
-    paginate,
-    id: 'id'
+    paginate
   };
 
   // Initialize our service with any options it requires

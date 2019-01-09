@@ -1,26 +1,24 @@
-const { authenticate } = require('@feathersjs/authentication').hooks
-const { hashPassword, protect } = require('@feathersjs/authentication-local').hooks;
-const commonHooks  = require('feathers-hooks-common')
-const gravatar = require('../../hooks/gravatar')
+const { authenticate } = require("@feathersjs/authentication").hooks;
+const {
+  hashPassword,
+  protect
+} = require("@feathersjs/authentication-local").hooks;
+const commonHooks = require("feathers-hooks-common");
+const gravatar = require("../../hooks/gravatar");
 
 module.exports = {
   before: {
     all: [],
-    find: [ authenticate('jwt') ],
-    get: [ authenticate('jwt') ],
+    find: [authenticate("jwt")],
+    get: [authenticate("jwt")],
     create: [hashPassword(), gravatar()],
-    update: [ authenticate('jwt') ],
-    patch: [ hashPassword(), authenticate('jwt') ],
-    remove: [ authenticate('jwt') ]
+    update: [authenticate("jwt")],
+    patch: [hashPassword(), authenticate("jwt")],
+    remove: [authenticate("jwt")]
   },
 
   after: {
-    all: [
-      commonHooks.when(
-        hook => hook.params.provider,
-        protect('password')
-      )
-    ],
+    all: [commonHooks.when(hook => hook.params.provider, protect("password"))],
     find: [],
     get: [],
     create: [],
@@ -38,4 +36,4 @@ module.exports = {
     patch: [],
     remove: []
   }
-}
+};

@@ -1,5 +1,5 @@
 // Initializes the `channels` service on path `/channels`
-const createService = require('feathers-nedb');
+const createService = require('feathers-mongoose');
 const createModel = require('../../models/channels.model');
 const hooks = require('./channels.hooks');
 
