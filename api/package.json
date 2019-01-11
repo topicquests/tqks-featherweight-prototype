@@ -41,6 +41,7 @@
     "compression": "^1.7.3",
     "cors": "^2.8.5",
     "feathers-hooks-common": "^4.19.7",
+    "feathers-mongodb-fuzzy-search": "^1.1.1",
     "feathers-mongoose": "^6.2.0",
     "helmet": "^3.15.0",
     "mongodb-core": "^3.1.9",

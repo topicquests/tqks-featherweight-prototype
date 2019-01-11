@@ -1,5 +1,5 @@
 const { authenticate } = require('@feathersjs/authentication').hooks
-const search = require('feathers-nedb-fuzzy-search')
+const search = require('feathers-mongodb-fuzzy-search')
 
 const populateChildren = async function (hook, tag) {
   const { conversation } = hook.app.services
