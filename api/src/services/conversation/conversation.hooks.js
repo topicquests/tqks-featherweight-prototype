@@ -2,11 +2,12 @@ const { authenticate } = require('@feathersjs/authentication').hooks
 const search = require('feathers-nedb-fuzzy-search')
 
 const populateChildren = async function (hook, conv) {
-  const toCheck = ['answers', 'questions', 'pros', 'cons', 'tags', 'subclasses', 'instances']
+  const toCheck = ['answers', 'questions', 'pros', 'cons', 'tags', 'instances', 'subclasses']
   const { conversation, tags } = hook.app.services
   // Walk along child node types
   for (let i = 0; i < toCheck.length; i++) {
     let type = toCheck[i]
+    console.info('ABCDEF', type, conv[type])
     // If it's there and has some elements
     if (typeof conv[type] !== 'undefined' && conv[type].length > 0) {
       // walk along the node's array carried in the hook
@@ -40,7 +41,7 @@ const populateChildren = async function (hook, conv) {
         // Wait for all the fetches in the map return
         const result = await Promise.all(promises)
         // Replace a list of node id values with a list of nodes
-        console.info('PromisesGot', result)
+        console.info('PromisesGot', type, result)
         conv[type] = result
         // console.info('HOOK', hook)
       } catch (e) {
