@@ -110,3 +110,6 @@ $RECYCLE.BIN/
 # Others
 lib/
 data/
+
+#Users config file
+config/byron.json
