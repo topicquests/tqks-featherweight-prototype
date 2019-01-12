@@ -12,7 +12,14 @@ module.exports = function(app) {
       password: { type: String, required: true },
       fullname: { type: String },
       avatar: { type: String },
-      handle: { type: String }
+      handle: { type: String },
+      password: { type: String },
+      isVeified: { type: Boolean },
+      verifyToken: { type: String },
+      verifyExpires: { type: Date },
+      verifyChanges: { type: Object },
+      resetToken: { type: String },
+      resetExpires: { type: Date }
     },
     {
       timestamps: true

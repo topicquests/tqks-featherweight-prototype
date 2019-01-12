@@ -6,6 +6,8 @@ const history = require('./history/history.service.js');
 const invintations = require('./invintations/invintations.service.js');
 const messages = require('./messages/messages.service.js');
 const tags = require('./tags/tags.service.js');
+const mailer = require('./mailer/mailer.service.js');
+const authmanagement = require('./authmanagement/authmanagement.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -16,4 +18,6 @@ module.exports = function (app) {
   app.configure(invintations);
   app.configure(messages);
   app.configure(tags);
+  app.configure(mailer);
+  app.configure(authmanagement);
 };
