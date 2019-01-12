@@ -18,6 +18,7 @@ User requests to reset password
 
 ## Example of config file
 
+```
 {
 "host": "localhost",
 "port": 8081,
@@ -53,3 +54,4 @@ User requests to reset password
 }
 }
 }
+```
