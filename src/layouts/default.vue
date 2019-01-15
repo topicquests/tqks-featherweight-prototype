@@ -1,53 +1,31 @@
 <template>
   <q-layout>
     <q-layout-header>
-      <q-toolbar
-        color="primary"
-        :glossy="false"
-        :inverted="$q.theme === 'ios'"
-      >  
-        <q-btn
-          flat
-          dense
-          round
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        >
-        <q-icon name="menu" />
+      <q-toolbar color="primary" :glossy="false" :inverted="$q.theme === 'ios'">
+        <q-btn flat dense round aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen">
+          <q-icon name="menu"/>
         </q-btn>
 
-        <q-toolbar-title>
-          FeatherWeight Prototype
-        </q-toolbar-title>
+        <q-toolbar-title>FeatherWeight Prototype</q-toolbar-title>
 
-        <q-search style="background-color: white;" 
-          v-model="search" 
-          v-on:keyup.13="doSearch"
-        />
+        <q-search style="background-color: white;" v-model="search" v-on:keyup.13="doSearch"/>
 
-        <q-btn v-if="!authenticated" flat @click="goTo('signin')">
-          Sign In
-        </q-btn>
-        <q-btn v-if="!authenticated" flat @click="goTo('register')">
-          Register
-        </q-btn>
+        <q-btn v-if="!authenticated" flat @click="goTo('signin')">Sign In</q-btn>
+        <q-btn v-if="!authenticated" flat @click="goTo('register')">Register</q-btn>
         <q-btn flat round @click="goTo('home')" v-show="authenticated">
-          <q-icon name="home" />
+          <q-icon name="home"/>
           <q-tooltip anchor="bottom middle" self="top middle" :offset="[0, 20]">Home</q-tooltip>
         </q-btn>
         <q-btn flat round @click="goTo('chat')" v-show="authenticated">
-          <q-icon name="chat" />
+          <q-icon name="chat"/>
           <q-tooltip anchor="bottom middle" self="top middle" :offset="[0, 20]">Chat</q-tooltip>
         </q-btn>
         <q-btn flat round @click="signout" v-show="authenticated">
-          <q-icon name="exit_to_app" />
+          <q-icon name="exit_to_app"/>
           <q-tooltip anchor="bottom middle" self="top middle" :offset="[0, 20]">Signout</q-tooltip>
         </q-btn>
-        <q-btn v-if="isQuestView" flat dense round
-          aria-label="Tree View"
-          @click="toggleNav"
-        >
-        <q-icon name="menu" />
+        <q-btn v-if="isQuestView" flat dense round aria-label="Tree View" @click="toggleNav">
+          <q-icon name="menu"/>
         </q-btn>
       </q-toolbar>
     </q-layout-header>
@@ -68,7 +46,8 @@
     </q-layout-drawer>-->
     <div id="mySidenav" class="sidenav">
       <div>
-        <q-tree v-if="simple"
+        <q-tree
+          v-if="simple"
           :nodes="simple"
           node-key="id"
           default-expand-all
@@ -77,80 +56,76 @@
       </div>
     </div>
 
-    <q-layout-drawer side = "left"
+    <q-layout-drawer
+      side="left"
       v-model="leftDrawerOpen"
       no-hide-on-route-change
-      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null">
-
-      <q-list
-        no-border
-        link
-        inset-delimiter
-      >
-
+      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+    >
+      <q-list no-border link inset-delimiter>
         <q-item to="/home">
-          <q-item-side icon="home" />
-          <q-item-main label="Home" />
+          <q-item-side icon="home"/>
+          <q-item-main label="Home"/>
         </q-item>
 
         <q-item v-if="isAuthenticated" :to="{ name: 'profile', params: { id:  userId }}">
-          <q-item-side icon="settings" />
-          <q-item-main label="Profile" />
+          <q-item-side icon="settings"/>
+          <q-item-main label="Profile"/>
         </q-item>
 
         <q-item to="/history">
-          <q-item-side icon="history" />
-          <q-item-main label="History" />
+          <q-item-side icon="history"/>
+          <q-item-main label="History"/>
         </q-item>
 
         <q-item to="/bookmarks">
-          <q-item-side icon="bookmark" />
-          <q-item-main label="Bookmarks" />
+          <q-item-side icon="bookmark"/>
+          <q-item-main label="Bookmarks"/>
         </q-item>
 
         <q-item to="/aboutb">
-          <q-item-side icon="help" />
-          <q-item-main label="Bookmarks Help" />
+          <q-item-side icon="help"/>
+          <q-item-main label="Bookmarks Help"/>
         </q-item>
 
         <q-item to="/quests">
-          <q-item-side icon="explore" />
-          <q-item-main label="Quests" />
+          <q-item-side icon="explore"/>
+          <q-item-main label="Quests"/>
         </q-item>
 
         <q-item to="/aboutc">
-          <q-item-side icon="help" />
-          <q-item-main label="Quests Help" />
+          <q-item-side icon="help"/>
+          <q-item-main label="Quests Help"/>
         </q-item>
 
         <q-item to="/tags">
-          <q-item-side icon="check_box" />
-          <q-item-main label="Tags" />
+          <q-item-side icon="check_box"/>
+          <q-item-main label="Tags"/>
         </q-item>
 
         <q-item to="/aboutt">
-          <q-item-side icon="help" />
-          <q-item-main label="Tags Help" />
+          <q-item-side icon="help"/>
+          <q-item-main label="Tags Help"/>
         </q-item>
 
-    <!--    <q-item to="/ether">
+        <!--    <q-item to="/ether">
           <q-item-side icon="language" />
           <q-item-main label="Etherpad Home" />
         </q-item>
-    -->
+        -->
         <q-item v-if="isAdmin" to="/admin">
-          <q-item-side icon="settings" />
-          <q-item-main label="Admin" />
+          <q-item-side icon="settings"/>
+          <q-item-main label="Admin"/>
         </q-item>
 
         <q-item v-if="isAuthenticated" to="/chat">
-          <q-item-side icon="chat" />
-          <q-item-main label="Chat" />
+          <q-item-side icon="chat"/>
+          <q-item-main label="Chat"/>
         </q-item>
 
         <q-collapsible icon="info" label="About">
-          <p style="padding: 25px;" class="text-grey-7">
-            This is a prototype <i>Structured Conversation</i> system.
+          <p style="padding: 25px;" class="text-grey-7">This is a prototype
+            <i>Structured Conversation</i> system.
           </p>
         </q-collapsible>
       </q-list>
@@ -160,20 +135,26 @@
       <router-view :user="user"></router-view>
     </q-page-container>
     <q-layout-footer>
-        <a style="float: left;"    href="http://www.topicquests.org/"><img src="assets/TopicQuestsLogo_sm.png"></a>
-        <a style="float: right;" href="https://github.com/KnowledgeGarden/tqks-featherweight-prototype"><img src="assets/github-1.jpg"></a>
+      <a style="float: left;" href="http://www.topicquests.org/">
+        <img src="assets/TopicQuestsLogo_sm.png">
+      </a>
+      <a
+        style="float: right;"
+        href="https://github.com/KnowledgeGarden/tqks-featherweight-prototype"
+      >
+        <img src="assets/github-1.jpg">
+      </a>
     </q-layout-footer>
   </q-layout>
 </template>
 
 <script>
-import auth from 'src/auth'
-import config from '../../config'
+import auth from "src/auth";
+import config from "../../config";
 export default {
-  name: 'index',
-  components: {
-  },
-  data () {
+  name: "index",
+  components: {},
+  data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
       rightDrawerOpen: this.$store.getters.isQuestView,
@@ -181,82 +162,89 @@ export default {
       userId: null,
       isAdmin: false,
       selected: null,
-      search: ''
-    }
+      search: ""
+    };
   },
   watch: {
     selected: function(val, oldVal) {
-      this.$router.push({name: 'questview', params: {id: val}});
+      this.$router.push({ name: "questview", params: { id: val } });
     }
   },
   computed: {
-    authenticated () {
-      let usx = this.$store.getters.user
-      let a =  usx !== null
-      console.info('DA', a)
-      console.info('DB', this.$store.getters.user)
+    authenticated() {
+      let usx = this.$store.getters.user;
+      let a = usx !== null;
+      console.info("DA", a);
+      console.info("DB", this.$store.getters.user);
       if (usx) {
-        this.userId = usx._id
+        this.userId = usx._id;
       }
-      return a
+      return a;
     },
-    user () {
-      return this.$store.getters.user
+    user() {
+      return this.$store.getters.user;
     },
-    isQuestView () {
-      return this.$store.getters.isQuestView
+    isQuestView() {
+      return this.$store.getters.isQuestView;
     },
-    simple () {
-      const tre = this.$store.getters.treeView
-      return tre
+    simple() {
+      const tre = this.$store.getters.treeView;
+      return tre;
     }
   },
   methods: {
-    toggleNav () {
+    toggleNav() {
       if (this.rightDrawerOpen) {
-        this.closeNav()
+        this.closeNav();
       } else {
-        this.rightDrawerOpen = true
+        this.rightDrawerOpen = true;
         document.getElementById("mySidenav").style.width = "450px";
       }
     },
-    closeNav () {
-      this.rightDrawerOpen = false
+    closeNav() {
+      this.rightDrawerOpen = false;
       document.getElementById("mySidenav").style.width = "0";
     },
 
-    doSearch () {
-      let q = this.search
-      this.$router.push({ name: 'search', params: { q }})
+    doSearch() {
+      let q = this.search;
+      this.$router.push({ name: "search", params: { q } });
     },
-    goTo (route) {
-      this.$router.push({ name: route })
+    goTo(route) {
+      this.$router.push({ name: route });
     },
-    signout () {
-      auth.signout()
+    signout() {
+      auth
+        .signout()
         .then(() => {
-          this.$store.commit('usr', null)
-          this.$store.commit('authenticate', false)
-          this.$store.commit('admin', false)
-          this.$q.notify({type: 'positive', message: 'You are now logged out, sign in again to continue to work'})
+          this.$store.commit("usr", null);
+          this.$store.commit("authenticate", false);
+          this.$store.commit("admin", false);
+          this.$q.notify({
+            type: "positive",
+            message: "You are now logged out, sign in again to continue to work"
+          });
         })
-        .catch((err) => {
-          this.$q.notify({type: 'positive', message: 'Cannot logout, please check again in a few minutes'})
-        })
+        .catch(err => {
+          this.$q.notify({
+            type: "positive",
+            message: "Cannot logout, please check again in a few minutes"
+          });
+        });
     },
-    setUser (user) {
-      this.$store.commit('usr', user)
+    setUser(user) {
+      this.$store.commit("usr", user);
     },
-    checkAdmin () {
-      let usx = this.$store.getters.user
+    checkAdmin() {
+      let usx = this.$store.getters.user;
       // alert(JSON.stringify(usx))
       if (usx) {
-        var email = usx.email
-        var admin = config.adminEmail
-        var isAuth = this.$store.getters.isAuthenticated
-        var truth = (email === admin && isAuth)
-        this.$store.commit('admin', truth)
-        this.isAdmin = truth
+        var email = usx.email;
+        var admin = config.adminEmail;
+        var isAuth = this.$store.getters.isAuthenticated;
+        var truth = email === admin && isAuth;
+        this.$store.commit("admin", truth);
+        this.isAdmin = truth;
       }
     }
     /*,
@@ -264,69 +252,70 @@ export default {
       alert(this.$state.getters.isQuestView)
       return this.$state.getters.isQuestView
     }*/
-    
   },
-  mounted () {
-    console.info('MountingDefault', this.$store.getters.user)
+  mounted() {
+    console.info("MountingDefault", this.$store.getters.user);
     // Check if there is already a session running
-    auth.authenticate()
-      .then((user) => {
-        this.setUser(user)
-        this.$q.notify({type: 'positive', message: 'Restoring previous session'})
-        this.$store.commit('authenticate', true)
-        this.$store.commit('admin', false)
-        this.isAuthenticated = true
-        this.checkAdmin()
+    auth
+      .authenticate()
+      .then(user => {
+        this.setUser(user);
+        this.$q.notify({
+          type: "positive",
+          message: "Restoring previous session"
+        });
+        this.$store.commit("authenticate", true);
+        this.$store.commit("admin", false);
+        this.isAuthenticated = true;
+        this.checkAdmin();
       })
       .catch(_ => {
         // alert('NotAuth')
-        this.setUser(null)
-        this.$store.commit('authenticate', false)
-        this.$store.commit('admin', false)
-        this.$data.isAuthenticated = false
-        this.$data.isAdmin = false
-        this.$router.push({ name: 'home' })
-        
-      })
+        this.setUser(null);
+        this.$store.commit("authenticate", false);
+        this.$store.commit("admin", false);
+        this.$data.isAuthenticated = false;
+        this.$data.isAdmin = false;
+        // this.$router.push({ name: 'home' })
+      });
 
     // On successful login
-    auth.onAuthenticated((user) => {
-      this.setUser(user)
-      this.$store.commit('authenticate', true)
-      this.$data.isAuthenticated = true
-      this.checkAdmin()
+    auth.onAuthenticated(user => {
+      this.setUser(user);
+      this.$store.commit("authenticate", true);
+      this.$data.isAuthenticated = true;
+      this.checkAdmin();
       // this.$router.push({ name: 'home' })
-    })
+    });
 
     // On logout
     auth.onLogout(() => {
       // alert('Logout')
-      this.setUser(null)
-      this.$store.commit('authenticate', false)
-      this.$router.push({ name: 'home' })
-      this.$data.isAuthenticated = false
-      this.$data.isAdmin = false
-    })
+      this.setUser(null);
+      this.$store.commit("authenticate", false);
+      this.$router.push({ name: "home" });
+      this.$data.isAuthenticated = false;
+      this.$data.isAdmin = false;
+    });
   },
-  beforeDestroy () {
-  }
-}
+  beforeDestroy() {}
+};
 </script>
 
 <style>
 .sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: rgb(218, 212, 212);
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: rgb(218, 212, 212);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
 }
 img.q-tree-img.q-mr-sm {
-    height: 20px;
+  height: 20px;
 }
 </style>

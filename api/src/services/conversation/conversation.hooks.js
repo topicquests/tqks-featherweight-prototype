@@ -1,5 +1,5 @@
 const { authenticate } = require("@feathersjs/authentication").hooks;
-const search = require('feathers-mongodb-fuzzy-search')
+const search = require("feathers-mongodb-fuzzy-search");
 
 const populateChildren = async function(hook, conv) {
   const toCheck = ["answers", "questions", "pros", "cons", "tags"];
@@ -62,7 +62,7 @@ const populateHookSingle = async function(hook) {
 
 // Find (GET, PUT, PATCH, REMOVE)
 const populateHookBatch = async function(hook) {
-  console.info("HOOK", hook.params.user);
+  console.info("HOOK", hook.params.user.handle);
   if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0) {
     console.info("PopulateHookBatch", hook.params.skippop);
     for (let i = 0; i < hook.result.data.length; i++) {
@@ -92,9 +92,10 @@ module.exports = {
   before: {
     all: [],
     find: [
-      hookBeforeFind, search({
-      fields: ['label', 'details'],
-      deep: true
+      hookBeforeFind,
+      search({
+        fields: ["label", "details"],
+        deep: true
       })
     ],
     get: [],

@@ -1,7 +1,8 @@
 module.exports = function(app) {
   const emailConfig = app.get("emailconfig");
+  const baseURL = app.get("baseURL");
   function getLink(type, hash) {
-    const url = "http://localhost:8081/" + type + "?token=" + hash;
+    const url = `${baseURL}/token/${type}/${hash}`;
     return url;
   }
 

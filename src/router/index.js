@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import routes from './routes'
+import routes from "./routes";
 // import auth from 'src/auth'
-import config from '../../config'
+import config from "../../config";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
   /*
@@ -21,17 +21,20 @@ const router = new VueRouter({
   base: process.env.VUE_ROUTER_BASE,
   scrollBehavior: () => ({ y: 0 }),
   routes
-})
+});
 
+const WHITE_LIST_ROUTES = ["token"];
 router.beforeEach((to, from, next) => {
-  if (!config.isPrivatePortal) {
+  console.info("Route", { to, from });
+  // debugger;
+  if (!config.isPrivatePortal || WHITE_LIST_ROUTES.indexOf(to.name) > -1) {
     // next({ path: '/home' })
-    next()
+    next();
   } else {
-    console.log('Not authenticated')
-    next({ path: '/signin' })
+    console.log("Not authenticated");
+    next({ path: "/signin" });
     // next({ path: '/home' })
   }
-})
+});
 
-export default router
+export default router;

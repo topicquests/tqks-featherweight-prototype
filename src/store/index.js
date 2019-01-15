@@ -1,18 +1,20 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import feathersVuex from 'feathers-vuex'
-import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate)
+import Vue from "vue";
+import Vuex from "vuex";
+import feathersVuex from "feathers-vuex";
+import Vuelidate from "vuelidate";
+Vue.use(Vuelidate);
 
 // we first import the module
 // import quests from './quests'
 
 // Initialize Feathers Vuex
-import feathersClient from '../api';
-const { service, auth, FeathersVuex } = feathersVuex(feathersClient, { idField: '_id' })
+import feathersClient from "../api";
+const { service, auth, FeathersVuex } = feathersVuex(feathersClient, {
+  idField: "_id"
+});
 
-Vue.use(Vuex)
-Vue.use(FeathersVuex)
+Vue.use(Vuex);
+Vue.use(FeathersVuex);
 
 const store = new Vuex.Store({
   state: {
@@ -22,6 +24,12 @@ const store = new Vuex.Store({
     user: null,
     treeView: null,
     isQuestView: false
+  },
+  actions: {
+    verifyToken(context, payload) {
+      console.info("Verifying token", { payload });
+      return feathersClient.service("authManagement").create(payload);
+    }
   },
   getters: {
     isAuthenticated: state => state.isAuthenticated,
@@ -33,22 +41,22 @@ const store = new Vuex.Store({
     isQuestView: state => state.isQuestView
   },
   mutations: {
-    admin (state, t) {
-      console.info('CommitAdmin', t)
-      state.isAdmin = t
+    admin(state, t) {
+      console.info("CommitAdmin", t);
+      state.isAdmin = t;
     },
-    authenticate (state, t) {
-      state.isAuthenticated = t
+    authenticate(state, t) {
+      state.isAuthenticated = t;
     },
-    usr (state, user) {
-      console.info('CommitUser', user)
-      state.user = user
+    usr(state, user) {
+      console.info("CommitUser", user);
+      state.user = user;
     },
-    tree (state, tree) {
-      state.treeView = tree
+    tree(state, tree) {
+      state.treeView = tree;
     },
-    questView (state, t) {
-      state.isQuestView = t
+    questView(state, t) {
+      state.isQuestView = t;
     }
   },
   modules: {
@@ -56,7 +64,8 @@ const store = new Vuex.Store({
     //quests
   },
   plugins: [
-    service('conversation', { idField: 'id'})
+    service("conversation", { idField: "id" }),
+    service("authManagment")
   ]
-})
-export default store
+});
+export default store;

@@ -14,7 +14,7 @@ module.exports = function(app) {
       avatar: { type: String },
       handle: { type: String },
       password: { type: String },
-      isVeified: { type: Boolean },
+      isVerified: { type: Boolean },
       verifyToken: { type: String },
       verifyExpires: { type: Date },
       verifyChanges: { type: Object },

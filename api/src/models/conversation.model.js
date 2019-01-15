@@ -19,11 +19,12 @@ module.exports = function(app) {
       imgsm: { type: String },
       parentLabel: { type: String },
       parentId: { type: String },
-      questions: { type: Array },
-      answers: { type: Array },
+      question: { type: Array },
+      answer: { type: Array },
       pros: { type: Array },
       cons: { type: Array },
-      tags: { type: Array }
+      tags: { type: Array },
+      skippop: { type: Boolean }
     },
     {
       timestamps: true
