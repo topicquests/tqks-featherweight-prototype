@@ -109,7 +109,7 @@ export default {
     }
   },
     beforeRouterUpdate () {
-      alert('Ssx')
+      alert('Tsx')
       console.info('Router', 'start')
       setTimeout(() => {
         this.initialize.apply(this).then(() => {
@@ -146,7 +146,7 @@ export default {
         console.info('Going ',from,'to',to)
         try {
           const { name, params: { id } } = to
-          if (name === 'questview' && id) {
+          if (name === 'topicview' && id) {
             this.initialize(id);
           }
 
