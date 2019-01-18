@@ -272,7 +272,7 @@ export default {
 }
 
 .datacontainer {
-  width: 1400px;
+  width: 100%;
 }
 
 .headerimage {
