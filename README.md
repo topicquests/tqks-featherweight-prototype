@@ -26,8 +26,7 @@ pm2 start ecosystem.config.js;
 
 ### Docker
 ```
-docker build -t handle/tqfw:tag   .
-docker run -p 3000:80 handle/tqfw:tag
+docker-compose up
 ```
 
 ### Environmental Overrides
