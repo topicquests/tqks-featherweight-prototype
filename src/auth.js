@@ -25,14 +25,14 @@ const auth = {
     return api.authenticate()
       .then((response) => {
         console.log('auth successful')
-
+        localStorage.setItem('tqks-auth', response.accessToken)
         return this.fetchUser(response.accessToken)
       })
       .then(user => {
         console.log('got user')
 
         this.user = user
-
+  
         return Promise.resolve(user)
       })
       .catch((err) => {

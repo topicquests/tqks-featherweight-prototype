@@ -35,11 +35,7 @@ const populateChildren = async function (hook, conv) {
         // To paint full child nodes, this must return the fetched node
         // That is the node which will populate the final array below
       })
-<<<<<<< Updated upstream
       
-=======
-
->>>>>>> Stashed changes
       try {
         console.info('Populating')
         console.info('Populate', type, conv.id, 'fetching')

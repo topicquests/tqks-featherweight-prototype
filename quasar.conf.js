@@ -77,6 +77,8 @@ module.exports = function (ctx) {
         'QLayoutFooter',
         'QPage',
         'QToolbar',
+          'QInnerLoading',
+  'QSpinnerGears',
         'QToolbarTitle',
         'QBtn',
         'QIcon',

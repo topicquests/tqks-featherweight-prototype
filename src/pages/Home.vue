@@ -8,38 +8,58 @@
   <q-page :padding="true" class="flex flex-center">
     <div>
         <div class="column items-center">
-          <h6>FeatherWeight Prototype</h6>
-          <img src="statics/images/earthrise2.png" >
-          <h5>
-            For a better experience with FeatherWeight, first register your avatar for the email you will use here at <a href="https://www.gravatar.com">https://www.gravatar.com</a>
-            then signup and go to the <router-link to="/chat">Chat</router-link>
-          </h5>
+          
+          <h6>{{cms.title}}</h6>
+          
+          <div v-html="cms.body">
+            
+          </div>
+          <q-inner-loading :visible="stillLoading">
+            <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
+          </q-inner-loading>
         </div>
       </div>
   </q-page>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  data () {
-    return {
-    }
-  },
-  computed: {
-    authenticated () {
+  computed:  {
+    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
+    stillLoading() {
+      return !(this.currentConfig && this.currentConfig.cms);
+    },
+    cms() {
+      if (this.stillLoading)
+        return null;
+      // Get the slug from current route and search for it in the config JSON
+      const slug = this.$route.name;
+      const page = this.currentConfig.cms.pages.filter(({slug}) => slug === slug)[0];
+      return page;
+    },
+     authenticated () {
       return this.$store.getters.user !== null
     }
   },
-  methods: {
-  },
   mounted () {
     this.$store.commit('questView', false)
+    this.fetchCurrentConfiguration(1).then(
+      (data) => {
+        console.log('Got config', data);
+      }
+    )
+    this.$store.commit('questView', false)
   },
-  beforeDestroy () {
+  methods: {
+    ...mapActions('configuration', {
+      fetchCurrentConfiguration: 'get'
+    }),
   }
+  
+  
 }
 </script>
-
 <style lang="styl">
 
 </style>

@@ -281,12 +281,14 @@ export default {
     // Check if there is already a session running
     auth.authenticate()
       .then((user) => {
+        
         this.setUser(user)
         this.$q.notify({type: 'positive', message: 'Restoring previous session'})
         this.$store.commit('authenticate', true)
         this.$store.commit('admin', false)
         this.isAuthenticated = true
         this.checkAdmin()
+        
       })
       .catch(_ => {
         // alert('NotAuth')

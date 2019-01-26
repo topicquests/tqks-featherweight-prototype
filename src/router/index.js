@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
     getUserState().then((user)=>{
         // the above state is not available here, since it
         // it is resolved asynchronously in the store action
-      if (user) {
+      if (user || localStorage.getItem('tqks-auth')) {
         next()
       } else {
         console.log('Not authenticated')
