@@ -3,6 +3,7 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
+      'moment'
     ],
     css: [
       'app.styl'
@@ -77,13 +78,14 @@ module.exports = function (ctx) {
         'QLayoutFooter',
         'QPage',
         'QToolbar',
-          'QInnerLoading',
-  'QSpinnerGears',
+        'QInnerLoading',
+        'QSpinnerGears',
         'QToolbarTitle',
         'QBtn',
         'QIcon',
         'QList',
         'QListHeader',
+        'QCard',
         'QItem',
         'QItemTile',
         'QItemMain',
