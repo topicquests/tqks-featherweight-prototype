@@ -3,9 +3,10 @@
 	"requiresInvite": "true",
 	"adminEmail": "sue@sixpack.com",
 	"cms": {
-		"site_info": {
+		"site": {
 			"copyright": "2019",
-			"favicon": "favicon.ico"
+			"favicon": "statics/icons/favicon-32x32.png",
+			"title": "Featherweight CMS Enhanced"
 		},
 		"nav": {
 			"footer": [{

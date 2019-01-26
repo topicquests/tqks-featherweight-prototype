@@ -7,17 +7,18 @@
 <template>
   <q-page :padding="true" class="flex flex-center">
     <div>
-        <div class="column items-center">
+        <div v-if="!stillLoading" class="column items-center">
           
           <h6>{{cms.title}}</h6>
           
           <div v-html="cms.body">
             
           </div>
-          <q-inner-loading :visible="stillLoading">
+       
+        </div>
+           <q-inner-loading :visible="stillLoading">
             <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
           </q-inner-loading>
-        </div>
       </div>
   </q-page>
 </template>
