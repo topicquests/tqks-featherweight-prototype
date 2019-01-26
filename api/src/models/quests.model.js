@@ -11,23 +11,23 @@
  *  conList -- Array of String
  *  tagList -- Array of String  (later)
  *  connectionList -- Array of String  (later)
- * 
+ *
  * We are indexing by
  *  id
  *  label
  */
 
-const NeDB = require('nedb');
-const path = require('path');
+const NeDB = require('nedb')
+const path = require('path')
 
 module.exports = function (app) {
-  const dbPath = app.get('nedb');
+  const dbPath = app.get('nedb')
   const Model = new NeDB({
     filename: path.join(dbPath, 'quests.db'),
     autoload: true
-  });
+  })
   Model.ensureIndex({ fieldName: 'id', unique: true })
   Model.ensureIndex({ fieldName: 'label'})
 
-  return Model;
-};
+  return Model
+}

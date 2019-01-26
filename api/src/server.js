@@ -6,14 +6,14 @@ const bodyParser = require('body-parser')
 const proxyMiddleware = require('http-proxy-middleware')
 
 const feathers = require('@feathersjs/feathers')
-const express = require('@feathersjs/express');
+const express = require('@feathersjs/express')
 const configuration = require('@feathersjs/configuration')
 const rest = require('@feathersjs/express/rest')
 const socketio = require('@feathersjs/socketio')
 
 const middleware = require('./middleware')
 const services = require('./services')
-const channels = require('./channels');
+const channels = require('./channels')
 const appHooks = require('./main.hooks')
 
 const authentication = require('./authentication')
@@ -31,7 +31,7 @@ function boot () {
 }
 
 export class Server {
-  constructor() {
+  constructor () {
     this.app = express(feathers())
     // Load app configuration
     this.app.configure(configuration(path.join(__dirname, '..')))
@@ -49,7 +49,7 @@ export class Server {
 
     // Define HTTP proxies to your custom API backend. See /config/index.js -> proxyTable
     // https://github.com/chimurai/http-proxy-middleware
-    Object.keys(this.app.get('proxyTable')).forEach( (context) => {
+    Object.keys(this.app.get('proxyTable')).forEach((context) => {
       let options = this.config.this.app.get('proxyTable')[context]
       if (typeof options === 'string') {
         options = { target: options }
@@ -71,14 +71,14 @@ export class Server {
 
     // Set up our services (see `services/index.js`)
     this.app.configure(services)
-    this.app.configure(channels);
+    this.app.configure(channels)
     // Configure middleware (see `middleware/index.js`) - always has to be last
     this.app.configure(middleware)
     this.app.hooks(appHooks)
   }
 
   run () {
-    const port = this.app.get('port');
+    const port = this.app.get('port')
 
     let promise = new Promise((resolve, reject) => {
       this.app.listen(port, (err) => {

@@ -49,6 +49,15 @@ module.exports = function (ctx) {
             '^/api': '/'
           }
         },
+        '/cms': {
+          target: 'http://localhost:8082',
+          changeOrigin: true,
+          logLevel: 'debug',
+          ws: true,
+          pathRewrite: {
+            '^/cms': '/'
+          }
+        },
         '/etherpad': {
           target: 'http://localhost:9001',
           changeOrigin: true,

@@ -1,6 +1,5 @@
 const { authenticate } = require('@feathersjs/authentication').hooks
 
-
 module.exports = {
   before: {
     all: [],
@@ -31,4 +30,4 @@ module.exports = {
     patch: [],
     remove: []
   }
-};
+}

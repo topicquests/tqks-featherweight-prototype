@@ -9,7 +9,7 @@ class Service {
 
   /**
    * Set the conversation service for fetching tree nodes
-   * @param {} conv 
+   * @param {} conv
    */
   setConversation (conv) {
     conversation = conv
@@ -53,25 +53,24 @@ class Service {
 
   /**
    * A recursive tree builder
-   * @param {*} rootNodeId 
+   * @param {*} rootNodeId
    * @param {*} callback signature: (jsonTree)
    */
   async toJsTree (rootNodeId, level = 0) {
     var thisNode
     var childArray
-    level++;
-    
-    console.info('ToJsTree', {level,  rootNodeId })
+    level++
+
+    console.info('ToJsTree', {level, rootNodeId })
     // Use find to avoid populating the children
     const respConv = await conversation.find({query: { id: rootNodeId }, skippop: true})
     console.dir(respConv)
-    
+
     if (respConv.data.length < 1) {
-      console.info("End", {level});
-      return {};
+      console.info('End', {level})
+      return {}
     }
-    
-    
+
     const node = respConv.data[0]
     // console.info('TV-1', rootNodeId, JSON.stringify(node))
     thisNode = {}
@@ -81,19 +80,20 @@ class Service {
     thisNode.expanded = true
     childArray = this.populateKids(node.questions, node.answers, node.pros, node.cons, node.tags)
     thisNode.children = []
-    const arrPromises = childArray.map( child => this.toJsTree(child, level));
+    const arrPromises = childArray.map(child => this.toJsTree(child, level))
     const children = await Promise.all(arrPromises)
-   
+
     thisNode.children = children
     // console.info('Going Back', thisNode)
-    return thisNode;
+    return thisNode
   }
 
   async get (id) {
     try {
       // A recursive walk down a tree from a root node identified by id
-      return await this.toJsTree(id)   
-    } catch (e) {
+      return await this.toJsTree(id)
+    }
+    catch (e) {
       console.error('Error fetching', e)
     }
   }
@@ -121,6 +121,6 @@ class Service {
 
 module.exports = function (options) {
   return new Service(options)
-};
+}
 
 module.exports.Service = Service

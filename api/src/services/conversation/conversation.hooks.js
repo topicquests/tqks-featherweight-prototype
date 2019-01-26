@@ -21,6 +21,7 @@ const populateChildren = async function (hook, conv) {
         } else {
           console.info('ConversationPopCon', id)
           const { data } = await conversation.find({ query: { id }, skippop: true  })
+
           theData = data
         }
         console.info('Fetching child found', id, theData)
@@ -34,7 +35,11 @@ const populateChildren = async function (hook, conv) {
         // To paint full child nodes, this must return the fetched node
         // That is the node which will populate the final array below
       })
+<<<<<<< Updated upstream
       
+=======
+
+>>>>>>> Stashed changes
       try {
         console.info('Populating')
         console.info('Populate', type, conv.id, 'fetching')
@@ -44,7 +49,8 @@ const populateChildren = async function (hook, conv) {
         console.info('PromisesGot', type, result)
         conv[type] = result
         // console.info('HOOK', hook)
-      } catch (e) {
+      }
+      catch (e) {
         console.error('Populate', conv.id)
       }
     }
@@ -61,25 +67,23 @@ const populateHookSingle = async function (hook) {
 // Find (GET, PUT, PATCH, REMOVE)
 const populateHookBatch = async function (hook) {
   console.info('HOOK', hook.params)
-  if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0)
-  {
+  if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0) {
     console.info('PopulateHookBatch', hook.params.skippop)
-    for (let i=0; i<hook.result.data.length; i++) {
+    for (let i = 0; i < hook.result.data.length; i++) {
       await populateChildren(hook, hook.result.data[i])
     }
   }
 }
 
-const compactDB  = async function (hook) {
+const compactDB = async function (hook) {
   const model = hook.service.Model
   model.persistence.compactDatafile
   // console.info('COMPACT', model)
 }
 
-function hookBeforeFind(hook) {
+function hookBeforeFind (hook) {
   // console.info('HOOKING', hook)
-  if (hook && hook.params.query.skippop)
-  {
+  if (hook && hook.params.query.skippop) {
     // console.info('FoundSkipPop')
     hook.params = hook.params || {}
     hook.params.skippop = true
