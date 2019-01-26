@@ -98,6 +98,11 @@
           <q-item-main label="Profile" />
         </q-item>
 
+        <q-item to="/calendar">
+        <!--  <q-item-side icon="calendar_today" />-->
+          <q-item-main label="Calendar" />
+        </q-item>
+
         <q-item to="/history">
           <q-item-side icon="history" />
           <q-item-main label="History" />
@@ -121,6 +126,11 @@
         <q-item to="/aboutc">
           <q-item-side icon="help" />
           <q-item-main label="Quests Help" />
+        </q-item>
+
+        <q-item to="/topics">
+          <q-item-side icon="info" />
+          <q-item-main label="Topics" />
         </q-item>
 
         <q-item to="/tags">

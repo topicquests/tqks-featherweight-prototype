@@ -1,5 +1,4 @@
 // Configuration for your app
-
 module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
