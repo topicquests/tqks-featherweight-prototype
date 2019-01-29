@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import routes from './routes'
 // import auth from 'src/auth'
 import config from '../../config'
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -23,14 +24,39 @@ const router = new VueRouter({
   routes
 })
 
+
+// from https://stackoverflow.com/a/45581925/439048
+function getUserState () {
+  return new Promise((resolve, reject) => {
+    if (store.state.user === undefined) {
+      const unwatch = store.watch(
+        () => store.state.user,
+        (value) => {
+          unwatch()
+          resolve(value)
+        }
+      )
+    } else {
+      resolve(store.state.user)
+    }
+  })
+}
+
 router.beforeEach((to, from, next) => {
-  if (!config.isPrivatePortal) {
-    // next({ path: '/home' })
+  if (!config.isPrivatePortal || (to && to.name == 'signin')) {
     next()
   } else {
-    console.log('Not authenticated')
-    next({ path: '/signin' })
-    // next({ path: '/home' })
+    getUserState().then((user)=>{
+        // the above state is not available here, since it
+        // it is resolved asynchronously in the store action
+      if (user) {
+        next()
+      } else {
+        console.log('Not authenticated')
+        next({ name: 'signin' })
+        // next({ path: '/home' })
+      }
+    })
   }
 })
 

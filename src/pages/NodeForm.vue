@@ -8,7 +8,7 @@
         </div>
         <div>
           <b>URL</b> (Optional)<br/>
-          <q-input v-model="url" />
+          <q-input v-model="url" type="url"/>
         </div>
         <div>
           <b>Details</b><br/>
@@ -99,9 +99,22 @@ export default {
     }
   },
   methods: {
+    validateURL () {
+      var urx = this.url
+      //see to it that, if there is a url, it's valid
+      if (urx !== '') {
+        if ((!/^https?:\/\//i.test(urx)) || 
+            (!/^ftp:\/\//i.test(urx))) {
+                        urx = 'http://' + urx;
+                        this.url = urx
+                    }
+
+      }
+    },
     doUpdate () {
       conversation.get(this.myId)
         .then ((response ) => {
+          this.validations()
           this.myNode = response
           this.label = response.label
           this.details = response.details
@@ -111,11 +124,11 @@ export default {
     async doSubmit () {
       // alert(this.label)
       // alert(this.details);
+      this.validateURL()
       var typ = this.$data.type
       const params = {}
         params.depth = 0
-      if (typ === 'update') {
-        
+      if (typ === 'update') {        
         conversation.find({ query: { 'id':this.myId, skippop:true } })
           .then ((response) => {
             var json = response.data[0]
@@ -125,10 +138,10 @@ export default {
             json.url = this.url
             console.info('NVU-1', json)
             conversation.update(json.id, json)
-                .then((response) => {
-                  console.info('NVU-2', response)
-                  router.push({name: 'questview', params: { 'id':json.id }})
-                })
+              .then((response) => {
+                console.info('NVU-2', response)
+                router.push({name: 'questview', params: { 'id':json.id }})
+              })
           })
       } else {
         var json = {}
@@ -154,15 +167,17 @@ export default {
           json.imgsm = 'statics/images/ibis/minus_sm.png'
         }
         json.parentId = this.$data.parentId
-        json.parentLabel = this.$data.parentLabel
+        
         const idx = this.$data.parentId
-        conversation.create(json).then((response) => {
+        conversation.find({ query: { 'id':this.parentId, skippop:true } })
+          .then((response) => {
+            var x = response.data[0]
+            this.$data.parentLabel = x.label
+            json.parentLabel = this.$data.parentLabel
+            conversation.create(json).then((response) => {
           // alert(JSON.stringify(response))
-          const id= response.id;
+              const id= response.id;
           // alert(idx+' '+id)
-          conversation.find({ query: { 'id':this.parentId, skippop:true } })
-            .then((response) => {
-              var x = response.data[0]
               // alert(JSON.stringify(x))
               var kids = []
               if (typ === 'question') {
@@ -216,7 +231,6 @@ export default {
       // called by the route 'nodeedit'
       this.$data.parentId = this.$route.params.id
       this.$data.parentType = this.$route.params.parentType
-      this.$data.parentLabel = this.$route.params.label
     }
   }
 }

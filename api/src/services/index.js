@@ -14,6 +14,8 @@ const treeView = require('./tree-view/tree-view.service.js')
 
 const tags = require('./tags/tags.service.js')
 
+const configuration = require('./configuration/configuration.service.js');
+
 module.exports = function () {
   const app = this // eslint-disable-line no-unused-vars
 
@@ -26,4 +28,5 @@ module.exports = function () {
   app.configure(treeView)
 
   app.configure(tags)
+  app.configure(configuration);
 }

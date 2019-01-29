@@ -38,6 +38,13 @@
               <q-input  v-model="removeUserEmail" />
               <q-btn label="Remove User" @click="removeUser" />
             </div>
+            <div class="box">
+              <h5>Manage Configuration</h5>
+              <b>Is Private: </b><q-input  v-model="isPrivatePortal" /><br/>
+              <b>Require Invite: </b><q-input  v-model="requiresInvite" /><br/>
+              <b>Admin Email: </b><q-input  v-model="adminEmail" /><br/>
+              <q-btn label="Save Config" @click="saveConfig" />
+            </div>
 
             <div class="box" style="background-color: red;">
               <h5>Change Node Type</h5>
@@ -57,10 +64,11 @@
 
 <script>
 import api from 'src/api'
+import { mapGetters, mapActions } from 'vuex'
 const invites = api.service('invitations')
 const users = api.service('users')
 const conversation = api.service('conversation')
-
+const configuration = api.service('configuration')
 export default {
   data () {
     return {
@@ -71,13 +79,44 @@ export default {
       displayEmail: '',
       removeUserEmail: '',
       option: '',
-      nodeId: ''
+      nodeId: '',
+      isPrivatePortal: '',
+      requiresInvite: true,
+      adminEmail: ''
     }
+  },
+
+  computed:  {
+    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
+
   },
   mounted () {
     this.$store.commit('questView', false)
+    this.fetchCurrentConfiguration(1).then(
+      (data) => {
+        console.log('Got config', data);
+        const { adminEmail, requiresInvite, isPrivatePortal } = data;
+        this.$data.isPrivatePortal = isPrivatePortal;
+        this.$data.requiresInvite = requiresInvite;
+        this.$data.adminEmail = adminEmail;
+      }
+    )
+ 
   },
   methods: {
+    ...mapActions('configuration', {
+        fetchCurrentConfiguration: 'get',
+        updateConfiguration: 'update'
+      }),
+    saveConfig() {
+      //var json = {}
+      let config = {};
+      config.isPrivatePortal = this.$data.isPrivatePortal
+      config.requiresInvite = this.$data.requiresInvite
+      config.adminEmail = this.$data.adminEmail
+      console.log("SavingConfig", config, this.$data.isPrivatePortal);
+      this.updateConfiguration([1, config]).then(console.log, console.error);
+    },
     doRadio (event) {
       this.$data.option = event
     },
