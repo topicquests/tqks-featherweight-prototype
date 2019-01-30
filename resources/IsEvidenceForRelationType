@@ -1,0 +1,5 @@
+{
+   "inGraph": "IsEvidenceFor",
+   "asSource": "is evidence for ",
+   "asTarget": "has evidence for "
+}

@@ -1,0 +1,5 @@
+{
+   "inGraph": "UsesRelation",
+   "asSource": "uses ",
+   "asTarget": "is used by "
+}

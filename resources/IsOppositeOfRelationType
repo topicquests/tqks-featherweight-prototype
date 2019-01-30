@@ -1,0 +1,6 @@
+{
+   "inGraph": "IsOppositeRelation",
+   "asSource": "is opposite ",
+   "asTarget": "is opposite ",
+   "isSymmetrical": true
+}
