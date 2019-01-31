@@ -8,7 +8,7 @@ module.exports = function(app) {
   const conversation = new Schema(
     {
       label: { type: String, required: true },
-      id: { type: String, required: true },
+      nodeId: { type: String, required: true },
       label: { type: String },
       url: { type: String },
       creator: { type: String },

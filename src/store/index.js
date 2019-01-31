@@ -23,8 +23,12 @@ const store = new Vuex.Store({
     isAdmin: true,
     user: null,
     treeView: null,
-    isQuestView: false
+    isQuestView: false,
+
+    serverPagination: {},
+    serverData: []
   },
+
   actions: {
     verifyToken(context, payload) {
       console.info("Verifying token", { payload });
@@ -63,9 +67,6 @@ const store = new Vuex.Store({
     // then we reference it
     //quests
   },
-  plugins: [
-    service("conversation", { idField: "id" }),
-    service("authManagment")
-  ]
+  plugins: [service("conversation"), service("authManagment")]
 });
 export default store;

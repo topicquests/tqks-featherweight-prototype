@@ -40,14 +40,19 @@ module.exports = function(app) {
             from: emailConfig.GMAIL,
             to: user.email,
             subject: "Confirm Signup",
-            html: "Thanks for verifying your email"
+            html: tokenLink
           };
           return sendEmail(email);
           break;
 
         case "sendResetPwd":
           tokenLink = getLink("reset", user.resetToken);
-          email = {};
+          email = {
+            from: emailConfig.GMAIL,
+            to: user.email,
+            subject: "Confirm reset password",
+            html: tokenLink
+          };
           return sendEmail(email);
           break;
 

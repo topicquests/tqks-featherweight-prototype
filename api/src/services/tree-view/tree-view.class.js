@@ -13,7 +13,7 @@ class Service {
    */
   setConversation(conv) {
     conversation = conv;
-    // console.info('TS', conversation)
+    // console.info("TS", conversation);
   }
 
   async find() {
@@ -64,7 +64,7 @@ class Service {
     console.info("ToJsTree", { level, rootNodeId });
     // Use find to avoid populating the children
     const respConv = await conversation.find({
-      query: { id: rootNodeId },
+      query: { nodeId: rootNodeId },
       skippop: true
     });
     console.dir(respConv);
@@ -97,10 +97,10 @@ class Service {
     return thisNode;
   }
 
-  async get(id) {
+  async get(nodeId) {
     try {
       // A recursive walk down a tree from a root node identified by id
-      return await this.toJsTree(id);
+      return await this.toJsTree(nodeId);
     } catch (e) {
       console.error("Error fetching", e);
     }

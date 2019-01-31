@@ -10,22 +10,25 @@ const populateChildren = async function(hook, conv) {
     // If it's there and has some elements
     if (typeof conv[type] !== "undefined" && conv[type].length > 0) {
       // walk along the node's array carried in the hook
-      const promises = conv[type].map(async id => {
-        console.info("Fetching child id", type, id);
+      const promises = conv[type].map(async nodeId => {
+        console.info("Fetching child id", type, nodeId);
         var theData;
         if (type === "tags") {
-          console.info("ConversationPopTag", id);
-          const { data } = await tags.find({ query: { id }, skippop: true });
+          console.info("ConversationPopTag", nodeId);
+          const { data } = await tags.find({
+            query: { nodeId },
+            skippop: true
+          });
           theData = data;
         } else {
-          console.info("ConversationPopCon", id);
+          console.info("ConversationPopCon", nodeId);
           const { data } = await conversation.find({
-            query: { id },
+            query: { nodeId },
             skippop: true
           });
           theData = data;
         }
-        console.info("Fetching child found", id, theData);
+        console.info("Fetching child found", nodeId, theData);
         // if this returns nothing, you see empty nodes
         // returning data[0] shows nodes
         // console.info('foo', data && data[0])
@@ -39,7 +42,7 @@ const populateChildren = async function(hook, conv) {
 
       try {
         console.info("Populating");
-        console.info("Populate", type, conv.id, "fetching");
+        console.info("Populate", type, conv.nodeId, "fetching");
         // Wait for all the fetches in the map return
         const result = await Promise.all(promises);
         // Replace a list of node id values with a list of nodes
@@ -47,7 +50,7 @@ const populateChildren = async function(hook, conv) {
         conv[type] = result;
         // console.info('HOOK', hook)
       } catch (e) {
-        console.error("Populate", conv.id);
+        console.error("Populate", conv.nodeId);
       }
     }
   }
@@ -57,12 +60,12 @@ const populateChildren = async function(hook, conv) {
 // arrays containing the nodes identified in the found arrays
 // Singleton services (GET, PUT, PATCH, REMOVE)
 const populateHookSingle = async function(hook) {
+  console.log("PopulateHookSingle find");
   await populateChildren(hook, hook.result);
 };
 
 // Find (GET, PUT, PATCH, REMOVE)
 const populateHookBatch = async function(hook) {
-  console.info("HOOK", hook.params.user.handle);
   if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0) {
     console.info("PopulateHookBatch", hook.params.skippop);
     for (let i = 0; i < hook.result.data.length; i++) {

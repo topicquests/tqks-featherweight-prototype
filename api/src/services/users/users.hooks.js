@@ -1,6 +1,7 @@
 const { authenticate } = require("@feathersjs/authentication").hooks;
 const verifyHooks = require("feathers-authentication-management").hooks;
 const accountService = require("../authmanagement/notifier");
+const { lowerCase } = require("feathers-hooks-common");
 
 const {
   hashPassword,
@@ -14,7 +15,12 @@ module.exports = {
     all: [],
     find: [authenticate("jwt")],
     get: [authenticate("jwt")],
-    create: [hashPassword(), gravatar(), verifyHooks.addVerification()],
+    create: [
+      lowerCase("email"),
+      hashPassword(),
+      gravatar(),
+      verifyHooks.addVerification()
+    ],
     update: [authenticate("jwt")],
     patch: [hashPassword(), authenticate("jwt")],
     remove: [authenticate("jwt")]
@@ -33,7 +39,11 @@ module.exports = {
       },
       verifyHooks.removeVerification()
     ],
-    update: [],
+    update: [
+      context => {
+        accountService(context.app).notifier("resetPwd", context.result);
+      }
+    ],
     patch: [],
     remove: []
   },

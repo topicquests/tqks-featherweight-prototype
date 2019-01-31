@@ -1,13 +1,13 @@
 <template>
   <q-page :padding="true" class="flex flex-center">
-    <q-dialog ref="theModal" v-model="showDialog" :title="title" @ok="onOk" @hide="onHide">
+    <q-dialog v-model="showDialog" :title="title" @ok="onOk">
       <div slot="body">
         <div class="row q-mb-md">
           <q-input
-            v-model="email"
-            type="email"
+            v-model="password"
+            type="password"
             name="email"
-            stack-label="E-mail"
+            stack-label="New Password"
             class="full-width"
             autofocus
           />
@@ -17,14 +17,8 @@
             v-model="password"
             type="password"
             name="email"
-            stack-label="Password"
+            stack-label="Confirm Password"
             class="full-width"
-          />
-          <q-btn
-            class="q-pa-sm"
-            label="forgot password"
-            text-color="green"
-            @click="forgotPassword"
           />
         </div>
       </div>
@@ -41,7 +35,7 @@ export default {
       showDialog: true,
       email: null,
       password: null,
-      title: "SignIn"
+      title: "Change Password"
     };
   },
   computed: {},
@@ -49,12 +43,7 @@ export default {
     goHome() {
       this.$router.push({ name: "home" });
     },
-    onHide() {
-      // Workaround needed because of timing issues (sequencing of 'hide' and 'ok' events) ...
-      setTimeout(() => {
-        this.goHome();
-      }, 50);
-    },
+
     onOk(data) {
       this.login(this.email, this.password)
         .then(_ => {
@@ -72,31 +61,11 @@ export default {
         });
     },
     login(email, password) {
-      email = email && email.toString().toLowerCase();
       return auth.login(email, password);
     },
 
     forgotPassword(data) {
-      console.info("SignIn", "forgotPassword");
-      return auth
-        .sendResetPassword(this.email.toLowerCase())
-        .then(result => {
-          console.info("SignIn", "forgotPassword", "success", { result });
-          this.$q.notify({
-            type: "positive",
-            message: "Please check your email for a password reset link"
-          });
-          this.$refs.theModal.hide();
-          this.$router.push("/home");
-        })
-        .catch(e => {
-          this.$q.notify({
-            type: "negative",
-            message: "There was an error resetting your password."
-          });
-          console.error(e);
-          console.error("SignIn", "forgotPassword", "error", { e });
-        });
+      return auth.forgotPassword(this.email);
     }
   },
   mounted() {},

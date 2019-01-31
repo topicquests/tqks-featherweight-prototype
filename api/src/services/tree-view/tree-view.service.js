@@ -10,6 +10,7 @@ module.exports = function(app) {
   };
 
   const conv = app.service("conversation");
+
   const ts = createService(options);
   ts.setConversation(conv);
 
