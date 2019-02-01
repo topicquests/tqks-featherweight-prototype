@@ -93,7 +93,8 @@ module.exports = function (ctx) {
         'QSearch',
         'QTree',
         'QRadio',
-        'QOptionGroup'
+        'QOptionGroup',
+        'QSelect'
       ],
       directives: [
         'Ripple'
