@@ -4,46 +4,48 @@
     <h2>Choose a Relation</h2>
     <span style="margin-left:20px"><b>Chosen Value</b> <q-input v-model="selection"/></span>
     <div class="relationscroller">
-        <!-- column headers -->
-        <div class="columncontainer">
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Cause</b>
-                    <q-select v-model="selection" :options="causeoptions"/>
-                </div>
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Agreement</b>
-                    <q-select v-model="selection" :options="agreeoptions"/>
-                </div>
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Solution</b>
-                    <q-select v-model="selection" :options="solutionoptions"/>
-                </div>
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Analogy-Metaphor</b>
-                    <q-select v-model="selection" :options="analogyoptions"/>
-                </div>
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Sameness</b>
-                    <q-select v-model="selection" :options="samenessoptions"/>
-                </div>
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Part-Whole Containment</b>
-                    <q-select v-model="selection" :options="partoptions"/>
-                </div>
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Argument</b>
-                    <q-select v-model="selection" :options="argueoptions"/>
-                </div>
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Explanation</b>
-                    <q-select v-model="selection" :options="explainoptions"/>
-                </div>
-                <div class="relationcolumn" style="text-align: center;">
-                    <b>Biomedical</b>
-                    <q-select v-model="selection" :options="biooptions"/>
-                </div>
+      <div class="columncontainer">
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Cause</b>
+          <q-select v-model="selection" :options="causeoptions"/>
         </div>
-    </div> 
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Agreement</b>
+          <q-select v-model="selection" :options="agreeoptions"/>
+        </div>
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Solution</b>
+          <q-select v-model="selection" :options="solutionoptions"/>
+        </div>
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Analogy-Metaphor</b>
+          <q-select v-model="selection" :options="analogyoptions"/>
+        </div>
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Sameness</b>
+          <q-select v-model="selection" :options="samenessoptions"/>
+        </div>
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Part-Whole Containment</b>
+          <q-select v-model="selection" :options="partoptions"/>
+        </div>
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Argument</b>
+          <q-select v-model="selection" :options="argueoptions"/>
+        </div>
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Explanation</b>
+          <q-select v-model="selection" :options="explainoptions"/>
+        </div>
+        <div class="relationcolumn" style="text-align: center;">
+          <b>Biomedical</b>
+          <q-select v-model="selection" :options="biooptions"/>
+        </div>
+      </div>
+    </div>
+    <div>
+      <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
+    </div>
   </q-page>
 </template>
 <script>
@@ -122,7 +124,9 @@ export default {
     }
   },
   methods: {
-
+    doSubmit () {
+      console.log("Submitted")
+    }
   },
   mounted () {
 
