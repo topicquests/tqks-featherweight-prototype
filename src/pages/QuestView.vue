@@ -43,6 +43,11 @@
               <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.id}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
+        <div class="columnx" style="text-align: center;">
+              <img class="headerimage" src="statics/images/link.png">Connections
+              <a v-if="isAuthenticated" :href="`/index.html#/connectionform/${q.id}`">
+              <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
       </div>
       <div class="datacontainer">
         <q-list class="datacolumn">
@@ -70,7 +75,12 @@
             <router-link :to="{ name: 'tagview', params: { id: tag.id }}">{{ tag.label }}</router-link>
           </q-item>
         </q-list>
-      </div>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="reln in q.relations" :key="reln.id">
+            <router-link :to="{ name: 'topicview', params: { id: reln.id }}">{{ reln.label }}</router-link>
+          </q-item>
+        </q-list>
+       </div>
     </div>
   </q-page>
 </template>
@@ -198,7 +208,6 @@ export default {
  */
 .columnscroller {
   border: 1px solid black;
-  width: 960;
   white-space:nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -213,7 +222,7 @@ export default {
  * The formula seems to be column width * num colums + 100px  2500
  */
 .columncontainer {
-  width: 1400px;
+  width: 2000px;
 }
 
 .columnx {
@@ -241,7 +250,7 @@ export default {
   margin-left: 4px;
   margin-right: 4px;
   overflow-wrap: normal;
-}
+  width: 960;}
 
 .datacontainer {
   width: 1400px;
