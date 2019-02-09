@@ -1,5 +1,6 @@
 const { authenticate } = require("@feathersjs/authentication").hooks;
 const search = require("feathers-mongodb-fuzzy-search");
+const mongoose = require("feathers-mongoose");
 
 const populateChildren = async function(hook, conv) {
   const toCheck = ["answers", "questions", "pros", "cons", "tags"];
@@ -74,6 +75,99 @@ const populateHookBatch = async function(hook) {
   }
 };
 
+/**
+ *@method addChildToParent
+ *@description Adds questions, answers, pros, cons and tags to parent quest
+ *
+ * @param {*} hook
+ */
+const addChildToParent = async function(hook) {
+  const { conversation } = hook.app.services;
+
+  // This is the parents id from the newly created child
+  let nodeId = hook.result.parentId;
+  let thisData;
+
+  // If it's map this means it is the root quest
+  // and we do not need to treat as a child
+  if (hook.result.type !== "maps") {
+    //find the parent
+    const { data } = await conversation.find({ query: { nodeId } });
+    thisData = data;
+    switch (hook.result.type) {
+      //type=question
+      case "question": {
+        //push the child nodeId onto question array
+        thisData[0].questions.push(hook.result);
+        // Update the parent with new question array
+        result = await conversation.update(
+          { _id: thisData[0]._id },
+          {
+            nodeId: thisData[0].nodeId,
+            questions: thisData[0].questions
+          }
+        );
+        break;
+      }
+      //type=answer
+      case "answer": {
+        thisData[0].answers.push(hook.result);
+        // Update the parent with new question array
+        result = await conversation.update(
+          { _id: thisData[0]._id },
+          {
+            nodeId: thisData[0].nodeId,
+            answers: thisData[0].answers
+          }
+        );
+        break;
+      }
+      //type=pro
+      case "pro": {
+        thisData[0].pros.push(hook.result);
+        // Update the parent with new question array
+        result = await conversation.update(
+          { _id: thisData[0]._id },
+          {
+            nodeId: thisData[0].nodeId,
+            pros: thisData[0].pros
+          }
+        );
+        break;
+      }
+      //type = con
+      case "con": {
+        thisData[0].cons.push(hook.result);
+        // Update the parent with new question array
+        result = await conversation.update(
+          { _id: thisData[0]._id },
+          {
+            nodeId: thisData[0].nodeId,
+            cons: thisData[0].cons
+          }
+        );
+        break;
+      }
+      //type = tag
+      case "tag": {
+        thisData[0].tags.push(hook.result);
+        // Update the parent with new question array
+        result = await conversation.update(
+          { _id: thisData[0]._id },
+          {
+            nodeId: thisData[0].nodeId,
+            tags: thisData[0].tags
+          }
+        );
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+};
+
 const compactDB = async function(hook) {
   const model = hook.service.Model;
   model.persistence.compactDatafile;
@@ -112,8 +206,8 @@ module.exports = {
     all: [],
     find: [populateHookBatch],
     get: [populateHookSingle],
-    create: [],
-    update: [compactDB],
+    create: [addChildToParent],
+    update: [],
     patch: [],
     remove: []
   },

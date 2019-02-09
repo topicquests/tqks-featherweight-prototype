@@ -28,7 +28,7 @@
     <router-link
       v-if="canEdit"
       style="margin-left:20px;"
-      :to="{ name: 'nodeupdate', params: { type: 'update', id: q.id }}"
+      :to="{ name: 'nodeupdate', params: { type: 'update', id: q.nodeId }}"
     >
       <b>Edit This Node</b>
     </router-link>
@@ -39,7 +39,7 @@
           <img class="headerimage" src="statics/images/ibis/issue.png">Questions
           <a
             v-if="isAuthenticated"
-            :href="`/index.html#/nodeedit/question/${q.type}/${q.id}/${q.label}`"
+            :href="`/index.html#/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
@@ -48,7 +48,7 @@
           <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
           <a
             v-if="isAuthenticated"
-            :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}/${q.label}`"
+            :href="`/index.html#/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
@@ -57,7 +57,7 @@
           <img class="headerimage" src="statics/images/ibis/plus.png">Pro
           <a
             v-if="isAuthenticated"
-            :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}/${q.label}`"
+            :href="`/index.html#/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
@@ -66,44 +66,46 @@
           <img class="headerimage" src="statics/images/ibis/minus.png">Con
           <a
             v-if="isAuthenticated"
-            :href="`/index.html#/nodeedit/con/${q.type}/${q.id}/${q.label}`"
+            :href="`/index.html#/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/tag.png">Tags
-          <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.nodeId}`">
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
         </div>
       </div>
       <div class="datacontainer">
         <q-list class="datacolumn">
-          <q-item class="node wordwrap" v-for="question in q.questions" :key="question.id">
+          <q-item class="node wordwrap" v-for="question in q.questions" :key="question.nodeId">
             <router-link
-              :to="{ name: 'questview', params: { id: question.id }}"
+              :to="{ name: 'questview', params: { id: question.nodeId }}"
             >{{ question.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="answer in q.answers" :key="answer.id">
-            <router-link :to="{ name: 'questview', params: { id: answer.id }}">{{ answer.label }}</router-link>
+          <q-item class="node" v-for="answer in q.answers" :key="answer.nodeId">
+            <router-link
+              :to="{ name: 'questview', params: { id: answer.nodeId }}"
+            >{{ answer.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="pro in q.pros" :key="pro.id">
-            <router-link :to="{ name: 'questview', params: { id: pro.id }}">{{ pro.label }}</router-link>
+          <q-item class="node" v-for="pro in q.pros" :key="pro.nodeId">
+            <router-link :to="{ name: 'questview', params: { id: pro.nodeId }}">{{ pro.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="con in q.cons" :key="con.id">
-            <router-link :to="{ name: 'questview', params: { id: con.id }}">{{ con.label }}</router-link>
+          <q-item class="node" v-for="con in q.cons" :key="con.nodeId">
+            <router-link :to="{ name: 'questview', params: { id: con.nodeId }}">{{ con.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="tag in q.tags" :key="tag.id">
-            <router-link :to="{ name: 'tagview', params: { id: tag.id }}">{{ tag.label }}</router-link>
+          <q-item class="node" v-for="tag in q.tags" :key="tag.nodeId">
+            <router-link :to="{ name: 'tagview', params: { id: tag.nodeId }}">{{ tag.label }}</router-link>
           </q-item>
         </q-list>
       </div>
@@ -111,9 +113,11 @@
   </q-page>
 </template>
 <script>
+//Place imports here
 import api from "src/api";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 const treeview = api.service("tree-view");
+
 console.log("QVTV", treeview);
 export default {
   data() {
@@ -133,11 +137,11 @@ export default {
     }, 500);
   },
   mounted() {
-    const id = this.$route.params.id;
+    const nodeId = this.$route.params.id;
     this.$data.rightDrawerOpen = false;
     const self = this;
     try {
-      treeview.get(id).then(function(tree) {
+      treeview.get(nodeId).then(function(tree) {
         console.info("QuestTreeView", tree);
         const img = tree.img;
         // only show the tree if the root is a map

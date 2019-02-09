@@ -22,7 +22,7 @@
           />
           <q-btn
             class="q-pa-sm"
-            label="forgot password"
+            label="Forgot your password?"
             text-color="green"
             @click="forgotPassword"
           />

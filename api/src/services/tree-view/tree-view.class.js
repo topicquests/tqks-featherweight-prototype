@@ -20,6 +20,18 @@ class Service {
     return [];
   }
 
+  /**
+   *@method populateKids
+   *@description
+   *
+   * @param {*} questionArray
+   * @param {*} answerArray
+   * @param {*} proArray
+   * @param {*} conArray
+   * @param {*} tagArray
+   * @returns
+   * @memberof Service
+   */
   populateKids(questionArray, answerArray, proArray, conArray, tagArray) {
     let result = []; // always return at least an empty list
     var i;
@@ -77,7 +89,7 @@ class Service {
     const node = respConv.data[0];
     // console.info('TV-1', rootNodeId, JSON.stringify(node))
     thisNode = {};
-    thisNode.id = node.id;
+    thisNode.nodeId = node.nodeId;
     thisNode.label = node.label;
     thisNode.img = node.imgsm;
     thisNode.expanded = true;
@@ -89,7 +101,9 @@ class Service {
       node.tags
     );
     thisNode.children = [];
-    const arrPromises = childArray.map(child => this.toJsTree(child, level));
+    const arrPromises = childArray.map(child =>
+      this.toJsTree(child.nodeId, level)
+    );
     const children = await Promise.all(arrPromises);
 
     thisNode.children = children;
