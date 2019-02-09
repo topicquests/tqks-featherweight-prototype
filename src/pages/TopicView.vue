@@ -58,7 +58,7 @@
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/link.png">Connections
-              <a v-if="isAuthenticated" :href="`/index.html#/connectionform/${q.id}`">
+              <a v-if="isAuthenticated" :href="`/index.html#/connectionform/${q.id}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
       </div>
@@ -100,7 +100,7 @@
         </q-list>
         <q-list class="datacolumn">
           <q-item class="node" v-for="reln in q.relations" :key="reln.id">
-            <router-link :to="{ name: 'topicview', params: { id: reln.id }}">{{ reln.label }}</router-link>
+            <router-link :to="{ name: 'topicview', params: { id: reln.id}}">{{ reln.label }}</router-link>
           </q-item>
         </q-list>
       </div>

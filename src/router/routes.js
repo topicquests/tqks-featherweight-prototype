@@ -32,7 +32,7 @@ export default [
       { path: '/tagform/:id', name: 'tagform', component: () => import('pages/TagForm'), props: true },
       { path: '/nodeedit/:type/:parentType/:id', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
       { path: '/nodeupdate/:type/:id', name: 'nodeupdate', component: () => import('pages/NodeForm'), props: true },
-      { path: '/connectionform/:id', name: 'connectionform', component: () => import('pages/ConnectionNodeForm'), props: true },      
+      { path: '/connectionform/:id/:label', name: 'connectionform', component: () => import('pages/ConnectionNodeForm'), props: true },      
       { path: '/connedit/:source/:target', name: 'conedit', component: () => import('pages/ConnectionForm'), props: true }
 
 

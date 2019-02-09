@@ -11,6 +11,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^11.2.0",
     "@feathersjs/authentication-client": "^1.0.2",
     "@feathersjs/feathers": "^3.1.7",
     "@feathersjs/socketio-client": "^1.0.2",
@@ -28,6 +29,7 @@
     "socket.io-parser": "^3.1.2",
     "uuid": "^3.3.0",
     "vue": "^2.5.17",
+    "vue-ckeditor5": "^0.4.1",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.17",
     "vuelidate": "^0.7.4",

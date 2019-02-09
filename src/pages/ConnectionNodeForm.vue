@@ -1,6 +1,12 @@
 <template>
     <q-page :padding="true" class="flex flex-left">
-        <h6>Connections Form</h6>
+        <div>
+            <h6>Connections Form</h6>
+            Id: {{id}}<br/>
+            Label: {{label}}<br/><br/>
+            <q-btn label="Create Relation" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
+        </div>
+
     </q-page>
 </template>
 
@@ -19,12 +25,32 @@
 //   b) we go straight to Submit to submit the new connection and
 //    update the source and target nodes
 ///////////////////////
+// Think:
+//  This form will be called twice
+//  build a Map (JSONObject) key = label, value = id
+//  For each Node
+//      salt the call into that map
+//      display each label into a tempA if it is null
+//          or tempB if tempA is not null;
+//  TempA and TempB are viewed in a table
+//  TempA gets a pulldown choicd
+//      SourceNode or TargetNode
+//  When that choice is made, the other label becomes the opposite
+//  We now have selected which node is source and which is target
+//  Then click Create Button      
+//////////////////////////////////
 export default {
+    props: ["id", "label"],
   data () {
     return {
         sourceId: null,
         targetId: null
     }
+  },
+  methods: {
+      doSubmit () {
+          //TODO
+      }
   },
   mounted () {
   }
