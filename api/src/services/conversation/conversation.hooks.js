@@ -2,6 +2,13 @@ const { authenticate } = require("@feathersjs/authentication").hooks;
 const search = require("feathers-mongodb-fuzzy-search");
 const mongoose = require("feathers-mongoose");
 
+/**
+ *@method populateChildren
+ *@description
+ *
+ * @param {*} hook
+ * @param {*} conv
+ */
 const populateChildren = async function(hook, conv) {
   const toCheck = ["answers", "questions", "pros", "cons", "tags"];
   const { conversation, tags } = hook.app.services;
@@ -11,13 +18,14 @@ const populateChildren = async function(hook, conv) {
     // If it's there and has some elements
     if (typeof conv[type] !== "undefined" && conv[type].length > 0) {
       // walk along the node's array carried in the hook
-      const promises = conv[type].map(async nodeId => {
-        console.info("Fetching child id", type, nodeId);
+      const promises = conv[type].map(async id => {
+        console.info("Fetching child id", type, id);
         var theData;
+        let nodeId = id[0].nodeId;
         if (type === "tags") {
-          console.info("ConversationPopTag", nodeId);
+          console.info("ConversationPopTag", id);
           const { data } = await tags.find({
-            query: { nodeId },
+            query: { id },
             skippop: true
           });
           theData = data;
@@ -77,7 +85,8 @@ const populateHookBatch = async function(hook) {
 
 /**
  *@method addChildToParent
- *@description Adds questions, answers, pros, cons and tags to parent quest
+ *@description Adds questions, answers, pros, cons and tags nodes to parent quest
+ *             The node's object is stored in parents questions, answers, pros, cons Array
  *
  * @param {*} hook
  */
@@ -103,8 +112,21 @@ const addChildToParent = async function(hook) {
         result = await conversation.update(
           { _id: thisData[0]._id },
           {
+            questions: thisData[0].questions,
+            answers: thisData[0].answers,
+            cons: thisData[0].cons,
+            tags: thisData[0].tags,
+            pros: thisData[0].pros,
             nodeId: thisData[0].nodeId,
-            questions: thisData[0].questions
+            label: thisData[0].label,
+            details: thisData[0].details,
+            url: thisData[0].url,
+            creator: thisData[0].creator,
+            handle: thisData[0].handle,
+            date: thisData[0].date,
+            type: thisData[0].type,
+            img: thisData[0].img,
+            imgsm: thisData[0].imgsm
           }
         );
         break;
@@ -116,8 +138,21 @@ const addChildToParent = async function(hook) {
         result = await conversation.update(
           { _id: thisData[0]._id },
           {
+            questions: thisData[0].questions,
+            answers: thisData[0].answers,
+            cons: thisData[0].cons,
+            tags: thisData[0].tags,
+            pros: thisData[0].pros,
             nodeId: thisData[0].nodeId,
-            answers: thisData[0].answers
+            label: thisData[0].label,
+            details: thisData[0].details,
+            url: thisData[0].url,
+            creator: thisData[0].creator,
+            handle: thisData[0].handle,
+            date: thisData[0].date,
+            type: thisData[0].type,
+            img: thisData[0].img,
+            imgsm: thisData[0].imgsm
           }
         );
         break;
@@ -129,8 +164,21 @@ const addChildToParent = async function(hook) {
         result = await conversation.update(
           { _id: thisData[0]._id },
           {
+            questions: thisData[0].questions,
+            answers: thisData[0].answers,
+            cons: thisData[0].cons,
+            tags: thisData[0].tags,
+            pros: thisData[0].pros,
             nodeId: thisData[0].nodeId,
-            pros: thisData[0].pros
+            label: thisData[0].label,
+            details: thisData[0].details,
+            url: thisData[0].url,
+            creator: thisData[0].creator,
+            handle: thisData[0].handle,
+            date: thisData[0].date,
+            type: thisData[0].type,
+            img: thisData[0].img,
+            imgsm: thisData[0].imgsm
           }
         );
         break;
@@ -142,8 +190,21 @@ const addChildToParent = async function(hook) {
         result = await conversation.update(
           { _id: thisData[0]._id },
           {
+            questions: thisData[0].questions,
+            answers: thisData[0].answers,
+            cons: thisData[0].cons,
+            tags: thisData[0].tags,
+            pros: thisData[0].pros,
             nodeId: thisData[0].nodeId,
-            cons: thisData[0].cons
+            label: thisData[0].label,
+            details: thisData[0].details,
+            url: thisData[0].url,
+            creator: thisData[0].creator,
+            handle: thisData[0].handle,
+            date: thisData[0].date,
+            type: thisData[0].type,
+            img: thisData[0].img,
+            imgsm: thisData[0].imgsm
           }
         );
         break;
@@ -155,8 +216,21 @@ const addChildToParent = async function(hook) {
         result = await conversation.update(
           { _id: thisData[0]._id },
           {
+            questions: thisData[0].questions,
+            answers: thisData[0].answers,
+            cons: thisData[0].cons,
+            tags: thisData[0].tags,
+            pros: thisData[0].pros,
             nodeId: thisData[0].nodeId,
-            tags: thisData[0].tags
+            label: thisData[0].label,
+            details: thisData[0].details,
+            url: thisData[0].url,
+            creator: thisData[0].creator,
+            handle: thisData[0].handle,
+            date: thisData[0].date,
+            type: thisData[0].type,
+            img: thisData[0].img,
+            imgsm: thisData[0].imgsm
           }
         );
         break;

@@ -87,7 +87,7 @@ class Service {
     }
 
     const node = respConv.data[0];
-    // console.info('TV-1', rootNodeId, JSON.stringify(node))
+    console.info("TV-1", rootNodeId, JSON.stringify(node));
     thisNode = {};
     thisNode.nodeId = node.nodeId;
     thisNode.label = node.label;

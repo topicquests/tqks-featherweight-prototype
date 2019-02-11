@@ -56,6 +56,12 @@ const store = new Vuex.Store({
       console.info("CommitUser", user);
       state.user = user;
     },
+    /**
+     * @method tree
+     * @description saves the tree from the QuestView page and stores it to the state     *
+     * @param {*} state
+     * @param {*} tree
+     */
     tree(state, tree) {
       state.treeView = tree;
     },

@@ -49,7 +49,7 @@
         <q-tree
           v-if="simple"
           :nodes="simple"
-          node-key="id"
+          node-key="nodeId"
           default-expand-all
           :selected.sync="selected"
         />
@@ -124,7 +124,8 @@
         </q-item>
 
         <q-collapsible icon="info" label="About">
-          <p style="padding: 25px;" class="text-grey-7">This is a prototype
+          <p style="padding: 25px;" class="text-grey-7">
+            This is a prototype
             <i>Structured Conversation</i> system.
           </p>
         </q-collapsible>

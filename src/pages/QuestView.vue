@@ -99,7 +99,7 @@
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="con in q.cons" :key="con.nodeId">
+          <q-item class="node" v-for="con in q.con" :key="con.nodeId">
             <router-link :to="{ name: 'questview', params: { id: con.nodeId }}">{{ con.label }}</router-link>
           </q-item>
         </q-list>
@@ -192,10 +192,6 @@ export default {
         const {
           data: [single]
         } = result;
-        // const single = await this.$store.dispatch("conversation/get", [
-        //   nodeId,
-        //   { depth: 1 }
-        // ]);
 
         this.setCurrentConversation(single);
         console.info("Initialize", "fetching data for ", nodeId, "success");
