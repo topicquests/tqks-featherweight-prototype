@@ -4,6 +4,8 @@
             <h6>Connections Form</h6>
             Id: {{id}}<br/>
             Label: {{label}}<br/><br/>
+            <hr>
+            <q-select v-model="selection" :options="options" @input="onValueChange"/> {{sourceLabel}}
             <q-btn label="Create Relation" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
         </div>
 
@@ -44,15 +46,30 @@ export default {
   data () {
     return {
         sourceId: null,
-        targetId: null
+        targetId: null,
+        sourceLabel: null,
+        targetLabel: null,
+        selection: null,
+        options: [
+        {label: 'Source',  value: "source"},
+        {label: 'Target', value: "target"}
+        ]
+        
     }
   },
   methods: {
       doSubmit () {
           //TODO
+      },
+      onValueChange () {
+          alert(this.$data.selection)
       }
   },
   mounted () {
+      //capture the first one in 
+      // we can deal with the next one in later
+      this.$data.sourceId = id
+      this.$data.sourceLabel = label
   }
 }
 </script>
