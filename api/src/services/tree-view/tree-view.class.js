@@ -22,7 +22,8 @@ class Service {
 
   /**
    *@method populateKids
-   *@description
+   *@description Get the children of the passed parent tree node (questions, answers, pros,
+   *              cons, and tags)
    *
    * @param {*} questionArray
    * @param {*} answerArray
@@ -111,6 +112,14 @@ class Service {
     return thisNode;
   }
 
+  /**
+   * @method get
+   * @description
+   *
+   * @param {*} nodeId
+   * @returns
+   * @memberof Service
+   */
   async get(nodeId) {
     try {
       // A recursive walk down a tree from a root node identified by id

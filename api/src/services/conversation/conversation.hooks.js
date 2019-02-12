@@ -21,11 +21,11 @@ const populateChildren = async function(hook, conv) {
       const promises = conv[type].map(async id => {
         console.info("Fetching child id", type, id);
         var theData;
-        let nodeId = id[0].nodeId;
+        let nodeId = id;
         if (type === "tags") {
           console.info("ConversationPopTag", id);
           const { data } = await tags.find({
-            query: { id },
+            query: { nodeId },
             skippop: true
           });
           theData = data;
@@ -92,154 +92,43 @@ const populateHookBatch = async function(hook) {
  */
 const addChildToParent = async function(hook) {
   const { conversation } = hook.app.services;
-
-  // This is the parents id from the newly created child
-  let nodeId = hook.result.parentId;
   let thisData;
 
   // If it's map this means it is the root quest
   // and we do not need to treat as a child
-  if (hook.result.type !== "maps") {
-    //find the parent
-    const { data } = await conversation.find({ query: { nodeId } });
-    thisData = data;
-    switch (hook.result.type) {
-      //type=question
-      case "question": {
-        //push the child nodeId onto question array
-        thisData[0].questions.push(hook.result);
-        // Update the parent with new question array
-        result = await conversation.update(
-          { _id: thisData[0]._id },
-          {
-            questions: thisData[0].questions,
-            answers: thisData[0].answers,
-            cons: thisData[0].cons,
-            tags: thisData[0].tags,
-            pros: thisData[0].pros,
-            nodeId: thisData[0].nodeId,
-            label: thisData[0].label,
-            details: thisData[0].details,
-            url: thisData[0].url,
-            creator: thisData[0].creator,
-            handle: thisData[0].handle,
-            date: thisData[0].date,
-            type: thisData[0].type,
-            img: thisData[0].img,
-            imgsm: thisData[0].imgsm
-          }
-        );
-        break;
-      }
-      //type=answer
-      case "answer": {
-        thisData[0].answers.push(hook.result);
-        // Update the parent with new question array
-        result = await conversation.update(
-          { _id: thisData[0]._id },
-          {
-            questions: thisData[0].questions,
-            answers: thisData[0].answers,
-            cons: thisData[0].cons,
-            tags: thisData[0].tags,
-            pros: thisData[0].pros,
-            nodeId: thisData[0].nodeId,
-            label: thisData[0].label,
-            details: thisData[0].details,
-            url: thisData[0].url,
-            creator: thisData[0].creator,
-            handle: thisData[0].handle,
-            date: thisData[0].date,
-            type: thisData[0].type,
-            img: thisData[0].img,
-            imgsm: thisData[0].imgsm
-          }
-        );
-        break;
-      }
-      //type=pro
-      case "pro": {
-        thisData[0].pros.push(hook.result);
-        // Update the parent with new question array
-        result = await conversation.update(
-          { _id: thisData[0]._id },
-          {
-            questions: thisData[0].questions,
-            answers: thisData[0].answers,
-            cons: thisData[0].cons,
-            tags: thisData[0].tags,
-            pros: thisData[0].pros,
-            nodeId: thisData[0].nodeId,
-            label: thisData[0].label,
-            details: thisData[0].details,
-            url: thisData[0].url,
-            creator: thisData[0].creator,
-            handle: thisData[0].handle,
-            date: thisData[0].date,
-            type: thisData[0].type,
-            img: thisData[0].img,
-            imgsm: thisData[0].imgsm
-          }
-        );
-        break;
-      }
-      //type = con
-      case "con": {
-        thisData[0].cons.push(hook.result);
-        // Update the parent with new question array
-        result = await conversation.update(
-          { _id: thisData[0]._id },
-          {
-            questions: thisData[0].questions,
-            answers: thisData[0].answers,
-            cons: thisData[0].cons,
-            tags: thisData[0].tags,
-            pros: thisData[0].pros,
-            nodeId: thisData[0].nodeId,
-            label: thisData[0].label,
-            details: thisData[0].details,
-            url: thisData[0].url,
-            creator: thisData[0].creator,
-            handle: thisData[0].handle,
-            date: thisData[0].date,
-            type: thisData[0].type,
-            img: thisData[0].img,
-            imgsm: thisData[0].imgsm
-          }
-        );
-        break;
-      }
-      //type = tag
-      case "tag": {
-        thisData[0].tags.push(hook.result);
-        // Update the parent with new question array
-        result = await conversation.update(
-          { _id: thisData[0]._id },
-          {
-            questions: thisData[0].questions,
-            answers: thisData[0].answers,
-            cons: thisData[0].cons,
-            tags: thisData[0].tags,
-            pros: thisData[0].pros,
-            nodeId: thisData[0].nodeId,
-            label: thisData[0].label,
-            details: thisData[0].details,
-            url: thisData[0].url,
-            creator: thisData[0].creator,
-            handle: thisData[0].handle,
-            date: thisData[0].date,
-            type: thisData[0].type,
-            img: thisData[0].img,
-            imgsm: thisData[0].imgsm
-          }
-        );
-        break;
-      }
-      default: {
-        break;
-      }
+  if (hook.result && hook.result.type !== "map") {
+    //find the parent, and destructure the first result
+
+    // Determine which key of the object to change
+
+    let { nodeId, type, parentId } = hook.result;
+    const {
+      data: [existing]
+    } = await conversation.find({ query: { nodeId: parentId } });
+    console.info("Populating parent for ", { nodeId, type });
+
+    // Get existing values for said type
+    let pluralizedKey = `${type}s`;
+    let existingKey = existing[pluralizedKey];
+    console.dir(existing);
+    if (!Array.isArray(existingKey)) {
+      console.warn("Existing key is not an array!!!", existingKey);
+      return;
     }
+
+    // Add the ID of the newly created node to the parent node under the proper type
+    existingKey.push(nodeId);
+
+    let payload = {};
+    payload[pluralizedKey] = existingKey;
+    console.info("Patching with payload", { payload });
+    // Update the parent object with the new ID
+    await conversation.patch(existing._id, payload);
+
+    // }
   }
+
+  return hook;
 };
 
 const compactDB = async function(hook) {
