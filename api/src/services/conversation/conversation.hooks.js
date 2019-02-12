@@ -105,6 +105,12 @@ const addChildToParent = async function(hook) {
     const {
       data: [existing]
     } = await conversation.find({ query: { nodeId: parentId } });
+    
+    if (!existing)
+     {
+       console.warn('No existing entry for parent', parentId);
+       return;
+     }
     console.info("Populating parent for ", { nodeId, type });
 
     // Get existing values for said type

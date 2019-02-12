@@ -7,7 +7,7 @@ module.exports = function(app) {
   const { Schema } = mongooseClient;
   const tags = new Schema(
     {
-      id: { type: String, required: true },
+      nodeId: { type: String, required: true },
       label: { type: String },
       creator: { type: String },
       handle: { type: String },

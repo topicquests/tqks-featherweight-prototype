@@ -2,34 +2,37 @@
   <q-page :padding="true">
     <h4><img style="margin-right:4px;" src="statics/images/tag.png">Tags</h4>
         <q-scroll-area style="width: 800px; height: 800px;">
-          <q-list v-for="quest in rawData" :key="quest.id">
+          <q-list v-for="tag in allTags" :key="tag.nodeId">
             <q-item>
               <!-- NOTE: adding /index.html# makes this work, but it's a hack style="margin-right: 4px"-->
-              <a :href="`/index.html#/tagview/${quest.id}`"><img  style="margin-right: 4px" :src="quest.imgsm">{{ quest.label }}</a>
+              <a :href="`/index.html#/tagview/${tag.nodeId}`"><img  style="margin-right: 4px" :src="tag.imgsm">{{ tag.label }}</a>
             </q-item>
           </q-list>
         </q-scroll-area>
-  
   </q-page>
 </template>
 
 <script>
-import api from 'src/api'
-const tags = api.service('tags')
-
+import { mapGetters, mapActions } from 'vuex';
 export default {
-
   data () {
     return {
       rawData: []
     }
   },
+  computed: {
+    ...mapGetters('tags', {
+      allTags: 'list'
+    })
+  },
   methods: {
-
+    ...mapActions('tags', {
+      findTags: 'find'
+    })
   },
   mounted () {
     this.$store.commit('questView', false)
-    tags.find({
+    this.findTags({
       query: {
         $limit: 100,
         $sort: {

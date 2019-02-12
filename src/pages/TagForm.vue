@@ -66,7 +66,7 @@ export default {
       }
     },
     grabTag (id, callback) {
-      tags.find({ query: { 'id':id, skippop:true } }) 
+      tags.find({ query: { 'nodeId':id, skippop:true } }) 
         .then((response) => {
           return callback(response.data[0])
         })
@@ -89,7 +89,7 @@ export default {
           console.info('NTC')
           // create a new tag
           var json = {}
-          json.id = id
+          json.nodeId = id
           json.label = label
           json.creator = self.user._id
           json.handle = self.user.handle
@@ -153,7 +153,7 @@ export default {
           })
       }
       // mate parent with its tag
-      conversation.find({ query: { 'id':this.parentId, skippop:true } })
+      conversation.find({ query: { 'nodeId':this.parentId, skippop:true } })
         .then((response) => {
           let x = response.data[0]
           console.info('TagProcess-2', x)

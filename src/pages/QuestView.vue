@@ -99,7 +99,7 @@
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="con in q.con" :key="con.nodeId">
+          <q-item class="node" v-for="con in q.cons" :key="con.nodeId">
             <router-link :to="{ name: 'questview', params: { id: con.nodeId }}">{{ con.label }}</router-link>
           </q-item>
         </q-list>
