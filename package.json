@@ -10,7 +10,7 @@
     "dev": "quasar dev",
     "build": "quasar build",
     "lint": "eslint --fix --ext  .js,.vue src",
-    "postinstall": "cd api && npm install",
+    "postinstall": "cd api && npm install && npm run build",
     "test": "echo \"No test specified\" && exit 0",
     "start": "concurrently \"node server.js\" \"cd api && npm run start\""
   },
