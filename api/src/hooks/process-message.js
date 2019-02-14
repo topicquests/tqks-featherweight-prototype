@@ -1,8 +1,8 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 
-module.exports = function() {
-  return function(hook) {
+module.exports = function () {
+  return function (hook) {
     // The authenticated user
     const user = hook.params.user
     // The actual message text
@@ -10,7 +10,7 @@ module.exports = function() {
       // Messages can't be longer than 400 characters
       .substring(0, 400)
       // Do some basic HTML escaping
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
     // Override the original data
     hook.data = {
@@ -24,5 +24,5 @@ module.exports = function() {
     // Hooks can either return nothing or a promise
     // that resolves with the `hook` object for asynchronous operations
     return Promise.resolve(hook)
-  };
-};
+  }
+}

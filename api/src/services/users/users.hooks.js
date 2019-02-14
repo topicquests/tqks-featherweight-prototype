@@ -1,6 +1,6 @@
 const { authenticate } = require('@feathersjs/authentication').hooks
-const { hashPassword, protect } = require('@feathersjs/authentication-local').hooks;
-const commonHooks  = require('feathers-hooks-common')
+const { hashPassword, protect } = require('@feathersjs/authentication-local').hooks
+const commonHooks = require('feathers-hooks-common')
 const gravatar = require('../../hooks/gravatar')
 
 module.exports = {

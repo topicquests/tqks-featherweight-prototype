@@ -3,6 +3,7 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
+      'moment'
     ],
     css: [
       'app.styl'
@@ -49,6 +50,15 @@ module.exports = function (ctx) {
             '^/api': '/'
           }
         },
+        '/cms': {
+          target: 'http://localhost:8082',
+          changeOrigin: true,
+          logLevel: 'debug',
+          ws: true,
+          pathRewrite: {
+            '^/cms': '/'
+          }
+        },
         '/etherpad': {
           target: 'http://localhost:9001',
           changeOrigin: true,
@@ -68,11 +78,14 @@ module.exports = function (ctx) {
         'QLayoutFooter',
         'QPage',
         'QToolbar',
+        'QInnerLoading',
+        'QSpinnerGears',
         'QToolbarTitle',
         'QBtn',
         'QIcon',
         'QList',
         'QListHeader',
+        'QCard',
         'QItem',
         'QItemTile',
         'QItemMain',

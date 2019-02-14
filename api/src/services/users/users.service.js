@@ -3,9 +3,9 @@ const createService = require('feathers-nedb')
 const createModel = require('../../models/users.model')
 const hooks = require('./users.hooks')
 
-module.exports = function() {
-  const app = this;
-  const Model = createModel(app);
+module.exports = function () {
+  const app = this
+  const Model = createModel(app)
   const paginate = app.get('paginate')
 
   const options = {
@@ -21,4 +21,4 @@ module.exports = function() {
   const service = app.service('users')
 
   service.hooks(hooks)
-};
+}

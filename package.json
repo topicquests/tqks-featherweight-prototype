@@ -19,6 +19,7 @@
     "etherpad-lite-client": "^0.8.0",
     "feathers-vuex": "^1.6.2",
     "fs": "0.0.1-security",
+    "g": "^2.0.1",
     "http-proxy-middleware": "^0.18.0",
     "isarray": "^2.0.2",
     "lodash": "^4.17.11",

@@ -1,8 +1,60 @@
 <template>
   <q-page :padding="true" v-if="!!q">
 
+
+<!--    <q-card inline style="width: 500px">-->
+<!--  <q-card-title>-->
+<!--  <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>-->
+<!--      <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>-->
+<!--      <span v-if="q.parentLabel"><b>Responds to </b>-->
+<!--        <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>-->
+<!--      </span>-->
+<!--  </q-card-title>-->
+<!--  <q-card-main>-->
+<!--     <q-scroll-area>-->
+<!--        <div  v-html="q.details"></div>-->
+<!--      </q-scroll-area>-->
+<!--       <q-list>-->
+<!--    <q-collapsible icon="explore" label="Questions">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+
+<!--    <q-collapsible icon="perm_identity" label="Answers">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+
+<!--    <q-collapsible icon="shopping_cart" label="Pros">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+    
+<!--        <q-collapsible icon="shopping_cart" label="Cons">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+        
+<!--        <q-collapsible icon="shopping_cart" label="Tags">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+<!--  </q-list>-->
+<!--  </q-card-main>-->
+<!--  <q-card-actions>-->
+<!--  <router-link v-if="canEdit" style="margin-left:20px;" :to="{ name: 'nodeupdate', params: { type: 'update', id: q.id }}">-->
+<!--<q-btn flat round dense icon="edit" />-->
+<!-- </router-link>-->
+ 
+<!--  </q-card-actions>-->
+<!--</q-card>-->
     <div  id="topbox">
-      <span style="float:right; font-size:small;"><a :href="`/index.html#/userview/${q.creator}`">{{q.handle}}</a> {{q.date}}</span>
+      <span style="float:right; font-size:small;"><a :href="`/index.html#/userview/${q.creator}`">{{q.handle}}</a> {{q.date | moment("dddd, MMMM Do YYYY")  }}</span>
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
       <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
       <span v-if="q.parentLabel"><b>Responds to </b>

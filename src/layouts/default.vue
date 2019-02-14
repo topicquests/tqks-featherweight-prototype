@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout v-if="cms">
     <q-layout-header>
       <q-toolbar
         color="primary"
@@ -17,7 +17,7 @@
         </q-btn>
 
         <q-toolbar-title>
-          FeatherWeight Prototype
+          {{cms.site.title}}
         </q-toolbar-title>
 
         <q-search style="background-color: white;" 
@@ -179,6 +179,8 @@
 <script>
 import auth from 'src/auth'
 import config from '../../config'
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'index',
   components: {
@@ -219,9 +221,22 @@ export default {
     simple () {
       const tre = this.$store.getters.treeView
       return tre
-    }
+    },
+    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
+    stillLoading() {
+      return !(this.currentConfig && this.currentConfig.cms);
+    },
+    cms() {
+      if (this.stillLoading)
+        return null;
+      // Get the slug from current route and search for it in the config JSON
+      return this.currentConfig.cms;
+    },
   },
   methods: {
+    ...mapActions('configuration', {
+      fetchCurrentConfiguration: 'get'
+    }),
     toggleNav () {
       if (this.rightDrawerOpen) {
         this.closeNav()
@@ -277,16 +292,24 @@ export default {
     
   },
   mounted () {
+    this.fetchCurrentConfiguration(1).then(
+      (data) => {
+        console.log('Got config', data);
+      }
+    )
+    
     console.info('MountingDefault', this.$store.getters.user)
     // Check if there is already a session running
     auth.authenticate()
       .then((user) => {
+        
         this.setUser(user)
         this.$q.notify({type: 'positive', message: 'Restoring previous session'})
         this.$store.commit('authenticate', true)
         this.$store.commit('admin', false)
         this.isAuthenticated = true
         this.checkAdmin()
+        
       })
       .catch(_ => {
         // alert('NotAuth')

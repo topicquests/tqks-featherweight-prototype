@@ -19,7 +19,7 @@
                   {{props.row.handle}}
                 </q-td>
                 <q-td key="date" :props="props">
-                  {{props.row.date}}
+                  {{props.row.date  | moment("dddd, MMMM Do YYYY")  }}
                 </q-td>
                 <q-td key="id" auto-width :props="props">
                   <router-link :to="{ name: 'questview', params: { id:  props.row.id }}">View</router-link>

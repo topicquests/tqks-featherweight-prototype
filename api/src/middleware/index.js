@@ -3,7 +3,7 @@ const notFound = require('feathers-errors/not-found')
 const dbSet = require('feathers-nedb-dump').set
 const dbDump = require('feathers-nedb-dump').get
 
-module.exports = function() {
+module.exports = function () {
   // Add your custom middleware here. Remember, that
   // in Express the order matters, `notFound` and
   // the error handler have to go last.
