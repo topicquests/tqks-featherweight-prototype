@@ -11,7 +11,7 @@
         <h3>Annotating</h3>
         <b>Annotation Bookmarklet: </b>
         <div><pre><code>  
-        javascript:window.open('http://localhost:8080/index.html#/bookmark/new?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title),'_blank')
+        javascript:window.open('/bookmark/new?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title),'_blank')
         </code></pre></div>
         Using the annotate bookmarklet involves these steps:
         <ol><li>Login</li><li>Visit website</li><li>Click Annotating Bookmarklet</li>

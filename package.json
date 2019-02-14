@@ -7,7 +7,8 @@
   "author": "",
   "private": true,
   "scripts": {
-    "dev" : "quasar dev",
+    "dev": "quasar dev",
+    "build": "quasar build",
     "lint": "eslint --fix --ext  .js,.vue src",
     "test": "echo \"No test specified\" && exit 0"
   },
@@ -16,6 +17,7 @@
     "@feathersjs/authentication-client": "^1.0.11",
     "@feathersjs/feathers": "^3.3.1",
     "@feathersjs/socketio-client": "^1.2.1",
+    "connect-history-api-fallback": "^1.6.0",
     "engine.io-client": "^3.3.2",
     "etherpad-lite-client": "^0.8.0",
     "feathers-vuex": "^1.6.2",

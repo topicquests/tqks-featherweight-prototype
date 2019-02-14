@@ -4,8 +4,8 @@
         <q-scroll-area style="width: 800px; height: 800px;">
           <q-list v-for="tag in allTags" :key="tag.nodeId">
             <q-item>
-              <!-- NOTE: adding /index.html# makes this work, but it's a hack style="margin-right: 4px"-->
-              <a :href="`/index.html#/tagview/${tag.nodeId}`"><img  style="margin-right: 4px" :src="tag.imgsm">{{ tag.label }}</a>
+              <!-- NOTE: adding  makes this work, but it's a hack style="margin-right: 4px"-->
+              <a :href="`/tagview/${tag.nodeId}`"><img  style="margin-right: 4px" :src="tag.imgsm">{{ tag.label }}</a>
             </q-item>
           </q-list>
         </q-scroll-area>

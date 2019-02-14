@@ -10,6 +10,8 @@ const authmanagement = require("./authmanagement/authmanagement.service.js");
 const treeView = require("./tree-view/tree-view.service.js");
 const configuration = require('./configuration/configuration.service.js');
 
+const invitations = require('./invitations/invitations.service.js');
+
 // eslint-disable-next-line no-unused-vars
 module.exports = function(app) {
   app.configure(users);
@@ -23,4 +25,5 @@ module.exports = function(app) {
   app.configure(authmanagement);
   app.configure(treeView);
   app.configure(configuration);
+  app.configure(invitations);
 };

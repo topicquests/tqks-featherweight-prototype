@@ -2,7 +2,7 @@
   <q-page :padding="true" v-if="!!q">
     <div id="topbox">
       <span style="float:right; font-size:small;">
-        <a :href="`/index.html#/userview/${q.creator}`">{{q.handle}}</a>
+        <a :href="`/userview/${q.creator}`">{{q.handle}}</a>
         {{q.date}}
       </span>
       <h4>
@@ -39,7 +39,7 @@
           <img class="headerimage" src="statics/images/ibis/issue.png">Questions
           <a
             v-if="isAuthenticated"
-            :href="`/index.html#/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
+            :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
@@ -48,7 +48,7 @@
           <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
           <a
             v-if="isAuthenticated"
-            :href="`/index.html#/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`"
+            :href="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
@@ -57,7 +57,7 @@
           <img class="headerimage" src="statics/images/ibis/plus.png">Pro
           <a
             v-if="isAuthenticated"
-            :href="`/index.html#/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`"
+            :href="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
@@ -66,20 +66,20 @@
           <img class="headerimage" src="statics/images/ibis/minus.png">Con
           <a
             v-if="isAuthenticated"
-            :href="`/index.html#/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`"
+            :href="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/tag.png">Tags
-          <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.nodeId}`">
+          <a v-if="isAuthenticated" :href="`/tagform/${q.nodeId}`">
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/link.png">Connections
-              <a v-if="isAuthenticated" :href="`/index.html#/connectionform/${q.id}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/connectionform/${q.id}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
       </div>

@@ -94,27 +94,27 @@ export default {
     },
     canRegister(email, callback) {
       var result = true;
-      if (!config.requiresInvite) {
+      // if (!config.requiresInvite) {
         return callback(result);
-      } else {
-        var json = {};
-        var x = {};
-        x.email = email;
-        json.query = x;
-        invites
-          .find(json)
-          .then(response => {
-            // alert(JSON.stringify(response))
-            if (response.total === 0) {
-              result = false;
-            }
-            // alert(result)
-            return callback(result);
-          })
-          .catch(err => {
-            console.log("CanRegisterError", err);
-          });
-      }
+      // } else {
+      //   var json = {};
+      //   var x = {};
+      //   x.email = email;
+      //   json.query = x;
+      //   invites
+      //     .find(json)
+      //     .then(response => {
+      //       // alert(JSON.stringify(response))
+      //       if (response.total === 0) {
+      //         result = false;
+      //       }
+      //       // alert(result)
+      //       return callback(result);
+      //     })
+      //     .catch(err => {
+      //       console.log("CanRegisterError", err);
+      //     });
+      // }
     },
     doRegister() {
       console.info("Register-1", this.$data.email);
@@ -167,7 +167,7 @@ export default {
                 type: "positive",
                 message: "Cannot register, please check your e-mail or password"
               });
-              self.goHome();
+              // self.goHome();
             });
         } else {
           // alert('bad')

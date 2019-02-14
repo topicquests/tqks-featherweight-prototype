@@ -2,7 +2,7 @@
   <q-page :padding="true" v-if="!!q">
 
     <div  id="topbox">
-      <span style="float:right; font-size:small;"><a :href="`/index.html#/userview/${q.creator}`">{{q.handle}}</a> {{q.date}}</span>
+      <span style="float:right; font-size:small;"><a :href="`/userview/${q.creator}`">{{q.handle}}</a> {{q.date}}</span>
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
       <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
       <!-- parent refers to type, this node being an instanceOf type -->
@@ -23,42 +23,42 @@
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-          <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/question/${q.type}/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/nodeedit/question/${q.type}/${q.id}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
-          <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/answer/${q.type}/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/nodeedit/answer/${q.type}/${q.id}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-          <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/pro/${q.type}/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/nodeedit/pro/${q.type}/${q.id}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/ibis/minus.png">Con
-              <a v-if="isAuthenticated" :href="`/index.html#/nodeedit/con/${q.type}/${q.id}`">
+              <a v-if="isAuthenticated" :href="`/nodeedit/con/${q.type}/${q.id}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/cogwheel.png">Subclasses
-          <a v-if="isAuthenticated" :href="`/index.html#/topicchild/${q.id}/subclass`">
+          <a v-if="isAuthenticated" :href="`/topicchild/${q.id}/subclass`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/cogwheel.png">Instances
-          <a v-if="isAuthenticated" :href="`/index.html#/topicchild/${q.id}/instance`">
+          <a v-if="isAuthenticated" :href="`/topicchild/${q.id}/instance`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/tag.png">Tags
-          <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/tagform/${q.id}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/link.png">Connections
-              <a v-if="isAuthenticated" :href="`/index.html#/connectionform/${q.id}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/connectionform/${q.id}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
       </div>
