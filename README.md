@@ -64,6 +64,22 @@ pm2 start ecosystem.config.js;
 docker-compose up
 ```
 
+### Heroku
+
+1. Create account
+2. Install CLI:
+```
+curl https://cli-assets.heroku.com/install.sh | sh
+```
+3. heroku login --interactive
+4. heroku apps:create tqbarney
+4. Add Mailgun and Mlabs free plans
+5. ```heroku config:Set NODE_ENV=heroku```
+6. git push heroku master
+
+Demo: http://tqmaster.herokuapp.com
+
+
 ### Environmental Overrides
 Pass the following env vars to override initial behavior
 ```
