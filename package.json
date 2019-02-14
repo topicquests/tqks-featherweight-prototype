@@ -10,7 +10,7 @@
     "dev": "quasar dev",
     "build": "quasar build",
     "lint": "eslint --fix --ext  .js,.vue src",
-    "postinstall" : "cd api && npm install",
+    "postinstall": "cd api && npm install",
     "test": "echo \"No test specified\" && exit 0",
     "start": "concurrently \"node server.js\" \"cd api && npm run start\""
   },
@@ -23,6 +23,7 @@
     "connect-history-api-fallback": "^1.6.0",
     "engine.io-client": "^3.3.2",
     "etherpad-lite-client": "^0.8.0",
+    "express": "^4.16.4",
     "feathers-vuex": "^1.6.2",
     "fs": "0.0.1-security",
     "g": "^2.0.1",
