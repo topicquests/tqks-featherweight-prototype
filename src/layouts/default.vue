@@ -1,12 +1,14 @@
 <template>
-  <q-layout>
+  <q-layout v-if="cms">
     <q-layout-header>
       <q-toolbar color="primary" :glossy="false" :inverted="$q.theme === 'ios'">
         <q-btn flat dense round aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen">
           <q-icon name="menu"/>
         </q-btn>
 
-        <q-toolbar-title>FeatherWeight Prototype</q-toolbar-title>
+        <q-toolbar-title>
+          {{cms.site.title}}
+        </q-toolbar-title>
 
         <q-search style="background-color: white;" v-model="search" v-on:keyup.13="doSearch"/>
 
@@ -73,6 +75,11 @@
           <q-item-main label="Profile"/>
         </q-item>
 
+        <q-item to="/calendar">
+        <!--  <q-item-side icon="calendar_today" />-->
+          <q-item-main label="Calendar" />
+        </q-item>
+
         <q-item to="/history">
           <q-item-side icon="history"/>
           <q-item-main label="History"/>
@@ -96,6 +103,11 @@
         <q-item to="/aboutc">
           <q-item-side icon="help"/>
           <q-item-main label="Quests Help"/>
+        </q-item>
+
+        <q-item to="/topics">
+          <q-item-side icon="info" />
+          <q-item-main label="Topics" />
         </q-item>
 
         <q-item to="/tags">
@@ -150,8 +162,10 @@
 </template>
 
 <script>
-import auth from "src/auth";
-import config from "../../config";
+import auth from 'src/auth'
+import config from '../../config'
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: "index",
   components: {},
@@ -188,13 +202,26 @@ export default {
     isQuestView() {
       return this.$store.getters.isQuestView;
     },
-    simple() {
-      const tre = this.$store.getters.treeView;
-      return tre;
-    }
+    simple () {
+      const tre = this.$store.getters.treeView
+      return tre
+    },
+    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
+    stillLoading() {
+      return !(this.currentConfig && this.currentConfig.cms);
+    },
+    cms() {
+      if (this.stillLoading)
+        return null;
+      // Get the slug from current route and search for it in the config JSON
+      return this.currentConfig.cms;
+    },
   },
   methods: {
-    toggleNav() {
+    ...mapActions('configuration', {
+      fetchCurrentConfiguration: 'get'
+    }),
+    toggleNav () {
       if (this.rightDrawerOpen) {
         this.closeNav();
       } else {
@@ -254,21 +281,25 @@ export default {
       return this.$state.getters.isQuestView
     }*/
   },
-  mounted() {
-    console.info("MountingDefault", this.$store.getters.user);
+  mounted () {
+    this.fetchCurrentConfiguration(1).then(
+      (data) => {
+        console.log('Got config', data);
+      }
+    )
+    
+    console.info('MountingDefault', this.$store.getters.user)
     // Check if there is already a session running
-    auth
-      .authenticate()
-      .then(user => {
-        this.setUser(user);
-        this.$q.notify({
-          type: "positive",
-          message: "Restoring previous session"
-        });
-        this.$store.commit("authenticate", true);
-        this.$store.commit("admin", false);
-        this.isAuthenticated = true;
-        this.checkAdmin();
+    auth.authenticate()
+      .then((user) => {
+        
+        this.setUser(user)
+        this.$q.notify({type: 'positive', message: 'Restoring previous session'})
+        this.$store.commit('authenticate', true)
+        this.$store.commit('admin', false)
+        this.isAuthenticated = true
+        this.checkAdmin()
+        
       })
       .catch(_ => {
         // alert('NotAuth')

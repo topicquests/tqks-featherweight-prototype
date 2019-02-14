@@ -1,10 +1,13 @@
 // Configuration for your app
-
-module.exports = function(ctx) {
+module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
-    plugins: [],
-    css: ["app.styl"],
+    plugins: [
+      'moment'
+    ],
+    css: [
+      'app.styl'
+    ],
     extras: [
       ctx.theme.mat ? "roboto-font" : null,
       "material-icons",
@@ -47,8 +50,17 @@ module.exports = function(ctx) {
             "^/api": "/"
           }
         },
-        "/etherpad": {
-          target: "http://localhost:9001",
+        '/cms': {
+          target: 'http://localhost:8082',
+          changeOrigin: true,
+          logLevel: 'debug',
+          ws: true,
+          pathRewrite: {
+            '^/cms': '/'
+          }
+        },
+        '/etherpad': {
+          target: 'http://localhost:9001',
           changeOrigin: true,
           pathRewrite: {
             "^/etherpad": ""
@@ -59,39 +71,46 @@ module.exports = function(ctx) {
     // framework: 'all' --- includes everything; for dev only!
     framework: {
       components: [
-        "QLayout",
-        "QLayoutHeader",
-        "QLayoutDrawer",
-        "QPageContainer",
-        "QLayoutFooter",
-        "QPage",
-        "QToolbar",
-        "QToolbarTitle",
-        "QBtn",
-        "QIcon",
-        "QList",
-        "QListHeader",
-        "QItem",
-        "QItemTile",
-        "QItemMain",
-        "QItemSide",
-        "QTooltip",
-        "QDialog",
-        "QInput",
-        "QChatMessage",
-        "QCollapsible",
-        "QPageSticky",
-        "QField",
-        "QEditor",
-        "QScrollArea",
-        "QPagination",
-        "QTable",
-        "QTd",
-        "QTr",
-        "QSearch",
-        "QTree",
-        "QRadio",
-        "QOptionGroup"
+        'QLayout',
+        'QLayoutHeader',
+        'QLayoutDrawer',
+        'QPageContainer',
+        'QLayoutFooter',
+        'QPage',
+        'QToolbar',
+        'QInnerLoading',
+        'QSpinnerGears',
+        'QToolbarTitle',
+        'QBtn',
+        'QIcon',
+        'QList',
+        'QListHeader',
+        'QCard',
+        'QItem',
+        'QItemTile',
+        'QItemMain',
+        'QItemSide',
+        'QTooltip',
+        'QDialog',
+        'QInput',
+        'QChatMessage',
+        'QCollapsible',
+        'QPageSticky',
+        'QField',
+        'QEditor',
+        'QScrollArea',
+        'QPagination',
+        'QTable',
+        'QTd',
+        'QTr',
+        'QSearch',
+        'QTree',
+        'QRadio',
+        'QOptionGroup',
+        'QSelect'
+      ],
+      directives: [
+        'Ripple'
       ],
       directives: ["Ripple"],
       // Quasar plugins

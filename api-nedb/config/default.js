@@ -8,7 +8,7 @@ module.exports = {
   // https://github.com/chimurai/http-proxy-middleware
   proxyTable: {},
 
-  port: process.env.PORT || 8081,
+  port: process.env.API_PORT || 8081,
 
   apiPath: '/api',
 

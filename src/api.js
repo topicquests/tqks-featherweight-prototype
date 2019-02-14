@@ -15,5 +15,6 @@ api.service('/conversation')
 api.service('/tree-view')
 api.service('/tags')
 api.service('/search')
+api.service('/configuration')
 
 export default api

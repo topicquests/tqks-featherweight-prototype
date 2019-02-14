@@ -109,7 +109,7 @@ class Service {
 
     thisNode.children = children;
     // console.info('Going Back', thisNode)
-    return thisNode;
+    return thisNode
   }
 
   /**
@@ -123,9 +123,16 @@ class Service {
   async get(nodeId) {
     try {
       // A recursive walk down a tree from a root node identified by id
+<<<<<<< HEAD
       return await this.toJsTree(nodeId);
     } catch (e) {
       console.error("Error fetching", e);
+=======
+      return await this.toJsTree(id)
+    }
+    catch (e) {
+      console.error('Error fetching', e)
+>>>>>>> master
     }
   }
 
@@ -150,8 +157,14 @@ class Service {
   }
 }
 
+<<<<<<< HEAD
 module.exports = function(options) {
   return new Service(options);
 };
+=======
+module.exports = function (options) {
+  return new Service(options)
+}
+>>>>>>> master
 
 module.exports.Service = Service;

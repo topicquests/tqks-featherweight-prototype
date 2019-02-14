@@ -143,7 +143,7 @@ const compactDB = async function(hook) {
   // console.info('COMPACT', model)
 };
 
-function hookBeforeFind(hook) {
+function hookBeforeFind (hook) {
   // console.info('HOOKING', hook)
   if (hook && hook.params.query.skippop) {
     // console.info('FoundSkipPop')

@@ -4,8 +4,8 @@ const createModel = require('../../models/tags.model');
 const hooks = require('./tags.hooks');
 
 module.exports = function (app) {
-  const Model = createModel(app);
-  const paginate = app.get('paginate');
+  const Model = createModel(app)
+  const paginate = app.get('paginate')
 
   const options = {
     Model,
@@ -13,10 +13,10 @@ module.exports = function (app) {
   };
 
   // Initialize our service with any options it requires
-  app.use('/tags', createService(options));
+  app.use('/tags', createService(options))
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('tags');
+  const service = app.service('tags')
 
-  service.hooks(hooks);
-};
+  service.hooks(hooks)
+}

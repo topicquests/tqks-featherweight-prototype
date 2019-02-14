@@ -1,5 +1,6 @@
 <template>
   <q-page :padding="true" v-if="!!q">
+<<<<<<< HEAD
     <div id="topbox">
       <span style="float:right; font-size:small;">
         <a :href="`/index.html#/userview/${q.creator}`">{{q.handle}}</a>
@@ -17,6 +18,66 @@
       </span>
       <span v-if="q.parentLabel">
         <b>Responds to</b>
+=======
+
+
+<!--    <q-card inline style="width: 500px">-->
+<!--  <q-card-title>-->
+<!--  <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>-->
+<!--      <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>-->
+<!--      <span v-if="q.parentLabel"><b>Responds to </b>-->
+<!--        <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>-->
+<!--      </span>-->
+<!--  </q-card-title>-->
+<!--  <q-card-main>-->
+<!--     <q-scroll-area>-->
+<!--        <div  v-html="q.details"></div>-->
+<!--      </q-scroll-area>-->
+<!--       <q-list>-->
+<!--    <q-collapsible icon="explore" label="Questions">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+
+<!--    <q-collapsible icon="perm_identity" label="Answers">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+
+<!--    <q-collapsible icon="shopping_cart" label="Pros">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+    
+<!--        <q-collapsible icon="shopping_cart" label="Cons">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+        
+<!--        <q-collapsible icon="shopping_cart" label="Tags">-->
+<!--      <div>-->
+<!--        Lorem ipsum dolor sit amet...-->
+<!--      </div>-->
+<!--    </q-collapsible>-->
+<!--  </q-list>-->
+<!--  </q-card-main>-->
+<!--  <q-card-actions>-->
+<!--  <router-link v-if="canEdit" style="margin-left:20px;" :to="{ name: 'nodeupdate', params: { type: 'update', id: q.id }}">-->
+<!--<q-btn flat round dense icon="edit" />-->
+<!-- </router-link>-->
+ 
+<!--  </q-card-actions>-->
+<!--</q-card>-->
+    <div  id="topbox">
+      <span style="float:right; font-size:small;"><a :href="`/index.html#/userview/${q.creator}`">{{q.handle}}</a> {{q.date | moment("dddd, MMMM Do YYYY")  }}</span>
+      <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
+      <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
+      <span v-if="q.parentLabel"><b>Responds to </b>
+>>>>>>> master
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
       <hr>
@@ -77,6 +138,11 @@
             <img class="respond" src="statics/images/respond_sm.png">
           </a>
         </div>
+        <div class="columnx" style="text-align: center;">
+              <img class="headerimage" src="statics/images/link.png">Connections
+              <a v-if="isAuthenticated" :href="`/index.html#/connectionform/${q.id}/${q.label}`">
+              <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
       </div>
       <div class="datacontainer">
         <q-list class="datacolumn">
@@ -108,7 +174,12 @@
             <router-link :to="{ name: 'tagview', params: { id: tag.nodeId }}">{{ tag.label }}</router-link>
           </q-item>
         </q-list>
-      </div>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="reln in q.relations" :key="reln.id">
+            <router-link :to="{ name: 'topicview', params: { id: reln.id }}">{{ reln.label }}</router-link>
+          </q-item>
+        </q-list>
+       </div>
     </div>
   </q-page>
 </template>
@@ -253,8 +324,7 @@ export default {
  */
 .columnscroller {
   border: 1px solid black;
-  width: 960;
-  white-space: nowrap;
+  white-space:nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
   margin: 12px;
@@ -268,7 +338,7 @@ export default {
  * The formula seems to be column width * num colums + 100px  2500
  */
 .columncontainer {
-  width: 1400px;
+  width: 2000px;
 }
 
 .columnx {
@@ -296,7 +366,7 @@ export default {
   margin-left: 4px;
   margin-right: 4px;
   overflow-wrap: normal;
-}
+  width: 960;}
 
 .datacontainer {
   width: 1400px;

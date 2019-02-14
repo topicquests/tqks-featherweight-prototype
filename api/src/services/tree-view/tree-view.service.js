@@ -7,7 +7,7 @@ module.exports = function(app) {
 
   const options = {
     paginate
-  };
+  }
 
   const conv = app.service("conversation");
 
@@ -20,5 +20,5 @@ module.exports = function(app) {
   // Get our initialized service so that we can register hooks
   const service = app.service("tree-view");
 
-  service.hooks(hooks);
-};
+  service.hooks(hooks)
+}

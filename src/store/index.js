@@ -73,6 +73,11 @@ const store = new Vuex.Store({
     // then we reference it
     //quests
   },
-  plugins: [service("conversation"), service("tags"), service("authManagment")]
+  plugins: [service("conversation"), 
+    service("tags"), 
+    service("authManagment"), 
+    service("configuration", {
+      idField: 'id'
+    })]
 });
 export default store;

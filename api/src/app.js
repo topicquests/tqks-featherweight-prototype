@@ -18,9 +18,9 @@ const channels = require('./channels');
 
 const mongoose = require('./mongoose');
 
-const authentication = require('./authentication');
+const authentication = require('./authentication')
 
-const app = express(feathers());
+const app = express(feathers())
 
 // Load app configuration
 app.configure(configuration());
@@ -54,4 +54,4 @@ app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
 
-module.exports = app;
+module.exports = app

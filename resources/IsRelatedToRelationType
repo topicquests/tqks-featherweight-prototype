@@ -1,0 +1,6 @@
+{
+   "inGraph": "RelatedTo",
+   "asSource": "is related to ",
+   "asTarget": "is related to ",
+   "isSymmetrical": true
+}

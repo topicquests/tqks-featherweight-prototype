@@ -1,0 +1,5 @@
+{
+   "inGraph": "ContainedInRelation",
+   "asSource": "is contained in ",
+   "asTarget": "contains "
+}

@@ -1,8 +1,10 @@
 
 
+const isAdminUser = require('../../hooks/is-admin-user');
+
 module.exports = {
   before: {
-    all: [],
+    all: [isAdminUser()],
     find: [],
     get: [],
     create: [],
@@ -30,4 +32,4 @@ module.exports = {
     patch: [],
     remove: []
   }
-};
+}

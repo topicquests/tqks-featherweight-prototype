@@ -1,0 +1,5 @@
+{
+   "inGraph": "PartOfRelation",
+   "asSource": "is part of ",
+   "asTarget": "has part "
+}

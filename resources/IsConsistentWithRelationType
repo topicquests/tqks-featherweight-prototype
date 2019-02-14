@@ -1,0 +1,6 @@
+{
+   "inGraph": "IsConsistentWithRelation",
+   "asSource": "is consistent with ",
+   "asTarget": "is consistent with ",
+   "isSymmetrical": true
+}
