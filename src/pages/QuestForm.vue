@@ -20,12 +20,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import api from "src/api";
-const uuidv4 = require("uuid/v4");
-const conversation = api.service("conversation");
-var router;
-=======
 import api from 'src/api'
 import Vue from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -41,7 +35,6 @@ Vue.use(VueCkeditor.plugin, options);
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
 var router
->>>>>>> master
 
 export default {
   data() {

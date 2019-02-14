@@ -31,6 +31,7 @@
     "uuid": "^3.3.0",
     "vue": "^2.6.5",
     "vue-ckeditor5": "^0.4.1",
+    "vue-moment": "^4.0.0",
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.6.5",
     "vuelidate": "^0.7.4",

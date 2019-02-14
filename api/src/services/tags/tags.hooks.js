@@ -5,7 +5,6 @@ const populateChildren = async function(hook, tag) {
   const { conversation } = hook.app.services;
   // Walk along child node types
   // If it's there and has some elements
-<<<<<<< HEAD
   const mynodes = tag.nodes;
   console.info("TagsHooksMyNodes", mynodes);
   if (mynodes !== undefined && mynodes.length > 0) {
@@ -18,35 +17,16 @@ const populateChildren = async function(hook, tag) {
       });
       const theData = data;
       console.info("Fetching child found", id, theData);
-=======
-  const mynodes = tag.nodes
-  console.info('TagsHooksMyNodes', mynodes)
-  if (mynodes !== undefined && mynodes.length > 0) {
-    // walk along the node's array carried in the hook
-    const promises = mynodes.map(async (id) => {
-      console.info('Fetching child id', id)
-      const { data } = await conversation.find({ query: { id }, skippop: true })
-      const theData = data
-      console.info('Fetching child found', id, theData)
->>>>>>> master
       // if this returns nothing, you see empty nodes
       // returning data[0] shows nodes
       // console.info('foo', data && data[0])
       // console.info('bar', data)
       // returning data && data[0] is equivalent to returning data[0]
-<<<<<<< HEAD
       return theData[0];
       // return data && data[0]
       // To paint full child nodes, this must return the fetched node
       // That is the node which will populate the final array below
     });
-=======
-      return theData[0]
-      // return data && data[0]
-      // To paint full child nodes, this must return the fetched node
-      // That is the node which will populate the final array below
-    })
->>>>>>> master
 
     try {
       console.info("Populating");
@@ -87,15 +67,9 @@ function hookBeforeFind (hook) {
   // return hook
 }
 
-<<<<<<< HEAD
 const compactDB = async function(hook) {
   const model = hook.service.Model;
   model.persistence.compactDatafile;
-=======
-const compactDB = async function (hook) {
-  const model = hook.service.Model
-  model.persistence.compactDatafile
->>>>>>> master
   // console.info('COMPACT', model)
 };
 module.exports = {

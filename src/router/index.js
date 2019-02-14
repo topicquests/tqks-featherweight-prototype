@@ -3,12 +3,7 @@ import VueRouter from "vue-router";
 
 import routes from "./routes";
 // import auth from 'src/auth'
-<<<<<<< HEAD
-import config from "../../config";
-=======
 import config from '../../config'
-import store from '../store/index'
->>>>>>> master
 
 Vue.use(VueRouter);
 
