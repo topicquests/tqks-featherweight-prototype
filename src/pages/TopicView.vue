@@ -56,6 +56,11 @@
           <a v-if="isAuthenticated" :href="`/index.html#/tagform/${q.id}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
+        <div class="columnx" style="text-align: center;">
+              <img class="headerimage" src="statics/images/link.png">Connections
+              <a v-if="isAuthenticated" :href="`/index.html#/connectionform/${q.id}/${q.label}`">
+              <img class="respond" src="statics/images/respond_sm.png"></a>
+        </div>
       </div>
       <div class="datacontainer">
         <q-list class="datacolumn">
@@ -91,6 +96,11 @@
         <q-list class="datacolumn">
           <q-item class="node" v-for="tag in q.tags" :key="tag.id">
             <router-link :to="{ name: 'tagview', params: { id: tag.id }}">{{ tag.label }}</router-link>
+          </q-item>
+        </q-list>
+        <q-list class="datacolumn">
+          <q-item class="node" v-for="reln in q.relations" :key="reln.id">
+            <router-link :to="{ name: 'topicview', params: { id: reln.id}}">{{ reln.label }}</router-link>
           </q-item>
         </q-list>
       </div>

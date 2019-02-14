@@ -1,0 +1,5 @@
+{
+   "inGraph": "ImpliesRelation",
+   "asSource": "implies ",
+   "asTarget": "is implied by "
+}
