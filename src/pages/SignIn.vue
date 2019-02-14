@@ -24,7 +24,7 @@
             class="q-pa-sm"
             label="Forgot your password?"
             text-color="green"
-            @click="forgotPassword"
+            @click.prevent="forgotPassword"
           />
         </div>
       </div>

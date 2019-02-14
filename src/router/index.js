@@ -23,17 +23,30 @@ const router = new VueRouter({
   routes
 });
 
-const WHITE_LIST_ROUTES = ["token"];
+// These routes don't require auth
+const WHITE_LIST_ROUTES = ["token", 
+  "signin", 
+  "home", 
+  "about", 
+  "aboutc", 
+  "signin", 
+  "register",
+  "history",
+  "bookmarks",
+  "quests",
+  "topics",
+  "tags",
+  "bookmarkview"
+];
+
 router.beforeEach((to, from, next) => {
-  console.info("Route", { to, from });
+  console.info("Router guard", { to, from });
   // debugger;
   if (!config.isPrivatePortal || WHITE_LIST_ROUTES.indexOf(to.name) > -1) {
-    // next({ path: '/home' })
     next();
   } else {
-    console.log("Not authenticated");
+    console.warn("Router guard", { to, from }, "not authenticated");
     next({ path: "/signin" });
-    // next({ path: '/home' })
   }
 });
 
