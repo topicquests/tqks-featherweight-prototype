@@ -36,6 +36,11 @@ We prefer that you get a free database from: https://mailtrap.io/register/signup
 
 Update `mongodb` and `emailconfig` in `/api/config/barney.json`
 
+### Make yourself admin
+
+In `config/overrides.json`, change the adminEmail to your main test account email.
+
+
 ### Building
 Two terminals. 
 * Root: npm install
