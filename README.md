@@ -19,6 +19,12 @@ Assuming your name is Barney :/
 
 ```cp /api/config/dev.json /api/config/barney.json```
 
+### Git ignore your file
+
+`cat "/api/config/barney.json" > .gitignore`
+
+
+
 #### Emails
 
 In order to send emails, you need an SMTP server. 
