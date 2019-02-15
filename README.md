@@ -1,4 +1,4 @@
-# tqks-featherweight-prototype
+# Topic Quests FeatherWeight Prototype
 Quasar Feathers Structured Conversation
 
 A Simple experiment in Structured Conversation.
@@ -32,7 +32,7 @@ Once you get your API keys, populate them in config/barney.json
 
 You can use your own MongoDB instance that you can pull using Docker.
 
-We prefer that you get a free database from: https://mailtrap.io/register/signup
+We prefer that you get a free database from: https://mlab.com/
 
 Update `mongodb` and `emailconfig` in `/api/config/barney.json`
 
