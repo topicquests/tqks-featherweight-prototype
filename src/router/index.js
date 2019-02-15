@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import routes from "./routes";
 // import auth from 'src/auth'
 import config from '../../config'
+import store from '../store/';
 
 Vue.use(VueRouter);
 
@@ -41,8 +42,12 @@ const WHITE_LIST_ROUTES = ["token",
 
 router.beforeEach((to, from, next) => {
   console.info("Router guard", { to, from });
+  let name = to.name || to.path.split('/')[1];
+  console.info("Router guard", {name});
   // debugger;
-  if (!config.isPrivatePortal || WHITE_LIST_ROUTES.indexOf(to.name) > -1) {
+  let { isAuthenticated } = store.state; 
+  
+  if (!config.isPrivatePortal || ( isAuthenticated || WHITE_LIST_ROUTES.includes(name))) {
     next();
   } else {
     console.warn("Router guard", { to, from }, "not authenticated");
