@@ -1,42 +1,36 @@
-/**
- * A Conversation is a Tree, typically rooted in a Quest
- * A Conversation tree node is of these types
- *   Question -- aka Issue
- *   Answer -- aka Position
- *   Pro Argument
- *   Con Argument
- * A conversation node is an object with these fields
- *  id -- UUID
- *  creatorId -- String
- *  createdDaate -- Date
- *  label -- String
- *  details -- String -- rich text
- *  parentId -- String
- *  url -- String -- a URL string
- *  questionList -- Array of String
- *  answerList -- Array of String
- *  proList -- Array of String
- *  conList -- Array of String
- *  tagList -- Array of String  (later)
- *  connectionList -- Array of String  (later)
- * 
- * We are indexing by
- *  id
- *  label
- */
+// conversation-model.js - A mongoose model
+//
+// See http://mongoosejs.com/docs/models.html
+// for more of what you can do here.
+module.exports = function(app) {
+  const mongooseClient = app.get("mongooseClient");
+  const { Schema } = mongooseClient;
+  const conversation = new Schema(
+    {
+      label: { type: String, required: true },
+      nodeId: { type: String, required: true },
+      label: { type: String },
+      details: { type: String },
+      url: { type: String },
+      creator: { type: String },
+      handle: { type: String },
+      date: { type: String },
+      type: { type: String },
+      img: { type: String },
+      imgsm: { type: String },
+      parentLabel: { type: String },
+      parentId: { type: String },
+      questions: { type: Array },
+      answers: { type: Array },
+      pros: { type: Array },
+      cons: { type: Array },
+      tags: { type: Array },
+      skippop: { type: Boolean }
+    },
+    {
+      timestamps: true
+    }
+  );
 
-const NeDB = require('nedb');
-const path = require('path');
-
-module.exports = function (app) {
-  const dbPath = app.get('nedb');
-  const Model = new NeDB({
-    filename: path.join(dbPath, 'conversation.db'),
-    autoload: true
-  });
-  
-  Model.ensureIndex({ fieldName: 'id', unique: true })
-  Model.ensureIndex({ fieldName: 'label'})
-
-  return Model;
+  return mongooseClient.model("conversation", conversation);
 };

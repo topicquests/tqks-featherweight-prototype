@@ -1,6 +1,27 @@
+var overrides = {}
 var path = require('path')
+try {
+  overrides = require('./overrides.json')
+} catch (e) {
+  console.error('Error reading overrides', e)
+}
 
-module.exports = {
+const {
+  IS_PRIVATE_PORTAL = false,
+  REQUIRES_INVITE = true,
+  ADMIN_EMAIL = 'sue@sixpack.com'
+} = process.env
+
+const config = {
+  // PORTAL
+  // Portal can be private, in which case, it forces Login
+  isPrivatePortal: IS_PRIVATE_PORTAL,
+  // When true, for an email to signup, it must be on an invitation list
+  // An admin handles the invitation list
+  requiresInvite: REQUIRES_INVITE,
+  // This email defines which account is the first Admin
+  // Admins might be able to assign roles to other accounts
+  adminEmail: ADMIN_EMAIL,
   // Webpack aliases
   aliases: {
     quasar: path.resolve(__dirname, '../node_modules/quasar-framework/'),
@@ -47,12 +68,25 @@ module.exports = {
     proxyTable: {
       '/api': {
         target: 'http://localhost:8081',
-        changeOrigin: true
+        changeOrigin: true,
+        logLevel: 'debug',
+        ws: true,
+        pathRewrite: {
+          '^/api': '/'
+        }
+      },
+      '/etherpad': {
+        target: 'http://localhost:9001',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/etherpad': ''
+        }
       }
     }
   }
 }
 
+module.exports = Object.assign({}, config, overrides)
 /*
  * proxyTable example:
  *

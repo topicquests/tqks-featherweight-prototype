@@ -1,50 +1,81 @@
 <template>
-    <q-page>
-        <h3>Quest Edit Form</h3>
-        <!-- todo -->
-        <div>
-            <h5>Subject</h5>
-            <q-input  v-model="label" />
-        </div>
-        <div>
-            <h5>Details</h5>
-            <q-editor v-model="details" />
-        </div>
-        <div>
-            <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
-        </div>
-    </q-page>
+  <q-page :padding="true">
+      <h6>Quest Edit Form</h6>
+      <div>
+        <b>Subject</b><br/>
+        <q-input v-model="label" />
+      </div>
+      <div>
+        <b>URL</b> (Optional)<br/>
+        <q-input  v-model="url" />
+      </div>
+      <div>
+        <b>Details</b><br/>
+        <ckeditor type="classic" v-model="details"></ckeditor>
+      </div>
+      <div>
+        <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
+      </div>
+  </q-page>
 </template>
 
 <script>
 import api from 'src/api'
+import Vue from 'vue'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import VueCkeditor from 'vue-ckeditor5'
+const options = {
+  editors: {
+    classic: ClassicEditor,
+  },
+  name: 'ckeditor'
+}
+ 
+Vue.use(VueCkeditor.plugin, options);
 const uuidv4 = require('uuid/v4')
-const quests = api.service('quests')
+const conversation = api.service('conversation')
+var router
 
 export default {
-  data () {
+  data() {
     return {
-      label: '',
-      details: ''
-    }
+      label: "",
+      details: "",
+      url: "",
+      user: this.$store.getters.user
+    };
   },
   methods: {
-    doSubmit: function () {
+    doSubmit: function() {
       // alert(this.label);
       // alert(this.details);
-      var json = {}
-      json.id = uuidv4()
-      json.label = this.label
-      json.details = this.details
-      alert(JSON.stringify(json))
-      quests.create(json).then((response) => {
-        alert(JSON.stringify(response))
-      })
+      var json = {};
+      json.nodeId = uuidv4();
+      json.type = "quest";
+      json.label = this.label;
+      json.url = this.url;
+      json.details = this.details;
+      json.img = "statics/images/ibis/map.png";
+      json.imgsm = "statics/images/ibis/map_sm.png";
+      json.creator = this.user._id;
+      json.handle = this.user.handle;
+      json.date = new Date();
+      json.type = "map";
+      console.info("QF-1", this.user);
+      console.info("QF-2", json);
+      // TODO add creatorId, date
+      // alert(JSON.stringify(json))
+      conversation.create(json).then(response => {
+        // alert(JSON.stringify(response))
+        router.push("/quests");
+      });
     }
   },
-  mounted () {
+  mounted() {
+    router = this.$router;
+    this.$store.commit("questView", false);
   }
-}
+};
 </script>
 
 <style>

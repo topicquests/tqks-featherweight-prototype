@@ -1,0 +1,5 @@
+{
+   "inGraph": "PredictsRelation",
+   "asSource": "predicts ",
+   "asTarget": "is predicted by "
+}

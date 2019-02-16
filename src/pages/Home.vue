@@ -5,57 +5,62 @@
 
 -->
 <template>
-  <q-page class="flex flex-center">
+  <q-page :padding="true" class="flex flex-center">
     <div>
-      <div class="layout-padding">
-        <div v-if="!authenticated">
-          <div class="column items-center">
-            <div class="auto"><img src="~assets/quasar-logo.png"></div>
-            <div class="auto">
-              <h3>
-                <br/>
-                <router-link to="/signin">Sign In</router-link> or <router-link to="/register">Register</router-link> to see the power of Quasar and Feathers
-                <br/><br/>
-              </h3>
-            </div>
-            <div class="auto"><img src="~assets/feathers-logo.png"></div>
+        <div v-if="!stillLoading" class="column items-center">
+          
+          <h6>{{cms.title}}</h6>
+          
+          <div v-html="cms.body">
+            
           </div>
+       
         </div>
-        <div v-else class="column items-center">
-          <h3>FeatherWeight Prototype</h3>
-          <img src="assets/earthrise2.png" >
-          <h5>
-            To make this demo work correctly first register your avatar to <a href="https://www.gravatar.com">https://www.gravatar.com</a>
-            then go to the <router-link to="/chat">Chat</router-link>
-          </h5>
-        </div>
+           <q-inner-loading :visible="stillLoading">
+            <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
+          </q-inner-loading>
       </div>
-    </div>
   </q-page>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  props: ['user'],
-  data () {
-    return {
-      isPrivate: false
+  computed:  {
+    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
+    stillLoading() {
+      return !(this.currentConfig && this.currentConfig.cms);
+    },
+    cms() {
+      if (this.stillLoading)
+        return null;
+      // Get the slug from current route and search for it in the config JSON
+      const slug = this.$route.name;
+      const page = this.currentConfig.cms.pages.filter(({slug}) => slug === slug)[0];
+      return page;
+    },
+     authenticated () {
+      return this.$store.getters.user !== null
     }
-  },
-  computed: {
-    authenticated () {
-      return this.user !== null
-    }
-  },
-  methods: {
   },
   mounted () {
+    this.$store.commit('questView', false)
+    this.fetchCurrentConfiguration(1).then(
+      (data) => {
+        console.log('Got config', data);
+      }
+    )
+    this.$store.commit('questView', false)
   },
-  beforeDestroy () {
+  methods: {
+    ...mapActions('configuration', {
+      fetchCurrentConfiguration: 'get'
+    }),
   }
+  
+  
 }
 </script>
-
 <style lang="styl">
 
 </style>

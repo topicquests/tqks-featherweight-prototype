@@ -3,7 +3,7 @@ import socketio from '@feathersjs/socketio-client'
 import auth from '@feathersjs/authentication-client'
 import io from 'socket.io-client'
 
-const socket = io('http://localhost:8081', {transports: ['websocket']})
+const socket = io('/', { path: '/api/socket.io' });
 
 const api = feathers()
   .configure(socketio(socket))
@@ -11,7 +11,10 @@ const api = feathers()
 
 api.service('/users')
 api.service('/messages')
-api.service('/quests')
-api.service('/conversations')
+api.service('/conversation')
+api.service('/tree-view')
+api.service('/tags')
+api.service('/search')
+api.service('/configuration')
 
 export default api

@@ -1,10 +1,12 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import routes from './routes'
-import auth from 'src/auth'
+import routes from "./routes";
+// import auth from 'src/auth'
+import config from '../../config'
+import store from '../store/';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
   /*
@@ -20,16 +22,37 @@ const router = new VueRouter({
   base: process.env.VUE_ROUTER_BASE,
   scrollBehavior: () => ({ y: 0 }),
   routes
-})
+});
+
+// These routes don't require auth
+const WHITE_LIST_ROUTES = ["token", 
+  "signin", 
+  "home", 
+  "about", 
+  "aboutc", 
+  "signin", 
+  "register",
+  "history",
+  "bookmarks",
+  "quests",
+  "topics",
+  "tags",
+  "bookmarkview"
+];
 
 router.beforeEach((to, from, next) => {
-  if (!to.meta.requiresAuth || auth.authenticated()) {
-    next()
+  console.info("Router guard", { to, from });
+  let name = to.name || to.path.split('/')[1];
+  console.info("Router guard", {name});
+  // debugger;
+  let { isAuthenticated } = store.state; 
+  
+  if (!config.isPrivatePortal || ( isAuthenticated || WHITE_LIST_ROUTES.includes(name))) {
+    next();
   } else {
-    console.log('Not authenticated')
-
-    next({ path: '/home' })
+    console.warn("Router guard", { to, from }, "not authenticated");
+    next({ path: "/signin" });
   }
-})
+});
 
-export default router
+export default router;

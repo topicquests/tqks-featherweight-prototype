@@ -1,4 +1,0 @@
-{"id":"f1a48d06-097c-4ba6-956d-455b05ff7f66","label":"testing","details":"testing","_id":"REn9bxDGLmP91Cok"}
-{"id":"80c2ec5a-b4c1-48b5-a327-477c2185352b","label":"Testing","details":"Testing","_id":"fEGcjUkS9Jo9IAT6"}
-{"$$indexCreated":{"fieldName":"id","unique":true,"sparse":false}}
-{"$$indexCreated":{"fieldName":"label","unique":false,"sparse":false}}

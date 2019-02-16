@@ -1,15 +1,15 @@
-const { authenticate } = require('@feathersjs/authentication').hooks
-const { populate } = require('feathers-hooks-common')
-const processMessage = require('../../hooks/process-message')
+const { authenticate } = require("@feathersjs/authentication").hooks;
+const { populate } = require("feathers-hooks-common");
+const processMessage = require("../../hooks/process-message");
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
+    all: [authenticate("jwt")],
     find: [],
     get: [],
-    create: [ processMessage() ],
-    update: [ processMessage() ],
-    patch: [ processMessage() ],
+    create: [processMessage()],
+    update: [processMessage()],
+    patch: [processMessage()],
     remove: []
   },
 
@@ -17,12 +17,14 @@ module.exports = {
     all: [
       populate({
         schema: {
-          include: [{
-            service: 'users',
-            nameAs: 'user',
-            parentField: 'userId',
-            childField: '_id'
-          }]
+          include: [
+            {
+              service: "users",
+              nameAs: "user",
+              parentField: "userId",
+              childField: "_id"
+            }
+          ]
         }
       })
     ],
@@ -43,4 +45,4 @@ module.exports = {
     patch: [],
     remove: []
   }
-}
+};

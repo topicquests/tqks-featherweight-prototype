@@ -1,22 +1,27 @@
-const users = require('./users/users.service.js')
+const users = require("./users/users.service.js");
+const channels = require("./channels/channels.service.js");
+const conversation = require("./conversation/conversation.service.js");
+const history = require("./history/history.service.js");
+const messages = require("./messages/messages.service.js");
+const tags = require("./tags/tags.service.js");
+const mailer = require("./mailer/mailer.service.js");
+const authmanagement = require("./authmanagement/authmanagement.service.js");
+const treeView = require("./tree-view/tree-view.service.js");
+const configuration = require('./configuration/configuration.service.js');
 
-const messages = require('./messages/messages.service.js')
+const invitations = require('./invitations/invitations.service.js');
 
-const channels = require('./channels/channels.service.js');
-
-const history = require('./history/history.service.js');
-
-const quests = require('./quests/quests.service.js');
-
-const conversation = require('./conversation/conversation.service.js');
-
-module.exports = function() {
-  const app = this; // eslint-disable-line no-unused-vars
-
-  app.configure(users)
-  app.configure(messages)
+// eslint-disable-next-line no-unused-vars
+module.exports = function(app) {
+  app.configure(users);
   app.configure(channels);
-  app.configure(history);
-  app.configure(quests);
   app.configure(conversation);
+  app.configure(history);
+  app.configure(messages);
+  app.configure(tags);
+  app.configure(mailer);
+  app.configure(authmanagement);
+  app.configure(treeView);
+  app.configure(configuration);
+  app.configure(invitations);
 };
