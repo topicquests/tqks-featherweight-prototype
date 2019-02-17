@@ -41,6 +41,8 @@
 //  We now have selected which node is source and which is target
 //  Then click Create Button      
 //////////////////////////////////
+// Now to sort this out
+//////////////////////////////////
 export default {
     props: ["id", "label"],
   data () {
