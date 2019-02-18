@@ -15,6 +15,10 @@ const feathersProxy = proxy({
 app.use('/api', feathersProxy);
 app.use(express.static('dist/spa-mat'));
 app.use(history({
-  index: '/dist/index.html'
+  disableDotRule: true,
+  verbose: true
 }))
+app.get('/', function (req, res) {
+  res.render(path.join(__dirname + '/dist/spa-mat/index.html'));
+});
 app.listen(process.env.PORT);
