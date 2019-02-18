@@ -17,4 +17,5 @@ app.use(express.static('dist/spa-mat'));
 app.use(history({
   index: '/dist/spa-mat/index.html'
 }))
+app.use(express.static('dist/spa-mat'));
 app.listen(process.env.PORT);
