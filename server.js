@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const proxy = require('http-proxy-middleware');
 const history = require('connect-history-api-fallback');
+const path = require('path');
 
 const feathersProxy = proxy({
   target: 'http://localhost:8081',
