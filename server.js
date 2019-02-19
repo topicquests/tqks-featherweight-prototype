@@ -18,7 +18,8 @@ app.use(history({
   index: '/dist/spa-mat/index.html'
 }))
 app.use(staticFileMiddleware);
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
+  console.info('Catch all routes');
   res.render(path.join(__dirname + '/dist/spa-mat/index.html'));
 });
 app.listen(process.env.PORT);
