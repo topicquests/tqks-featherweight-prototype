@@ -41,7 +41,7 @@
             v-if="isAuthenticated"
             :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
           >
-            <img class="respond" src="statics/images/respond_sm.png">
+          <img class="respond" src="statics/images/respond_sm.png">
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
@@ -79,7 +79,7 @@
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/link.png">Connections
-              <a v-if="isAuthenticated" :href="`/connectionform/${q.id}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/connedit/${q.nodeId}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
       </div>
@@ -114,8 +114,8 @@
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="reln in q.relations" :key="reln.id">
-            <router-link :to="{ name: 'topicview', params: { id: reln.id }}">{{ reln.label }}</router-link>
+          <q-item class="node"  v-for="reln in q.relations" :key="reln.nodeId">
+            <router-link :to="{ name: 'topicview', params: { id: reln.nodeId }}">{{ reln.label }}</router-link>
           </q-item>
         </q-list>
        </div>
@@ -187,6 +187,10 @@ export default {
     }
   },
   methods: {
+    conClick (nodeId, label) {
+      alert(nodeId)
+
+    },
     // Pass id, or it will take it from current $route context
     async initialize(id = null) {
       this.$store.commit("questView", true);

@@ -33,6 +33,8 @@ const options = {
  
 Vue.use(VueCkeditor.plugin, options);
 import { required } from 'vuelidate/lib/validators'
+import { mapGetters, mapActions, mapMutations } from "vuex";
+
 import api from 'src/api'
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
