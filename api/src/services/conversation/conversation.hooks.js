@@ -159,10 +159,7 @@ module.exports = {
     all: [],
     find: [
       hookBeforeFind,
-      search({
-        fields: ["label", "details"],
-        deep: true
-      })
+      search()
     ],
     get: [],
     create: [authenticate("jwt")],
