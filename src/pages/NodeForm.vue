@@ -127,6 +127,7 @@ export default {
         conversation.create(json).then(async response => {
           const id = response.parentId;
           router.push({ name: "questview", params: { id: id } });
+          //Parent node is updated in server
         });
       }
     }

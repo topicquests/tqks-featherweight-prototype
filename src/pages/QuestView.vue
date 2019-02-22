@@ -32,7 +32,11 @@
     >
       <b>Edit This Node</b>
     </router-link>
-
+    <span v-if="isRelation" style="margen-left:20px;">
+      <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode.nodeId }}">{{ q.theSource.label }}</router-link>
+        <br/>
+      <b>Target Node</b> <router-link :to="{ name: 'questview', params: { id: q.targetNode.nodeId }}">{{ q.theTarget.label }}</router-link>
+    </span>
     <div class="columnscroller">
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
@@ -133,7 +137,8 @@ export default {
   data() {
     return {
       // Boolean that indicates that the right sidebar is open, depending on the platform
-      rightDrawerOpen: this.$q.platform.is.desktop
+      rightDrawerOpen: this.$q.platform.is.desktop,
+      isRelation: false
     };
   },
   // Initialize if router changes
@@ -212,6 +217,7 @@ export default {
         console.info("SINGLE", JSON.stringify(single));
       } catch (e) {
         console.info("Initialize", "fetching data for ", nodeId, "error", e);
+        this.$data.isRelation = (this.$q.type === 'relation') //TODO check this
       }
     },
     ...mapActions("conversation", { findConversations: "find" }),

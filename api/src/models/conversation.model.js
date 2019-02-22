@@ -9,6 +9,13 @@ module.exports = function(app) {
     {
       label: { type: String, required: true },
       nodeId: { type: String, required: true },
+      instanceOf: { type: String},
+      subOf: { type: String},
+      sourceNode: { type: String},
+      targetNode: { type: String},
+      instances: { type: Array},
+      subclasses: { type: Array},
+      relations: { type: Array},
       label: { type: String },
       details: { type: String },
       url: { type: String },

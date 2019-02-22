@@ -1,6 +1,6 @@
 <template>
   <q-page :padding="true">
-    <h3><img src="statics/images/connect.png" > New Connection Form     <q-btn label="Clear Selections" @click="clearSelections" /></h3>
+    <h3><img src="statics/images/link.png" > New Connection Form     <q-btn label="Clear Selections" @click="clearSelections" /></h3>
     <div v-if="isFirst">
       <q-btn label="Got that Node. Select another Node to Connect" @click="$router.replace('/home')" />
     </div>
@@ -70,7 +70,10 @@
 </template>
 <script>
 import { required } from 'vuelidate/lib/validators'
-
+import api from 'src/api'
+const uuidv4 = require('uuid/v4')
+const conversation = api.service('conversation')
+var router
 
 //*** */https://quasar-framework.org/components/select.html
 export default {
@@ -163,18 +166,51 @@ export default {
     },
     doSubmit () {
       console.log("Submitted")
-      //TODO
       // use sourceNode and targetNode as fields
-      //TODO must update conversation hook to handle those
+      var s, t, sl, tl 
+
+      if (this.$data.isReverse) {
+        s = localStorage.getItem('connectionBId')
+        t = localStorage.getItem('connectionAId')
+        sl = localStorage.getItem('connectionBLabel')
+        tl = localStorage.getItem('connectionALabel')
+      } else {
+        t = localStorage.getItem('connectionBId')
+        s = localStorage.getItem('connectionAId')
+        tl = localStorage.getItem('connectionBLabel')
+        sl = localStorage.getItem('connectionALabel')
+      }
+      let lab = sl+' '+this.$data.selection+' '+tl
+      var json = {};
+      json.nodeId = uuidv4();
+      json.label = lab;
+      json.details = lab;
+      json.instanceOf = this.$data.selection;
+      json.url = this.url;
+      json.creator = this.user._id;
+      json.handle = this.user.handle;
+      json.date = new Date();
+      json.sourceNode = s;
+      json.targetNode = t;
+      json.img = "statics/images/ibis/link.png";
+      json.imgsm = "statics/images/ibis/link_sm.png";
+      json.type = "relation";
       //we are done here, clear localStorage
       localStorage.removeItem('connectionAId')
       localStorage.removeItem('connectionALabel')
       localStorage.removeItem('connectionBId')
       localStorage.removeItem('connectionBLabel')
-      //TODO
+      conversation.create(json).then(async response => {
+        const id = json.nodeId;
+        router.push({ name: "questview", params: { id: id } });
+        // source and target nodes updated at server
+      });
+      //TODO must update conversation hook to handle those
     }
   },
   mounted () {
+    router = this.$router;
+
     //alert(this.label)
     /////////////////////////
     // Complex behaviors:

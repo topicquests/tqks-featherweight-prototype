@@ -54,7 +54,7 @@ export default {
   methods: {
     async doSubmit() {
       var json = {};
-      json.id = uuidv4();
+      json.nodeId = uuidv4();
       json.label = this.label;
       json.details = this.details;
       json.url = this.url;
@@ -65,7 +65,7 @@ export default {
       json.img = "statics/images/bookmark.png";
       json.imgsm = "statics/images/bookmark_sm.png";
       conversation.create(json).then(response => {
-        this.$router.push({ name: "questview", params: { id: json.id } });
+        this.$router.push({ name: "questview", params: { id: json.nodeId } });
       });
     }
   },

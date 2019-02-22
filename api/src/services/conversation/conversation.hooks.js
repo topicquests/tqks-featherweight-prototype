@@ -10,7 +10,7 @@ const mongoose = require("feathers-mongoose");
  * @param {*} conv
  */
 const populateChildren = async function(hook, conv) {
-  const toCheck = ["answers", "questions", "pros", "cons", "tags"];
+  const toCheck = ["answers", "questions", "pros", "cons", "tags", "subclasses", "instances", "relations"];
   const { conversation, tags } = hook.app.services;
   // Walk along child node types
   for (let i = 0; i < toCheck.length; i++) {
@@ -100,8 +100,10 @@ const addChildToParent = async function(hook) {
     //find the parent, and destructure the first result
 
     // Determine which key of the object to change
-
-    let { nodeId, type, parentId } = hook.result;
+    // TODO this must also look if this is a relation
+    // if it is a 'relation' type, then must add to
+    //  sourceNodde.relations[] and targetNode.relations[]
+    let { nodeId, type, parentId, sourceNode, parentNode } = hook.result;
     const {
       data: [existing]
     } = await conversation.find({ query: { nodeId: parentId } });
