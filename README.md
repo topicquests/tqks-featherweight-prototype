@@ -37,8 +37,10 @@ Once you get your API keys, populate them in config/barney.json
 #### Database
 
 You can use your own MongoDB instance that you can pull using Docker.
-
-We prefer that you get a free database from: https://mlab.com/
+```
+docker pull mongo
+docker run --name tq-mongo -p 27017:27017 mongo:latest
+```
 
 Update `mongodb` and `emailconfig` in `/api/config/barney.json`
 
