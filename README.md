@@ -30,6 +30,11 @@ Assuming your name is Barney :/
 In order to send emails, you need an SMTP server. 
 You can use your personal Gmail too.
 
+You can also run a local SMTP server by running this command:
+```
+docker run -p 1025:1025 -p 8025:8025 mailhog/mailhog
+```
+
 We prefer that you get a free account from: https://mailtrap.io/register/signup
 
 Once you get your API keys, populate them in config/barney.json
