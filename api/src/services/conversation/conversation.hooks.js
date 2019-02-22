@@ -93,17 +93,26 @@ const populateHookBatch = async function(hook) {
 const addChildToParent = async function(hook) {
   const { conversation } = hook.app.services;
   let thisData;
+  let { nodeId, type, parentId, sourceNode, parentNode, subOf, instanceOf } = hook.result;
+  if (hook.result && hook.result.type === "topic") {
+    //deal with subOf or instanceOf
+    //NOTE: relationtypes do not have nodes to patch
+  } else if (hook.result && hook.result.type === "relation") {
+    console.log("RELATIONXXX", hook)
+    
+    // fetch sourceNode and patch relations with nid
+    // fetch targetNode and patch relations with nid
 
-  // If it's map this means it is the root quest
-  // and we do not need to treat as a child
-  if (hook.result && hook.result.type !== "map") {
+  } else if (hook.result && hook.result.type !== "map") {
+    // If it's map this means it is the root quest
+    // and we do not need to treat as a child
+
     //find the parent, and destructure the first result
 
     // Determine which key of the object to change
     // TODO this must also look if this is a relation
     // if it is a 'relation' type, then must add to
     //  sourceNodde.relations[] and targetNode.relations[]
-    let { nodeId, type, parentId, sourceNode, parentNode } = hook.result;
     const {
       data: [existing]
     } = await conversation.find({ query: { nodeId: parentId } });
