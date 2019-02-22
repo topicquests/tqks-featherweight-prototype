@@ -5,7 +5,7 @@
           <q-list v-for="tag in allTags" :key="tag.nodeId">
             <q-item>
               <!-- NOTE: adding  makes this work, but it's a hack style="margin-right: 4px"-->
-              <a :href="`/tagview/${tag.nodeId}`"><img  style="margin-right: 4px" :src="tag.imgsm">{{ tag.label }}</a>
+              <router-link :to="`/tagview/${tag.nodeId}`"><img  style="margin-right: 4px" :src="tag.imgsm">{{ tag.label }}</router-link>
             </q-item>
           </q-list>
         </q-scroll-area>

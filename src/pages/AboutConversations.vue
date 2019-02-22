@@ -13,7 +13,7 @@
           <li>To summarize ideas, discoveries, or questions which are floating about in other conversations</li>
       </ul>
       <h3>Conversation Nodes</h3>
-      Here, we describe each of the primary conversation node types. We will use the following image, found <a href="https://eight2late.wordpress.com/2009/04/07/issues-ideas-and-arguments-a-communication-centric-approach-to-tackling-project-complexity/">here</a> 
+      Here, we describe each of the primary conversation node types. We will use the following image, found <router-link to="https://eight2late.wordpress.com/2009/04/07/issues-ideas-and-arguments-a-communication-centric-approach-to-tackling-project-complexity/">here</router-link> 
       as a reference. When we use the term <b>parent node</b>, that refers to the node to which any conversation node <i>responds</i>.<br/>
       <img style="display: block; margin: 0 auto;" src="statics/images/demomap2.jpg"><br/>
       <h4>Question</h4>
