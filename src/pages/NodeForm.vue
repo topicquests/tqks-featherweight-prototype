@@ -1,42 +1,47 @@
 <template>
-    <q-page :padding="true">
-        <h6>Node Edit Form</h6>
-        
-        <div>
-          <b>Subject</b><br/>
-          <q-input v-model="label" required/>
-        </div>
-        <div>
-          <b>URL</b> (Optional)<br/>
-          <q-input v-model="url" type="url"/>
-        </div>
-        <div>
-          <b>Details</b><br/>
-          <ckeditor type="classic" v-model="details"></ckeditor>
-        </div>
-        <div>
-          <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
-        </div>
-    </q-page>
+  <q-page :padding="true">
+    <h6>Node Edit Form</h6>
+
+    <div>
+      <b>Subject</b>
+      <br>
+      <q-input v-model="label" required/>
+    </div>
+    <div>
+      <b>URL</b> (Optional)
+      <br>
+      <q-input v-model="url" type="url"/>
+    </div>
+    <div>
+      <b>Details</b>
+      <br>
+      <ckeditor type="classic" v-model="details"></ckeditor>
+    </div>
+    <div>
+      <q-btn label="Submit" @click="doSubmit"/>
+      <q-btn label="Cancel" @click="$router.replace('/home')"/>
+    </div>
+  </q-page>
 </template>
 
 <script>
-import Vue from 'vue'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import VueCkeditor from 'vue-ckeditor5'
+import Vue from "vue";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import VueCkeditor from "vue-ckeditor5";
 const options = {
   editors: {
-    classic: ClassicEditor,
+    classic: ClassicEditor
   },
-  name: 'ckeditor'
-}
- 
+  name: "ckeditor"
+};
+
 Vue.use(VueCkeditor.plugin, options);
-import { required } from 'vuelidate/lib/validators'
-import api from 'src/api'
-const uuidv4 = require('uuid/v4')
-const conversation = api.service('conversation')
-var router
+import { required } from "vuelidate/lib/validators";
+import api from "src/api";
+const uuidv4 = require("uuid/v4");
+const conversation = api.service("conversation");
+var router;
 
 export default {
   props: ["user"],
