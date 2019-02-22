@@ -17,11 +17,11 @@ Assuming your name is Barney :/
 
 ### Clone config/dev.json
 
-```cp /api/config/dev.json /api/config/barney.json```
+```cp api/config/dev.json api/config/barney.json```
 
 ### Git ignore your file
 
-`cat "/api/config/barney.json" > .gitignore`
+`cat "api/config/barney.json" > .gitignore`
 
 
 
