@@ -24,6 +24,7 @@
     "engine.io-client": "^3.3.2",
     "etherpad-lite-client": "^0.8.0",
     "express": "^4.16.4",
+    "feathers-authentication-hooks": "^0.3.1",
     "feathers-vuex": "^1.6.2",
     "fs": "0.0.1-security",
     "g": "^2.0.1",
