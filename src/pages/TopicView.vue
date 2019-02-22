@@ -17,8 +17,13 @@
     </div>
     <!-- Edit and other controls go here -->
     <router-link v-if="canEdit" style="margin-left:20px;" :to="{ name: 'nodeupdate', params: { type: 'update', id: q.id }}"><b>Edit This Node</b></router-link>
+    <span v-if="isRelation" style="margen-left:20px;">
+      <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode.nodeId }}">{{ q.theSource.label }}</router-link>
+        <br/>
+      <b>Target Node</b> <router-link :to="{ name: 'questview', params: { id: q.targetNode.nodeId }}">{{ q.theTarget.label }}</router-link>
+    </span>
     <!-- What follows is any child nodes and tags around this topic -->
-    <!-- TODO ADD Connections -->
+    
     <div class="columnscroller">
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
@@ -115,7 +120,8 @@ console.log('QVTV', treeview)
 export default {
   data () {
     return {
-      rightDrawerOpen: this.$q.platform.is.desktop
+      rightDrawerOpen: this.$q.platform.is.desktop,
+      isRelation: false
     }
   },
     beforeRouterUpdate () {
@@ -177,6 +183,7 @@ export default {
           const single = await this.$store.dispatch('conversation/get', [id, { depth: 1 }])
           console.info('Initialize', 'fetching data for ', id, 'success')
           console.info('SINGLE', JSON.stringify(single))
+          this.$data.isRelation = (this.$q.type === 'relation') //TODO check this
         } catch (e) {
           console.info('Initialize', 'fetching data for ', id, 'error', e)
         }

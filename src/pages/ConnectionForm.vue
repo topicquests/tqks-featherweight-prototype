@@ -164,6 +164,8 @@ export default {
     doSubmit () {
       console.log("Submitted")
       //TODO
+      // use sourceNode and targetNode as fields
+      //TODO must update conversation hook to handle those
       //we are done here, clear localStorage
       localStorage.removeItem('connectionAId')
       localStorage.removeItem('connectionALabel')
