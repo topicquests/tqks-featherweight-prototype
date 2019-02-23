@@ -69,14 +69,14 @@ const populateChildren = async function(hook, conv) {
 // arrays containing the nodes identified in the found arrays
 // Singleton services (GET, PUT, PATCH, REMOVE)
 const populateHookSingle = async function(hook) {
-  console.log("PopulateHookSingle find");
+  console.log('PopulateHookSingle find');
   await populateChildren(hook, hook.result);
 };
 
 // Find (GET, PUT, PATCH, REMOVE)
 const populateHookBatch = async function(hook) {
   if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0) {
-    console.info("PopulateHookBatch", hook.params.skippop);
+    console.info('PopulateHookBatch', hook.params.skippop);
     for (let i = 0; i < hook.result.data.length; i++) {
       await populateChildren(hook, hook.result.data[i]);
     }
@@ -92,18 +92,51 @@ const populateHookBatch = async function(hook) {
  */
 const addChildToParent = async function(hook) {
   const { conversation } = hook.app.services;
-  let thisData;
-  let { nodeId, type, parentId, sourceNode, parentNode, subOf, instanceOf } = hook.result;
-  if (hook.result && hook.result.type === "topic") {
+  //let thisData;
+  let { nodeId, type, parentId, sourceNode, targetNode, subOf, instanceOf } = hook.result;
+  if (hook.result && hook.result.type === 'topic') {
     //deal with subOf or instanceOf
+    const {
+      data: [subx]
+    } = await conversation.find({ query: { nodeId: subOf } });
+    if (!subx) {
+      const {
+        data: [inx]
+      } = await conversation.find({ query: { nodeId: instanceOf } });
+      if (!inx) {
+        //TODO trouble
+      } else {
+        //TODO
+      }
+  
+    } else {
+      //TODO
+    }
+
     //NOTE: relationtypes do not have nodes to patch
-  } else if (hook.result && hook.result.type === "relation") {
-    console.log("RELATIONXXX", hook)
+  } else if (hook.result && hook.result.type === 'relation') {
+    console.log('RELATIONXXX', hook)
     
     // fetch sourceNode and patch relations with nid
+    const {
+      data: [snx]
+    } = await conversation.find({ query: { nodeId: sourceNode } });
+    if (!snx) {
+      //TODO trouble
+    } else {
+      //TODO
+    }
     // fetch targetNode and patch relations with nid
+    const {
+      data: [tnx]
+    } = await conversation.find({ query: { nodeId: targetNode } });
+    if (!tnx) {
+      //TODO trouble
+    } else {
+      //TODO
+    }
 
-  } else if (hook.result && hook.result.type !== "map") {
+  } else if (hook.result && hook.result.type !== 'map') {
     // If it's map this means it is the root quest
     // and we do not need to treat as a child
 
@@ -148,11 +181,6 @@ const addChildToParent = async function(hook) {
   return hook;
 };
 
-const compactDB = async function(hook) {
-  const model = hook.service.Model;
-  model.persistence.compactDatafile;
-  // console.info('COMPACT', model)
-};
 
 function hookBeforeFind (hook) {
   // console.info('HOOKING', hook)

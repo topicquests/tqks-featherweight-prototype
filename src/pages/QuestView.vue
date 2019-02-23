@@ -138,7 +138,7 @@ export default {
     return {
       // Boolean that indicates that the right sidebar is open, depending on the platform
       rightDrawerOpen: this.$q.platform.is.desktop,
-      isRelation: false
+      isRelation: (this.$q.type === 'relation')
     };
   },
   // Initialize if router changes
@@ -217,7 +217,6 @@ export default {
         console.info("SINGLE", JSON.stringify(single));
       } catch (e) {
         console.info("Initialize", "fetching data for ", nodeId, "error", e);
-        this.$data.isRelation = (this.$q.type === 'relation') //TODO check this
       }
     },
     ...mapActions("conversation", { findConversations: "find" }),
