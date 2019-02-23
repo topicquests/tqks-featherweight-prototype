@@ -24,7 +24,6 @@ const store = new Vuex.Store({
     user: null,
     treeView: null,
     isQuestView: false,
-
     serverPagination: {},
     serverData: []
   },
@@ -73,9 +72,9 @@ const store = new Vuex.Store({
     // then we reference it
     //quests
   },
-  plugins: [service("conversation"), 
-    service("tags"), 
-    service("authManagment"), 
+  plugins: [service("conversation"),
+    service("tags"),
+    service("authManagment"),
     service("configuration", {
       idField: 'id'
     })]

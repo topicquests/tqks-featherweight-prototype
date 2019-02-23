@@ -162,9 +162,10 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import auth from 'src/auth'
 import config from '../../config'
-import { mapGetters, mapActions } from 'vuex'
+import InitConfigStepper from '../components/InitConfigStepper'
 
 export default {
   name: "index",
@@ -287,19 +288,19 @@ export default {
         console.log('Got config', data);
       }
     )
-    
+
     console.info('MountingDefault', this.$store.getters.user)
     // Check if there is already a session running
     auth.authenticate()
       .then((user) => {
-        
+
         this.setUser(user)
         this.$q.notify({type: 'positive', message: 'Restoring previous session'})
         this.$store.commit('authenticate', true)
         this.$store.commit('admin', false)
         this.isAuthenticated = true
         this.checkAdmin()
-        
+
       })
       .catch(_ => {
         // alert('NotAuth')

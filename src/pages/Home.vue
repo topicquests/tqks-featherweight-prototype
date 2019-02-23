@@ -7,32 +7,33 @@
 <template>
   <q-page :padding="true" class="flex flex-center">
     <div>
-        <div v-if="!stillLoading" class="column items-center">
-          
-          <h6>{{cms.title}}</h6>
-          
-          <div v-html="cms.body">
-            
-          </div>
-       
-        </div>
-           <q-inner-loading :visible="stillLoading">
-            <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
-          </q-inner-loading>
+      <div v-if="!isLoading" class="column items-center">
+        <h6>{{cms.title}}</h6>
+        <div v-html="cms.body"></div>
       </div>
+      <q-inner-loading :visible="isLoading">
+        <q-spinner-gears size="50px" color="primary"></q-spinner-gears>
+      </q-inner-loading>
+    </div>
   </q-page>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
+const getters = mapGetters({
+  user: 'user',
+  currentConfig: 'configuration/getCopy',
+});
+
 export default {
   computed:  {
-    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
-    stillLoading() {
+    ...getters,
+    isLoading() {
       return !(this.currentConfig && this.currentConfig.cms);
     },
     cms() {
-      if (this.stillLoading)
+      if (this.isLoading)
         return null;
       // Get the slug from current route and search for it in the config JSON
       const slug = this.$route.name;
@@ -40,25 +41,27 @@ export default {
       return page;
     },
      authenticated () {
-      return this.$store.getters.user !== null
+      return this.user !== null
     }
   },
   mounted () {
     this.$store.commit('questView', false)
-    this.fetchCurrentConfiguration(1).then(
-      (data) => {
-        console.log('Got config', data);
-      }
-    )
+    // jon/what is this doing??
+    // this.fetchCurrentConfiguration(1).then(
+    //   (data) => {
+    //     console.log('Got config', data);
+    //   }
+    // )
     this.$store.commit('questView', false)
   },
   methods: {
+    // this seems to be duplicate of the getter, since the action is only used to log
     ...mapActions('configuration', {
       fetchCurrentConfiguration: 'get'
     }),
   }
-  
-  
+
+
 }
 </script>
 <style lang="styl">
