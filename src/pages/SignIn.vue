@@ -25,6 +25,7 @@
             label="Forgot your password?"
             text-color="green"
             @click.prevent="forgotPassword"
+            :disabled="!email"
           />
         </div>
       </div>
