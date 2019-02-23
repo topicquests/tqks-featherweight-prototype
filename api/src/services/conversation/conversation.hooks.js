@@ -48,7 +48,6 @@ const populateChildren = async function(hook, conv) {
         // To paint full child nodes, this must return the fetched node
         // That is the node which will populate the final array below
       });
-
       try {
         console.info("Populating");
         console.info("Populate", type, conv.nodeId, "fetching");
@@ -87,7 +86,8 @@ const populateHookBatch = async function(hook) {
  *@method addChildToParent
  *@description Adds questions, answers, pros, cons and tags nodes to parent quest
  *             The node's object is stored in parents questions, answers, pros, cons Array
- *
+ *             Extended to include topic subClass and instanceOf
+ *             Extended to include Connection sourceNode and targetNode
  * @param {*} hook
  */
 const addChildToParent = async function(hook) {
@@ -104,38 +104,62 @@ const addChildToParent = async function(hook) {
         data: [inx]
       } = await conversation.find({ query: { nodeId: instanceOf } });
       if (!inx) {
-        //TODO trouble
+        console.log('SubOrInstanceNode missing: ', nodeId, subOf, instanceOf);
       } else {
-        //TODO
-      }
-  
+        let subs = inx.instances;
+        if (!subs) {
+          subs = [];
+        }
+        subs.push(nodeId);
+        let payS = {};
+        payS.instnces = subs;
+        await conversation.patch(inx._id, payS);      }
     } else {
-      //TODO
+      let subs = subx.subclasses;
+      if (!subs) {
+        subs = [];
+      }
+      subs.push(nodeId);
+      let payS = {};
+      payS.subclasses = subs;
+      await conversation.patch(subx._id, payS);
     }
-
     //NOTE: relationtypes do not have nodes to patch
   } else if (hook.result && hook.result.type === 'relation') {
-    console.log('RELATIONXXX', hook)
+    //console.log('RELATIONXXX', hook)
     
     // fetch sourceNode and patch relations with nid
     const {
       data: [snx]
     } = await conversation.find({ query: { nodeId: sourceNode } });
     if (!snx) {
-      //TODO trouble
+      console.log('RelationSourceNode missing: ', nodeId, sourceNode);
     } else {
-      //TODO
+      let relS = snx.relations;
+      if (!relS) {
+        relS = [];
+      }
+      relS.push(nodeId);
+      let payS = {};
+      payS.relations = relS;
+      await conversation.patch(snx._id, payS);
     }
     // fetch targetNode and patch relations with nid
     const {
       data: [tnx]
     } = await conversation.find({ query: { nodeId: targetNode } });
     if (!tnx) {
-      //TODO trouble
+      console.log('RelationTargetNode missing: ', nodeId, targetNode);
     } else {
-      //TODO
+      let relT = tnx.relations;
+      if (!relT) {
+        relT = [];
+      }
+      relT.push(nodeId);
+      let payT = {};
+      payT.relations = relT;
+      await conversation.patch(tnx._id, payT);
     }
-
   } else if (hook.result && hook.result.type !== 'map') {
     // If it's map this means it is the root quest
     // and we do not need to treat as a child

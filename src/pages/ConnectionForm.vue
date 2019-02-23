@@ -192,8 +192,8 @@ export default {
       json.date = new Date();
       json.sourceNode = s;
       json.targetNode = t;
-      json.img = "statics/images/ibis/link.png";
-      json.imgsm = "statics/images/ibis/link_sm.png";
+      json.img = "statics/images/link.png";
+      json.imgsm = "statics/images/link_sm.png";
       json.type = "relation";
       //we are done here, clear localStorage
       localStorage.removeItem('connectionAId')

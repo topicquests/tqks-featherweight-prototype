@@ -89,7 +89,7 @@ export default {
             required: true,
             label: 'Action',
             align: 'left',
-            field: 'id',
+            field: 'nodeId',
             sortable: true
           }
         ]

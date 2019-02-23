@@ -16,7 +16,13 @@
       </q-scroll-area>
     </div>
     <!-- Edit and other controls go here -->
-    <router-link v-if="canEdit" style="margin-left:20px;" :to="{ name: 'nodeupdate', params: { type: 'update', id: q.id }}"><b>Edit This Node</b></router-link>
+    <router-link 
+      v-if="canEdit" 
+      style="margin-left:20px;" 
+      :to="{ name: 'nodeupdate', params: { type: 'update', id: q.nodeId }}"
+    >
+      <b>Edit This Node</b>
+    </router-link>
     <span v-if="isRelation" style="margen-left:20px;">
       <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode.nodeId }}">{{ q.theSource.label }}</router-link>
         <br/>
@@ -28,84 +34,84 @@
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-          <a v-if="isAuthenticated" :href="`/nodeedit/question/${q.type}/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/nodeedit/question/${q.type}/${q.nodeId}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
-          <a v-if="isAuthenticated" :href="`/nodeedit/answer/${q.type}/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/nodeedit/answer/${q.type}/${q.nodeId}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-          <a v-if="isAuthenticated" :href="`/nodeedit/pro/${q.type}/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/nodeedit/pro/${q.type}/${q.nodeId}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/ibis/minus.png">Con
-              <a v-if="isAuthenticated" :href="`/nodeedit/con/${q.type}/${q.id}`">
+              <a v-if="isAuthenticated" :href="`/nodeedit/con/${q.type}/${q.nodeId}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/cogwheel.png">Subclasses
-          <a v-if="isAuthenticated" :href="`/topicchild/${q.id}/subclass`">
+          <a v-if="isAuthenticated" :href="`/topicchild/${q.nodeId}/subclass`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/cogwheel.png">Instances
-          <a v-if="isAuthenticated" :href="`/topicchild/${q.id}/instance`">
+          <a v-if="isAuthenticated" :href="`/topicchild/${q.nodeId}/instance`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage" src="statics/images/tag.png">Tags
-          <a v-if="isAuthenticated" :href="`/tagform/${q.id}`">
+          <a v-if="isAuthenticated" :href="`/tagform/${q.nodeId}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/link.png">Connections
-              <a v-if="isAuthenticated" :href="`/connectionform/${q.id}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/connectionform/${q.nodeId}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
       </div>
       <div class="datacontainer">
         <q-list class="datacolumn">
-          <q-item class="node wordwrap" v-for="question in q.questions" :key="question.id">
-            <router-link :to="{ name: 'questview', params: { id: question.id }}">{{ question.label }}</router-link>
+          <q-item class="node wordwrap" v-for="question in q.questions" :key="question.nodeId">
+            <router-link :to="{ name: 'questview', params: { id: question.nodeId }}">{{ question.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="answer in q.answers" :key="answer.id">
-            <router-link :to="{ name: 'questview', params: { id: answer.id }}">{{ answer.label }}</router-link>
+          <q-item class="node" v-for="answer in q.answers" :key="answer.nodeId">
+            <router-link :to="{ name: 'questview', params: { id: answer.nodeId }}">{{ answer.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="pro in q.pros" :key="pro.id">
-            <router-link :to="{ name: 'questview', params: { id: pro.id }}">{{ pro.label }}</router-link>
+          <q-item class="node" v-for="pro in q.pros" :key="pro.nodeId">
+            <router-link :to="{ name: 'questview', params: { id: pro.nodeId }}">{{ pro.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="con in q.cons" :key="con.id">
-            <router-link :to="{ name: 'questview', params: { id: con.id }}">{{ con.label }}</router-link>
+          <q-item class="node" v-for="con in q.cons" :key="con.nodeId">
+            <router-link :to="{ name: 'questview', params: { id: con.nodeId }}">{{ con.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="sub in q.subclasses" :key="sub.id">
-            <router-link :to="{ name: 'topicview', params: { id: sub.id }}">{{ sub.label }}</router-link>
+          <q-item class="node" v-for="sub in q.subclasses" :key="sub.nodeId">
+            <router-link :to="{ name: 'topicview', params: { id: sub.nodeId }}">{{ sub.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="inst in q.instances" :key="inst.id">
-            <router-link :to="{ name: 'topicview', params: { id: inst.id }}">{{ inst.label }}</router-link>
+          <q-item class="node" v-for="inst in q.instances" :key="inst.nodeId">
+            <router-link :to="{ name: 'topicview', params: { id: inst.nodeId }}">{{ inst.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="tag in q.tags" :key="tag.id">
-            <router-link :to="{ name: 'tagview', params: { id: tag.id }}">{{ tag.label }}</router-link>
+          <q-item class="node" v-for="tag in q.tags" :key="tag.nodeId">
+            <router-link :to="{ name: 'tagview', params: { id: tag.nodeId }}">{{ tag.label }}</router-link>
           </q-item>
         </q-list>
         <q-list class="datacolumn">
-          <q-item class="node" v-for="reln in q.relations" :key="reln.id">
-            <router-link :to="{ name: 'topicview', params: { id: reln.id}}">{{ reln.label }}</router-link>
+          <q-item class="node" v-for="reln in q.relations" :key="reln.nodeId">
+            <router-link :to="{ name: 'topicview', params: { id: reln.nodeId}}">{{ reln.label }}</router-link>
           </q-item>
         </q-list>
       </div>
@@ -114,7 +120,7 @@
 </template>
 <script>
 import api from 'src/api'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from "vuex";
 const treeview = api.service('tree-view')
 console.log('QVTV', treeview)
 export default {
@@ -177,17 +183,28 @@ export default {
       async initialize (id = null) {
         this.$store.commit('questView', true)
         console.info('QV-1', id)
-        id = id || this.$route.params.id
-        console.info('Initialize', 'fetching data for ', id)
+        const nodeId = id || this.$route.params.id
+        console.info('Initialize', 'fetching data for ', nodeId)
         try {
-          const single = await this.$store.dispatch('conversation/get', [id, { depth: 1 }])
-          console.info('Initialize', 'fetching data for ', id, 'success')
-          console.info('SINGLE', JSON.stringify(single))
-          this.$data.isRelation = (this.$q.type === 'relation') //TODO check this
+          const result = await this.findConversations({
+            query: { nodeId },
+            depth: 1
+          });
+          console.info("Initialize", "result", { result });
+          const {
+            data: [single]
+          } = result;
+
+          this.setCurrentConversation(single);
+          console.info("Initialize", "fetching data for ", nodeId, "success");
+          console.info("SINGLE", JSON.stringify(single));
         } catch (e) {
-          console.info('Initialize', 'fetching data for ', id, 'error', e)
+          console.info("Initialize", "fetching data for ", nodeId, "error", e);
         }
-      }
+      },
+      ...mapActions("conversation", { findConversations: "find" }),
+      ...mapMutations("conversation", { setCurrentConversation: "setCurrent" })
+
     },
     computed: {
       ...mapGetters({q: 'conversation/current'}),
@@ -222,11 +239,11 @@ export default {
 
 <style lang="styl">
 .scroll.relative-position.overflow-hidden.fit.q-touch {
-    user-select: auto !important;
+  user-select: auto !important;
 }
 .details {
-  max-width: 960px; 
-  height: 400px; 
+  max-width: 960px;
+  height: 400px;
   overflow-wrap: normal;
 }
 .spanwrap {
@@ -251,19 +268,15 @@ export default {
  * width is set to accomodate lots of columns.
  * If they wrap when adding more columns, then
  * width must increase.
- * Lives inside #columnscroller which defaults to the parent width
- * The formula seems to be column width * num colums + 100px
+ * The formula seems to be column width * num colums + 100px  2500
  */
 .columncontainer {
- width: 2000px;
+  width: 2500px;
 }
 
-/** 
- * Individual columns
- */
 .columnx {
-  float:left;
-  white-space:normal;
+  float: left;
+  white-space: normal;
   border: 1px solid black;
   width: 270px;
   height: 34px;
@@ -271,11 +284,11 @@ export default {
   border-radius: 3px;
   margin-left: 4px;
   margin-right: 4px;
-  font-family:pragmatica-web,sans-serif;
+  font-family: pragmatica-web, sans-serif;
 }
 .datacolumn {
   height: 400px;
-  float:left;
+  float: left;
   border: 1px solid white;
   min-width: 270px;
   max-width: 270px;
@@ -286,10 +299,10 @@ export default {
   margin-left: 4px;
   margin-right: 4px;
   overflow-wrap: normal;
-}
+  width: 960;}
 
 .datacontainer {
-  width: 100%;
+  width: 2000px;
 }
 
 .headerimage {
@@ -305,12 +318,12 @@ export default {
   border-radius: 3px;
   min-height: 40px;
   overflow-wrap: inherit;
-  font-family:pragmatica-web,sans-serif;
-  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  white-space: pre-wrap;       /* css-3 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  font-family: pragmatica-web, sans-serif;
+  white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  white-space: pre-wrap; /* css-3 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
   white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
   white-space: normal;
 }
@@ -324,13 +337,13 @@ export default {
   margin-right: 4px;
 }
 /*
- * 
+ * width: 958px;
  */
 #topbox {
   border: 1px solid black;
   background: white;
   margin: 12px;
-  font-family:pragmatica-web,sans-serif;
+  font-family: pragmatica-web, sans-serif;
   border-radius: 3px;
 }
 </style>

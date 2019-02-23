@@ -21,8 +21,8 @@
           <q-td key="date" :props="props">
             {{props.row.date}}
           </q-td>
-          <q-td key="id" auto-width :props="props">
-            <router-link :to="{ name: 'topicview', params: { id:  props.row.id }}">View</router-link>
+          <q-td key="nodeId" auto-width :props="props">
+            <router-link :to="{ name: 'topicview', params: { id:  props.row.nodeId }}">View</router-link>
           </q-td>
         </q-tr>
         </template>
@@ -74,11 +74,11 @@
             sortable: true
           },
           {
-            name: 'id',
+            name: 'nodeId',
             required: true,
             label: 'Action',
             align: 'left',
-            field: 'id',
+            field: 'nodeId',
             sortable: true
           },
         ],

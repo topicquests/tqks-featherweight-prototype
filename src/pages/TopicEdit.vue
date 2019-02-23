@@ -38,6 +38,7 @@ const conversation = api.service('conversation')
 var router
 
 export default {
+  props: ["user"],
   data () {
     return {
       label: '',
@@ -53,9 +54,9 @@ export default {
       // alert(this.label);
       // alert(this.details);
       var mytype = this.type
-      console.log('TopicEditDid',mytype)
+      //console.log('TopicEditDid', mytype)
       var json = {}
-      json.id = uuidv4()
+      json.nodeId = uuidv4()
       json.label = this.label
       json.url = this.url
       json.details = this.details
@@ -66,6 +67,7 @@ export default {
       json.date = new Date()
       json.type = 'topic'
       if (mytype) {
+        //only a mytype if this is a child of some other topic
         var kid
         if (mytype === 'subclass') {
           //subclass we are only allowing single inheritance for now
@@ -79,7 +81,8 @@ export default {
       // use the conversation node database
       conversation.create(json).then((response) => {
         // alert(JSON.stringify(response))
-        if (mytype) {
+        // adding child to parent handled at server
+        /*if (mytype) {
           //add child to parent
           conversation.find({ query: { 'id':this.id, skippop:true } })
             .then ((response) => {
@@ -107,9 +110,9 @@ export default {
                   router.push({name: 'topicview', params: { 'id':parent.id }})
                 })
           })
-        } else {
+        } else {*/
           router.push('/topics')
-        }
+        //}
       })
     }
   },

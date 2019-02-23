@@ -138,7 +138,7 @@ export default {
     return {
       // Boolean that indicates that the right sidebar is open, depending on the platform
       rightDrawerOpen: this.$q.platform.is.desktop,
-      isRelation: (this.$q.type === 'relation')
+      isRelation: (this.$q.type === 'relation') //TODO this doesn't work
     };
   },
   // Initialize if router changes
@@ -201,7 +201,7 @@ export default {
       this.$store.commit("questView", true);
       console.info("QV-1", id);
       const nodeId = id || this.$route.params.id;
-      console.info("Initialize", "fetching data for ", id);
+      console.info("Initialize", "fetching data for ", nodeId);
       try {
         const result = await this.findConversations({
           query: { nodeId },
