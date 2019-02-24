@@ -21,6 +21,10 @@
 </template>
 
 <script>
+//Called by two routes from TopicView.vue:
+//  topicedit no params for a new topic
+//  topicchild/:id/:type  where id is parentId, and type is oneOf 'subclass' or 'instance'
+//Note that topic nodes are edited with NodeForm.vue
 import Vue from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import VueCkeditor from 'vue-ckeditor5'
@@ -50,6 +54,7 @@ export default {
     }
   },
   methods: {
+    
     doSubmit: function () {
       // alert(this.label);
       // alert(this.details);
@@ -79,40 +84,9 @@ export default {
       console.info('QFT-1', this.user)
       console.info('QFT-2', json)
       // use the conversation node database
-      conversation.create(json).then((response) => {
-        // alert(JSON.stringify(response))
-        // adding child to parent handled at server
-        /*if (mytype) {
-          //add child to parent
-          conversation.find({ query: { 'id':this.id, skippop:true } })
-            .then ((response) => {
-              var parent = response.data[0]
-              var kids
-              if (this.type === 'subclass') {
-                kids = parent.subclasses
-                if (!kids) {
-                  kids = []
-                }
-                kids.push(json.id)
-                parent.subclasses = kids
-              } else {
-                //default instance
-                kids = parent.instances
-                if (!kids) {
-                  kids = []
-                }
-                kids.push(json.id)
-                parent.instances = kids
-              }
-              conversation.update(parent.id, parent)
-                .then((response) => {
-                  console.info('NVU-2', response)
-                  router.push({name: 'topicview', params: { 'id':parent.id }})
-                })
-          })
-        } else {*/
+      conversation.create(json).then((response) => {   
           router.push('/topics')
-        //}
+          // parents, if any, set in server
       })
     }
   },

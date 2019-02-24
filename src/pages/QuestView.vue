@@ -33,14 +33,14 @@
       <b>Edit This Node</b>
     </router-link>
     <span v-if="isRelation" style="margen-left:20px;">
-      <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode.nodeId }}">{{ q.theSource.label }}</router-link>
+      <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
         <br/>
-      <b>Target Node</b> <router-link :to="{ name: 'questview', params: { id: q.targetNode.nodeId }}">{{ q.theTarget.label }}</router-link>
+      <b>Target Node</b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
     </span>
     <div class="columnscroller">
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/issue.png">Questions
+          <img class="headerimage" src="statics/images/issue.png">Questions
           <a
             v-if="isAuthenticated"
             :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
@@ -49,7 +49,7 @@
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
+          <img class="headerimage" src="statics/images/position.png">Answers/Ideas
           <a
             v-if="isAuthenticated"
             :href="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`"
@@ -58,7 +58,7 @@
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/plus.png">Pro
+          <img class="headerimage" src="statics/images/plus.png">Pro
           <a
             v-if="isAuthenticated"
             :href="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`"
@@ -67,7 +67,7 @@
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/minus.png">Con
+          <img class="headerimage" src="statics/images/minus.png">Con
           <a
             v-if="isAuthenticated"
             :href="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`"
@@ -161,7 +161,7 @@ export default {
         const img = tree.img;
         // only show the tree if the root is a map
         if (
-          img === "statics/images/ibis/map_sm.png" ||
+          img === "statics/images/map_sm.png" ||
           img === "statics/images/bookmark_sm.png"
         ) {
           const result = [];
@@ -314,7 +314,8 @@ export default {
   margin-left: 4px;
   margin-right: 4px;
   overflow-wrap: normal;
-  width: 960;}
+  width: 960;
+  }
 
 .datacontainer {
   width: 1400px;

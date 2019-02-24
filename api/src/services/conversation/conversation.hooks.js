@@ -126,7 +126,7 @@ const addChildToParent = async function(hook) {
     }
     //NOTE: relationtypes do not have nodes to patch
   } else if (hook.result && hook.result.type === 'relation') {
-    //console.log('RELATIONXXX', hook)
+    console.log('RELATIONXXX', sourceNode, targetNode);
     
     // fetch sourceNode and patch relations with nid
     const {

@@ -55,8 +55,8 @@ export default {
       json.label = this.label;
       json.url = this.url;
       json.details = this.details;
-      json.img = "statics/images/ibis/map.png";
-      json.imgsm = "statics/images/ibis/map_sm.png";
+      json.img = "statics/images/map.png";
+      json.imgsm = "statics/images/map_sm.png";
       json.creator = this.user._id;
       json.handle = this.user.handle;
       json.date = new Date();

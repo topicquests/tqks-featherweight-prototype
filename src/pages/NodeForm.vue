@@ -41,7 +41,9 @@ const conversation = api.service('conversation')
 var router
 
 export default {
-  props: ["user"],
+  // these props are for a new node
+  // when type = 'update', "id" is passed as a param
+  props: ["user", "type", "parentType", "parentId", "parentLabel" ],
   validations: {
     url: { required },
     label: { required }
@@ -51,35 +53,33 @@ export default {
       label: "",
       details: "",
       url: "",
-      type: "",
-      parentId: "",
-      parentType: "",
-      parentLabel: "",
       isUpdate: false,
-      myId: "",
+      nodeId: null,
       myNode: null
     };
   },
   methods: {
     ...mapActions("conversation", { findConversations: "find" }),
     doUpdate() {
-      conversation.get(this.myId, this.nodeId).then(response => {
-        this.myNode = response;
-        this.label = response.label;
-        this.details = response.details;
-        this.url = response.url;
+      conversation
+          .find({ query: { nodeId: this.$data.nodeId, skippop: true } })
+          .then(response => {
+        const resp = response.data[0]
+        //    alert(JSON.stringify(resp))
+        this.$data.myNode = resp;
+        this.$data.label = resp.label;
+        this.$data.details = resp.details;
+        this.$data.url = resp.url;
       });
     },
     async doSubmit() {
-      // alert(this.label)
-      // alert(this.details);
-      var typ = this.$data.type;
       const params = {};
       params.depth = 0;
       //Create question, answer, pro, or cons child quest
-      if (typ === "update") {
+      if (this.type === "update") {
+        alert('updating', his.$data.nodeId)
         conversation
-          .find({ query: { nodeId: this.myId, skippop: true } })
+          .find({ query: { nodeId: his.$data.nodeId, skippop: true } })
           .then(response => {
             var json = response.data[0];
             // alert('NF-1', JSON.stringify(json))
@@ -104,17 +104,17 @@ export default {
         json.type = typ;
         // Add icons
         if (typ === "question") {
-          json.img = "statics/images/ibis/issue.png";
-          json.imgsm = "statics/images/ibis/issue_sm.png";
+          json.img = "statics/images/issue.png";
+          json.imgsm = "statics/images/issue_sm.png";
         } else if (typ === "answer") {
-          json.img = "statics/images/ibis/position.png";
-          json.imgsm = "statics/images/ibis/position_sm.png";
+          json.img = "statics/images/position.png";
+          json.imgsm = "statics/images/position_sm.png";
         } else if (typ === "pro") {
-          json.img = "statics/images/ibis/plus.png";
-          json.imgsm = "statics/images/ibis/plus_sm.png";
+          json.img = "statics/images/plus.png";
+          json.imgsm = "statics/images/plus_sm.png";
         } else if (typ === "con") {
-          json.img = "statics/images/ibis/minus.png";
-          json.imgsm = "statics/images/ibis/minus_sm.png";
+          json.img = "statics/images/minus.png";
+          json.imgsm = "statics/images/minus_sm.png";
         }
 
         // Get parent id from current node, current node becomes the parent of future node
@@ -137,23 +137,18 @@ export default {
     // If type === "update", we are editing the node
     // Must fetch it
     // Otherwise, this is a node-creation event
+    //alert("editing")
     router = this.$router;
     this.$store.commit("questView", false);
-    this.$data.type = this.$route.params.type;
-    if (this.$data.type === "update") {
+    //this.$data.type = this.$route.params.type;
+    if (this.type === "update") {
+      //alert('updating', this.parentType, this.parentId, this.parentLabel)
       // called by the route 'nodeupdate'
       this.$data.isUpdate = true;
       // myId is this node's identity; it's being updated
-      this.$data.myId = this.$route.params.nodeId;
+      this.$data.nodeId = this.$route.params.id;
       this.doUpdate();
-    } else {
-      // called by the route 'nodeedit'
-      //path: "/nodeedit/:type/:parentType/:id/:label",
-      this.$data.parentId = this.$route.params.id;
-      this.$data.parentType = this.$route.params.parentType;
-      this.$data.parentLabel = this.$route.params.label;
-      console.info("NodeEdit: ", this.$data);
-    }
+    } 
   }
 };
 </script>

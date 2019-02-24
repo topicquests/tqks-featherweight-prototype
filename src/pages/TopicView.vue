@@ -24,32 +24,32 @@
       <b>Edit This Node</b>
     </router-link>
     <span v-if="isRelation" style="margen-left:20px;">
-      <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode.nodeId }}">{{ q.theSource.label }}</router-link>
+      <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
         <br/>
-      <b>Target Node</b> <router-link :to="{ name: 'questview', params: { id: q.targetNode.nodeId }}">{{ q.theTarget.label }}</router-link>
+      <b>Target Node</b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
     </span>
     <!-- What follows is any child nodes and tags around this topic -->
     
     <div class="columnscroller">
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/issue.png">Questions
-          <a v-if="isAuthenticated" :href="`/nodeedit/question/${q.type}/${q.nodeId}`">
+          <img class="headerimage" src="statics/images/issue.png">Questions
+          <a v-if="isAuthenticated" :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
-          <a v-if="isAuthenticated" :href="`/nodeedit/answer/${q.type}/${q.nodeId}`">
+          <img class="headerimage" src="statics/images/position.png">Answers/Ideas
+          <a v-if="isAuthenticated" :href="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/plus.png">Pro
-          <a v-if="isAuthenticated" :href="`/nodeedit/pro/${q.type}/${q.nodeId}`">
+          <img class="headerimage" src="statics/images/plus.png">Pro
+          <a v-if="isAuthenticated" :href="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`">
           <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
-              <img class="headerimage" src="statics/images/ibis/minus.png">Con
-              <a v-if="isAuthenticated" :href="`/nodeedit/con/${q.type}/${q.nodeId}`">
+              <img class="headerimage" src="statics/images/minus.png">Con
+              <a v-if="isAuthenticated" :href="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
         <div class="columnx" style="text-align: center;">
@@ -151,7 +151,7 @@ export default {
             console.info('TopicTreeView', tree)
             const img = tree.img
             // only show the tree if the root is a map
-            if (img === 'statics/images/ibis/map_sm.png' ||
+            if (img === 'statics/images/map_sm.png' ||
                 img === 'statics/images/bookmark_sm.png') {
               const result = []
               result.push(tree)
@@ -271,7 +271,7 @@ export default {
  * The formula seems to be column width * num colums + 100px  2500
  */
 .columncontainer {
-  width: 2500px;
+  width: 3000px;
 }
 
 .columnx {
@@ -299,10 +299,11 @@ export default {
   margin-left: 4px;
   margin-right: 4px;
   overflow-wrap: normal;
-  width: 960;}
+  /*width: 960;*/
+  }
 
 .datacontainer {
-  width: 2000px;
+  width: 3000px;
 }
 
 .headerimage {

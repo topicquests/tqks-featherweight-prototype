@@ -191,7 +191,9 @@ export default {
       json.handle = this.user.handle;
       json.date = new Date();
       json.sourceNode = s;
+      json.sourceLabel = sl;
       json.targetNode = t;
+      json.targetLabel = tl;
       json.img = "statics/images/link.png";
       json.imgsm = "statics/images/link_sm.png";
       json.type = "relation";
@@ -211,7 +213,7 @@ export default {
   mounted () {
     router = this.$router;
 
-    //alert(this.label)
+    alert(this.label)
     /////////////////////////
     // Complex behaviors:
     // First mount when a node is chosen for connection
