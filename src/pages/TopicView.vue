@@ -69,7 +69,7 @@
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/link.png">Connections
-              <a v-if="isAuthenticated" :href="`/connectionform/${q.nodeId}/${q.label}`">
+              <a v-if="isAuthenticated" :href="`/connedit/${q.nodeId}/${q.label}`">
               <img class="respond" src="statics/images/respond_sm.png"></a>
         </div>
       </div>
@@ -127,7 +127,7 @@ export default {
   data () {
     return {
       rightDrawerOpen: this.$q.platform.is.desktop,
-      isRelation: false
+      isRelation: (this.q.type === relation)
     }
   },
     beforeRouterUpdate () {

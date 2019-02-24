@@ -33,9 +33,10 @@
       <b>Edit This Node</b>
     </router-link>
     <span v-if="isRelation" style="margen-left:20px;">
-      <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
+      <br/>
+      <b style="margin-left:20px;">Source Node  </b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
         <br/>
-      <b>Target Node</b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
+      <b style="margin-left:20px;">Target Node  </b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
     </span>
     <div class="columnscroller">
       <div class="columncontainer">
@@ -138,7 +139,7 @@ export default {
     return {
       // Boolean that indicates that the right sidebar is open, depending on the platform
       rightDrawerOpen: this.$q.platform.is.desktop,
-      isRelation: (this.$q.type === 'relation') //TODO this doesn't work
+      isRelation: true// (this.$q.type === 'relation') //TODO this doesn't work
     };
   },
   // Initialize if router changes
