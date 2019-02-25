@@ -74,6 +74,9 @@ export default {
     let url = this.$route.query.url;
     this.$data.url = url;
     this.$data.label = this.$route.query.title;
+    //TODO there is an opportunity to push these values
+    //to localStore and set a flag to return here after
+    //authentication
     if (!this.$store.getters.isAuthenticated) {
       this.$router.push("/signin");
     }

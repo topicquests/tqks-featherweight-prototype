@@ -67,11 +67,25 @@ function hookBeforeFind (hook) {
   // return hook
 }
 
-const compactDB = async function(hook) {
-  const model = hook.service.Model;
-  model.persistence.compactDatafile;
-  // console.info('COMPACT', model)
-};
+/**
+ * A Brand New Tag is created. It is to be persisted
+ * in the creation process, but it has a nodes array nodeId
+ * which is for a conversation node which needs to be patched
+ * @param {} hook 
+ */
+function updateTagAndReference (hook) {
+  console.info('TAGHOOKUPDATE', hook);
+}
+
+/**
+ * An existing Tag got a new Reference and possibly a new User
+ * The new reference needs to be patched with this tag
+ * If userId is new, patch it into this Tag
+ * @param {*} hook 
+ */
+function patchTagAndReference (hook) {
+  //TODO
+}
 module.exports = {
   before: {
     all: [],
@@ -93,8 +107,10 @@ module.exports = {
     all: [],
     find: [populateHookBatch],
     get: [populateHookSingle],
-    create: [],
-    update: [compactDB],
+    create: [
+      //updateTagAndReference
+    ],
+    update: [],
     patch: [],
     remove: []
   },

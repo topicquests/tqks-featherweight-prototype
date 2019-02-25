@@ -84,19 +84,27 @@ export default {
       this.grabTag(id, function (theTag) {
         console.info('NT-2', theTag)
         if (theTag) {
+          //TODO must patch this tag with possibly new user
+          let usrs = theTag.users
+          let uid = this.user._id
+          //if uid is unique, the patch new uid into tag
+          //TODO
           return callback(theTag)
         } else {
           console.info('NTC')
           // create a new tag
           var json = {}
+          var usrs = []
+          usrs.push(this.user._id)
           json.nodeId = id
           json.label = label
-          json.creator = self.user._id
-          json.handle = self.user.handle
+          json.creator = this.user._id
+          json.handle = this.user.handle
           json.date = new Date()
           json.type = 'tag'
           json.img = 'statics/images/tag.png'
           json.imgsm = 'statics/images/tag_sm.png'
+          json.users = usrs
           tags.create(json)
             .then((response) => {
               console.info('TagCreate', response)

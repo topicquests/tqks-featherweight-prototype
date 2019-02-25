@@ -5,9 +5,9 @@
       {{ currentTag.label }}
     </h4>
     <q-scroll-area style="width: 800px; height: 800px;">
-      <q-list v-if="nodes" v-for="node in currentTag.nodes" :key="node.id">
+      <q-list v-if="nodes" v-for="node in currentTag.nodes" :key="node.nodeId">
         <q-item>
-          <router-link :to="{ name: 'questview', params: { id: node.id }}">{{ node.label }}</router-link>
+          <router-link :to="{ name: 'questview', params: { id: node.nodeId }}">{{ node.label }}</router-link>
         </q-item>
       </q-list>
     </q-scroll-area>

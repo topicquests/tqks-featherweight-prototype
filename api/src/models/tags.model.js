@@ -15,7 +15,8 @@ module.exports = function(app) {
       type: { type: String },
       img: { type: String },
       imgsm: { type: String },
-      nodes: { type: Array }
+      nodes: { type: Array },
+      users: { type: Array }
     },
     {
       timestamps: true
