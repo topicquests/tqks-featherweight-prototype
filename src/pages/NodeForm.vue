@@ -4,7 +4,7 @@
         
         <div>
           <b>Subject</b><br/>
-          <q-input v-model="label" required/>
+          <q-input v-model="label" pattern="[A-Za-z0-9 ]*" required/>
         </div>
         <div>
           <b>URL</b> (Optional)<br/>
