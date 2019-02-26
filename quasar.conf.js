@@ -73,6 +73,7 @@ module.exports = function (ctx) {
     framework: {
       components: [
         'QBtn',
+        'QBtnToggle',
         'QCard',
         'QChatMessage',
         'QCollapsible',
@@ -108,6 +109,7 @@ module.exports = function (ctx) {
         'QTable',
         'QTd',
         'QTr',
+        'QToggle',
         'QToolbar',
         'QToolbarTitle',
         'QTooltip',

@@ -1,6 +1,6 @@
 <template>
   <div id="q-app">
-    <InitConfigStepper :show="renderInitConfig" />
+    <InitConfigStepper :class="{hidden: !renderInitConfig}" />
     <router-view />
   </div>
 </template>
@@ -11,7 +11,7 @@ import InitConfigStepper from './components/InitConfigStepper'
 
 const getters = mapGetters({
   isAdmin: 'isAdmin',
-  initConfigCompleted: 'configuration/initConfigCompleted'
+  currentConfig: 'configuration/getCopy',
 });
 
 export default {
@@ -22,9 +22,7 @@ export default {
   computed: {
     ...getters,
     renderInitConfig() {
-      // add logic to test if init config has been completed and if admin
-      // if it is, return true, else return false
-      if (this.isAdmin && !initConfigCompleted) {
+      if (this.isAdmin && !this.currentConfig.isInitConfigCompleted) {
         return true;
       }
       return false;

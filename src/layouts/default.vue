@@ -165,7 +165,6 @@
 import { mapGetters, mapActions } from 'vuex'
 import auth from 'src/auth'
 import config from '../../config'
-import InitConfigStepper from '../components/InitConfigStepper'
 
 export default {
   name: "index",

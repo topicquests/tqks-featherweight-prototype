@@ -1,5 +1,6 @@
 {
-	"isPrivatePortal": "false",
+  "isPrivatePortal": "false",
+  "isInitConfigCompleted": "false",
 	"requiresInvite": "true",
 	"adminEmail": "sue@sixpack.com",
 	"cms": {
