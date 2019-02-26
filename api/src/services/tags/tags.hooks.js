@@ -56,7 +56,7 @@ const populateHookBatch = async function(hook) {
   }
 };
 
-function hookBeforeFind (hook) {
+function hookBeforeFind(hook) {
   // console.info('HOOKING', hook)
   if (hook && hook.params.query.skippop) {
     // console.info('FoundSkipPop')
@@ -75,13 +75,7 @@ const compactDB = async function(hook) {
 module.exports = {
   before: {
     all: [],
-    find: [
-      // hookBeforeFind,
-      //  search({
-      //   fields: ["label"],
-      //   deep: true
-      //  })
-    ],
+    find: [hookBeforeFind, search()],
     get: [],
     create: [authenticate("jwt")],
     update: [authenticate("jwt")],
@@ -108,4 +102,4 @@ module.exports = {
     patch: [],
     remove: []
   }
-}
+};
