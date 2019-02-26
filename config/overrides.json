@@ -40,7 +40,7 @@
 		},
 		"pages": [{
 			"slug": "home",
-			"body": "<img src=\"statics/images/earthrise2.png\" ><h5>\r\n          For a better experience with FeatherWeight, first register your avatar for the email you will use here at <a href=\"https:\/\/www.gravatar.com\">https:\/\/www.gravatar.com<\/a>\r\n          then signup and go to the <a href=\"#\/chat\" class=\"\">Chat<\/a><\/h5>",
+			"body": "<img src=\"statics/images/earthrise2.png\" ><h5>\r\n          For a better experience with FeatherWeight, first register your avatar for the email you will use here at <router-link to=\"https:\/\/www.gravatar.com\">https:\/\/www.gravatar.com<\/router-link>\r\n          then signup and go to the <router-link to=\"#\/chat\" class=\"\">Chat<\/router-link><\/h5>",
 			"title": "FeatherWeight Prototype from CMS",
 			"search_enabled": true,
 			"heading": "hello",
