@@ -2,7 +2,7 @@
   <q-page :padding="true" v-if="!!q">
     <div id="topbox">
       <span style="float:right; font-size:small;">
-        <router-link :to="`/userview/${q.creator}`">{{q.handle}}</router-link>
+        <router-link :to="{name: 'userview', params: {id: q.creator}}">{{q.handle}}</router-link>
         {{q.date}}
       </span>
       <h4>
