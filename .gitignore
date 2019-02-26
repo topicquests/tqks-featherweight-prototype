@@ -1,0 +1,11 @@
+.DS_Store
+.thumbs.db
+node_modules/
+dist/
+api/data
+npm-debug.log*
+cordova/platforms
+cordova/plugins
+.quasar
+Notes.txt
+api/config/eyasu.json
