@@ -126,8 +126,8 @@ console.log('QVTV', treeview)
 export default {
   data () {
     return {
-      rightDrawerOpen: this.$q.platform.is.desktop,
-      isRelation: (this.q.type === relation)
+      rightDrawerOpen: this.$q.platform.is.desktop//,
+  //isRelation: (this.q.type === relation)
     }
   },
     beforeRouterUpdate () {
@@ -210,6 +210,9 @@ export default {
       ...mapGetters({q: 'conversation/current'}),
       isAuthenticated () {
         return this.$store.getters.isAuthenticated
+      },
+      isRelation() {
+        return (this.q.type === 'relation')
       },
       canEdit () {
         let result = this.$store.getters.isAdmin

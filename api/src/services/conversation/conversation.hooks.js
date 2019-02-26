@@ -113,7 +113,8 @@ const addChildToParent = async function(hook) {
         subs.push(nodeId);
         let payS = {};
         payS.instnces = subs;
-        await conversation.patch(inx._id, payS);      }
+        await conversation.patch(inx._id, payS);
+      }
     } else {
       let subs = subx.subclasses;
       if (!subs) {

@@ -5,7 +5,7 @@
       {{ currentTag.label }}
     </h4>
     <q-scroll-area style="width: 800px; height: 800px;">
-      <q-list v-if="nodes" v-for="node in currentTag.nodes" :key="node.nodeId">
+      <q-list v-if="currentTag.nodes" v-for="node in currentTag.nodes" :key="node.nodeId">
         <q-item>
           <router-link :to="{ name: 'questview', params: { id: node.nodeId }}">{{ node.label }}</router-link>
         </q-item>
@@ -16,6 +16,9 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import api from 'src/api'
+const tags = api.service('tags')
+
 export default {
   computed: {
     ...mapGetters('tags', {
@@ -31,23 +34,26 @@ export default {
   mounted() {
     this.$store.commit("questView", false);
     const nodeId = this.$route.params.id;
+          console.info('TagView', 'find', {nodeId});
+
     // console.info("TagView" , "mounted", "Got id from param", this.$data.id);
     this.findTags({
-      nodeId
+      query: { nodeId }
     }).then( result => {
+      console.info('TagView', 'find', {result});
       const {
           data: [single]
         } = result;
 
       this.setCurrentTag(single);  
     });
-    // tags.find({nodeId}).then(response => {
-    //   console.info("TagView" , "mounted", "Find results", response);
-    //   // alert(response)
-    //   //this.$data.theTag = response
-    //   this.$data.label = response.label;
-    //   this.$data.nodes = response.nodes;
-    // });
+    /*tags.find({nodeId}).then(response => {
+       console.info("TagView" , "mounted", "Find results", response);
+       //alert(response)
+       this.$data.theTag = response
+       this.$data.label = response.label;
+       this.$data.nodes = response.nodes;
+    });*/
   }
 };
 </script>
