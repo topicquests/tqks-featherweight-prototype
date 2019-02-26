@@ -41,7 +41,7 @@
     <div class="columnscroller">
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/issue.png">Questions
+          <img class="headerimage ibis-icon ibis-issue">Questions
           <a
             v-if="isAuthenticated"
             :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
@@ -50,7 +50,7 @@
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
+          <img class="headerimage ibis-icon ibis-answer">Answers/Ideas
           <a
             v-if="isAuthenticated"
             :href="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`"
@@ -59,7 +59,7 @@
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/plus.png">Pro
+          <img class="headerimage ibis-icon ibis-pro">Pro
           <a
             v-if="isAuthenticated"
             :href="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`"
@@ -68,7 +68,7 @@
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/minus.png">Con
+          <img class="headerimage ibis-icon ibis-con">Con
           <a
             v-if="isAuthenticated"
             :href="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`"
@@ -77,7 +77,7 @@
           </a>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/tag.png">Tags
+          <img class="headerimage ibis-icon ibis-tag">Tags
           <a v-if="isAuthenticated" :href="`/tagform/${q.nodeId}`">
             <img class="respond" src="statics/images/respond_sm.png">
           </a>

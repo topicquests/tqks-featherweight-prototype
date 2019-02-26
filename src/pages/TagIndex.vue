@@ -1,6 +1,6 @@
 <template>
   <q-page :padding="true">
-    <h4><img style="margin-right:4px;" src="statics/images/tag.png">Tags</h4>
+    <h4><img style="margin-right:4px;" class="ibis-icon ibis-tag">Tags</h4>
         <q-scroll-area style="width: 800px; height: 800px;">
           <q-list v-for="tag in allTags" :key="tag.nodeId">
             <q-item>

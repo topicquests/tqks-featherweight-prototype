@@ -1,7 +1,7 @@
 <template>
   <q-page :padding="true" v-if="currentTag">
     <h4>
-      <img style="margin-right:4px;" src="statics/images/tag.png">
+      <img style="margin-right:4px;" class="ibis-icon ibis-tag">
       {{ currentTag.label }}
     </h4>
     <q-scroll-area style="width: 800px; height: 800px;">
