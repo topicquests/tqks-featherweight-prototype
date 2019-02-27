@@ -138,8 +138,7 @@ export default {
   data() {
     return {
       // Boolean that indicates that the right sidebar is open, depending on the platform
-      rightDrawerOpen: this.$q.platform.is.desktop,
-      isRelation: true// (this.$q.type === 'relation') //TODO this doesn't work
+      rightDrawerOpen: this.$q.platform.is.desktop
     };
   },
   // Initialize if router changes
@@ -193,10 +192,7 @@ export default {
     }
   },
   methods: {
-    conClick (nodeId, label) {
-      alert(nodeId)
-
-    },
+    
     // Pass id, or it will take it from current $route context
     async initialize(id = null) {
       this.$store.commit("questView", true);
@@ -227,6 +223,9 @@ export default {
     ...mapGetters({ q: "conversation/current" }),
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
+    },
+    isRelation() {
+      return (this.q.type === 'relation')
     },
     canEdit() {
       let result = this.$store.getters.isAdmin;

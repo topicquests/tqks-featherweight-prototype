@@ -12,7 +12,7 @@
       </div>
       <div>
         <b>Details</b><br/>
-        <ckeditor type="classic" v-model="details"></ckeditor>
+        <ckeditor class="details" type="classic" v-model="details"></ckeditor>
       </div>
       <div>
         <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
@@ -25,6 +25,7 @@
 //  topicedit no params for a new topic
 //  topicchild/:id/:type  where id is parentId, and type is oneOf 'subclass' or 'instance'
 //Note that topic nodes are edited with NodeForm.vue
+//https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html
 import Vue from 'vue'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import VueCkeditor from 'vue-ckeditor5'
@@ -103,4 +104,9 @@ export default {
 </script>
 
 <style>
+.details {
+  max-width: 960px;
+  height: 400px;
+  overflow-wrap: normal;
+}
 </style>

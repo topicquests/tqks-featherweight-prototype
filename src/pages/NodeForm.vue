@@ -93,6 +93,7 @@ export default {
             });
           });
       } else {
+        let typ = this.type
         var json = {};
         json.nodeId = uuidv4();
         json.label = this.label;
@@ -116,17 +117,15 @@ export default {
           json.img = "statics/images/minus.png";
           json.imgsm = "statics/images/minus_sm.png";
         }
-
+console.log("NF-1", this.parentId, this.parentLabel)
         // Get parent id from current node, current node becomes the parent of future node
-        json.parentId = this.$data.parentId;
-        json.parentLabel = this.$data.parentLabel;
+        json.parentId = this.parentId;
+        json.parentLabel = this.parentLabel;
         //idx is now the nodeId for the newly created child quest
         const idx = json.nodeId;
-
         console.info("NodeForm", "creating conversation", JSON.stringify(json));
         conversation.create(json).then(async response => {
-          const id = response.parentId;
-          router.push({ name: "questview", params: { id: id } });
+          router.push({ name: "questview", params: { id: idx } });
           //Parent node is updated in server
         });
       }
