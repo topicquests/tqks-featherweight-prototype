@@ -39,15 +39,25 @@ export default {
     };
   },
   methods: {
-    doSearch() {
+    async doSearch() {
       let result = [];
       let q = this.query;
-      conversation
-        .find({ query: { $limit: 100, $search: q, skippop: true } })
+      let options = {
+        $limit: 100,
+        $or: [
+          { details: { $regex: q, $options: "i" } },
+          { label: { $regex: q, $options: "i" } }
+        ],
+        skippop: true
+      };
+      const conversationResults = await conversation
+        .find({
+          query: options
+        })
         .then(response => {
-          // alert(JSON.stringify(response))
+          //alert(JSON.stringify(response));
           let hits = response.data;
-          //alert(JSON.stringify(hits))
+          //alert(JSON.stringify(hits));
           console.info("SrchCon", JSON.stringify(hits));
           if (hits) {
             for (var i = 0; i < hits.length; i++) {
@@ -55,11 +65,13 @@ export default {
             }
           }
           tags
-            .find({ query: { $limit: 100, $search: q, skippop: true } })
+            .find({
+              query: options
+            })
             .then(response => {
-              // alert(JSON.stringify(response))
+              // alert(JSON.stringify(response));
               let hits = response.data;
-              //alert(JSON.stringify(hits))
+              // alert(JSON.stringify(hits));
               console.info("SrchTag", JSON.stringify(hits));
               if (hits) {
                 for (var i = 0; i < hits.length; i++) {
@@ -69,6 +81,7 @@ export default {
               console.info("SrchHits", JSON.stringify(result));
               this.hits = result;
             })
+
             .catch(err => {
               console.info("tagSearchError", err);
             });

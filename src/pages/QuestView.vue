@@ -2,12 +2,7 @@
   <q-page :padding="true" v-if="!!q">
     <div id="topbox">
       <span style="float:right; font-size:small;">
-        <!-- ROUTER LINK -->
-        <router-link :to="{name: 'userview', params: {id: q.creator}}" >
-        {{q.handle}}
-        </router-link>
-        <!-- ROUTER LINK -->
-        <!-- <a :href="`/userview/${q.creator}`">{{q.handle}}</a> -->
+        <router-link :to="{name: 'userview', params: {id: q.creator}}">{{q.handle}}</router-link>
         {{q.date}}
       </span>
       <h4>
@@ -16,7 +11,7 @@
       </h4>
       <span v-if="q.url">
         <b>URL:</b>
-        <a :href="q.url">{{ q.url}}</a>
+        <router-link :to="q.url">{{ q.url}}</router-link>
         <br>
         <br>
       </span>
@@ -42,50 +37,50 @@
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
           <img class="headerimage ibis-icon ibis-issue">Questions
-          <a
+          <router-link
             v-if="isAuthenticated"
-            :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
+            :to="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
-          </a>
+          </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage ibis-icon ibis-answer">Answers/Ideas
-          <a
+          <router-link
             v-if="isAuthenticated"
-            :href="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`"
+            :to="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
-          </a>
+          </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage ibis-icon ibis-pro">Pro
-          <a
+          <router-link
             v-if="isAuthenticated"
-            :href="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`"
+            :to="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
-          </a>
+          </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage ibis-icon ibis-con">Con
-          <a
+          <router-link
             v-if="isAuthenticated"
-            :href="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`"
+            :to="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`"
           >
             <img class="respond" src="statics/images/respond_sm.png">
-          </a>
+          </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
           <img class="headerimage ibis-icon ibis-tag">Tags
-          <a v-if="isAuthenticated" :href="`/tagform/${q.nodeId}`">
+          <router-link v-if="isAuthenticated" :to="`/tagform/${q.nodeId}`">
             <img class="respond" src="statics/images/respond_sm.png">
-          </a>
+          </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
               <img class="headerimage" src="statics/images/link.png">Connections
-              <a v-if="isAuthenticated" :href="`/connectionform/${q.id}/${q.label}`">
-              <img class="respond" src="statics/images/respond_sm.png"></a>
+              <router-link v-if="isAuthenticated" :to="`/connectionform/${q.id}/${q.label}`">
+              <img class="respond" src="statics/images/respond_sm.png"></router-link>
         </div>
       </div>
       <div class="datacontainer">

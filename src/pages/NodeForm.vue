@@ -1,27 +1,24 @@
 <template>
-  <q-page :padding="true">
-    <h6>Node Edit Form</h6>
-
-    <div>
-      <b>Subject</b>
-      <br>
-      <q-input v-model="label" required/>
-    </div>
-    <div>
-      <b>URL</b> (Optional)
-      <br>
-      <q-input v-model="url" type="url"/>
-    </div>
-    <div>
-      <b>Details</b>
-      <br>
-      <ckeditor type="classic" v-model="details"></ckeditor>
-    </div>
-    <div>
-      <q-btn label="Submit" @click="doSubmit"/>
-      <q-btn label="Cancel" @click="$router.replace('/home')"/>
-    </div>
-  </q-page>
+    <q-page :padding="true">
+        <h6>Node Edit Form</h6>
+        
+        <div>
+          <b>Subject</b><br/>
+          <q-input v-model="label" pattern="[A-Za-z0-9 ]*" required/>
+        </div>
+        <div>
+          <b>URL</b> (Optional)<br/>
+          <q-input v-model="url" type="url"/>
+        </div>
+        <div>
+          <b>Details</b><br/>
+          <ckeditor type="classic" v-model="details"></ckeditor>
+        </div>
+        <div>
+          <q-btn label="Submit" @click="doSubmit" />
+          <q-btn label="Cancel" @click="$router.replace('/home')" />
+        </div>
+    </q-page>
 </template>
 
 <script>
