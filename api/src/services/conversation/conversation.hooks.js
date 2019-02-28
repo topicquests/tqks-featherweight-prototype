@@ -133,11 +133,11 @@ const addChildToParent = async function(hook) {
   return hook;
 };
 
-const compactDB = async function(hook) {
-  const model = hook.service.Model;
-  model.persistence.compactDatafile;
-  // console.info('COMPACT', model)
-};
+// const compactDB = async function(hook) {
+//   const model = hook.service.Model;
+//   model.persistence.compactDatafile;
+//   // console.info('COMPACT', model)
+// };
 
 function hookBeforeFind(hook) {
   // console.info('HOOKING', hook)
