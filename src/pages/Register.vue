@@ -1,5 +1,5 @@
 <template>
-  <q-page :padding="true" class="flex flex-center">
+  <q-page :padding="true" class="flex-center" style="width:50vw;">
     <div class="panel-body">
       <h6>Register</h6>
       <div slot="body">
