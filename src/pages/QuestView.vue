@@ -156,6 +156,7 @@ export default {
     this.$data.rightDrawerOpen = false;
     const self = this;
     try {
+      console.info("QVMounting", nodeId, treeview);
       treeview.get(nodeId).then(function(tree) {
         console.info("QuestTreeView", tree);
         const img = tree.img;

@@ -213,7 +213,7 @@ export default {
   mounted () {
     router = this.$router;
 
-    alert(this.label)
+    //alert(this.label)
     /////////////////////////
     // Complex behaviors:
     // First mount when a node is chosen for connection

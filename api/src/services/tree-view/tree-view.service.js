@@ -10,9 +10,11 @@ module.exports = function(app) {
   }
 
   const conv = app.service("conversation");
+  const tgs = app.service("tags");
 
   const ts = createService(options);
   ts.setConversation(conv);
+  ts.setTags(tgs);
 
   // Initialize our service with any options it requires
   app.use("/tree-view", ts);

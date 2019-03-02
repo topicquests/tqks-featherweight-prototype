@@ -132,7 +132,7 @@ const addChildToParent = async function(hook) {
     //NOTE: relationtypes do not have nodes to patch
     //They do, however, have source and target nodes which are affected
   } else if (hook.result && hook.result.type === 'relation') {
-    console.log('RELATIONXXX', sourceNode, targetNode);
+    //console.log('RELATIONXXX', sourceNode, targetNode);
     
     // fetch sourceNode and patch relations with nid
     const {
@@ -183,17 +183,16 @@ const addChildToParent = async function(hook) {
     } = await conversation.find({ query: { nodeId: parentId },
       skippop: true });
     
-    if (!existing)
-     {
-       console.warn('No existing entry for parent', parentId);
-       return;
-     }
-    console.info("Populating parent for ", { nodeId, type });
+    if (!existing) {
+      console.warn('No existing entry for parent', parentId);
+      return;
+    }
+    //console.info("Populating parent for ", { nodeId, type });
 
     // Get existing values for said type
     let pluralizedKey = `${type}s`;
     let existingKey = existing[pluralizedKey];
-    console.dir(existing);
+    //console.dir(existing);
     if (!Array.isArray(existingKey)) {
       console.warn("Existing key is not an array!!!", existingKey);
       return;
@@ -204,7 +203,7 @@ const addChildToParent = async function(hook) {
 
     let payload = {};
     payload[pluralizedKey] = existingKey;
-    console.info("Patching with payload", { payload });
+   //console.info("Patching with payload", { payload });
     // Update the parent object with the new ID
     await conversation.patch(existing._id, payload);
 
