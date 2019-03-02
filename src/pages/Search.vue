@@ -1,5 +1,4 @@
 <template>
-
     <q-page>
       <div id="topbox">
         <h6><img style="margin-right:4px;" src="statics/images/search.png">Search Hits</h6>

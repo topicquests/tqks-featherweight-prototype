@@ -99,15 +99,14 @@
         this.$data.serverData.push(jsx)
       },
       request({ pagination }) {
-        //let skip = this.data.
         this.$store.dispatch('conversation/find', {
-            query: {
-              $limit: 100,
-              $sort: {
+            //query: {  
+              limit: 100,
+              sort: {
                 date: -1
               },
-              'type': 'topic'
-            }
+              type: "topic"
+            //}
           })
           .then((response) => {
             this.$data.serverPagination = pagination

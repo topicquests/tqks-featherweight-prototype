@@ -106,8 +106,8 @@ export default {
   mounted() {
     this.$data.isAuthenticated = this.$store.getters.isAuthenticated;
     const query = {
-      $limit: 100,
-      $sort: {
+      limit: 100,
+      sort: {
         date: -1
       },
       type: "map"

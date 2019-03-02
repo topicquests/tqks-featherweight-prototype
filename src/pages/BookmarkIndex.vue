@@ -105,33 +105,18 @@ export default {
   },
   mounted () {
     this.$store.commit('questView', false)
-    //this.$data.id = this.$route.params.id
     const query = {
-      $limit: 100,
-      $sort: {
+      limit: 100,
+      sort: {
         date: -1
       },
-      'type': "bookmark"
+      type: "bookmark"
     };
     console.log("Finding w query: ", JSON.stringify(query));
     this.findBookmarks(query).then(
       d => console.log("Query returned", { d }),
       console.error
     );
-    /*console.info('TAGS-1', this.$data.id)
-    conversation.find({
-      query: {
-        $limit: 100,
-        $sort: {
-          date: -1
-        },
-        'type': 'bookmark'
-      }
-    })
-      .then((response) => {
-        // alert(JSON.stringify(response.data))
-        this.$data.nodes = response.data
-      })*/
   }
 }
 </script>

@@ -92,17 +92,21 @@ const populateHookBatch = async function(hook) {
  */
 const addChildToParent = async function(hook) {
   const { conversation } = hook.app.services;
+  //console.info("AddChildToParent")
+  //hook.params.skippop = true;
   //let thisData;
   let { nodeId, type, parentId, sourceNode, targetNode, subOf, instanceOf } = hook.result;
   if (hook.result && hook.result.type === 'topic') {
     //deal with subOf or instanceOf
     const {
       data: [subx]
-    } = await conversation.find({ query: { nodeId: subOf } });
+    } = await conversation.find({ query: { nodeId: subOf },
+      skippop: true });
     if (!subx) {
       const {
         data: [inx]
-      } = await conversation.find({ query: { nodeId: instanceOf } });
+      } = await conversation.find({ query: { nodeId: instanceOf },
+        skippop: true });
       if (!inx) {
         console.log('SubOrInstanceNode missing: ', nodeId, subOf, instanceOf);
       } else {
@@ -112,7 +116,7 @@ const addChildToParent = async function(hook) {
         }
         subs.push(nodeId);
         let payS = {};
-        payS.instnces = subs;
+        payS.instances = subs;
         await conversation.patch(inx._id, payS);
       }
     } else {
@@ -126,13 +130,15 @@ const addChildToParent = async function(hook) {
       await conversation.patch(subx._id, payS);
     }
     //NOTE: relationtypes do not have nodes to patch
+    //They do, however, have source and target nodes which are affected
   } else if (hook.result && hook.result.type === 'relation') {
     console.log('RELATIONXXX', sourceNode, targetNode);
     
     // fetch sourceNode and patch relations with nid
     const {
       data: [snx]
-    } = await conversation.find({ query: { nodeId: sourceNode } });
+    } = await conversation.find({ query: { nodeId: sourceNode },
+      skippop: true });
     if (!snx) {
       console.log('RelationSourceNode missing: ', nodeId, sourceNode);
     } else {
@@ -148,7 +154,8 @@ const addChildToParent = async function(hook) {
     // fetch targetNode and patch relations with nid
     const {
       data: [tnx]
-    } = await conversation.find({ query: { nodeId: targetNode } });
+    } = await conversation.find({ query: { nodeId: targetNode },
+      skippop: true });
     if (!tnx) {
       console.log('RelationTargetNode missing: ', nodeId, targetNode);
     } else {
@@ -173,7 +180,8 @@ const addChildToParent = async function(hook) {
     //  sourceNodde.relations[] and targetNode.relations[]
     const {
       data: [existing]
-    } = await conversation.find({ query: { nodeId: parentId } });
+    } = await conversation.find({ query: { nodeId: parentId },
+      skippop: true });
     
     if (!existing)
      {

@@ -1,18 +1,19 @@
 <template>
   <q-page :padding="true">
     <h4><img style="margin-right:4px;" src="statics/images/tag.png">Tags</h4>
-        <q-scroll-area style="width: 800px; height: 800px;">
-          <q-list v-for="tag in allTags" :key="tag.nodeId">
-            <q-item>
-              <!-- NOTE: adding  makes this work, but it's a hack style="margin-right: 4px"-->
-              <a :href="`/tagview/${tag.nodeId}`"><img  style="margin-right: 4px" :src="tag.imgsm">{{ tag.label }}</a>
-            </q-item>
-          </q-list>
-        </q-scroll-area>
+    <q-scroll-area style="width: 800px; height: 800px;">
+      <q-list v-for="tag in allTags" :key="tag.nodeId">
+        <q-item>
+          <!-- NOTE: adding  makes this work, but it's a hack style="margin-right: 4px"-->
+          <a :href="`/tagview/${tag.nodeId}`"><img  style="margin-right: 4px" :src="tag.imgsm">{{ tag.label }}</a>
+        </q-item>
+      </q-list>
+    </q-scroll-area>
   </q-page>
 </template>
 
 <script>
+
 import { mapGetters, mapActions } from 'vuex';
 export default {
   data () {
@@ -33,12 +34,10 @@ export default {
   mounted () {
     this.$store.commit('questView', false)
     this.findTags({
-      query: {
-        $limit: 100,
-        $sort: {
+        limit: 100,
+        sort: {
           label: 1
         }
-      }
     })
       .then((response) => {
         // alert(JSON.stringify(response.data))

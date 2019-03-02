@@ -24,9 +24,10 @@
       <b>Edit This Node</b>
     </router-link>
     <span v-if="isRelation" style="margen-left:20px;">
-      <b>Source Node</b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
+      <br/>
+      <b style="margin-left:20px;">Source Node </b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
         <br/>
-      <b>Target Node</b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
+      <b style="margin-left:20px;">Target Node </b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
     </span>
     <!-- What follows is any child nodes and tags around this topic -->
     

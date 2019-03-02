@@ -1,27 +1,26 @@
 <template>
-<q-page :padding="true" class="flex flex-left">
-<!--<h6>History</h6>-->
-  <q-table 
-    title="Conversation History"
-    :data="listConversations"
-    :columns="columns"
-    row-key="id"
-  >
-    <template slot="body" slot-scope="props">
-      <q-tr :props="props">
-        <q-td key="type" style="width: 30px" :props="props">
-          <i :class="'ibis-icon ibis-' + props.row.type"/>
-        </q-td>
-        <q-td key="label" :props="props">{{props.row.label}}</q-td>
-        <q-td key="handle" :props="props">{{props.row.handle}}</q-td>
-        <q-td key="date" :props="props">{{props.row.date}}</q-td>
-        <q-td key="nodeId" auto-width :props="props">
-          <router-link :to="{ name: 'questview', params: { id:  props.row.nodeId }}">View</router-link>
-        </q-td>
-      </q-tr>
-    </template>    
-  </q-table>
-</q-page>
+  <q-page :padding="true" >
+    <q-table 
+      title="Conversation History"
+      :data="listConversations"
+      :columns="columns"
+      row-key="id"
+    >
+      <template slot="body" slot-scope="props">
+        <q-tr :props="props">
+          <q-td key="type" style="width: 30px" :props="props">
+            <i :class="'ibis-icon ibis-' + props.row.type"/>
+          </q-td>
+          <q-td key="label" :props="props">{{props.row.label}}</q-td>
+          <q-td key="handle" :props="props">{{props.row.handle}}</q-td>
+          <q-td key="date" :props="props">{{props.row.date}}</q-td>
+          <q-td key="nodeId" auto-width :props="props">
+            <router-link :to="{ name: 'questview', params: { id:  props.row.nodeId }}">View</router-link>
+          </q-td>
+        </q-tr>
+      </template>    
+    </q-table>
+  </q-page>
 </template>
 
 <script>
@@ -81,14 +80,7 @@ export default {
   },
   mounted () {
     this.$store.commit('questView', false)
-    this.findConversations({
-      query: {
-        $limit: 50,
-        $sort: {
-          date: -1
-        }
-      }
-    })
+    this.findConversations({sort: {date: -1}})
       .then((response) => {
         console.info({response});
       })
