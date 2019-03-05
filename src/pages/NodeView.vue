@@ -30,93 +30,116 @@
       <b style="margin-left:20px;">Target Node </b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
     </span>
     <!-- What follows is any child nodes and tags around this topic -->
-    
-    <div class="columnscroller">
-      <div class="columncontainer">
-        <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/issue.png">Questions
-          <a v-if="isAuthenticated" :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`">
-          <img class="respond" src="statics/images/respond_sm.png"></a>
+    <q-list>
+      <q-collapsible image="statics/images/issue_sm.png" label="Questions" >
+        <div>
+          <div v-if="isAuthenticated" class="node">
+            <a :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`">
+              New Question</a>
+          </div>
+          <q-list>
+            <q-item class="node wordwrap" v-for="question in q.questions" :key="question.nodeId">
+              <router-link :to="{ name: 'questview', params: { id: question.nodeId }}">{{ question.label }}</router-link>
+            </q-item>
+          </q-list>
         </div>
-        <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/position.png">Answers/Ideas
-          <a v-if="isAuthenticated" :href="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`">
-          <img class="respond" src="statics/images/respond_sm.png"></a>
+      </q-collapsible>
+      <q-collapsible image="statics/images/position_sm.png" label="Answers"      >
+        <div>
+          <div v-if="isAuthenticated" class="node">
+            <a :href="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`">
+              New Answer</a>
+          </div>
         </div>
-        <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/plus.png">Pro
-          <a v-if="isAuthenticated" :href="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`">
-          <img class="respond" src="statics/images/respond_sm.png"></a>
-        </div>
-        <div class="columnx" style="text-align: center;">
-              <img class="headerimage" src="statics/images/minus.png">Con
-              <a v-if="isAuthenticated" :href="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`">
-              <img class="respond" src="statics/images/respond_sm.png"></a>
-        </div>
-        <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/cogwheel.png">Subclasses
-          <a v-if="isAuthenticated" :href="`/topicchild/${q.nodeId}/subclass`">
-          <img class="respond" src="statics/images/respond_sm.png"></a>
-        </div>
-        <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/cogwheel.png">Instances
-          <a v-if="isAuthenticated" :href="`/topicchild/${q.nodeId}/instance`">
-          <img class="respond" src="statics/images/respond_sm.png"></a>
-        </div>
-        <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/tag.png">Tags
-          <a v-if="isAuthenticated" :href="`/tagform/${q.nodeId}`">
-          <img class="respond" src="statics/images/respond_sm.png"></a>
-        </div>
-        <div class="columnx" style="text-align: center;">
-              <img class="headerimage" src="statics/images/link.png">Connections
-              <a v-if="isAuthenticated" :href="`/connedit/${q.nodeId}/${q.label}`">
-              <img class="respond" src="statics/images/respond_sm.png"></a>
-        </div>
-      </div>
-      <div class="datacontainer">
-        <q-list class="datacolumn">
-          <q-item class="node wordwrap" v-for="question in q.questions" :key="question.nodeId">
-            <router-link :to="{ name: 'questview', params: { id: question.nodeId }}">{{ question.label }}</router-link>
-          </q-item>
-        </q-list>
-        <q-list class="datacolumn">
+        <q-list>
           <q-item class="node" v-for="answer in q.answers" :key="answer.nodeId">
             <router-link :to="{ name: 'questview', params: { id: answer.nodeId }}">{{ answer.label }}</router-link>
           </q-item>
         </q-list>
-        <q-list class="datacolumn">
+      </q-collapsible>
+      <q-collapsible image="statics/images/plus_sm.png" label="Pro Arguments">
+        <div>
+          <div v-if="isAuthenticated" class="node">
+            <a :href="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`">
+              New Pro Argument</a>
+          </div>
+        </div>
+        <q-list>
           <q-item class="node" v-for="pro in q.pros" :key="pro.nodeId">
             <router-link :to="{ name: 'questview', params: { id: pro.nodeId }}">{{ pro.label }}</router-link>
           </q-item>
         </q-list>
-        <q-list class="datacolumn">
+      </q-collapsible>
+      <q-collapsible image="statics/images/minus_sm.png" label="Con Arguments">
+        <div>
+          <div v-if="isAuthenticated" class="node">
+            <a :href="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`">
+              New Con Argument</a>
+          </div>
+        </div>
+        <q-list>
           <q-item class="node" v-for="con in q.cons" :key="con.nodeId">
             <router-link :to="{ name: 'questview', params: { id: con.nodeId }}">{{ con.label }}</router-link>
           </q-item>
         </q-list>
-        <q-list class="datacolumn">
+      </q-collapsible>
+      <q-collapsible v-if="isTopic" image="statics/images/cogwheel_sm.png" label="Subclasses">
+        <div>
+          <div v-if="isAuthenticated" class="node">
+            <a :href="`/topicchild/${q.nodeId}/subclass`">
+              New Subclass Topic</a>
+          </div>
+        </div>
+        <q-list>
           <q-item class="node" v-for="sub in q.subclasses" :key="sub.nodeId">
             <router-link :to="{ name: 'topicview', params: { id: sub.nodeId }}">{{ sub.label }}</router-link>
           </q-item>
         </q-list>
-        <q-list class="datacolumn">
+      </q-collapsible>
+      <q-collapsible v-if="isTopic" image="statics/images/cogwheel_sm.png" label="Instances">
+        <div>
+          <div v-if="isAuthenticated" class="node">
+            <a :href="`/topicchild/${q.nodeId}/instance`">
+              New Instance Topic</a>
+          </div>
+        <q-list>
           <q-item class="node" v-for="inst in q.instances" :key="inst.nodeId">
             <router-link :to="{ name: 'topicview', params: { id: inst.nodeId }}">{{ inst.label }}</router-link>
           </q-item>
         </q-list>
-        <q-list class="datacolumn">
+        </div>
+      </q-collapsible>
+      <q-collapsible image="statics/images/tag_sm.png" label="Tags">
+        <div>
+          <div v-if="isAuthenticated" class="node">
+            <a :href="`/tagform/${q.nodeId}`">
+              Add Tags</a>
+          </div>
+        </div>
+        <q-list>
           <q-item class="node" v-for="tag in q.tags" :key="tag.nodeId">
             <router-link :to="{ name: 'tagview', params: { id: tag.nodeId }}">{{ tag.label }}</router-link>
           </q-item>
         </q-list>
-        <q-list class="datacolumn">
-          <q-item class="node" v-for="reln in q.relations" :key="reln.nodeId">
-            <router-link :to="{ name: 'topicview', params: { id: reln.nodeId}}">{{ reln.label }}</router-link>
-          </q-item>
-        </q-list>
-      </div>
-    </div>
+      </q-collapsible>
+      <q-collapsible image="statics/images/link_sm.png" label="Connections">
+        <div>
+          <div>
+            <div v-if="isAuthenticated" class="node">
+              <a :href="`/connedit/${q.nodeId}/${q.label}`">
+                New Connection</a>
+            </div>
+          </div>
+          <q-list>
+            <q-item class="node" v-for="reln in q.relations" :key="reln.nodeId">
+              <router-link :to="{ name: 'topicview', params: { id: reln.nodeId}}">{{ reln.label }}</router-link>
+            </q-item>
+          </q-list>
+        </div>
+      </q-collapsible>
+    </q-list>    
+
+
   </q-page>
 </template>
 <script>
@@ -128,7 +151,6 @@ export default {
   data () {
     return {
       rightDrawerOpen: this.$q.platform.is.desktop//,
-  //isRelation: (this.q.type === relation)
     }
   },
     beforeRouterUpdate () {
@@ -172,7 +194,7 @@ export default {
         console.info('Going ',from,'to',to)
         try {
           const { name, params: { id } } = to
-          if (name === 'topicview' && id) {
+          if (name === 'topicview' || name === 'questview' && id) {
             this.initialize(id);
           }
 
@@ -215,8 +237,14 @@ export default {
       isAuthenticated () {
         return this.$store.getters.isAuthenticated
       },
-      isRelation() {
+      isRelation () {
         return (this.q.type === 'relation')
+      },
+      isTopic (){
+        return (this.q.type === 'topic')
+      },
+      notTopic (){
+        return (this.q.type !== 'topic')
       },
       canEdit () {
         let result = this.$store.getters.isAdmin
@@ -278,7 +306,13 @@ export default {
  * The formula seems to be column width * num colums + 100px  2500
  */
 .columncontainer {
-  width: 3000px;
+  width: 2300px;
+  -webkit-column-count: 8;
+     -moz-column-count: 8;
+          column-count: 8;
+}
+.columncontainer6 {
+  width: 2200;
   -webkit-column-count: 8;
      -moz-column-count: 8;
           column-count: 8;
@@ -312,8 +346,14 @@ export default {
   /*width: 960;*/
   }
 
+.datacontainer6 {
+  width: 2200px;
+    -webkit-column-count: 6;
+     -moz-column-count: 6;
+          column-count: 6;
+}
 .datacontainer {
-  width: 3000px;
+  width: 2300px;
     -webkit-column-count: 8;
      -moz-column-count: 8;
           column-count: 8;

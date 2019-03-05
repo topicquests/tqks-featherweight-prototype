@@ -82,7 +82,7 @@
 
         <q-item to="/history">
           <q-item-side icon="history"/>
-          <q-item-main label="History"/>
+          <q-item-main label="Recent Changes"/>
         </q-item>
 
         <q-item to="/bookmarks">
