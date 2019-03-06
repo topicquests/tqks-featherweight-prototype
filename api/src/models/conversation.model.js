@@ -2,6 +2,14 @@
 //
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
+// See https://mongoosejs.com/docs/schematypes.html#maps
+// for using maps for label and details where we would use
+// language codes, e.g. "en": "some string"
+// label: { type: Map, of: String, required: true }
+// details: { type: Map, of: String }
+// use:
+//    label: { en: 'Dog',
+//             fr: 'Chien' }
 module.exports = function(app) {
   const mongooseClient = app.get("mongooseClient");
   const { Schema } = mongooseClient;
