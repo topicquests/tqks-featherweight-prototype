@@ -36,7 +36,7 @@
     <div class="columnscroller">
       <div class="columncontainer">
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/issue.png">Questions
+          <img class="headerimage ibis-icon ibis-issue">Questions
           <router-link
             v-if="isAuthenticated"
             :to="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`"
@@ -45,7 +45,7 @@
           </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/position.png">Answers/Ideas
+          <img class="headerimage ibis-icon ibis-answer">Answers/Ideas
           <router-link
             v-if="isAuthenticated"
             :to="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`"
@@ -54,7 +54,7 @@
           </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/plus.png">Pro
+          <img class="headerimage ibis-icon ibis-pro">Pro
           <router-link
             v-if="isAuthenticated"
             :to="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`"
@@ -63,7 +63,7 @@
           </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/ibis/minus.png">Con
+          <img class="headerimage ibis-icon ibis-con">Con
           <router-link
             v-if="isAuthenticated"
             :to="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`"
@@ -72,7 +72,7 @@
           </router-link>
         </div>
         <div class="columnx" style="text-align: center;">
-          <img class="headerimage" src="statics/images/tag.png">Tags
+          <img class="headerimage ibis-icon ibis-tag">Tags
           <router-link v-if="isAuthenticated" :to="`/tagform/${q.nodeId}`">
             <img class="respond" src="statics/images/respond_sm.png">
           </router-link>
