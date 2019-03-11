@@ -32,13 +32,14 @@ const options = {
 }
  
 Vue.use(VueCkeditor.plugin, options);
+ClassicEditor.ui.view.editable.editableElement.style.height = '300px';
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
 var router
 
 export default {
   data() {
-    return {
+    return { 
       label: "",
       details: "",
       url: "",
@@ -79,4 +80,10 @@ export default {
 </script>
 
 <style>
+.details {
+  max-width: 960px;
+  min-height: 800px;
+  overflow: auto;
+  overflow-wrap: normal;
+}
 </style>

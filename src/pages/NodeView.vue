@@ -11,9 +11,9 @@
       </span>
       <!-- TODO enumerate superclasses if any -->
       <hr/>
-      <q-scroll-area class="details">
+      <div class="details">
         <div  v-html="q.details"></div>
-      </q-scroll-area>
+      </div>
     </div>
     <!-- Edit and other controls go here -->
     <router-link 
@@ -276,9 +276,12 @@ export default {
 .scroll.relative-position.overflow-hidden.fit.q-touch {
   user-select: auto !important;
 }
+
+
 .details {
   max-width: 960px;
   height: 400px;
+  overflow: auto;
   overflow-wrap: normal;
 }
 .spanwrap {

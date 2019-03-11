@@ -75,23 +75,19 @@ export default {
     async doSubmit() {
       const params = {};
       params.depth = 0;
+      //alert(this.$data.nodeId, this.type)
       //Create question, answer, pro, or cons child quest
       if (this.type === "update") {
-        alert('updating', his.$data.nodeId)
-        conversation
-          .find({ query: { nodeId: his.$data.nodeId, skippop: true } })
-          .then(response => {
-            var json = response.data[0];
-            // alert('NF-1', JSON.stringify(json))
-            json.label = this.label;
-            json.details = this.details;
-            json.url = this.url;
-            console.info("NVU-1", json);
-            conversation.update(json.id, json).then(response => {
-              console.info("NVU-2", response);
-              router.push({ name: "questview", params: { id: json.id } });
-            });
-          });
+        var json = this.$data.myNode; //response.data[0];
+        // alert('NF-1', JSON.stringify(json))
+        json.label = this.label;
+        json.details = this.details;
+        json.url = this.url;
+        console.info("NVU-1", json);
+        conversation.update(json._id, json).then(response => {
+          console.info("NVU-2", response);
+          router.push({ name: "questview", params: { id: json.nodeId } });
+        });
       } else {
         let typ = this.type
         var json = {};
@@ -117,7 +113,7 @@ export default {
           json.img = "statics/images/minus.png";
           json.imgsm = "statics/images/minus_sm.png";
         }
-console.log("NF-1", this.parentId, this.parentLabel)
+        console.log("NF-1", this.parentId, this.parentLabel)
         // Get parent id from current node, current node becomes the parent of future node
         json.parentId = this.parentId;
         json.parentLabel = this.parentLabel;
@@ -146,6 +142,7 @@ console.log("NF-1", this.parentId, this.parentLabel)
       this.$data.isUpdate = true;
       // myId is this node's identity; it's being updated
       this.$data.nodeId = this.$route.params.id;
+      // Go fetch this node for editing
       this.doUpdate();
     } 
   }

@@ -4,8 +4,8 @@
       <img style="margin-right:4px;" src="statics/images/tag.png">
       {{ currentTag.label }}
     </h4>
-    <q-scroll-area style="width: 800px; height: 800px;">
-      <q-list v-if="currentTag.nodes" v-for="node in currentTag.nodes" :key="node.nodeId">
+    <q-scroll-area v-if="currentTag.nodes" style="width: 800px; height: 800px;">
+      <q-list  v-for="node in currentTag.nodes" :key="node.nodeId">
         <q-item>
           <router-link :to="{ name: 'questview', params: { id: node.nodeId }}">{{ node.label }}</router-link>
         </q-item>

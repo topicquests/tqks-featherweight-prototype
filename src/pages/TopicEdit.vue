@@ -12,7 +12,8 @@
       </div>
       <div>
         <b>Details</b><br/>
-        <ckeditor class="details" type="classic" v-model="details"></ckeditor>
+        <!--<ckeditor type="classic" class="details" :editor="editor" v-model="details"  @ready="onReady"></ckeditor>-->
+      <vue-editor v-model="details"></vue-editor>
       </div>
       <div>
         <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
@@ -26,17 +27,19 @@
 //  topicchild/:id/:type  where id is parentId, and type is oneOf 'subclass' or 'instance'
 //Note that topic nodes are edited with NodeForm.vue
 //https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html
-import Vue from 'vue'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+/*import Vue from 'vue'
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+//import DocumentEditor from '@ckeditor/ckeditor5-build-classic'
 import VueCkeditor from 'vue-ckeditor5'
 const options = {
   editors: {
-    classic: ClassicEditor,
+    classic: DecoupledEditor,
   },
   name: 'ckeditor'
 }
  
-Vue.use(VueCkeditor.plugin, options);
+Vue.use(VueCkeditor.plugin, options);*/
+import { VueEditor, Quill } from 'vue2-editor'
 import api from 'src/api'
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
@@ -44,8 +47,14 @@ var router
 
 export default {
   props: ["user"],
+  components: {
+      VueEditor
+   },
   data () {
     return {
+      editor: DecoupledEditor,
+      editorConfig: {
+				},
       label: '',
       details: '',
       url: '',
@@ -55,7 +64,13 @@ export default {
     }
   },
   methods: {
-    
+    onReady( editor )  {
+        //document.body.prepend( editor.ui.view.toolbar.element );
+        editor.ui.getEditableElement().parentElement.insertBefore(
+                    editor.ui.view.toolbar.element,
+                    editor.ui.getEditableElement()
+                );
+			},
     doSubmit: function () {
       // alert(this.label);
       // alert(this.details);
