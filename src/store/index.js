@@ -75,7 +75,7 @@ const store = new Vuex.Store({
   },
   plugins: [service("conversation"), 
     service("tags"), 
-    service("authManagment"), 
+    service("authManagement"), 
     service("configuration", {
       idField: 'id'
     })]

@@ -35,7 +35,7 @@ export default [
       { path: '/connectionform/:id/:label', name: 'connectionform', component: () => import('pages/ConnectionNodeForm'), props: true },
       { path: '/connedit/:source/:target', name: 'conedit', component: () => import('pages/ConnectionForm'), props: true }
       ,{
-        path: "/token/:type/:hash",
+        path: "/token/:type/:hash/:emailb64",
         name: "token",
         component: () => import("pages/Token"),
         props: true
