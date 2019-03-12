@@ -90,7 +90,7 @@ echo ""
 echo "Now go to https://docs.mongodb.com/manual/installation/#mongodb-community-edition and follow"
 echo "your platform's instructions for installing MongoDB Community Edition"
 
-echo "Would you like me to try and open the browser at this address for? (y/n)"
+echo "Would you like me to try and open the browser at this address? (y/n)"
 read OPEN_BROWSER
 
 if [ $(echo $OPEN_BROWSER | tr '[:upper:]' '[:lower:]') == 'y' ]; then
