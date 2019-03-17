@@ -43,7 +43,7 @@ var router
 export default {
   // these props are for a new node
   // when type = 'update', "id" is passed as a param
-  props: ["user", "type", "parentType", "parentId", "parentLabel" ],
+  props: ["user", "type", "parentType", "parentId" ],
   validations: {
     url: { required },
     label: { required }
@@ -113,16 +113,22 @@ export default {
           json.img = "statics/images/minus.png";
           json.imgsm = "statics/images/minus_sm.png";
         }
-        console.log("NF-1", this.parentId, this.parentLabel)
-        // Get parent id from current node, current node becomes the parent of future node
-        json.parentId = this.parentId;
-        json.parentLabel = this.parentLabel;
-        //idx is now the nodeId for the newly created child quest
-        const idx = json.nodeId;
-        console.info("NodeForm", "creating conversation", JSON.stringify(json));
-        conversation.create(json).then(async response => {
-          router.push({ name: "questview", params: { id: idx } });
-          //Parent node is updated in server
+        conversation
+          .find({ query: { nodeId: this.parentId, skippop: true } })
+          .then(response => {
+            const resp = response.data[0]
+            const label = resp.label //*
+            console.log("NF-1", this.parentId, label)
+            // Get parent id from current node, current node becomes the parent of future node
+            json.parentId = this.parentId;
+            json.parentLabel = label;
+            //idx is now the nodeId for the newly created child quest
+            const idx = json.nodeId;
+            console.info("NodeForm", "creating conversation", JSON.stringify(json));
+            conversation.create(json).then(async response => {
+              router.push({ name: "questview", params: { id: idx } });
+              //Parent node is updated in server
+            });
         });
       }
     }

@@ -5,16 +5,9 @@
       <q-btn label="Got that Node. Select another Node to Connect" @click="$router.replace('/home')" />
     </div>
     <div v-if="!isFirst">
-      <div>
-        <table style="width:100%">
-          <th>
-            <td style="width:25%">Source</td><td style="width:25%">Relation</td><td style="width:25%">Target</td>
-          </th>
-          <tr>
-            <td ><q-input v-model="sourceLabel"/></td><td><q-input v-model="selection" /></td><td ><q-input v-model="targetLabel" /></td>
-          </tr>
-        </table>
-      </div>
+     <div><b>Source   </b><q-input v-model="sourceLabel"/></div>
+      <div><b>Relation </b><q-input v-model="selection" /></div>
+      <div><b>Target   </b><q-input v-model="targetLabel" /></div>
       <div>
         <q-btn label="Reverse Source and Target" @click="doReverse" />
       </div>
@@ -77,7 +70,7 @@ var router
 
 //*** */https://quasar-framework.org/components/select.html
 export default {
-  props: [ 'user', 'id', 'label' ],
+  props: [ 'user', 'id' ],
   validations: {
     selection: { required }
   },
@@ -230,23 +223,31 @@ export default {
     //    but if user wants to swap them, click the button
     //    then set a boolean isReverse and repaint the boxes
     // Now prompt user to select a relation type
+    // Removed label from input due to html issues
+    // so much fetch the node
     //////////////////////////////////
-    let _if = localStorage.getItem('connectionALabel')
-//    alert(_if)
-//    alert(this.label)
-    if (_if === null) {
-      localStorage.setItem('connectionAId', this.id)
-      localStorage.setItem('connectionALabel', this.label)
-      this.$data.isFirst = true
-      this.$data.isReady = false
-    } else {
-      localStorage.setItem('connectionBId', this.id)
-      localStorage.setItem('connectionBLabel', this.label)
-      this.$data.isFirst = false
-      this.$data.isReady = true;
-      this.$data.sourceLabel = localStorage.getItem('connectionALabel')
-      this.$data.targetLabel = localStorage.getItem('connectionBLabel')
-    }
+    conversation
+          .find({ query: { nodeId: this.id, skippop: true } })
+          .then(response => {
+        const resp = response.data[0]
+        const label = resp.label //*
+        let _if = localStorage.getItem('connectionALabel')
+        if (_if === null) {
+          localStorage.setItem('connectionAId', this.id)
+          localStorage.setItem('connectionALabel', label)
+          this.$data.isFirst = true
+          this.$data.isReady = false
+        } else {
+          localStorage.setItem('connectionBId', this.id)
+          localStorage.setItem('connectionBLabel', label)
+          this.$data.isFirst = false
+          this.$data.isReady = true;
+          this.$data.sourceLabel = localStorage.getItem('connectionALabel')
+          this.$data.targetLabel = localStorage.getItem('connectionBLabel')
+        }
+
+    });
+
 //    alert(localStorage.getItem('connectionALabel'))
 //    alert(localStorage.getItem('connectionBLabel'))
 
