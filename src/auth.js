@@ -22,18 +22,19 @@ const auth = {
   authenticate() {
     console.log("auth", this.user);
 
-    return api.authenticate()
-      .then((response) => {
-        console.log('auth successful')
-        localStorage.setItem('tqks-auth', response.accessToken)
-        return this.fetchUser(response.accessToken)
+    return api
+      .authenticate()
+      .then(response => {
+        console.log("auth successful");
+        localStorage.setItem("tqks-auth", response.accessToken);
+        return this.fetchUser(response.accessToken);
       })
       .then(user => {
         console.log("got user");
 
-        this.user = user
-  
-        return Promise.resolve(user)
+        this.user = user;
+
+        return Promise.resolve(user);
       })
       .catch(err => {
         console.log("auth failed", err);
@@ -132,6 +133,27 @@ const auth = {
     } catch (e) {
       throw e;
     }
+  },
+
+  verifySignUp: async function verifySignUp(slug) {
+    if (!slug) {
+      return false;
+    }
+    let [err, response] = await api.authManagement.create({
+      action: "verifySignupLong",
+      value: slug
+    });
+
+    if (!err) {
+      notify.success(
+        "Your email has been verified. We can now protect your account."
+      );
+    } else {
+      notify.error("Sorry, but we could not verify your email.");
+      notify.debug("Verify Email Error: ", err);
+    }
+
+    return response;
   },
 
   resetPassword: async function saveResetPassword(slug, password) {
