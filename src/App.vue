@@ -22,7 +22,7 @@ export default {
   computed: {
     ...getters,
     renderInitConfig() {
-      if (this.isAdmin && !this.currentConfig.isInitConfigCompleted) {
+      if (this.isAdmin && (this.currentConfig && !this.currentConfig.isInitConfigCompleted)) {
         return true;
       }
       return false;
