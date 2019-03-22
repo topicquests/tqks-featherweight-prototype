@@ -25,6 +25,7 @@
             label="Forgot your password?"
             text-color="green"
             @click.prevent="forgotPassword"
+            :disabled="!email"
           />
         </div>
       </div>
@@ -65,7 +66,7 @@ export default {
         })
         .catch(_ => {
           this.$q.notify({
-            type: "positive",
+            type: "negative",
             message: "Cannot sign in, please check your e-mail or password"
           });
           this.goHome();

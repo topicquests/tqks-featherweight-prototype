@@ -11,10 +11,10 @@
  <q-tr slot="body" slot-scope="props" :props="props">
    
    <q-td  key="type" style="width: 30px"  :props="props">
-              <i :class="'ibis-icon ibis-' + props.row.type"/>
+              <i style="display: block;" :class="'ibis-icon ibis-' + props.row.type"/>
             </q-td>
             
-<q-td key="label" :props="props"><a href="">{{ props.row.label }}</a></q-td>
+<q-td key="label" :props="props"><router-link to="">{{ props.row.label }}</router-link></q-td>
             <q-td key="handle" :props="props">
           {{props.row.handle}}
         </q-td>
@@ -33,7 +33,7 @@
 <!--  <q-list v-for="quest in listConversations" :key="quest.id">-->
 <!--    <q-item>-->
       <!-- NOTE: adding /index.html# makes this work, but it's a hack style="margin-right: 4px"-->
-<!--      <a :href="`/index.html#/${historyList(quest.type)}/${quest.id}`"><img  style="margin-right: 4px" :src="quest.imgsm">{{ quest.label }}</a>-->
+<!--      <router-link :to="`/index.html#/${historyList(quest.type)}/${quest.id}`"><img  style="margin-right: 4px" :src="quest.imgsm">{{ quest.label }}</router-link>-->
 <!--    </q-item>-->
 <!--  </q-list>-->
 <!--</q-scroll-area>-->

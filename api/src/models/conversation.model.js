@@ -9,7 +9,6 @@ module.exports = function(app) {
     {
       label: { type: String, required: true },
       nodeId: { type: String, required: true },
-      label: { type: String },
       details: { type: String },
       url: { type: String },
       creator: { type: String },
@@ -31,6 +30,8 @@ module.exports = function(app) {
       timestamps: true
     }
   );
+
+  conversation.index({ label: "text", details: "text" });
 
   return mongooseClient.model("conversation", conversation);
 };

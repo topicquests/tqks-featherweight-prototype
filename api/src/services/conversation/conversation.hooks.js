@@ -92,31 +92,29 @@ const populateHookBatch = async function(hook) {
  */
 const addChildToParent = async function(hook) {
   const { conversation } = hook.app.services;
-  let thisData;
 
   // If it's map this means it is the root quest
   // and we do not need to treat as a child
   if (hook.result && hook.result.type !== "map") {
     //find the parent, and destructure the first result
-
     // Determine which key of the object to change
-
     let { nodeId, type, parentId } = hook.result;
     const {
       data: [existing]
-    } = await conversation.find({ query: { nodeId: parentId } });
-    
-    if (!existing)
-     {
-       console.warn('No existing entry for parent', parentId);
-       return;
-     }
+    } = await conversation.find({
+      query: { nodeId: parentId },
+      skippop: true
+    });
+    if (!existing) {
+      console.warn("No existing entry for parent", parentId);
+      return;
+    }
     console.info("Populating parent for ", { nodeId, type });
 
     // Get existing values for said type
     let pluralizedKey = `${type}s`;
     let existingKey = existing[pluralizedKey];
-    console.dir(existing);
+    console.info("Dir ", existing);
     if (!Array.isArray(existingKey)) {
       console.warn("Existing key is not an array!!!", existingKey);
       return;
@@ -130,20 +128,18 @@ const addChildToParent = async function(hook) {
     console.info("Patching with payload", { payload });
     // Update the parent object with the new ID
     await conversation.patch(existing._id, payload);
-
-    // }
   }
 
   return hook;
 };
 
-const compactDB = async function(hook) {
-  const model = hook.service.Model;
-  model.persistence.compactDatafile;
-  // console.info('COMPACT', model)
-};
+// const compactDB = async function(hook) {
+//   const model = hook.service.Model;
+//   model.persistence.compactDatafile;
+//   // console.info('COMPACT', model)
+// };
 
-function hookBeforeFind (hook) {
+function hookBeforeFind(hook) {
   // console.info('HOOKING', hook)
   if (hook && hook.params.query.skippop) {
     // console.info('FoundSkipPop')
@@ -157,13 +153,7 @@ function hookBeforeFind (hook) {
 module.exports = {
   before: {
     all: [],
-    find: [
-      hookBeforeFind,
-      search({
-        fields: ["label", "details"],
-        deep: true
-      })
-    ],
+    find: [hookBeforeFind, search({ fields: ["label", "details"] })],
     get: [],
     create: [authenticate("jwt")],
     update: [authenticate("jwt")],

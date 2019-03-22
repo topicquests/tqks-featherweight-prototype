@@ -33,32 +33,95 @@ class Service {
    * @returns
    * @memberof Service
    */
-  populateKids(questionArray, answerArray, proArray, conArray, tagArray) {
-    let result = []; // always return at least an empty list
+  async populateKids(questionArray, answerArray, proArray, conArray, tagArray) {
+    let result = [];
+    let cursor;
+    let nodeId;
+    let node;
     var i;
+
     if (questionArray) {
       for (i in questionArray) {
-        result.push(questionArray[i]);
+        cursor = {};
+
+        nodeId = questionArray[i];
+
+        //Get the node of the child
+        const questionResult = await conversation.find({
+          query: { nodeId, skippop: true }
+        });
+
+        node = questionResult.data[0];
+        cursor.label = node.label;
+        cursor.nodeId = node.nodeId;
+        result.push(cursor);
       }
     }
     if (answerArray) {
       for (i in answerArray) {
-        result.push(answerArray[i]);
+        cursor = {};
+
+        nodeId = answerArray[i];
+
+        //Get the node of the child
+        const answerResult = await conversation.find({
+          query: { nodeId, skippop: true }
+        });
+
+        node = answerResult.data[0];
+        cursor.label = node.label;
+        cursor.nodeId = node.nodeId;
+        result.push(cursor);
       }
     }
     if (proArray) {
       for (i in proArray) {
-        result.push(proArray[i]);
+        cursor = {};
+
+        nodeId = proArray[i];
+
+        //Get the node of the child
+        const proResult = await conversation.find({
+          query: { nodeId, skippop: true }
+        });
+
+        node = proResult.data[0];
+        cursor.label = node.label;
+        cursor.nodeId = node.nodeId;
+        result.push(cursor);
       }
     }
     if (conArray) {
       for (i in conArray) {
-        result.push(conArray[i]);
+        cursor = {};
+
+        nodeId = conArray[i];
+
+        //Get the node of the child
+        const conResult = await conversation.find({
+          query: { nodeId, skippop: true }
+        });
+
+        node = conResult.data[0];
+        cursor.label = node.label;
+        cursor.nodeId = node.nodeId;
+        result.push(cursor);
       }
     }
     if (tagArray) {
       for (i in tagArray) {
-        result.push(tagArray[i]);
+        cursor = {};
+        nodeId = tagArray[i];
+
+        //Get the node of the child
+        const tagResult = await conversation.find({
+          query: { nodeId, skippop: true }
+        });
+
+        node = tagResult.data[0];
+        cursor.label = node.label;
+        cursor.nodeId = node.nodeId;
+        result.push(cursor);
       }
     }
     return result;
@@ -94,7 +157,7 @@ class Service {
     thisNode.label = node.label;
     thisNode.img = node.imgsm;
     thisNode.expanded = true;
-    childArray = this.populateKids(
+    childArray = await this.populateKids(
       node.questions,
       node.answers,
       node.pros,
@@ -109,7 +172,7 @@ class Service {
 
     thisNode.children = children;
     // console.info('Going Back', thisNode)
-    return thisNode
+    return thisNode;
   }
 
   /**

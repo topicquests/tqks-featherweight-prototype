@@ -148,15 +148,15 @@
       <router-view :user="user"></router-view>
     </q-page-container>
     <q-layout-footer>
-      <a style="float: left;" href="http://www.topicquests.org/">
+      <router-link style="float: left;" to="http://www.topicquests.org/">
         <img src="assets/TopicQuestsLogo_sm.png">
-      </a>
-      <a
+      </router-link>
+      <router-link
         style="float: right;"
-        href="https://github.com/KnowledgeGarden/tqks-featherweight-prototype"
+        to="https://github.com/KnowledgeGarden/tqks-featherweight-prototype"
       >
         <img src="assets/github-1.jpg">
-      </a>
+      </router-link>
     </q-layout-footer>
   </q-layout>
 </template>
