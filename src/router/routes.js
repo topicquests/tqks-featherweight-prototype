@@ -20,7 +20,7 @@ export default [
       { path: '/tags', name: 'tags', component: () => import('pages/TagIndex') },
       { path: '/ether', name: 'ether', component: () => import('pages/EtherpadView') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },
-      { path: '/topicedit', name: 'topicedit', component: () => import('pages/TopicEdit'), props: true },
+      { path: '/topicedit', name: 'topicedit', component: () => import('pages/TopicEdit') },
       { path: '/topicchild/:id/:type', name: 'topicchild', component: () => import('pages/TopicEdit'), props: true },
       { path: '/bookmarkview/:id', name: 'bookmarkview', component: () => import('pages/NodeView'), props: true },
       { path: '/questview/:id', name: 'questview', component: () => import('pages/NodeView'), props: true },

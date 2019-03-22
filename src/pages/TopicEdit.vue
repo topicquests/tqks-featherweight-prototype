@@ -12,8 +12,8 @@
       </div>
       <div>
         <b>Details</b><br/>
-        <!--<ckeditor type="classic" class="details" :editor="editor" v-model="details"  @ready="onReady"></ckeditor>-->
-      <vue-editor v-model="details"></vue-editor>
+        <ckeditor type="classic" class="details" :editor="editor" v-model="details"  @ready="onReady"></ckeditor>
+      <!-- <vue-editor v-model="details"></vue-editor> -->
       </div>
       <div>
         <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
@@ -46,15 +46,25 @@ const conversation = api.service('conversation')
 var router
 
 export default {
-  props: [ "id", "type" ],
+  props: ["id", "type"],
   components: {
       VueEditor
    },
   data () {
     return {
+      // editor: DecoupledEditor,
+      // editorConfig: {
+			// 	},
       label: '',
       details: '',
-      url: ''
+      url: '',
+      // id: '',
+      // user: 
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
     }
   },
   methods: {
@@ -68,6 +78,7 @@ export default {
     doSubmit: function () {
       // alert(this.label);
       // alert(this.details);
+      // alert(this.type);
       var mytype = this.type
       //console.log('TopicEditDid', mytype)
       var json = {}
@@ -81,7 +92,6 @@ export default {
       json.handle = this.user.handle
       json.date = new Date()
       json.type = 'topic'
-      console.info('MYTYPE', mytype)
       if (mytype) {
         //only a mytype if this is a child of some other topic
         var kid
@@ -102,7 +112,12 @@ export default {
     }
   },
   mounted () {
-    //alert(this.id, this.type)
+    console.info('TopicEdit', 'mounted', this.type, this.id);
+    //either subclass or instance
+    // this.$data.type = this.$route.params.type
+    //if this is a subclass or instance, id is parent topic
+    // this.$data.id = this.$route.params.id
+    // console.log('TopicEdit',this.$data.type,this.$data.id)
     router = this.$router
     this.$store.commit('questView', false)
   },

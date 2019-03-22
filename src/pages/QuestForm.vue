@@ -1,4 +1,4 @@
-<template>
+git <template>
   <q-page :padding="true">
       <h6>Quest Edit Form</h6>
       <div>
@@ -32,7 +32,6 @@ const options = {
 }
  
 Vue.use(VueCkeditor.plugin, options);
-
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
 var router
