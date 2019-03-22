@@ -85,19 +85,15 @@
           <q-item-main label="History"/>
         </q-item>
 
-        <q-collapsible to="/bookmarks" icon="bookmark" label="Bookmarks">
-          <q-item to="/aboutb">
-            <q-item-side icon="help"/>
-            <q-item-main label="Bookmarks Help"/>
-          </q-item>
-        </q-collapsible>
+        <q-item to="/bookmarks">
+          <q-item-side icon="bookmark"/>
+          <q-item-main label="Bookmarks"/>
+        </q-item>
 
-        <q-collapsible to="/quests" icon="explore" label="Quests">
-          <q-item to="/aboutc">
-            <q-item-side icon="help"/>
-            <q-item-main label="Quests Help"/>
-          </q-item>
-        </q-collapsible>
+        <q-item to="/quests">
+          <q-item-side icon="explore"/>
+          <q-item-main label="Quests"/>
+        </q-item>
 
 
         <q-item to="/topics">
@@ -105,7 +101,20 @@
           <q-item-main label="Topics" />
         </q-item>
 
-        <q-collapsible to="/tags" icon="check_box" label="Tags">
+        <q-item to="/tags">
+          <q-item-side icon="check_box" />
+          <q-item-main label="Tags" />
+        </q-item>
+
+        <q-collapsible icon="help" label="Help">
+          <q-item to="/aboutb">
+            <q-item-side icon="help"/>
+            <q-item-main label="Bookmarks Help"/>
+          </q-item>
+          <q-item to="/aboutc">
+            <q-item-side icon="help"/>
+            <q-item-main label="Quests Help"/>
+          </q-item>
           <q-item to="/aboutt">
             <q-item-side icon="help"/>
             <q-item-main label="Tags Help"/>
