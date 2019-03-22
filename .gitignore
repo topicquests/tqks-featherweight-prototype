@@ -9,3 +9,4 @@ cordova/plugins
 .quasar
 Notes.txt
 api/config/eyasu.json
+api/config/nick.json
