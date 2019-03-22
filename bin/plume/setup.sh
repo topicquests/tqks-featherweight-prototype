@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-echo "Welcome to Featherweight! I am here to help you get your dev environment set up."
+echo "Welcome to Featherweight! I am Plume, your friends project helper."
+echo "I am here to help you get your dev environment set up."
 echo "What is your first name?"
 read FIRST_NAME
 
