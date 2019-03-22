@@ -13,21 +13,28 @@ Given that this platform relies on both Feathers.js and Quasar-Framework, it's u
 
 Install Node 10 on a *nix environment. We haven't tested this on Windows.
 
+## Automatic Development Setup
+We've created a Plume, a script to help you get set up. Just open a terminal, navigate to the root of the project and run this command:
+```
+> ./bin/plume/setup.sh
+```
+
+Follow the directions. If you have any difficulty, feel free to contact @ncko.
+
+## Manual Development Setup
 Assuming your name is Barney :/
 
 ### Clone config/dev.json
 
-```cp api/config/dev.json api/config/barney.json```
+`cp api/config/dev.json api/config/barney.json`
 
 ### Git ignore your file
 
 `cat "api/config/barney.json" > .gitignore`
 
-
-
 #### Emails
 
-In order to send emails, you need an SMTP server. 
+In order to send emails, you need an SMTP server.
 You can use your personal Gmail too.
 
 You can also run a local SMTP server by running this command:
@@ -55,12 +62,12 @@ In `config/overrides.json`, change the adminEmail to your main test account emai
 
 
 ### Building
-Two terminals. 
+Two terminals.
 * Root: npm install
 * /api: npm install
- 
 
-### Running 
+
+### Running
 * Root: npm run dev
 * /api: npm run dev
 
