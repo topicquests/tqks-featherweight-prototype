@@ -3,7 +3,7 @@
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
 module.exports = function(app) {
-  const mongooseClient = app.get("mongooseClient");
+  const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
 
   const users = new Schema(
@@ -13,7 +13,6 @@ module.exports = function(app) {
       fullname: { type: String },
       avatar: { type: String },
       handle: { type: String },
-      password: { type: String },
       isVerified: { type: Boolean },
       verifyToken: { type: String },
       verifyExpires: { type: Date },
@@ -26,5 +25,5 @@ module.exports = function(app) {
     }
   );
 
-  return mongooseClient.model("users", users);
+  return mongooseClient.model('users', users);
 };
