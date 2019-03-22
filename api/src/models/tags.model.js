@@ -9,6 +9,7 @@ module.exports = function(app) {
     {
       nodeId: { type: String, required: true },
       label: { type: String },
+      details: { type: String },
       creator: { type: String },
       handle: { type: String },
       date: { type: String },
@@ -22,6 +23,8 @@ module.exports = function(app) {
       timestamps: true
     }
   );
+
+  tags.index({ label: "text", details: "text" });
 
   return mongooseClient.model("tags", tags);
 };

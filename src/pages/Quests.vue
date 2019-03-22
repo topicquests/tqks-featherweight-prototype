@@ -11,7 +11,7 @@
       <template slot="body" slot-scope="props">
         <q-tr :props="props">
           <q-td key="type" style="width: 30px" :props="props">
-            <i :class="'ibis-icon ibis-' + props.row.type"/>
+            <i style="display: block;" :class="'ibis-icon ibis-' + props.row.type"/>
           </q-td>
           <q-td key="label" :props="props">{{props.row.label}}</q-td>
           <q-td key="handle" :props="props">{{props.row.handle}}</q-td>

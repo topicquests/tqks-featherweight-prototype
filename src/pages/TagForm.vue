@@ -1,6 +1,6 @@
 <template>
     <q-page :padding="true">
-      <h4><img style="margin-right:4px;" src="statics/images/tag.png">New Tag</h4>
+      <h4><img style="margin-right:4px;" class="ibis-icon ibis-tag">New Tag</h4>
       <div id="newtagview">
         <div id="tagform">
           

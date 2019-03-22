@@ -17,15 +17,6 @@ module.exports = function(app) {
     {
       label: { type: String, required: true },
       nodeId: { type: String, required: true },
-      instanceOf: { type: String },
-      subOf: { type: String },
-      sourceNode: { type: String },
-      sourceLabel: { type: String },
-      targetNode: { type: String },
-      targetLabel: { type: String },
-      instances: { type: Array },
-      subclasses: { type: Array },
-      relations: { type: Array },
       details: { type: String },
       url: { type: String },
       creator: { type: String },
@@ -47,6 +38,8 @@ module.exports = function(app) {
       timestamps: true
     }
   );
+
+  conversation.index({ label: "text", details: "text" });
 
   return mongooseClient.model("conversation", conversation);
 };

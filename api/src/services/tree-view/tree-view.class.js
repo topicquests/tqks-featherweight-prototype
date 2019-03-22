@@ -39,13 +39,13 @@ class Service {
    * @returns
    * @memberof Service
    */
-  async populateKids(id, questionArray, answerArray, proArray, conArray, tagArray, relationArray) {
+  async populateKids(questionArray, answerArray, proArray, conArray, tagArray) {
     let result = [];
-    let cursor = {};
+    let cursor;
     let nodeId;
     let node;
     var i;
-//console.info("TVC-tag", tagArray);
+
     if (questionArray) {
       for (i in questionArray) {
         cursor = {};
@@ -54,13 +54,12 @@ class Service {
 
         //Get the node of the child
         const questionResult = await conversation.find({
-          query: { nodeId }, skippop: true
+          query: { nodeId, skippop: true }
         });
 
         node = questionResult.data[0];
         cursor.label = node.label;
         cursor.nodeId = node.nodeId;
-        cursor.isTag = false;
         result.push(cursor);
       }
     }
@@ -72,13 +71,12 @@ class Service {
 
         //Get the node of the child
         const answerResult = await conversation.find({
-          query: { nodeId }, skippop: true
+          query: { nodeId, skippop: true }
         });
 
         node = answerResult.data[0];
         cursor.label = node.label;
         cursor.nodeId = node.nodeId;
-        cursor.isTag = false;
         result.push(cursor);
       }
     }
@@ -90,13 +88,12 @@ class Service {
 
         //Get the node of the child
         const proResult = await conversation.find({
-          query: { nodeId }, skippop: true
+          query: { nodeId, skippop: true }
         });
 
         node = proResult.data[0];
         cursor.label = node.label;
         cursor.nodeId = node.nodeId;
-        cursor.isTag = false;
         result.push(cursor);
       }
     }
@@ -108,13 +105,12 @@ class Service {
 
         //Get the node of the child
         const conResult = await conversation.find({
-          query: { nodeId }, skippop: true
+          query: { nodeId, skippop: true }
         });
 
         node = conResult.data[0];
         cursor.label = node.label;
         cursor.nodeId = node.nodeId;
-        cursor.isTag = false;
         result.push(cursor);
       }
     }
@@ -124,37 +120,17 @@ class Service {
         nodeId = tagArray[i];
 
         //Get the node of the child
-        const tagResult = await tags.find({
-          query: { nodeId }, skippop: true
+        const tagResult = await conversation.find({
+          query: { nodeId, skippop: true }
         });
-//console.info("GOTTAG", tagResult);
+
         node = tagResult.data[0];
         cursor.label = node.label;
         cursor.nodeId = node.nodeId;
-        cursor.isTag = true;
-//console.info("GTTT", cursor);
         result.push(cursor);
       }
     }
-    if (relationArray) {
-      for (i in relationArray) {
-        cursor = {};
-
-        nodeId = relationArray[i];
-
-        //Get the node of the child
-        const conResult = await conversation.find({
-          query: { nodeId }, skippop: true
-        });
-
-        node = conResult.data[0];
-        cursor.label = node.label;
-        cursor.nodeId = node.nodeId;
-        cursor.isTag = false;
-        result.push(cursor);
-      }
-    }
-//console.log("TREEEEEE", id, result);
+    //console.log("TREEEEEE", id, result);
     return result;
   }
 
@@ -170,7 +146,7 @@ class Service {
     var respConv;
     level++;
 
-    console.info("ToJsTree", isTag, { level, rootNodeId });
+    console.info('ToJsTree', isTag, { level, rootNodeId });
     // Use find to avoid populating the children
     if (isTag) {
       respConv = await tags.find({
@@ -183,11 +159,11 @@ class Service {
         query: { nodeId: rootNodeId },
         skippop: true
       });
-  }
+    }
     console.dir(respConv);
 
     if (respConv.data.length < 1) {
-      console.info("End", { level });
+      console.info('End', { level });
       return {};
     }
 
@@ -198,19 +174,13 @@ class Service {
     thisNode.label = node.label;
     thisNode.img = node.imgsm;
     thisNode.expanded = true;
-    if (thisNode.type === 'tag') {
-      childArray = [];
-    } else {
-      childArray = await this.populateKids( rootNodeId,
-        node.questions,
-        node.answers,
-        node.pros,
-        node.cons,
-        node.tags,
-        node.relations
-      );
-    }
-    //console.info("TREX", rootNodeId, thisNode.nodeId, childArray);
+    childArray = await this.populateKids(
+      node.questions,
+      node.answers,
+      node.pros,
+      node.cons,
+      node.tags
+    );
     thisNode.children = [];
     const arrPromises = childArray.map(child =>
       this.toJsTree(child.nodeId, child.isTag, level)
@@ -237,7 +207,7 @@ class Service {
       // A recursive walk down a tree from a root node identified by id
       return await this.toJsTree(nodeId, false, 0);
     } catch (e) {
-      console.error("Error fetching", e);
+      console.error('Error fetching', e);
     }
   }
 

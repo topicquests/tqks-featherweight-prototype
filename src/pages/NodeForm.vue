@@ -4,7 +4,7 @@
         
         <div>
           <b>Subject</b><br/>
-          <q-input v-model="label" required/>
+          <q-input v-model="label" pattern="[A-Za-z0-9 ]*" required/>
         </div>
         <div>
           <b>URL</b> (Optional)<br/>
@@ -15,30 +15,30 @@
           <ckeditor type="classic" v-model="details"></ckeditor>
         </div>
         <div>
-          <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
+          <q-btn label="Submit" @click="doSubmit" />
+          <q-btn label="Cancel" @click="$router.replace('/home')" />
         </div>
     </q-page>
 </template>
 
 <script>
-import Vue from 'vue'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import VueCkeditor from 'vue-ckeditor5'
+import Vue from "vue";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import VueCkeditor from "vue-ckeditor5";
 const options = {
   editors: {
-    classic: ClassicEditor,
+    classic: ClassicEditor
   },
-  name: 'ckeditor'
-}
- 
-Vue.use(VueCkeditor.plugin, options);
-import { required } from 'vuelidate/lib/validators'
-import { mapGetters, mapActions, mapMutations } from "vuex";
+  name: "ckeditor"
+};
 
-import api from 'src/api'
-const uuidv4 = require('uuid/v4')
-const conversation = api.service('conversation')
-var router
+Vue.use(VueCkeditor.plugin, options);
+import { required } from "vuelidate/lib/validators";
+import api from "src/api";
+const uuidv4 = require("uuid/v4");
+const conversation = api.service("conversation");
+var router;
 
 export default {
   // these props are for a new node

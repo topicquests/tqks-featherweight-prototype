@@ -1,0 +1,68 @@
+{
+  "addons": [
+    "mailgun",
+    "mongolab"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "description": "",
+  "env": {
+    "HEROKU_APP_ID": {
+      "required": true
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_RELEASE_CREATED_AT": {
+      "required": true
+    },
+    "HEROKU_RELEASE_VERSION": {
+      "required": true
+    },
+    "HEROKU_SLUG_COMMIT": {
+      "required": true
+    },
+    "HEROKU_SLUG_DESCRIPTION": {
+      "required": true
+    },
+    "MAILGUN_API_KEY": {
+      "required": true
+    },
+    "MAILGUN_DOMAIN": {
+      "required": true
+    },
+    "MAILGUN_PUBLIC_KEY": {
+      "required": true
+    },
+    "MAILGUN_SMTP_LOGIN": {
+      "required": true
+    },
+    "MAILGUN_SMTP_PASSWORD": {
+      "required": true
+    },
+    "MAILGUN_SMTP_PORT": {
+      "required": true
+    },
+    "MAILGUN_SMTP_SERVER": {
+      "required": true
+    },
+    "MONGODB_URI": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "tqks-featherweight-prototype",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}

@@ -13,22 +13,34 @@ Given that this platform relies on both Feathers.js and Quasar-Framework, it's u
 
 Install Node 10 on a *nix environment. We haven't tested this on Windows.
 
+## Automatic Development Setup
+We've created a Plume, a script to help you get set up. Just open a terminal, navigate to the root of the project and run this command:
+```
+> ./bin/plume/setup.sh
+```
+
+Follow the directions. If you have any difficulty, feel free to contact @ncko.
+
+## Manual Development Setup
 Assuming your name is Barney :/
 
 ### Clone config/dev.json
 
-```cp /api/config/dev.json /api/config/barney.json```
+`cp api/config/dev.json api/config/barney.json`
 
 ### Git ignore your file
 
-`cat "/api/config/barney.json" > .gitignore`
-
-
+`cat "api/config/barney.json" > .gitignore`
 
 #### Emails
 
-In order to send emails, you need an SMTP server. 
+In order to send emails, you need an SMTP server.
 You can use your personal Gmail too.
+
+You can also run a local SMTP server by running this command:
+```
+docker run -p 1025:1025 -p 8025:8025 mailhog/mailhog
+```
 
 We prefer that you get a free account from: https://mailtrap.io/register/signup
 
@@ -37,8 +49,10 @@ Once you get your API keys, populate them in config/barney.json
 #### Database
 
 You can use your own MongoDB instance that you can pull using Docker.
-
-We prefer that you get a free database from: https://mlab.com/
+```
+docker pull mongo
+docker run --name tq-mongo -p 27017:27017 mongo:latest
+```
 
 Update `mongodb` and `emailconfig` in `/api/config/barney.json`
 
@@ -48,12 +62,12 @@ In `config/overrides.json`, change the adminEmail to your main test account emai
 
 
 ### Building
-Two terminals. 
+Two terminals.
 * Root: npm install
 * /api: npm install
- 
 
-### Running 
+
+### Running
 * Root: npm run dev
 * /api: npm run dev
 

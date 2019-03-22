@@ -10,7 +10,7 @@ import { mapActions } from "vuex";
 
 export default {
   name: "VerifyUser",
-  props: ["hash"],
+  props: ["hash", "email"],
   mounted() {
     const value = this.hash;
     console.info("Verifying token", value);

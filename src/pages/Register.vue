@@ -1,5 +1,5 @@
 <template>
-  <q-page :padding="true" class="flex flex-center">
+  <q-page :padding="true" class="flex-center" style="width:50vw;min-width:350px;">
     <div class="panel-body">
       <h6>Register</h6>
       <div slot="body">
@@ -95,7 +95,7 @@ export default {
     canRegister(email, callback) {
       var result = true;
       // if (!config.requiresInvite) {
-        return callback(result);
+      return callback(result);
       // } else {
       //   var json = {};
       //   var x = {};
@@ -164,7 +164,7 @@ export default {
             .catch(_ => {
               // alert('wtf')
               self.$q.notify({
-                type: "positive",
+                type: "negative",
                 message: "Cannot register, please check your e-mail or password"
               });
               // self.goHome();

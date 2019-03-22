@@ -1,8 +1,12 @@
 module.exports = function(app) {
   const emailConfig = app.get("emailconfig");
   const baseURL = app.get("baseURL");
-  function getLink(type, hash) {
-    const url = `${baseURL}/token/${type}/${hash}`;
+
+  function getLink(type, hash, email = '') {
+    let url = `${baseURL}/token/${type}/${hash}`;
+    if (email.length > 0) {
+      url += `/${new Buffer(email, 'utf8').toString('base64')}`;
+    }
     return url;
   }
 
@@ -24,7 +28,7 @@ module.exports = function(app) {
       let email;
       switch (type) {
         case "resendVerifySignup": //sending the user the verification email
-          tokenLink = getLink("verify", user.verifyToken);
+          tokenLink = getLink("verify", user.verifyToken, user.email);
           email = {
             from: emailConfig.GMAIL,
             to: user.email,
@@ -35,7 +39,7 @@ module.exports = function(app) {
           break;
 
         case "verifySignup": // confirming verification
-          tokenLink = getLink("verify", user.verifyToken);
+          tokenLink = getLink("verify", user.verifyToken, user.email);
           email = {
             from: emailConfig.GMAIL,
             to: user.email,
@@ -46,7 +50,7 @@ module.exports = function(app) {
           break;
 
         case "sendResetPwd":
-          tokenLink = getLink("reset", user.resetToken);
+          tokenLink = getLink("reset", user.resetToken, user.email);
           email = {
             from: emailConfig.GMAIL,
             to: user.email,
@@ -57,7 +61,7 @@ module.exports = function(app) {
           break;
 
         case "resetPwd":
-          tokenLink = getLink("reset", user.resetToken);
+          tokenLink = getLink("reset", user.resetToken, user.email);
           email = {};
           return sendEmail(email);
           break;
@@ -68,7 +72,7 @@ module.exports = function(app) {
           break;
 
         case "identityChange":
-          tokenLink = getLink("verifyChanges", user.verifyToken);
+          tokenLink = getLink("verifyChanges", user.verifyToken, user.email);
           email = {};
           return sendEmail(email);
           break;
