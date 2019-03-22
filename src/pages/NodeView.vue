@@ -273,6 +273,11 @@ export default {
 </script>
 
 <style lang="styl">
+.q-item-image {
+    min-width: 20px;
+    max-width: 20px;
+}
+
 .scroll.relative-position.overflow-hidden.fit.q-touch {
   user-select: auto !important;
 }
