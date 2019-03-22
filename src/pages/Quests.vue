@@ -106,11 +106,10 @@ export default {
   mounted() {
     this.$data.isAuthenticated = this.$store.getters.isAuthenticated;
     const query = {
-      $limit: 100,
-      $sort: {
-        date: -1
-      },
-      type: "map"
+        sort: {
+          createdAt: -1
+        },
+        type: "map"
     };
     console.log("Finding w query: ", JSON.stringify(query));
     this.findConversations(query).then(

@@ -202,25 +202,25 @@ export default {
     },
     getLargeIcon (typ) {
         if (typ === 'question') {
-          return 'statics/images/ibis/issue.png'
+          return 'statics/images/issue.png'
         } else if (typ === 'answer') {
-          return 'statics/images/ibis/position.png'
+          return 'statics/images/position.png'
         } else if (typ === 'pro') {
-          return 'statics/images/ibis/plus.png'
+          return 'statics/images/plus.png'
         } else if (typ === 'con') {
-          return 'statics/images/ibis/minus.png'
+          return 'statics/images/minus.png'
         }
         return ''
     },
     getSmallIcon (typ) {
         if (typ === 'question') {
-          return 'statics/images/ibis/issue_sm.png'
+          return 'statics/images/issue_sm.png'
         } else if (typ === 'answer') {
-          return 'statics/images/ibis/position_sm.png'
+          return 'statics/images/position_sm.png'
         } else if (typ === 'pro') {
-          return 'statics/images/ibis/plus_sm.png'
+          return 'statics/images/plus_sm.png'
         } else if (typ === 'con') {
-          return 'statics/images/ibis/minus_sm.png'
+          return 'statics/images/minus_sm.png'
         }
         return ''
     },
@@ -237,8 +237,8 @@ export default {
 /*
 {"id":"9a21ed84-b66a-4a87-9f33-c65a21a39b6d","label":"Why is the sky blue?","details":"","url":"","creator":"Uyrena5iH2SGdvPY","handle":"sue","date":"2018-07-24T23:56:06.603Z",
 "type":"answer",
-"img":"statics/images/ibis/position.png",
-"imgsm":"statics/images/ibis/position_sm.png",
+"img":"statics/images/position.png",
+"imgsm":"statics/images/position_sm.png",
 "parentId":"bb86153f-6d50-4526-bc10-28f0731d7278","parentLabel":"Jim's Second Quest","_id":"DRWKPMobqL9YscSw"}
 */
           child.type = choice
@@ -248,8 +248,8 @@ export default {
 /*
 {"id":"9a21ed84-b66a-4a87-9f33-c65a21a39b6d","label":"Why is the sky blue?","details":"","url":"","creator":"Uyrena5iH2SGdvPY","handle":"sue","date":"2018-07-24T23:56:06.603Z",
 "type":"question",
-"img":"statics/images/ibis/issue.png",
-"imgsm":"statics/images/ibis/issue_sm.png","parentId":"bb86153f-6d50-4526-bc10-28f0731d7278","parentLabel":"Jim's Second Quest","_id":"DRWKPMobqL9YscSw"}
+"img":"statics/images/issue.png",
+"imgsm":"statics/images/issue_sm.png","parentId":"bb86153f-6d50-4526-bc10-28f0731d7278","parentLabel":"Jim's Second Quest","_id":"DRWKPMobqL9YscSw"}
 */          
           const parentId = child.parentId
           conversation.update(child.id, child)
@@ -261,7 +261,7 @@ export default {
                     const parent = response2.data[0]
                     console.info('CNT-Parent', JSON.stringify(parent))
 /*
-{"id":"e64d7264-6a31-44a3-9a99-84ebc904a382","type":"map","label":"Test  Quest","url":"","details":"","img":"statics/images/ibis/map.png","imgsm":"statics/images/ibis/map_sm.png","creator":"Uyrena5iH2SGdvPY","handle":"sue","date":"2018-07-25T00:52:29.998Z",
+{"id":"e64d7264-6a31-44a3-9a99-84ebc904a382","type":"map","label":"Test  Quest","url":"","details":"","img":"statics/images/map.png","imgsm":"statics/images/map_sm.png","creator":"Uyrena5iH2SGdvPY","handle":"sue","date":"2018-07-25T00:52:29.998Z",
 "answers":["72d22096-aef8-4e89-9f6d-ddaffd80dc36"],"_id":"B48n0KwxK1y7CXyV"}
 */
                     const oldkids = parent[oldType]
@@ -287,7 +287,7 @@ export default {
                     }
                     console.info('CNT-Parent-2', JSON.stringify(parent))
 /*
-{"id":"e64d7264-6a31-44a3-9a99-84ebc904a382","type":"map","label":"Test  Quest","url":"","details":"","img":"statics/images/ibis/map.png","imgsm":"statics/images/ibis/map_sm.png","creator":"Uyrena5iH2SGdvPY","handle":"sue","date":"2018-07-25T00:52:29.998Z",
+{"id":"e64d7264-6a31-44a3-9a99-84ebc904a382","type":"map","label":"Test  Quest","url":"","details":"","img":"statics/images/map.png","imgsm":"statics/images/map_sm.png","creator":"Uyrena5iH2SGdvPY","handle":"sue","date":"2018-07-25T00:52:29.998Z",
 "answers":[],"_id":"B48n0KwxK1y7CXyV",
 "questions":["72d22096-aef8-4e89-9f6d-ddaffd80dc36"]}*/                    
                     conversation.update(parent.id, parent)

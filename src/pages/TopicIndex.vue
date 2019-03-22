@@ -4,7 +4,7 @@
 
         <q-table
           title="Topics"
-          :data="serverData"
+          :data="rootConversations"
           :columns="columns"
         >
        <template slot="body" slot-scope="props">
@@ -21,8 +21,8 @@
           <q-td key="date" :props="props">
             {{props.row.date}}
           </q-td>
-          <q-td key="id" auto-width :props="props">
-            <router-link :to="{ name: 'topicview', params: { id:  props.row.id }}">View</router-link>
+          <q-td key="nodeId" auto-width :props="props">
+            <router-link :to="{ name: 'topicview', params: { id:  props.row.nodeId }}">View</router-link>
           </q-td>
         </q-tr>
         </template>
@@ -33,8 +33,9 @@
 </template>
 
 <script>
-  import api from 'src/api'
-  const conversation = api.service('conversation')
+//  import api from 'src/api'
+//  const conversation = api.service('conversation')
+  import { mapActions, mapGetters } from "vuex";
 
   export default {
     props: ['user'],
@@ -74,11 +75,11 @@
             sortable: true
           },
           {
-            name: 'id',
+            name: 'nodeId',
             required: true,
             label: 'Action',
             align: 'left',
-            field: 'id',
+            field: 'nodeId',
             sortable: true
           },
         ],
@@ -88,6 +89,7 @@
       }
     },
     methods: {
+      ...mapActions("conversation", { findConversations: "find" }),
       fill(n) {
         var jsx = {}
         jsx.imgsm = n.imgsm
@@ -97,37 +99,28 @@
         jsx.date = n.date
         // console.info('JSX', jsx)
         this.$data.serverData.push(jsx)
-      },
-      request({ pagination }) {
-        //let skip = this.data.
-        this.$store.dispatch('conversation/find', {
-            query: {
-              $limit: 100,
-              $sort: {
-                date: -1
-              },
-              'type': 'topic'
-            }
-          })
-          .then((response) => {
-            this.$data.serverPagination = pagination
-            var data = response.data
-            // alert(JSON.stringify(data))
-            if (data && data.length > 0) {
-              this.$data.serverData = data
-              // console.info('DATA', JSON.stringify(data))
-              // data.map(this.fill)
-            }
-          })
+      }
+    },
+    computed: {
+      ...mapGetters("conversation", { allConversations: "list" }),
+      rootConversations() {
+        return this.allConversations.filter(c => c.type === "topic");
       }
     },
     mounted() {
-      this.$data.isAuthenticated = this.$store.getters.isAuthenticated,
+      this.$data.isAuthenticated = this.$store.getters.isAuthenticated;
       
-      this.request({
-        pagination: this.serverPagination
-      })
-      
+      const query = {
+        sort: {
+          createdAt: -1
+        },
+        type: "topic"
+      };
+      this.findConversations(query).then(
+        d => console.log("Query returned", { d }),
+        console.error
+      );
+      //turn off conversation tree
       this.$store.commit('questView', false)
 
     }
