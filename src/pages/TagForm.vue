@@ -23,16 +23,18 @@
 import api from 'src/api'
 const conversation = api.service('conversation')
 const tags = api.service('tags')
+
 export default {
-  props: [ 'user' ],
+  props: ["user"],
   data () {
     return {
       labels: '',
-      parentId: ''
+      parentId: ''//,//parentId is the id of the node which gets this tag
+      //user: this.$store.getters.user
     }
   },
   methods: {
-    async doSubmit () {
+    /*async*/ doSubmit () {
       //alert(this.$data.labels)
       //alert(this.$data.parentId)
       //
@@ -84,9 +86,26 @@ export default {
       this.grabTag(id, function (theTag) {
         console.info('NT-2', theTag)
         if (theTag) {
+          //TODO must patch this tag with possibly new user
+          let usrs = theTag.users
+          if (!usrs) {
+            usrs = []
+          }
+          let uid = self.user._id
+          let ulbl = self.user.handle
+          let ustruct = {}
+          ustruct.creator = uid
+          ustruct.label = ulbl
+          //if uid is unique, the patch new uid into tag
+          if (!usrs.includes(ustruct)) {
+            usrs.push(ustruct)
+            let payS = {};
+              payS.users = usrs
+            /*await*/ tags.patch(theTag._id, payS)
+          }
           return callback(theTag)
         } else {
-          console.info('NTC')
+          console.info('NTC', self.user)
           // create a new tag
           var json = {}
           json.nodeId = id
@@ -97,6 +116,15 @@ export default {
           json.type = 'tag'
           json.img = 'statics/images/tag.png'
           json.imgsm = 'statics/images/tag_sm.png'
+          // create an array of JSON objects
+          // with creator and handle
+          // for later display of a tag's users
+          let ustruct = {}
+          ustruct.creator = json.creator
+          ustruct.label = json.handle
+          let usrs = []
+          usrs.push(ustruct)
+          json.users = usrs
           tags.create(json)
             .then((response) => {
               console.info('TagCreate', response)
@@ -118,7 +146,7 @@ export default {
       function next () {
         if (labelArray.length === 0) {
           console.info('TA0')
-          return self.$router.push({name: 'questview', params: { 'id':self.parentId }})
+          return self.$router.push({name: 'questview', params: { 'id': self.parentId }})
         } else {
           theLabel = labelArray.pop()
           if (theLabel && theLabel !== '') {
@@ -143,32 +171,27 @@ export default {
       if (!nodes) {
         nodes = []
       }
-      let where = nodes.indexOf(this.parentId)
-      if (where < 0) {
+      if (!nodes.includes(this.parentId)) {
         nodes.push(this.parentId)
-        tag.nodes = nodes
-        console.info('TagProcess-1', tag)
-        tags.update(tag.id, tag)
-          .then((response) => {
-          })
+        let x = {}
+        x.nodes = nodes;
+        /*await*/ tags.patch(tag._id, x)
       }
       // mate parent with its tag
       conversation.find({ query: { 'nodeId':this.parentId, skippop:true } })
         .then((response) => {
-          let x = response.data[0]
-          console.info('TagProcess-2', x)
-          let tags = x.tags
+          let nx = response.data[0]
+          console.info('TagProcess-2', nx)
+          let tags = nx.tags
           if (!tags) {
             tags = []
           }
           let where2 = tags.indexOf(tag.id)
-          if (where2 < 0) {
-            tags.push(tag.id)
+          if (!tags.includes(tag.nodeId)) {
+            tags.push(tag.nodeId)
+            let x = {}
             x.tags = tags
-            conversation.update(x.id, x)
-              .then((response) => {
-                console.info('TagProcess-3', response)
-              })
+            /*await*/ conversation.patch(nx._id, x)
           }
           console.info('TagProcess-4')
         })
@@ -177,6 +200,7 @@ export default {
   mounted () {
     this.$store.commit('questView', false)
     this.$data.parentId = this.$route.params.id
+    console.info("TAGMOUNT", this.user)
   }
 }
 </script>

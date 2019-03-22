@@ -12,7 +12,8 @@
       </div>
       <div>
         <b>Details</b><br/>
-        <ckeditor type="classic" v-model="details"></ckeditor>
+        <ckeditor type="classic" class="details" :editor="editor" v-model="details"  @ready="onReady"></ckeditor>
+      <!-- <vue-editor v-model="details"></vue-editor> -->
       </div>
       <div>
         <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
@@ -21,41 +22,67 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+//Called by two routes from TopicView.vue:
+//  topicedit no params for a new topic
+//  topicchild/:id/:type  where id is parentId, and type is oneOf 'subclass' or 'instance'
+//Note that topic nodes are edited with NodeForm.vue
+//https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html
+/*import Vue from 'vue'
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+//import DocumentEditor from '@ckeditor/ckeditor5-build-classic'
 import VueCkeditor from 'vue-ckeditor5'
 const options = {
   editors: {
-    classic: ClassicEditor,
+    classic: DecoupledEditor,
   },
   name: 'ckeditor'
 }
  
-Vue.use(VueCkeditor.plugin, options);
+Vue.use(VueCkeditor.plugin, options);*/
+import { VueEditor, Quill } from 'vue2-editor'
 import api from 'src/api'
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
 var router
 
 export default {
+  props: ["id", "type"],
+  components: {
+      VueEditor
+   },
   data () {
     return {
+      // editor: DecoupledEditor,
+      // editorConfig: {
+			// 	},
       label: '',
       details: '',
       url: '',
-      id: '',
-      type: '',
-      user: this.$store.getters.user
+      // id: '',
+      // user: 
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
     }
   },
   methods: {
+    onReady( editor )  {
+        //document.body.prepend( editor.ui.view.toolbar.element );
+        editor.ui.getEditableElement().parentElement.insertBefore(
+                    editor.ui.view.toolbar.element,
+                    editor.ui.getEditableElement()
+                );
+			},
     doSubmit: function () {
       // alert(this.label);
       // alert(this.details);
+      // alert(this.type);
       var mytype = this.type
-      console.log('TopicEditDid',mytype)
+      //console.log('TopicEditDid', mytype)
       var json = {}
-      json.id = uuidv4()
+      json.nodeId = uuidv4()
       json.label = this.label
       json.url = this.url
       json.details = this.details
@@ -66,64 +93,46 @@ export default {
       json.date = new Date()
       json.type = 'topic'
       if (mytype) {
+        //only a mytype if this is a child of some other topic
         var kid
         if (mytype === 'subclass') {
           //subclass we are only allowing single inheritance for now
-          json.subOf = this.$data.id
+          json.subOf = this.id
         } else {
-          json.instanceOf = this.$data.id
+          json.instanceOf = this.id
         }
       }
       console.info('QFT-1', this.user)
       console.info('QFT-2', json)
       // use the conversation node database
-      conversation.create(json).then((response) => {
-        // alert(JSON.stringify(response))
-        if (mytype) {
-          //add child to parent
-          conversation.find({ query: { 'id':this.id, skippop:true } })
-            .then ((response) => {
-              var parent = response.data[0]
-              var kids
-              if (this.type === 'subclass') {
-                kids = parent.subclasses
-                if (!kids) {
-                  kids = []
-                }
-                kids.push(json.id)
-                parent.subclasses = kids
-              } else {
-                //default instance
-                kids = parent.instances
-                if (!kids) {
-                  kids = []
-                }
-                kids.push(json.id)
-                parent.instances = kids
-              }
-              conversation.update(parent.id, parent)
-                .then((response) => {
-                  console.info('NVU-2', response)
-                  router.push({name: 'topicview', params: { 'id':parent.id }})
-                })
-          })
-        } else {
+      conversation.create(json).then((response) => {   
           router.push('/topics')
-        }
+          // parents, if any, set in server
       })
     }
   },
   mounted () {
+    console.info('TopicEdit', 'mounted', this.type, this.id);
     //either subclass or instance
-    this.$data.type = this.$route.params.type
+    // this.$data.type = this.$route.params.type
     //if this is a subclass or instance, id is parent topic
-    this.$data.id = this.$route.params.id
-    console.log('TopicEdit',this.$data.type,this.$data.id)
+    // this.$data.id = this.$route.params.id
+    // console.log('TopicEdit',this.$data.type,this.$data.id)
     router = this.$router
     this.$store.commit('questView', false)
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
+    }
   }
 }
 </script>
 
 <style>
+.details {
+  max-width: 960px;
+  height: 400px;
+  overflow-wrap: normal;
+}
 </style>

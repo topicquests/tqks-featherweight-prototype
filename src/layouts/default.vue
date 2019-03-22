@@ -75,14 +75,14 @@
           <q-item-main label="Profile"/>
         </q-item>
 
-        <q-item to="/calendar">
-        <!--  <q-item-side icon="calendar_today" />-->
+        <!-- <q-item to="/calendar">
+          <q-item-side icon="calendar_today" />
           <q-item-main label="Calendar" />
-        </q-item>
+        </q-item>-->
 
         <q-item to="/history">
           <q-item-side icon="history"/>
-          <q-item-main label="History"/>
+          <q-item-main label="Recent Changes"/>
         </q-item>
 
         <q-collapsible to="/bookmarks" icon="bookmark" label="Bookmarks">

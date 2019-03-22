@@ -21,10 +21,10 @@ export default [
       { path: '/ether', name: 'ether', component: () => import('pages/EtherpadView') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },
       { path: '/topicedit', name: 'topicedit', component: () => import('pages/TopicEdit') },
-      { path: '/topicchild/:id/:type', name: 'topicchild', component: () => import('pages/TopicEdit') },
-      { path: '/bookmarkview/:id', name: 'bookmarkview', component: () => import('pages/QuestView'), props: true },
-      { path: '/questview/:id', name: 'questview', component: () => import('pages/QuestView'), props: true },
-      { path: '/topicview/:id', name: 'topicview', component: () => import('pages/TopicView'), props: true },
+      { path: '/topicchild/:id/:type', name: 'topicchild', component: () => import('pages/TopicEdit'), props: true },
+      { path: '/bookmarkview/:id', name: 'bookmarkview', component: () => import('pages/NodeView'), props: true },
+      { path: '/questview/:id', name: 'questview', component: () => import('pages/NodeView'), props: true },
+      { path: '/topicview/:id', name: 'topicview', component: () => import('pages/NodeView'), props: true },
       { path: '/profile/:id', name: 'profile', component: () => import('pages/ProfileForm'), props: true },
       { path: '/search/:q', name: 'search', component: () => import('pages/Search'), props: true },
       { path: '/userview/:id', name: 'userview', component: () => import('pages/UserView'), props: true },
@@ -32,7 +32,7 @@ export default [
       { path: '/tagform/:id', name: 'tagform', component: () => import('pages/TagForm'), props: true },
       { path: '/nodeedit/:type/:parentType/:id/:label', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
       { path: '/nodeupdate/:type/:id', name: 'nodeupdate', component: () => import('pages/NodeForm'), props: true },
-      { path: '/connectionform/:id/:label', name: 'connectionform', component: () => import('pages/ConnectionNodeForm'), props: true },
+      { path: '/connectionform/:id/:label', name: 'connectionform', component: () => import('pages/ConnectionForm'), props: true },
       { path: '/connedit/:source/:target', name: 'conedit', component: () => import('pages/ConnectionForm'), props: true }
       ,{
         path: "/token/:type/:hash/:emailb64",

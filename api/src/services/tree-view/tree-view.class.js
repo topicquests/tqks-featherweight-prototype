@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 var conversation = null;
+var tags = null;
 
 class Service {
   constructor(options) {
@@ -16,6 +17,10 @@ class Service {
     // console.info("TS", conversation);
   }
 
+  setTags(tgs) {
+    tags = tgs;
+  }
+
   async find() {
     return [];
   }
@@ -24,12 +29,13 @@ class Service {
    *@method populateKids
    *@description Get the children of the passed parent tree node (questions, answers, pros,
    *              cons, and tags)
-   *
+   * @param {*} id -- for debugging
    * @param {*} questionArray
    * @param {*} answerArray
    * @param {*} proArray
    * @param {*} conArray
    * @param {*} tagArray
+   * @param {*} relationArray
    * @returns
    * @memberof Service
    */
@@ -124,34 +130,45 @@ class Service {
         result.push(cursor);
       }
     }
+    //console.log("TREEEEEE", id, result);
     return result;
   }
 
   /**
    * A recursive tree builder
    * @param {*} rootNodeId
+   * @param {*} isTag
    * @param {*} callback signature: (jsonTree)
    */
-  async toJsTree(rootNodeId, level = 0) {
+  async toJsTree(rootNodeId, isTag, level = 0) {
     var thisNode;
     var childArray;
+    var respConv;
     level++;
 
-    console.info("ToJsTree", { level, rootNodeId });
+    console.info('ToJsTree', isTag, { level, rootNodeId });
     // Use find to avoid populating the children
-    const respConv = await conversation.find({
-      query: { nodeId: rootNodeId },
-      skippop: true
-    });
+    if (isTag) {
+      respConv = await tags.find({
+        query: { nodeId: rootNodeId },
+        skippop: true
+      });
+
+    } else {
+      respConv = await conversation.find({
+        query: { nodeId: rootNodeId },
+        skippop: true
+      });
+    }
     console.dir(respConv);
 
     if (respConv.data.length < 1) {
-      console.info("End", { level });
+      console.info('End', { level });
       return {};
     }
 
     const node = respConv.data[0];
-    console.info("TV-1", rootNodeId, JSON.stringify(node));
+    //console.info("TV-1", rootNodeId, JSON.stringify(node));
     thisNode = {};
     thisNode.nodeId = node.nodeId;
     thisNode.label = node.label;
@@ -166,11 +183,12 @@ class Service {
     );
     thisNode.children = [];
     const arrPromises = childArray.map(child =>
-      this.toJsTree(child.nodeId, level)
+      this.toJsTree(child.nodeId, child.isTag, level)
     );
     const children = await Promise.all(arrPromises);
 
     thisNode.children = children;
+    
     // console.info('Going Back', thisNode)
     return thisNode;
   }
@@ -184,11 +202,12 @@ class Service {
    * @memberof Service
    */
   async get(nodeId) {
+    //console.info("TREEVIEW-GET", nodeId);
     try {
       // A recursive walk down a tree from a root node identified by id
-      return await this.toJsTree(nodeId);
+      return await this.toJsTree(nodeId, false, 0);
     } catch (e) {
-      console.error("Error fetching", e);
+      console.error('Error fetching', e);
     }
   }
 

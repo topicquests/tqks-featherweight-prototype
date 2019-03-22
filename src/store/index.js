@@ -26,7 +26,12 @@ const store = new Vuex.Store({
     isQuestView: false,
 
     serverPagination: {},
-    serverData: []
+    serverData: [],
+
+    connectionA: null,
+    connectionALabel: null,
+    connectionB: null,
+    connectionBLabel: null
   },
 
   actions: {
@@ -42,7 +47,8 @@ const store = new Vuex.Store({
     node: state => state.conversation.copy,
     user: state => state.user,
     treeView: state => state.treeView,
-    isQuestView: state => state.isQuestView
+    isQuestView: state => state.isQuestView,
+
   },
   mutations: {
     admin(state, t) {
@@ -56,6 +62,7 @@ const store = new Vuex.Store({
       console.info("CommitUser", user);
       state.user = user;
     },
+    
     /**
      * @method tree
      * @description saves the tree from the QuestView page and stores it to the state     *
