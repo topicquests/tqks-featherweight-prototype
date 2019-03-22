@@ -20,8 +20,8 @@ export default [
       { path: '/tags', name: 'tags', component: () => import('pages/TagIndex') },
       { path: '/ether', name: 'ether', component: () => import('pages/EtherpadView') },
       { path: '/questedit', name: 'questedit', component: () => import('pages/QuestForm') },
-      { path: '/topicedit', name: 'topicedit', component: () => import('pages/TopicEdit') },
-      { path: '/topicchild/:id/:type', name: 'topicchild', component: () => import('pages/TopicEdit') },
+      { path: '/topicedit', name: 'topicedit', component: () => import('pages/TopicEdit'), props: true },
+      { path: '/topicchild/:id/:type', name: 'topicchild', component: () => import('pages/TopicEdit'), props: true },
       { path: '/bookmarkview/:id', name: 'bookmarkview', component: () => import('pages/NodeView'), props: true },
       { path: '/questview/:id', name: 'questview', component: () => import('pages/NodeView'), props: true },
       { path: '/topicview/:id', name: 'topicview', component: () => import('pages/NodeView'), props: true },
@@ -30,10 +30,10 @@ export default [
       { path: '/userview/:id', name: 'userview', component: () => import('pages/UserView'), props: true },
       { path: '/tagview/:id', name: 'tagview', component: () => import('pages/TagView'), props: true },
       { path: '/tagform/:id', name: 'tagform', component: () => import('pages/TagForm'), props: true },
-      { path: '/nodeedit/:type/:parentType/:parentId/:parentLabel', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
+      { path: '/nodeedit/:type/:parentType/:parentId/', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
       { path: '/nodeupdate/:type/:id', name: 'nodeupdate', component: () => import('pages/NodeForm'), props: true },
-      { path: '/connedit/:id/:label', name: 'conedit', component: () => import('pages/ConnectionForm'), props: true }
-      ,{
+      { path: '/connedit/:id/', name: 'conedit', component: () => import('pages/ConnectionForm'), props: true }, 
+      {
         path: "/token/:type/:hash",
         name: "token",
         component: () => import("pages/Token"),

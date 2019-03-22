@@ -32,7 +32,7 @@ const options = {
 }
  
 Vue.use(VueCkeditor.plugin, options);
-ClassicEditor.ui.view.editable.editableElement.style.height = '300px';
+
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
 var router

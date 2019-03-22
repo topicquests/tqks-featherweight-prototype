@@ -31,10 +31,10 @@
     </span>
     <!-- What follows is any child nodes and tags around this topic -->
     <q-list>
-      <q-collapsible image="statics/images/issue_sm.png" label="Questions" >
+      <q-collapsible image="statics/images/issue.png" label="Questions" >
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/nodeedit/question/${q.type}/${q.nodeId}/${q.label}`">
+            <a :href="`/nodeedit/question/${q.type}/${q.nodeId}`">
               New Question</a>
           </div>
           <q-list>
@@ -44,10 +44,10 @@
           </q-list>
         </div>
       </q-collapsible>
-      <q-collapsible image="statics/images/position_sm.png" label="Answers"      >
+      <q-collapsible image="statics/images/position.png" label="Answers"      >
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/nodeedit/answer/${q.type}/${q.nodeId}/${q.label}`">
+            <a :href="`/nodeedit/answer/${q.type}/${q.nodeId}`">
               New Answer</a>
           </div>
         </div>
@@ -57,10 +57,10 @@
           </q-item>
         </q-list>
       </q-collapsible>
-      <q-collapsible image="statics/images/plus_sm.png" label="Pro Arguments">
+      <q-collapsible image="statics/images/plus.png" label="Pro Arguments">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/nodeedit/pro/${q.type}/${q.nodeId}/${q.label}`">
+            <a :href="`/nodeedit/pro/${q.type}/${q.nodeId}`">
               New Pro Argument</a>
           </div>
         </div>
@@ -70,10 +70,10 @@
           </q-item>
         </q-list>
       </q-collapsible>
-      <q-collapsible image="statics/images/minus_sm.png" label="Con Arguments">
+      <q-collapsible image="statics/images/minus.png" label="Con Arguments">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/nodeedit/con/${q.type}/${q.nodeId}/${q.label}`">
+            <a :href="`/nodeedit/con/${q.type}/${q.nodeId}`">
               New Con Argument</a>
           </div>
         </div>
@@ -83,7 +83,7 @@
           </q-item>
         </q-list>
       </q-collapsible>
-      <q-collapsible v-if="isTopic" image="statics/images/cogwheel_sm.png" label="Subclasses">
+      <q-collapsible v-if="isTopic" image="statics/images/cogwheel.png" label="Subclasses">
         <div>
           <div v-if="isAuthenticated" class="node">
             <a :href="`/topicchild/${q.nodeId}/subclass`">
@@ -96,7 +96,7 @@
           </q-item>
         </q-list>
       </q-collapsible>
-      <q-collapsible v-if="isTopic" image="statics/images/cogwheel_sm.png" label="Instances">
+      <q-collapsible v-if="isTopic" image="statics/images/cogwheel.png" label="Instances">
         <div>
           <div v-if="isAuthenticated" class="node">
             <a :href="`/topicchild/${q.nodeId}/instance`">
@@ -109,7 +109,7 @@
         </q-list>
         </div>
       </q-collapsible>
-      <q-collapsible image="statics/images/tag_sm.png" label="Tags">
+      <q-collapsible image="statics/images/tag.png" label="Tags">
         <div>
           <div v-if="isAuthenticated" class="node">
             <a :href="`/tagform/${q.nodeId}`">
@@ -122,11 +122,11 @@
           </q-item>
         </q-list>
       </q-collapsible>
-      <q-collapsible image="statics/images/link_sm.png" label="Connections">
+      <q-collapsible image="statics/images/link.png" label="Connections">
         <div>
           <div>
             <div v-if="isAuthenticated" class="node">
-              <a :href="`/connedit/${q.nodeId}/${q.label}`">
+              <a :href="`/connedit/${q.nodeId}`">
                 New Connection</a>
             </div>
           </div>
@@ -138,8 +138,6 @@
         </div>
       </q-collapsible>
     </q-list>    
-
-
   </q-page>
 </template>
 <script>
@@ -150,7 +148,7 @@ console.log('QVTV', treeview)
 export default {
   data () {
     return {
-      rightDrawerOpen: this.$q.platform.is.desktop//,
+      rightDrawerOpen: this.$q.platform.is.desktop
     }
   },
     beforeRouterUpdate () {
@@ -177,11 +175,12 @@ export default {
             console.info('TopicTreeView', tree)
             const img = tree.img
             // only show the tree if the root is a map
-            if (img === 'statics/images/map_sm.png' ||
-                img === 'statics/images/bookmark_sm.png') {
+            if (img === 'statics/images/map.png' ||
+                img === 'statics/images/bookmark.png') {
               const result = []
               result.push(tree)
               self.$store.commit('tree', result)
+              self.$store.commit('questView', true)
             }
           })     
       } catch (err) {
@@ -289,84 +288,7 @@ export default {
   overflow: auto;
   overflow-wrap: normal;
 }
-.spanwrap {
-  float: left;
-  word-wrap: normal;
-  white-space: normal;
-  overflow-wrap: inherit;
-}
-/**
- * Enable columns to scroll right and left
- */
-.columnscroller {
-  border: 1px solid black;
-  white-space:nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  margin: 12px;
-  border-radius: 3px;
-}
 
-/**
- * width is set to accomodate lots of columns.
- * If they wrap when adding more columns, then
- * width must increase.
- * The formula seems to be column width * num colums + 100px  2500
- */
-.columncontainer {
-  width: 2300px;
-  -webkit-column-count: 8;
-     -moz-column-count: 8;
-          column-count: 8;
-}
-.columncontainer6 {
-  width: 2200;
-  -webkit-column-count: 8;
-     -moz-column-count: 8;
-          column-count: 8;
-}
-
-.columnx {
-  float: left;
-  white-space: normal;
-  border: 1px solid black;
-  width: 270px;
-  height: 34px;
-  background: rgb(240, 234, 234);
-  border-radius: 3px;
-  margin-left: 4px;
-  margin-right: 4px;
-  font-family: pragmatica-web, sans-serif;
-}
-.datacolumn {
-  height: 400px;
-  float: left;
-  border: 1px solid white;
-  min-width: 270px;
-  max-width: 270px;
-  background: white;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  break-inside: avoid;
-  margin-left: 4px;
-  margin-right: 4px;
-  overflow-wrap: normal;
-  /*width: 960;*/
-  }
-
-.datacontainer6 {
-  width: 2200px;
-    -webkit-column-count: 6;
-     -moz-column-count: 6;
-          column-count: 6;
-}
-.datacontainer {
-  width: 2300px;
-    -webkit-column-count: 8;
-     -moz-column-count: 8;
-          column-count: 8;
-
-}
 
 .headerimage {
   float: left;
@@ -395,10 +317,7 @@ export default {
   background-color: rgba(255, 255, 0, 0.801);
 }
 
-.respond {
-  float: right;
-  margin-right: 4px;
-}
+
 /*
  * width: 958px;
  */

@@ -46,21 +46,15 @@ const conversation = api.service('conversation')
 var router
 
 export default {
-  props: ["user"],
+  props: [ "id", "type" ],
   components: {
       VueEditor
    },
   data () {
     return {
-      editor: DecoupledEditor,
-      editorConfig: {
-				},
       label: '',
       details: '',
-      url: '',
-      id: '',
-      type: '',
-      user: this.$store.getters.user
+      url: ''
     }
   },
   methods: {
@@ -87,14 +81,15 @@ export default {
       json.handle = this.user.handle
       json.date = new Date()
       json.type = 'topic'
+      console.info('MYTYPE', mytype)
       if (mytype) {
         //only a mytype if this is a child of some other topic
         var kid
         if (mytype === 'subclass') {
           //subclass we are only allowing single inheritance for now
-          json.subOf = this.$data.id
+          json.subOf = this.id
         } else {
-          json.instanceOf = this.$data.id
+          json.instanceOf = this.id
         }
       }
       console.info('QFT-1', this.user)
@@ -107,13 +102,14 @@ export default {
     }
   },
   mounted () {
-    //either subclass or instance
-    this.$data.type = this.$route.params.type
-    //if this is a subclass or instance, id is parent topic
-    this.$data.id = this.$route.params.id
-    console.log('TopicEdit',this.$data.type,this.$data.id)
+    //alert(this.id, this.type)
     router = this.$router
     this.$store.commit('questView', false)
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
+    }
   }
 }
 </script>
