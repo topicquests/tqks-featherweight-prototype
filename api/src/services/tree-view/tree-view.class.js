@@ -58,7 +58,7 @@ class Service {
         });
 
         node = questionResult.data[0];
-        cursor.label = node.label;
+        cursor.label = node.label['en'];
         cursor.nodeId = node.nodeId;
         result.push(cursor);
       }
@@ -75,7 +75,7 @@ class Service {
         });
 
         node = answerResult.data[0];
-        cursor.label = node.label;
+        cursor.label = node.label['en']; //'en' becomes a language code passed in
         cursor.nodeId = node.nodeId;
         result.push(cursor);
       }
@@ -92,7 +92,7 @@ class Service {
         });
 
         node = proResult.data[0];
-        cursor.label = node.label;
+        cursor.label = node.label['en'];
         cursor.nodeId = node.nodeId;
         result.push(cursor);
       }
@@ -109,7 +109,7 @@ class Service {
         });
 
         node = conResult.data[0];
-        cursor.label = node.label;
+        cursor.label = node.label['en'];
         cursor.nodeId = node.nodeId;
         result.push(cursor);
       }
@@ -125,7 +125,7 @@ class Service {
         });
 
         node = tagResult.data[0];
-        cursor.label = node.label;
+        cursor.label = node.label['en'];
         cursor.nodeId = node.nodeId;
         result.push(cursor);
       }
@@ -171,7 +171,7 @@ class Service {
     //console.info("TV-1", rootNodeId, JSON.stringify(node));
     thisNode = {};
     thisNode.nodeId = node.nodeId;
-    thisNode.label = node.label;
+    thisnode.label['en'] = node.label;
     thisNode.img = node.imgsm;
     thisNode.expanded = true;
     childArray = await this.populateKids(

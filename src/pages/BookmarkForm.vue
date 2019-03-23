@@ -43,6 +43,7 @@ export default {
   },
   data() {
     return {
+      language: "en", //default for now
       label: "",
       details: "",
       url: "",
@@ -55,8 +56,12 @@ export default {
     async doSubmit() {
       var json = {};
       json.nodeId = uuidv4();
-      json.label = this.label;
-      json.details = this.details;
+      let s = {};
+      s[this.$data.language] = this.label;;
+      json.label = s;
+      s = {};
+      s[this.$data.language] = this.details;
+      json.details = s;
       json.url = this.url;
       json.creator = this.user._id;
       json.handle = this.user.handle;

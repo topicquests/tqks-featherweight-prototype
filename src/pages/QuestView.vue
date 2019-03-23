@@ -7,7 +7,7 @@
       </span>
       <h4>
         <img style="margin-right:4px;" :src="q.img">
-        {{ q.label }}
+        {{ q.label[language] }}
       </h4>
       <span v-if="q.url">
         <b>URL:</b>
@@ -15,13 +15,13 @@
         <br>
         <br>
       </span>
-      <span v-if="q.parentLabel">
+      <span v-if="q.parentLabel[language]">
         <b>Responds to</b>
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
       <hr>
       <q-scroll-area class="details">
-        <div v-html="q.details"></div>
+        <div v-html="q.details[language]"></div>
       </q-scroll-area>
     </div>
     <!-- Edit and other controls go here -->
@@ -132,6 +132,7 @@ console.log("QVTV", treeview);
 export default {
   data() {
     return {
+      language: "en", // default for now
       // Boolean that indicates that the right sidebar is open, depending on the platform
       rightDrawerOpen: this.$q.platform.is.desktop
     };

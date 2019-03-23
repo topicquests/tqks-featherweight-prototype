@@ -129,11 +129,6 @@ const addChildToParent = async function(hook) {
   return hook;
 };
 
-// const compactDB = async function(hook) {
-//   const model = hook.service.Model;
-//   model.persistence.compactDatafile;
-//   // console.info('COMPACT', model)
-// };
 
 function hookBeforeFind(hook) {
   // console.info('HOOKING', hook)
@@ -149,6 +144,8 @@ function hookBeforeFind(hook) {
 module.exports = {
   before: {
     all: [],
+    //TODO Find is going to be broken because those fields are
+    // not String fields; they are now Map fields
     find: [hookBeforeFind, search({ fields: ["label", "details"] })],
     get: [],
     create: [authenticate("jwt")],

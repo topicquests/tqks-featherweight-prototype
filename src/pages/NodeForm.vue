@@ -50,8 +50,11 @@ export default {
   },
   data() {
     return {
+      language: "en", // default for now
       label: "",
       details: "",
+      allLabels: null,
+      allDetails: null,
       url: "",
       isUpdate: false,
       nodeId: null,
@@ -65,10 +68,15 @@ export default {
           .find({ query: { nodeId: this.$data.nodeId, skippop: true } })
           .then(response => {
         const resp = response.data[0]
-        //    alert(JSON.stringify(resp))
+        // this is complex, now that we use Map instead of String
+        // for language support.
         this.$data.myNode = resp;
-        this.$data.label = resp.label;
-        this.$data.details = resp.details;
+        this.$data.allLabels = resp.label;
+        this.$data.allDetails = resp.details;
+        // it's safe to assume 'en' up until we are using lots of
+        // different languages
+        this.$data.label[this.language] = resp.label[this.language];
+        this.$data.details[this.language] = resp.details[this.language];
         this.$data.url = resp.url;
       });
     },
@@ -79,9 +87,19 @@ export default {
       //Create question, answer, pro, or cons child quest
       if (this.type === "update") {
         var json = this.$data.myNode; //response.data[0];
-        // alert('NF-1', JSON.stringify(json))
-        json.label = this.label;
-        json.details = this.details;
+        // We must now pay attention to allLabels and allDetails
+        let s = this.$data.allLabels
+        if (!s) {
+          s = {};
+        }
+        s[this.$data.language] = this.$data.label;
+        json.label = s;
+        s = this.$data.allDetails;
+        if (!s) {
+          s = {};
+        }
+        s[this.$data.language] = this.$data.details;
+        json.details = s;
         json.url = this.url;
         console.info("NVU-1", json);
         conversation.update(json._id, json).then(response => {

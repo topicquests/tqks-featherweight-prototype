@@ -7,7 +7,7 @@
     <q-scroll-area v-if="currentTag.nodes" style="width: 800px; height: 800px;">
       <q-list  v-for="node in currentTag.nodes" :key="node.nodeId">
         <q-item>
-          <router-link :to="{ name: 'questview', params: { id: node.nodeId }}">{{ node.label }}</router-link>
+          <router-link :to="{ name: 'questview', params: { id: node.nodeId }}">{{ node.label[language] }}</router-link>
         </q-item>
       </q-list>
     </q-scroll-area>
@@ -20,6 +20,12 @@ import api from 'src/api'
 const tags = api.service('tags')
 
 export default {
+  data() {
+    return {
+      language: "en" // default for now
+    };
+  },
+
   computed: {
     ...mapGetters('tags', {
       currentTag: 'current'

@@ -76,6 +76,7 @@ export default {
   },
   data () {
     return {
+      language: 'en', //default for now
       source: '',
       target: '',
       sourceLabel: '',
@@ -184,9 +185,13 @@ export default {
       json.handle = this.user.handle;
       json.date = new Date();
       json.sourceNode = s;
-      json.sourceLabel = sl;
+      let sss = {};
+      sss[this.$data.language] = sl;
+      json.sourceLabel = sss;
       json.targetNode = t;
-      json.targetLabel = tl;
+      sss = {};
+      sss[this.$data.language] = tl;
+      json.targetLabel = sss;
       json.img = "statics/images/link.png";
       json.imgsm = "statics/images/link_sm.png";
       json.type = "relation";

@@ -3,16 +3,16 @@
 
     <div  id="topbox">
       <span style="float:right; font-size:small;"><a :href="`/userview/${q.creator}`">{{q.handle}}</a> {{q.date}}</span>
-      <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
+      <h4><img style="margin-right:4px;" :src="q.img">{{ q.label[language] }}</h4>
       <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
       <!-- parent refers to type, this node being an instanceOf type -->
-      <span v-if="q.parentLabel"><b>Responds to </b>
-        <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
+      <span v-if="q.parentLabel[language]"><b>Responds to </b>
+        <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel[language] }}</router-link>
       </span>
       <!-- TODO enumerate superclasses if any -->
       <hr/>
       <div class="details">
-        <div  v-html="q.details"></div>
+        <div  v-html="q.details[language]"></div>
       </div>
     </div>
     <!-- Edit and other controls go here -->
@@ -25,9 +25,9 @@
     </router-link>
     <span v-if="isRelation" style="margen-left:20px;">
       <br/>
-      <b style="margin-left:20px;">Source Node </b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
+      <b style="margin-left:20px;">Source Node </b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel[language] }}</router-link>
         <br/>
-      <b style="margin-left:20px;">Target Node </b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
+      <b style="margin-left:20px;">Target Node </b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel[language] }}</router-link>
     </span>
     <!-- What follows is any child nodes and tags around this topic -->
     <q-list>
@@ -39,7 +39,7 @@
           </div>
           <q-list>
             <q-item class="node wordwrap" v-for="question in q.questions" :key="question.nodeId">
-              <router-link :to="{ name: 'questview', params: { id: question.nodeId }}">{{ question.label }}</router-link>
+              <router-link :to="{ name: 'questview', params: { id: question.nodeId }}">{{ question.label[language] }}</router-link>
             </q-item>
           </q-list>
         </div>
@@ -53,7 +53,7 @@
         </div>
         <q-list>
           <q-item class="node" v-for="answer in q.answers" :key="answer.nodeId">
-            <router-link :to="{ name: 'questview', params: { id: answer.nodeId }}">{{ answer.label }}</router-link>
+            <router-link :to="{ name: 'questview', params: { id: answer.nodeId }}">{{ answer.label[language] }}</router-link>
           </q-item>
         </q-list>
       </q-collapsible>
@@ -66,7 +66,7 @@
         </div>
         <q-list>
           <q-item class="node" v-for="pro in q.pros" :key="pro.nodeId">
-            <router-link :to="{ name: 'questview', params: { id: pro.nodeId }}">{{ pro.label }}</router-link>
+            <router-link :to="{ name: 'questview', params: { id: pro.nodeId }}">{{ pro.label[language] }}</router-link>
           </q-item>
         </q-list>
       </q-collapsible>
@@ -79,7 +79,7 @@
         </div>
         <q-list>
           <q-item class="node" v-for="con in q.cons" :key="con.nodeId">
-            <router-link :to="{ name: 'questview', params: { id: con.nodeId }}">{{ con.label }}</router-link>
+            <router-link :to="{ name: 'questview', params: { id: con.nodeId }}">{{ con.label[language] }}</router-link>
           </q-item>
         </q-list>
       </q-collapsible>
@@ -92,7 +92,7 @@
         </div>
         <q-list>
           <q-item class="node" v-for="sub in q.subclasses" :key="sub.nodeId">
-            <router-link :to="{ name: 'topicview', params: { id: sub.nodeId }}">{{ sub.label }}</router-link>
+            <router-link :to="{ name: 'topicview', params: { id: sub.nodeId }}">{{ sub.label[language] }}</router-link>
           </q-item>
         </q-list>
       </q-collapsible>
@@ -104,7 +104,7 @@
           </div>
         <q-list>
           <q-item class="node" v-for="inst in q.instances" :key="inst.nodeId">
-            <router-link :to="{ name: 'topicview', params: { id: inst.nodeId }}">{{ inst.label }}</router-link>
+            <router-link :to="{ name: 'topicview', params: { id: inst.nodeId }}">{{ inst.label[language] }}</router-link>
           </q-item>
         </q-list>
         </div>
@@ -132,7 +132,7 @@
           </div>
           <q-list>
             <q-item class="node" v-for="reln in q.relations" :key="reln.nodeId">
-              <router-link :to="{ name: 'topicview', params: { id: reln.nodeId}}">{{ reln.label }}</router-link>
+              <router-link :to="{ name: 'topicview', params: { id: reln.nodeId }}">{{ reln.label[language] }}</router-link>
             </q-item>
           </q-list>
         </div>
@@ -148,6 +148,7 @@ console.log('QVTV', treeview)
 export default {
   data () {
     return {
+      language: 'en', //default for now
       rightDrawerOpen: this.$q.platform.is.desktop
     }
   },

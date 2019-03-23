@@ -39,6 +39,7 @@ var router
 export default {
   data() {
     return { 
+      language: "en", // default for now
       label: "",
       details: "",
       url: "",
@@ -52,9 +53,13 @@ export default {
       var json = {};
       json.nodeId = uuidv4();
       json.type = "quest";
-      json.label = this.label;
+      let s = {};
+      s[this.$data.language] = this.label;;
+      json.label = s;
       json.url = this.url;
-      json.details = this.details;
+      s = {};
+      s[this.$data.language] = this.details;
+      json.details = s;
       json.img = "statics/images/map.png";
       json.imgsm = "statics/images/map_sm.png";
       json.creator = this.user._id;
