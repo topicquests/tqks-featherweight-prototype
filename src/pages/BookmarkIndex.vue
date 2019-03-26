@@ -6,7 +6,7 @@
             <q-td key="type" style="width: 30px" :props="props">
               <i :class="'ibis-icon ibis-' + props.row.type"/>
             </q-td>
-            <q-td key="label" :props="props">{{props.row.label}}</q-td>
+            <q-td key="label" :props="props">{{props.row.label[language]}}</q-td>
             <q-td key="handle" :props="props">{{props.row.handle}}</q-td>
             <q-td key="date" :props="props">{{props.row.date}}</q-td>
             <q-td key="nodeId" auto-width :props="props">
@@ -35,6 +35,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data () {
     return {
+      language: 'en', //default for now
       columns: [
         {
           name: "type",

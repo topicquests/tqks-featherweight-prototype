@@ -12,8 +12,7 @@
       </div>
       <div>
         <b>Details</b><br/>
-        <ckeditor type="classic" class="details" :editor="editor" v-model="details"  @ready="onReady"></ckeditor>
-      <!-- <vue-editor v-model="details"></vue-editor> -->
+        <ckeditor type="classic" v-model="details"></ckeditor>
       </div>
       <div>
         <q-btn label="Submit" @click="doSubmit" /><q-btn label="Cancel" @click="$router.replace('/home')" />
@@ -27,34 +26,28 @@
 //  topicchild/:id/:type  where id is parentId, and type is oneOf 'subclass' or 'instance'
 //Note that topic nodes are edited with NodeForm.vue
 //https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html
-/*import Vue from 'vue'
-import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-//import DocumentEditor from '@ckeditor/ckeditor5-build-classic'
+import Vue from 'vue'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import VueCkeditor from 'vue-ckeditor5'
 const options = {
   editors: {
-    classic: DecoupledEditor,
+    classic: ClassicEditor,
   },
   name: 'ckeditor'
 }
  
-Vue.use(VueCkeditor.plugin, options);*/
-import { VueEditor, Quill } from 'vue2-editor'
+Vue.use(VueCkeditor.plugin, options);
 import api from 'src/api'
 const uuidv4 = require('uuid/v4')
 const conversation = api.service('conversation')
 var router
 
+
 export default {
   props: ["id", "type"],
-  components: {
-      VueEditor
-   },
   data () {
     return {
-      // editor: DecoupledEditor,
-      // editorConfig: {
-			// 	},
+      language: 'en', //default
       label: '',
       details: '',
       url: '',
@@ -83,9 +76,14 @@ export default {
       //console.log('TopicEditDid', mytype)
       var json = {}
       json.nodeId = uuidv4()
-      json.label = this.label
+      let s = {};
+      s[this.$data.language] = this.label;;
+      json.label = s;
+      json.url = this.url;
+      s = {};
+      s[this.$data.language] = this.details;
+      json.details = s;
       json.url = this.url
-      json.details = this.details
       json.img = 'statics/images/cogwheel.png'
       json.imgsm = 'statics/images/cogwheel_sm.png'
       json.creator = this.user._id

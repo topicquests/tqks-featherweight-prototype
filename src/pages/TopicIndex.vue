@@ -13,7 +13,7 @@
             <img  src="statics/images/cogwheel_sm.png" >
           </q-td>
           <q-td key="label" :props="props">
-            {{props.row.label}}
+            {{props.row.label[language]}}
           </q-td>
           <q-td key="handle" :props="props">
             {{props.row.handle}}
@@ -41,6 +41,7 @@
     props: ['user'],
     data() {
       return {
+        language: 'en', //default
         columns: [
           {
             name: 'type',

@@ -15,9 +15,9 @@ module.exports = function(app) {
   const { Schema } = mongooseClient;
   const conversation = new Schema(
     {
-      label: { type: String, required: true },
-      nodeId: { type: Map, required: true }, //issue #94
-      details: { type: Map }, //issue #94
+      label: { type: Object, required: true },//issue #94
+      nodeId: { type: String, required: true },
+      details: { type: Object }, //issue #94
       url: { type: String },
       creator: { type: String },
       handle: { type: String },
@@ -25,12 +25,12 @@ module.exports = function(app) {
       type: { type: String },
       img: { type: String },
       imgsm: { type: String },
-      parentLabel: { type: Map }, //issue #94
+      parentLabel: { type: Object }, //issue #94
       parentId: { type: String },
       sourceNode: { type: String },
-      sourceLabel: { type: Map }, //issue #94
+      sourceLabel: { type: Object }, //issue #94
       targetNode: { type: String},
-      targetLabel: { type: Map }, //issue #94
+      targetLabel: { type: Object }, //issue #94
       questions: { type: Array },
       answers: { type: Array },
       pros: { type: Array },

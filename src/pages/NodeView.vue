@@ -174,14 +174,16 @@ export default {
         treeview.get(id)
           .then(function (tree) {
             console.info('TopicTreeView', tree)
-            const img = tree.img
-            // only show the tree if the root is a map
-            if (img === 'statics/images/map.png' ||
-                img === 'statics/images/bookmark.png') {
-              const result = []
-              result.push(tree)
-              self.$store.commit('tree', result)
-              self.$store.commit('questView', true)
+            if (tree) {
+              const img = tree.img
+              // only show the tree if the root is a map
+              if (img === 'statics/images/map.png' ||
+                  img === 'statics/images/bookmark.png') {
+                const result = []
+                result.push(tree)
+                self.$store.commit('tree', result)
+                self.$store.commit('questView', true)
+              }
             }
           })     
       } catch (err) {
@@ -238,6 +240,7 @@ export default {
         return this.$store.getters.isAuthenticated
       },
       isRelation () {
+        alert(this.q)
         return (this.q.type === 'relation')
       },
       isTopic (){
