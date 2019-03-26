@@ -46,10 +46,7 @@ export default {
       language: "en", //default for now
       label: "",
       details: "",
-      url: "",
-      isUpdate: false,
-      myId: "",
-      myNode: null
+      url: ""
     };
   },
   methods: {
