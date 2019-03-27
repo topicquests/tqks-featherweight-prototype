@@ -30,10 +30,10 @@ export default [
       { path: '/userview/:id', name: 'userview', component: () => import('pages/UserView'), props: true },
       { path: '/tagview/:id', name: 'tagview', component: () => import('pages/TagView'), props: true },
       { path: '/tagform/:id', name: 'tagform', component: () => import('pages/TagForm'), props: true },
-      { path: '/nodeedit/:type/:parentType/:id/:label', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
+      { path: '/nodeedit/:type/:parentType/:parentId', name: 'nodeedit', component: () => import('pages/NodeForm'), props: true },
       { path: '/nodeupdate/:type/:id', name: 'nodeupdate', component: () => import('pages/NodeForm'), props: true },
       { path: '/connectionform/:id/:label', name: 'connectionform', component: () => import('pages/ConnectionForm'), props: true },
-      { path: '/connedit/:source/:target', name: 'conedit', component: () => import('pages/ConnectionForm'), props: true }
+      { path: '/connedit/:id', name: 'conedit', component: () => import('pages/ConnectionForm'), props: true }
       ,{
         path: "/token/:type/:hash/:emailb64",
         name: "token",

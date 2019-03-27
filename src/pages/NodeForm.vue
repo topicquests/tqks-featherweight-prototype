@@ -110,13 +110,18 @@ export default {
         let typ = this.type
         var json = {};
         json.nodeId = uuidv4();
-        json.label = this.label;
-        json.details = this.details;
+        let s = {};
+        s[this.$data.language] = this.label;
+        json.label = s;
+        s = {};
+        s[this.$data.language] = this.details;
+        json.details = s;
         json.url = this.url;
         json.creator = this.user._id;
         json.handle = this.user.handle;
         json.date = new Date();
         json.type = typ;
+        json.parentId = this.parentId;
         // Add icons
         if (typ === "question") {
           json.img = "statics/images/issue.png";
@@ -156,7 +161,7 @@ export default {
     // If type === "update", we are editing the node
     // Must fetch it
     // Otherwise, this is a node-creation event
-    //alert("editing")
+    alert(this.parentId)
     router = this.$router;
     this.$store.commit("questView", false);
     //this.$data.type = this.$route.params.type;

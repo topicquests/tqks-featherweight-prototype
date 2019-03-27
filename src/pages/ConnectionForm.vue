@@ -177,15 +177,17 @@ export default {
       let lab = sl+' '+this.$data.selection+' '+tl
       var json = {};
       json.nodeId = uuidv4();
-      json.label = lab;
-      json.details = lab;
+      let sss = {}
+      sss[this.$data.language] = lab
+      json.label = sss;
+      json.details = sss;
       json.instanceOf = this.$data.selection;
       json.url = this.url;
       json.creator = this.user._id;
       json.handle = this.user.handle;
       json.date = new Date();
       json.sourceNode = s;
-      let sss = {};
+      sss = {};
       sss[this.$data.language] = sl;
       json.sourceLabel = sss;
       json.targetNode = t;
@@ -211,7 +213,7 @@ export default {
   mounted () {
     router = this.$router;
 
-    //alert(this.label)
+   // alert(this.id)
     /////////////////////////
     // Complex behaviors:
     // First mount when a node is chosen for connection
@@ -235,7 +237,8 @@ export default {
           .find({ query: { nodeId: this.id, skippop: true } })
           .then(response => {
         const resp = response.data[0]
-        const label = resp.label //*
+        const label = resp.label[this.$data.language] //*
+        //alert(label)
         let _if = localStorage.getItem('connectionALabel')
         if (_if === null) {
           localStorage.setItem('connectionAId', this.id)

@@ -6,7 +6,7 @@
       <h4><img style="margin-right:4px;" :src="q.img">{{ q.label[language] }}</h4>
       <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
       <!-- parent refers to type, this node being an instanceOf type -->
-      <span v-if="q.parentLabel[language]"><b>Responds to </b>
+      <span v-if="q.parentLabel"><b>Responds to </b>
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel[language] }}</router-link>
       </span>
       <!-- TODO enumerate superclasses if any -->
@@ -153,7 +153,7 @@ export default {
     }
   },
     beforeRouterUpdate () {
-      alert('Tsx')
+      //alert('Tsx')
       console.info('Router', 'start')
       setTimeout(() => {
         this.initialize.apply(this).then(() => {
@@ -240,7 +240,7 @@ export default {
         return this.$store.getters.isAuthenticated
       },
       isRelation () {
-        alert(this.q)
+        //alert(this.q)
         return (this.q.type === 'relation')
       },
       isTopic (){

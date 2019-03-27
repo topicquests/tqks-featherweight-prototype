@@ -29,13 +29,16 @@ module.exports = function(app) {
       parentId: { type: String },
       sourceNode: { type: String },
       sourceLabel: { type: Object }, //issue #94
-      targetNode: { type: String},
+      targetNode: { type: String },
       targetLabel: { type: Object }, //issue #94
       questions: { type: Array },
       answers: { type: Array },
       pros: { type: Array },
       cons: { type: Array },
       tags: { type: Array },
+      subclasses: { type: Array },
+      instances: { type: Array },
+      relations: { type: Array },
       skippop: { type: Boolean }
     },
     {
