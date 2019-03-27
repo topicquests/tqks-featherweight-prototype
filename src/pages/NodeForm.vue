@@ -161,7 +161,7 @@ export default {
     // If type === "update", we are editing the node
     // Must fetch it
     // Otherwise, this is a node-creation event
-    alert(this.parentId)
+    //alert(this.parentId)
     router = this.$router;
     this.$store.commit("questView", false);
     //this.$data.type = this.$route.params.type;
