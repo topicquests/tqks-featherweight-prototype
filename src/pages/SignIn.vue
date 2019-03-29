@@ -64,6 +64,7 @@ export default {
             type: "positive",
             message: "You are now logged in"
           });
+        this.goHome();
       } catch (e) {
         this.$q.notify({
             type: "negative",
