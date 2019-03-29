@@ -1,12 +1,14 @@
 <template>
   <q-page :padding="true" v-if="!!q">
+  
     <div id="topbox">
+     
       <span style="float:right; font-size:small;">
         <router-link :to="{name: 'userview', params: {id: q.creator}}">{{q.handle}}</router-link>
         {{q.date}}
       </span>
       <h4>
-        <img style="margin-right:4px;" :src="q.img">
+        <i style="display: block;" :class="'ibis-icon ibis-' + q.type"/>
         {{ q.label }}
       </h4>
       <span v-if="q.url">

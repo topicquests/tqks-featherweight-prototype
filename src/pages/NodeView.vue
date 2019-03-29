@@ -1,25 +1,42 @@
 <template>
   <q-page :padding="true" v-if="!!q">
+    <div class="row">
+      <div class="col-sm-6">
+   <q-card>
+  <q-card-title>
+  <i class="ibis-icon ibis-map" style="display: inline-block; float: left"></i>   {{ q.label }}
+<span slot="subtitle"><a :href="`/userview/${q.creator}`">{{q.handle}}</a> {{q.date}}</span>
+  </q-card-title>
+    <q-card-separator />
+    <q-card-actions>
+      <q-btn   v-if="canEdit" 
+      style="margin-left:20px;" 
+      :to="{ name: 'nodeupdate', params: { type: 'update', id: q.nodeId }}" flat color="primary" label="Edit" />
+      
+</q-card-actions>
 
-    <div  id="topbox">
-      <span style="float:right; font-size:small;"><a :href="`/userview/${q.creator}`">{{q.handle}}</a> {{q.date}}</span>
-      <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
+    <q-card-separator />
+
+
+     
       <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
       <!-- parent refers to type, this node being an instanceOf type -->
       <span v-if="q.parentLabel"><b>Responds to </b>
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
-      <!-- TODO enumerate superclasses if any -->
-      <hr/>
-      <div class="details">
+  <q-card-separator />
+  <q-card-main><div class="details">
         <div  v-html="q.details"></div>
       </div>
-    </div>
+  </q-card-main>
+</q-card>
+</div>
+
+<div class="col-sm-auto">
+  
     <!-- Edit and other controls go here -->
     <router-link 
-      v-if="canEdit" 
-      style="margin-left:20px;" 
-      :to="{ name: 'nodeupdate', params: { type: 'update', id: q.nodeId }}"
+    
     >
       <b>Edit This Node</b>
     </router-link>
@@ -138,6 +155,12 @@
         </div>
       </q-collapsible>
     </q-list>    
+
+
+</div>
+
+
+</div>
   </q-page>
 </template>
 <script>
