@@ -59,7 +59,7 @@ export default {
     async doLogin() {
       try {
         console.info('SignIn', 'doLogin');
-        await this.login(this.username, this.password);
+        await this.login(this.email, this.password);
         this.$q.notify({
             type: "positive",
             message: "You are now logged in"
