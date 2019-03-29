@@ -1,7 +1,6 @@
 <template>
-<q-page :padding="true" class="flex flex-left">
-<!--<h6>History</h6>-->
-  <q-table 
+  <q-page :padding="true" >
+    <q-table 
       title="Conversation History"
       :data="listConversations"
       :columns="columns"
@@ -85,11 +84,11 @@ export default {
             sortable: true
           },
           {
-            name: 'id',
+            name: 'nodeId',
             required: true,
             label: 'Action',
             align: 'left',
-            field: 'id',
+            field: 'nodeId',
             sortable: true
           }
         ]
@@ -97,14 +96,7 @@ export default {
   },
   mounted () {
     this.$store.commit('questView', false)
-    this.findConversations({
-      query: {
-        $limit: 50,
-        $sort: {
-          date: -1
-        }
-      }
-    })
+    this.findConversations({sort: {date: -1}})
       .then((response) => {
         console.info({response});
       })

@@ -55,8 +55,8 @@
         </div>
       </div>
       <div>
-        <q-btn label="Register" @click="doRegister"/>
-        <q-btn label="Cancel" @click="$router.replace('/home')"/>
+        <q-btn class="q-ma-sm" color="primary" label="Register" @click="doRegister"/>
+        <q-btn class="q-ma-sm" outline color="negative"  label="Cancel" @click="$router.replace('/home')"/>
       </div>
     </div>
   </q-page>

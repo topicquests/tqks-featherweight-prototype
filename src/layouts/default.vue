@@ -75,14 +75,14 @@
           <q-item-main label="Profile"/>
         </q-item>
 
-        <q-item to="/calendar">
-        <!--  <q-item-side icon="calendar_today" />-->
+        <!-- <q-item to="/calendar">
+          <q-item-side icon="calendar_today" />
           <q-item-main label="Calendar" />
-        </q-item>
+        </q-item>-->
 
         <q-item to="/history">
           <q-item-side icon="history"/>
-          <q-item-main label="History"/>
+          <q-item-main label="Recent Changes"/>
         </q-item>
 
         <q-item to="/bookmarks">
@@ -90,20 +90,11 @@
           <q-item-main label="Bookmarks"/>
         </q-item>
 
-        <q-item to="/aboutb">
-          <q-item-side icon="help"/>
-          <q-item-main label="Bookmarks Help"/>
-        </q-item>
-
         <q-item to="/quests">
           <q-item-side icon="explore"/>
           <q-item-main label="Quests"/>
         </q-item>
 
-        <q-item to="/aboutc">
-          <q-item-side icon="help"/>
-          <q-item-main label="Quests Help"/>
-        </q-item>
 
         <q-item to="/topics">
           <q-item-side icon="info" />
@@ -111,14 +102,26 @@
         </q-item>
 
         <q-item to="/tags">
-          <q-item-side icon="check_box"/>
-          <q-item-main label="Tags"/>
+          <q-item-side icon="check_box" />
+          <q-item-main label="Tags" />
         </q-item>
 
-        <q-item to="/aboutt">
-          <q-item-side icon="help"/>
-          <q-item-main label="Tags Help"/>
-        </q-item>
+        <q-collapsible icon="help" label="Help">
+          <q-item to="/aboutb">
+            <q-item-side icon="help"/>
+            <q-item-main label="Bookmarks Help"/>
+          </q-item>
+          <q-item to="/aboutc">
+            <q-item-side icon="help"/>
+            <q-item-main label="Quests Help"/>
+          </q-item>
+          <q-item to="/aboutt">
+            <q-item-side icon="help"/>
+            <q-item-main label="Tags Help"/>
+          </q-item>
+        </q-collapsible>
+
+
 
         <!--    <q-item to="/ether">
           <q-item-side icon="language" />

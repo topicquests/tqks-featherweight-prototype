@@ -10,7 +10,7 @@ const mongoose = require("feathers-mongoose");
  * @param {*} conv
  */
 const populateChildren = async function(hook, conv) {
-  const toCheck = ["answers", "questions", "pros", "cons", "tags"];
+  const toCheck = ["answers", "questions", "pros", "cons", "tags", "subclasses", "instances", "relations"];
   const { conversation, tags } = hook.app.services;
   // Walk along child node types
   for (let i = 0; i < toCheck.length; i++) {
@@ -48,7 +48,6 @@ const populateChildren = async function(hook, conv) {
         // To paint full child nodes, this must return the fetched node
         // That is the node which will populate the final array below
       });
-
       try {
         console.info("Populating");
         console.info("Populate", type, conv.nodeId, "fetching");
@@ -69,14 +68,14 @@ const populateChildren = async function(hook, conv) {
 // arrays containing the nodes identified in the found arrays
 // Singleton services (GET, PUT, PATCH, REMOVE)
 const populateHookSingle = async function(hook) {
-  console.log("PopulateHookSingle find");
+  console.log('PopulateHookSingle find');
   await populateChildren(hook, hook.result);
 };
 
 // Find (GET, PUT, PATCH, REMOVE)
 const populateHookBatch = async function(hook) {
   if (!hook.params.skippop && hook.result.data && hook.result.data.length > 0) {
-    console.info("PopulateHookBatch", hook.params.skippop);
+    console.info('PopulateHookBatch', hook.params.skippop);
     for (let i = 0; i < hook.result.data.length; i++) {
       await populateChildren(hook, hook.result.data[i]);
     }
@@ -87,15 +86,13 @@ const populateHookBatch = async function(hook) {
  *@method addChildToParent
  *@description Adds questions, answers, pros, cons and tags nodes to parent quest
  *             The node's object is stored in parents questions, answers, pros, cons Array
- *
+ *             Extended to include topic subClass and instanceOf
+ *             Extended to include Connection sourceNode and targetNode
  * @param {*} hook
  */
 const addChildToParent = async function(hook) {
   const { conversation } = hook.app.services;
 
-  // If it's map this means it is the root quest
-  // and we do not need to treat as a child
-  if (hook.result && hook.result.type !== "map") {
     //find the parent, and destructure the first result
     // Determine which key of the object to change
     let { nodeId, type, parentId } = hook.result;
@@ -125,10 +122,9 @@ const addChildToParent = async function(hook) {
 
     let payload = {};
     payload[pluralizedKey] = existingKey;
-    console.info("Patching with payload", { payload });
+   //console.info("Patching with payload", { payload });
     // Update the parent object with the new ID
     await conversation.patch(existing._id, payload);
-  }
 
   return hook;
 };

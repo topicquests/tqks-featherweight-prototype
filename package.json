@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^11.2.0",
+    "@ckeditor/ckeditor5-build-decoupled-document": "^12.0.0",
     "@feathersjs/authentication-client": "^1.0.11",
     "@feathersjs/feathers": "^3.3.1",
     "@feathersjs/socketio-client": "^1.2.1",
@@ -34,6 +35,7 @@
     "moment": "^2.24.0",
     "npm": "^6.8.0",
     "quasar-calendar": "^0.3.2",
+    "save": "^2.3.3",
     "socket.io-client": "^1.7.3",
     "socket.io-parser": "^3.3.0",
     "uuid": "^3.3.0",
@@ -42,6 +44,7 @@
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.6.5",
+    "vue2-editor": "^2.6.6",
     "vuelidate": "^0.7.4",
     "vuex": "^3.1.0"
   },

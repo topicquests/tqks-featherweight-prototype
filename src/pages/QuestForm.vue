@@ -1,4 +1,4 @@
-<template>
+git <template>
   <q-page :padding="true">
       <h6>Quest Edit Form</h6>
       <div>
@@ -38,7 +38,7 @@ var router
 
 export default {
   data() {
-    return {
+    return { 
       label: "",
       details: "",
       url: "",
@@ -55,8 +55,8 @@ export default {
       json.label = this.label;
       json.url = this.url;
       json.details = this.details;
-      json.img = "statics/images/ibis/map.png";
-      json.imgsm = "statics/images/ibis/map_sm.png";
+      json.img = "statics/images/map.png";
+      json.imgsm = "statics/images/map_sm.png";
       json.creator = this.user._id;
       json.handle = this.user.handle;
       json.date = new Date();
@@ -79,4 +79,10 @@ export default {
 </script>
 
 <style>
+.details {
+  max-width: 960px;
+  min-height: 800px;
+  overflow: auto;
+  overflow-wrap: normal;
+}
 </style>

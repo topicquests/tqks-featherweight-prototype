@@ -16,7 +16,8 @@ module.exports = function(app) {
       type: { type: String },
       img: { type: String },
       imgsm: { type: String },
-      nodes: { type: Array }
+      nodes: { type: Array }, // Array of nodeIds for nodes with this tag
+      users: { type: Array }  // Array of {cretor,handle} structs
     },
     {
       timestamps: true

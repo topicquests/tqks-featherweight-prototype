@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
 import { mapGetters, mapActions } from 'vuex';
 export default {
   data () {
@@ -33,12 +34,10 @@ export default {
   mounted () {
     this.$store.commit('questView', false)
     this.findTags({
-      query: {
-        $limit: 100,
-        $sort: {
+        limit: 100,
+        sort: {
           label: 1
         }
-      }
     })
       .then((response) => {
         // alert(JSON.stringify(response.data))
