@@ -4,10 +4,7 @@
       <h3>Bookmarks and Web Annotations</h3>
         FeatherWeight supports the kind of <i>bookmarking</i> activity known as <b>Web Annotations</b><br/>
         This requires a <i>Javascript Bookmarklet</i> to be added to your browser.
-        The general forms of that Javascript object is described below. The task is to create a 
-        <i>New Bookmark</i> for each, and give that a name according to whether it's for annotating or stashing.
-        Then, use the general Javascript below and adapt the "http://localhost:3000" to the correct URL for 
-        the FeatherWeight portal you are using.
+        The general forms of that Javascript object is described below. 
         <h3>Annotating</h3>
         <b>Annotation Bookmarklet: </b>
         <div><pre><code>  
