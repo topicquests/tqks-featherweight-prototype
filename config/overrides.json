@@ -3,6 +3,8 @@
   "isInitConfigCompleted": "false",
 	"requiresInvite": "true",
 	"adminEmail": "sue@sixpack.com",
+  "initConfigCompleted": "0",
+  "loginCount": "0",
 	"cms": {
 		"site": {
 			"copyright": "2019",

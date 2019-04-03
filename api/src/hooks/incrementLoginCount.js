@@ -8,13 +8,11 @@ module.exports = function (options = {}) {
   return async context => {
     const configSvc = await context.app.service('configuration');
     const config = await configSvc.get(1);
-    const currentUser = context.params.user;
-    console.info('Checking if admin...', {config, currentUser});
-    if(config.loginCount > 1) {
-      if (!currentUser || config.adminEmail !== currentUser.email) {
-        throw new errors.Forbidden('You are not admin');
-      }
-    }
+    console.info('incrementing login', { config });
+    // does this need to be a string?
+    config.loginCount += 1;
+    await configSvc.update([1, config]);
+    console.info('incrementing login', 'done', {count: config.loginCount});
     return context;
   };
 };
