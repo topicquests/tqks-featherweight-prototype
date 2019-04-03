@@ -1,1 +1,6 @@
-{"isPrivatePortal":"1","requiresInvite":"1","initConfigCompleted": "0","adminEmail":"jon@featherweight.com"}
+{
+  "isPrivatePortal":"1",
+  "requiresInvite":"1",
+  "initConfigCompleted":"0",
+  "adminEmail":"jon@featherweight.com"
+}
