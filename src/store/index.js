@@ -35,6 +35,7 @@ const store = new Vuex.Store({
       return feathersClient.service("authManagement").create(payload);
     }
   },
+
   getters: {
     isAuthenticated: state => state.isAuthenticated,
     canEdit: state => state.canEdit,
@@ -73,11 +74,13 @@ const store = new Vuex.Store({
     // then we reference it
     //quests
   },
-  plugins: [service("conversation"), 
-    service("tags"), 
-    service("authManagment"), 
+  plugins: [
+    service("conversation"),
+    service("tags"),
+    service("authManagment"),
     service("configuration", {
-      idField: 'id'
-    })]
+      idField: "id"
+    })
+  ]
 });
 export default store;

@@ -2,28 +2,23 @@ const { authenticate } = require("@feathersjs/authentication").hooks;
 const verifyHooks = require("feathers-authentication-management").hooks;
 const accountService = require("../authmanagement/notifier");
 const { lowerCase } = require("feathers-hooks-common");
+const commonHooks = require("feathers-hooks-common");
+const gravatar = require("../../hooks/gravatar");
+const validateSignon = require("../../hooks/validate-signon");
 
 const {
   hashPassword,
   protect
 } = require("@feathersjs/authentication-local").hooks;
 
-const commonHooks = require("feathers-hooks-common");
-const gravatar = require("../../hooks/gravatar");
-
 module.exports = {
   before: {
     all: [],
-    find: [
-      authenticate("jwt") //verifyHooks.isVerified()
-    ],
-    get: [
-      authenticate("jwt") //verifyHooks.isVerified()
-    ],
+    find: [authenticate("jwt")],
+    get: [authenticate("jwt")],
     create: [
       lowerCase("email"),
       hashPassword(),
-      //verifyHooks.isVerified(),
       gravatar(),
       verifyHooks.addVerification()
     ],
@@ -49,7 +44,7 @@ module.exports = {
 
   after: {
     all: [commonHooks.when(hook => hook.params.provider, protect("password"))],
-    find: [],
+    find: [validateSignon(this.hook)],
     get: [],
     create: [
       context => {

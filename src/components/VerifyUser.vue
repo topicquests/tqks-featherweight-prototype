@@ -16,7 +16,8 @@ export default {
     console.info("Verifying token", value);
     this.verifyToken({
       action: "verifySignupLong",
-      value
+      value,
+      verifyToken: true
     })
       .then(res => {
         console.info("Verified user", res);
