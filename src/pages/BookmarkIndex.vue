@@ -4,7 +4,7 @@
         <template slot="body" slot-scope="props">
           <q-tr :props="props">
             <q-td key="type" style="width: 30px" :props="props">
-              <i :class="'ibis-icon ibis-' + props.row.type"/>
+              <img  src="statics/images/bookmark_sm.png" >
             </q-td>
             <q-td key="label" :props="props">{{props.row.label}}</q-td>
             <q-td key="handle" :props="props">{{props.row.handle}}</q-td>
@@ -101,7 +101,7 @@ export default {
       type: "bookmark"
     };
     console.log("Finding w query: ", JSON.stringify(query));
-    const bookmarks = await this.findBookmarks(query);
+    const bookmarks = await this.findBookmarks({ query });
     console.log("Query returned", { bookmarks });
   }
 }

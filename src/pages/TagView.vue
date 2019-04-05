@@ -6,7 +6,7 @@
       <template slot="body" slot-scope="props">
         <q-tr :props="props">
           <q-td key="type" style="width: 30px" :props="props">
-            <i :class="'ibis-icon ibis-'+ props.row.type"/>
+            <img v-bind:src="'../statics/images/'+ props.row.type+'.png'"/>
           </q-td>
           <q-td key="label" :props="props">{{props.row.label}}</q-td>
           <q-td key="nodeId" auto-width :props="props">
