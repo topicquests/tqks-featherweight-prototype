@@ -9,9 +9,12 @@ module.exports = function (options = {}) {
     const configSvc = await context.app.service('configuration');
     const config = await configSvc.get(1);
     console.info('incrementing login', { config });
-    // does this need to be a string?
-    config.loginCount += 1;
-    await configSvc.update([1, config]);
+    config.loginCount = config.loginCount + 1;
+    try {
+      await configSvc.update(1, config);
+    } catch (e) {
+      console.error('incrementing login', e)
+    }
     console.info('incrementing login', 'done', {count: config.loginCount});
     return context;
   };

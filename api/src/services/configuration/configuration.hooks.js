@@ -1,5 +1,3 @@
-
-
 const isAdminUser = require('../../hooks/is-admin-user');
 const { pluck } = require('feathers-hooks-common');
 

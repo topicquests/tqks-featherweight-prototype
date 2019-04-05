@@ -9,11 +9,12 @@ const {
 } = require('@feathersjs/authentication-local').hooks;
 const commonHooks = require('feathers-hooks-common');
 const gravatar = require('../../hooks/gravatar');
+const incrementLoginCount = require('../../hooks/incrementLoginCount');
 
 module.exports = {
   before: {
     all: [],
-    find: [authenticate('jwt')],
+    find: [authenticate('jwt'), incrementLoginCount()],
     get: [authenticate('jwt')],
     create: [
       lowerCase('email'),

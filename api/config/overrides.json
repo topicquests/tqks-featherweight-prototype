@@ -2,6 +2,6 @@
   "isPrivatePortal": "1",
   "requiresInvite": "1",
   "initConfigCompleted": "0",
-  "loginCount": "0",
+  "loginCount": 0,
   "adminEmail":"jon@featherweight.com"
 }
