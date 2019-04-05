@@ -9,7 +9,7 @@ module.exports = function (options = {}) {
     const config = await context.app.service('configuration').get(1);
     const currentUser = context.params.user;
     console.info('Checking if admin...', {config, currentUser});
-    if (!currentUser || config.adminEmail !== currentUser.email) {
+    if (currentUser && config.adminEmail !== currentUser.email) {
       throw new errors.Forbidden('You are not admin');
     }
     return context;
