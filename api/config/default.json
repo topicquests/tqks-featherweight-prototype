@@ -12,6 +12,7 @@
     "SMTP_USER": "af9a8766d909b7",
     "SMTP_PASS": "d803d787c8349d"
   },
+  "baseURL": "http://localhost:8080/",
   "mongodb_bak": "mongodb://fw123:121212121a@ds139360.mlab.com:39360/fw",
   "mongodb": "mongodb://featherweight:UQg6qjGL9AmhRKF@ds237574.mlab.com:37574/featherweight",
   "authentication": {
