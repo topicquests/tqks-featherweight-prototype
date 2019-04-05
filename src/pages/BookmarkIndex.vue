@@ -15,14 +15,6 @@
           </q-tr>
         </template>
       </q-table>
-      <!--<h4><img style="margin-right:4px;" src="statics/images/bookmark.png">Web Annotations</h4>
-        <q-scroll-area style="width: 800px; height: 800px;">
-          <q-list v-if="nodes" v-for="node in nodes" :key="node.id">
-            <q-item>
-              <router-link :to="{ name: 'questview', params: { id: node.id }}">{{ node.label }}</router-link>
-            </q-item>
-          </q-list>
-        </q-scroll-area>-->
     </q-page>
 </template>
 
@@ -103,20 +95,14 @@ export default {
       return this.allBookmarks.filter(c => c.type === "bookmark");
     }
   },
-  mounted () {
+  async mounted () {
     this.$store.commit('questView', false)
     const query = {
-      limit: 100,
-      sort: {
-        date: -1
-      },
       type: "bookmark"
     };
     console.log("Finding w query: ", JSON.stringify(query));
-    this.findBookmarks(query).then(
-      d => console.log("Query returned", { d }),
-      console.error
-    );
+    const bookmarks = await this.findBookmarks(query);
+    console.log("Query returned", { bookmarks });
   }
 }
 </script>
