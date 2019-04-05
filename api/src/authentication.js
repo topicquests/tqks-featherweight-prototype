@@ -2,6 +2,7 @@ const authentication = require('@feathersjs/authentication');
 const jwt = require('@feathersjs/authentication-jwt');
 const local = require('@feathersjs/authentication-local');
 
+const resendVerifyEmailAuth = require('./hooks/resend-verify-email-auth');
 
 module.exports = function (app) {
   const config = app.get('authentication');
@@ -17,7 +18,8 @@ module.exports = function (app) {
   app.service('authentication').hooks({
     before: {
       create: [
-        authentication.hooks.authenticate(config.strategies)
+        authentication.hooks.authenticate(config.strategies),
+        resendVerifyEmailAuth()
       ],
       remove: [
         authentication.hooks.authenticate('jwt')

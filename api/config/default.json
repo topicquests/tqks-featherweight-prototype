@@ -6,6 +6,7 @@
     "default": 10,
     "max": 50
   },
+  "baseURL": "http://localhost:8080",
   "emailconfig": {
     "SMTP_HOST": "smtp.mailtrap.io",
     "SMTP_PORT": 2525,
