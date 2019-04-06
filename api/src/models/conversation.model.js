@@ -41,6 +41,7 @@ module.exports = function(app) {
       subclasses: { type: Array },
       instances: { type: Array },
       relations: { type: Array },
+      properties: { type: Object }, // holds map objects of key/value pairs
       skippop: { type: Boolean }
     },
     {
