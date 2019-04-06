@@ -19,6 +19,8 @@
         <li>Click the link <b>New Connection</b></li>
         <li>That takes you to the Connection Form where you simply click</li>
       </ol>
+      <img src="statics/images/topicsindex.png"><br/>
+      <img src="statics/images/NewConnection.png"><br/>
     </div>
   </q-page>
 </template>
