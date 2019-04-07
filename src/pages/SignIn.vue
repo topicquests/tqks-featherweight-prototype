@@ -1,35 +1,48 @@
 <template>
   <q-page :padding="true" class="flex-center" style="width:50vw;min-width:350px;">
-<div class="panel-body">
+    <div class="panel-body">
       <h6>Sign In</h6>
       <form>
-      <div slot="body">
-        <div class="row q-mb-md">
-          <q-input
-            v-model="email"
-            type="email"
-            name="email"
-            stack-label="E-mail"
-            class="full-width"
-            autofocus
+        <div slot="body">
+          <div class="row q-mb-md">
+            <q-input
+              v-model="email"
+              type="email"
+              name="email"
+              stack-label="E-mail"
+              class="full-width"
+              autofocus
+            />
+          </div>
+          <div class="row q-mb-md">
+            <q-input
+              v-model="password"
+              type="password"
+              name="passowrd"
+              stack-label="Password"
+              class="full-width"
+              @keyup.enter="doLogin"
+            />
+          </div>
+        </div>
+        <div>
+          <q-btn class="q-ma-sm" color="primary" label="Login" @click="doLogin"/>
+          <q-btn
+            class="q-ma-sm"
+            outline
+            color="primary"
+            :disable="!isForgotPasswordVisible"
+            label="Forgot Password"
+            @click="forgotPassword"
+          />
+          <q-btn
+            class="q-ma-sm"
+            outline
+            color="negative"
+            label="Cancel"
+            @click="$router.replace('/home')"
           />
         </div>
-        <div class="row q-mb-md">
-          <q-input
-            v-model="password"
-            type="password"
-            name="passowrd"
-            stack-label="Password"
-            class="full-width"
-            @keyup.enter="doLogin"
-          />
-        </div>
-      </div>
-      <div>
-        <q-btn class="q-ma-sm" color="primary" label="Login" @click="doLogin"/>
-        <q-btn class="q-ma-sm" outline color="primary"  :disable="!isForgotPasswordVisible" label="Forgot Password" @click="forgotPassword"/>
-        <q-btn class="q-ma-sm" outline color="negative"  label="Cancel" @click="$router.replace('/home')"/>
-      </div>
       </form>
     </div>
   </q-page>
@@ -41,8 +54,8 @@ import auth from "src/auth";
 export default {
   data() {
     return {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       title: "Sign In",
       valid: false
     };
@@ -67,10 +80,10 @@ export default {
         this.goHome();
       } catch (e) {
         this.$q.notify({
-            type: "negative",
-            message: "Cannot sign in, please check your e-mail or password"
-          });
-        console.error('SignIn', 'doLogin', {e});
+          type: "negative",
+          message: "Cannot sign in, please check your e-mail or password"
+        });
+        console.error("SignIn", "doLogin", { e });
       }
     },
     goHome() {
