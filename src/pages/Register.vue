@@ -92,30 +92,30 @@ export default {
         this.goHome();
       }, 50);
     },
-    canRegister(email, callback) {
-      var result = true;
-      // if (!config.requiresInvite) {
-      return callback(result);
-      // } else {
-      //   var json = {};
-      //   var x = {};
-      //   x.email = email;
-      //   json.query = x;
-      //   invites
-      //     .find(json)
-      //     .then(response => {
-      //       // alert(JSON.stringify(response))
-      //       if (response.total === 0) {
-      //         result = false;
-      //       }
-      //       // alert(result)
-      //       return callback(result);
-      //     })
-      //     .catch(err => {
-      //       console.log("CanRegisterError", err);
-      //     });
-      // }
-    },
+    // canRegister(email, callback) {
+    //   var userIsInvited = true;
+    //   if (!config.requiresInvite) {
+    //     return callback(userIsInvited);
+    //   } else {
+    //     var json = {};
+    //     var x = {};
+    //     x.email = email;
+    //     json.query = x;
+    //     invites
+    //       .find(json)
+    //       .then(response => {
+    //         // alert(JSON.stringify(response))
+    //         if (response.total === 0) {
+    //           result = false;
+    //         }
+    //         // alert(result)
+    //         return callback(result);
+    //       })
+    //       .catch(err => {
+    //         console.log("CanRegisterError", err);
+    //       });
+    //   }
+    // },
     doRegister() {
       console.info("Register-1", this.$data.email);
       const theEmail = this.$data.email;
@@ -138,46 +138,64 @@ export default {
         return;
       }
 
-      const self = this;
-      this.canRegister(theEmail, function(truth) {
-        console.info("Register-2", truth);
-        if (truth) {
-          self
-            .register(
-              theEmail,
-              self.$data.password,
-              theFullName,
-              theHandle,
-              self.$data.homepage
-            )
-            // .then(() => {
-            //   console.info('Register-3', self.email)
-            //   return self.login(self.email, self.password)
-            // })
-            .then(_ => {
-              self.$q.notify({
-                type: "positive",
-                message: "Please check your email for verification!"
-              });
-              self.goHome();
-            })
-            .catch(_ => {
-              // alert('wtf')
-              self.$q.notify({
-                type: "negative",
-                message: "Cannot register, please check your e-mail or password"
-              });
-              // self.goHome();
-            });
-        } else {
-          // alert('bad')
-          self.$q.notify({
+      this.register(theEmail, this.$data.password, theFullName, theHandle, this.$data.homepage)
+        .then(response => {
+          console.log('response:', response);
+          this.$q.notify({
+            type: "positive",
+            message: "Please check your email for verification!"
+          });
+          this.goHome();
+        }).catch((error) => {
+          // user must be invited and isn't
+          this.$q.notify({
             type: "negative",
             message: "Cannot register, email not found on invitations list"
           });
-          self.goHome();
-        }
-      });
+          this.goHome();
+        })
+
+
+      // const self = this;
+      // this.canRegister(theEmail, function(truth) {
+      //   console.info("Register-2", truth);
+      //   if (truth) {
+      //     self
+      //       .register(
+      //         theEmail,
+      //         self.$data.password,
+      //         theFullName,
+      //         theHandle,
+      //         self.$data.homepage
+      //       )
+      //       // .then(() => {
+      //       //   console.info('Register-3', self.email)
+      //       //   return self.login(self.email, self.password)
+      //       // })
+      //       .then(_ => {
+      //         self.$q.notify({
+      //           type: "positive",
+      //           message: "Please check your email for verification!"
+      //         });
+      //         self.goHome();
+      //       })
+      //       .catch(_ => {
+      //         // alert('wtf')
+      //         self.$q.notify({
+      //           type: "negative",
+      //           message: "Cannot register, please check your e-mail or password"
+      //         });
+      //         // self.goHome();
+      //       });
+      //   } else {
+          // alert('bad')
+          // self.$q.notify({
+          //   type: "negative",
+          //   message: "Cannot register, email not found on invitations list"
+          // });
+          // self.goHome();
+        // }
+      // })
     },
     register(email, password, fullName, handle, homepage) {
       return auth.register(email, password, fullName, handle, homepage);
