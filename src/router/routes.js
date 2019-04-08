@@ -7,6 +7,7 @@ export default [
       { path: '/home', name: 'home', component: () => import('pages/Home') },
       { path: '/aboutb', name: 'aboutb', component: () => import('pages/AboutBookmarks') },
       { path: '/aboutc', name: 'aboutc', component: () => import('pages/AboutConversations') },
+      { path: '/aboutcons', name: 'aboutcons', component: () => import('pages/AboutConnections') },
       { path: '/aboutt', name: 'aboutt', component: () => import('pages/AboutTags') },
       { path: '/signin', name: 'signin', component: () => import('pages/SignIn') },
       { path: '/register', name: 'register', component: () => import('pages/Register') },
