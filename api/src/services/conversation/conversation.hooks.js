@@ -10,34 +10,37 @@ const mongoose = require("feathers-mongoose");
  * @param {*} conv
  */
 const populateChildren = async function(hook, conv) {
+  console.info('XPOPX', conv.nodeId, conv.type);
   const toCheck = ["answers", "questions", "pros", "cons", "tags", "subclasses", "instances", "relations"];
   const { conversation, tags } = hook.app.services;
   // Walk along child node types
   for (let i = 0; i < toCheck.length; i++) {
     let type = toCheck[i];
     // If it's there and has some elements
-    if (typeof conv[type] !== "undefined" && conv[type].length > 0) {
+    // was conv[type] but in the top console.info, that crashes
+    if (typeof conv.type !== "undefined" && conv.type.length > 0) {
       // walk along the node's array carried in the hook
+      // NOTE: conv.type.map does not work here
       const promises = conv[type].map(async id => {
-        console.info("Fetching child id", type, id);
+        //console.info("Fetching child id", type, id);
         var theData;
         let nodeId = id;
         if (type === "tags") {
-          console.info("ConversationPopTag", id);
+          //console.info("ConversationPopTag", id);
           const { data } = await tags.find({
             query: { nodeId },
             skippop: true
           });
           theData = data;
         } else {
-          console.info("ConversationPopCon", nodeId);
+          //console.info("ConversationPopCon", nodeId);
           const { data } = await conversation.find({
             query: { nodeId },
             skippop: true
           });
           theData = data;
         }
-        console.info("Fetching child found", nodeId, theData);
+        //console.info("Fetching child found", nodeId, theData);
         // if this returns nothing, you see empty nodes
         // returning data[0] shows nodes
         // console.info('foo', data && data[0])
@@ -49,12 +52,12 @@ const populateChildren = async function(hook, conv) {
         // That is the node which will populate the final array below
       });
       try {
-        console.info("Populating");
-        console.info("Populate", type, conv.nodeId, "fetching");
+        //console.info("Populating");
+        //console.info("Populate", type, conv.nodeId, "fetching");
         // Wait for all the fetches in the map return
         const result = await Promise.all(promises);
         // Replace a list of node id values with a list of nodes
-        console.info("PromisesGot", result);
+        //console.info("PromisesGot", result);
         conv[type] = result;
         // console.info('HOOK', hook)
       } catch (e) {
