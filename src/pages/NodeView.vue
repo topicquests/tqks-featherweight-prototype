@@ -166,26 +166,7 @@ export default {
       //turn off conversation tree
       this.$store.commit('questView', false)
 
-      const self = this
-      try {
-        //TODO treeview must look for 'topic' 
-        // rather than 'map' to paint a tree view
-        treeview.get(id)
-          .then(function (tree) {
-            console.info('TopicTreeView', tree)
-            const img = tree.img
-            // only show the tree if the root is a map
-            if (img === 'statics/images/map.png' ||
-                img === 'statics/images/bookmark.png') {
-              const result = []
-              result.push(tree)
-              self.$store.commit('tree', result)
-              self.$store.commit('questView', true)
-            }
-          })     
-      } catch (err) {
-        console.log('QuestViewTreeError', err)
-      }
+      
       this.initialize()
     },
     watch: {
@@ -206,8 +187,7 @@ export default {
     methods: {
       // Pass id, or it will take it from current $route context
       async initialize (id = null) {
-        this.$store.commit('questView', true)
-        console.info('QV-1', id)
+        //this.$store.commit('questView', true)        
         const nodeId = id || this.$route.params.id
         console.info('Initialize', 'fetching data for ', nodeId)
         try {
@@ -225,6 +205,27 @@ export default {
           console.info("SINGLE", JSON.stringify(single));
         } catch (e) {
           console.info("Initialize", "fetching data for ", nodeId, "error", e);
+        }
+
+        const self = this
+        try {
+          //TODO treeview must look for 'topic' 
+          // rather than 'map' to paint a tree view
+          treeview.get(nodeId)
+            .then(function (tree) {
+              console.info('TopicTreeView', tree)
+              //const img = tree.img
+              // only show the tree if the root is a map
+              //if (img === 'statics/images/map_sm.png' ||
+              //    img === 'statics/images/bookmark_sm.png') {
+                const result = []
+                result.push(tree)
+                self.$store.commit('tree', result)
+                self.$store.commit('questView', true)
+              //}
+            })     
+        } catch (err) {
+          console.log('QuestViewTreeError', err)
         }
       },
       ...mapActions("conversation", { findConversations: "find" }),
