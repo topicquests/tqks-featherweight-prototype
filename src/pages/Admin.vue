@@ -3,12 +3,12 @@
         <div>
             <h6>Admin</h6>
             <div class="box">
-                <q-btn label="List Invitations" @click="listInvites" />
-                <q-scroll-area style="width: 100%; height: 100px;">
-                    <q-list v-for="inv in invites" :key="inv.email">
-                        <div> Email: {{ inv.email }} </div>
-                    </q-list>
-                </q-scroll-area>
+                <q-table
+                  title="Open Invitations"
+                  :data="invitationsList"
+                  :columns="inviteColumns"
+                  row-key="name"
+                />
             </div>
             <div class="box">
                 <h5>Add One Email to Invitations</h5>
@@ -21,23 +21,22 @@
                 <q-btn label="Remove Invitation" @click="removeInvite" />
             </div>
             <div class="box">
-                <q-btn label="List Users" @click="listUsers" /><br/>
-                <q-scroll-area style="width: 100%; height: 100px;">
-                    <q-list v-for="inv in users" :key="inv.email">
-                        <div> Email: {{ inv.email }} </div>
-                        <div> ID: {{ inv._id }} </div>
-                    </q-list>
-                </q-scroll-area>
-            </div>
-            <div class="box">
-              <h5>Display a User</h5>
-              <q-input  v-model="displayEmail" />
-              <q-btn label="Display User" @click="displayUser" />
-            </div>
-            <div class="box">
-              <h5>Remove a User</h5>
-              <q-input  v-model="removeUserEmail" />
-              <q-btn label="Remove User" @click.prevent="removeUser" />
+                <q-table
+                  title="Current Users"
+                  :data="usersList"
+                  :columns="userColumns"
+                  row-key="name"
+                >
+                  <!-- slot name syntax: body-cell-<column_name> -->
+                  <q-td key="actions" name="actions" slot="body-cell-actions" slot-scope="props">
+                    <q-btn small color="negative" @click.prevent="removeUser(props.row._id)">
+                      Delete
+                    </q-btn>
+                    <q-btn small color="primary" @click.prevent="displayUser(props.row.email)">
+                      View
+                    </q-btn>
+                  </q-td>
+                </q-table>
             </div>
             <div class="box">
               <h5>Manage Configuration</h5>
@@ -79,11 +78,51 @@ const actions = mapActions({
 });
 const getters = mapGetters({
   currentConfig: 'configuration/getCopy',
+  invitationsList: 'invitations/list',
+  usersList: 'users/list',
 });
 
 export default {
   data () {
     return {
+      inviteColumns: [
+        {
+          name: 'email',
+          required: true,
+          label: 'Email',
+          align: 'left',
+          field: 'email',
+          sortable: true,
+          style: 'width: 100%'
+        },
+      ],
+      userColumns: [
+        {
+          name: 'email',
+          required: true,
+          label: 'Email',
+          align: 'left',
+          field: 'email',
+          sortable: true,
+          style: 'width: 100%'
+        },
+        {
+          name: 'id',
+          required: true,
+          label: 'ID',
+          align: 'left',
+          field: '_id',
+          sortable: true,
+          style: 'width: 100%'
+        },
+        {
+          name: 'actions',
+          required: true,
+          label: 'actions',
+          align: 'left',
+          style: 'width: 100%'
+        },
+      ],
       invites: [],
       inviteEmail: '',
       removeInviteEmail: '',
@@ -104,6 +143,8 @@ export default {
   async mounted () {
     this.$store.commit('questView', false)
     const config = await this.fetchCurrentConfiguration(1);
+    await this.findInvites({ query: { $limit: 100 } });
+    await this.findUsers({ query: { $limit: 100 } });
     console.log('Got config', config);
     const { adminEmail, requiresInvite, isPrivatePortal } = config;
     this.$data.isPrivatePortal = isPrivatePortal;
@@ -124,13 +165,17 @@ export default {
     doRadio (event) {
       this.$data.option = event
     },
-    listInvites () {
+    async listInvites() {
       // alert('List invites')
-      this.findInvites({ query: { $limit: 100 } })
-        .then((response) => { this.$data.invites = response.data })
+      try {
+        const { data } = await this.findInvites({ query: { $limit: 100 } });
+        this.$data.invites = data;
+      } catch (e) {
+        this.$q.notify({type: 'negative', message: 'Error ' + error});
+      }
     },
 
-    async addInvite () {
+    async addInvite() {
       // alert('Add invite')
       var ems = this.$data.inviteEmail.trim()
       if (ems === '') {
@@ -146,7 +191,7 @@ export default {
         this.$q.notify({type: 'negative', message: 'Error ' + error});
       }
     },
-    async removeInvite () {
+    async removeInvite() {
       var email = this.removeInviteEmail.trim();
       if (email === '') {
         return null;
@@ -161,7 +206,7 @@ export default {
         this.$q.notify({type: 'negative', message: 'Error-2 ' + error});
       }
     },
-    async listUsers () {
+    async listUsers() {
       try {
         const { data } = await this.findUsers({ query: { $limit: 100 } });
         this.$data.users = data;
@@ -169,36 +214,22 @@ export default {
         this.$q.notify({type: 'negative', message: 'Error-2 ' + error});
       }
     },
-    displayUser () {
-      var email = this.$data.displayEmail.trim()
-      // alert(ems)
-      if (email === '') {
-        return
-      }
+    displayUser(email) {
       this.findUsers({ query: { email }})
         .then((response) => {
-          alert(JSON.stringify(response))
-          this.displayEmail = ''
+          alert(JSON.stringify(response));
+          this.displayEmail = '';
         })
         .catch(e => {
-          console.error('Admin.vue', 'listUsers', 'error', e)
+          console.error('Admin.vue', 'listUsers', 'error', e);
         })
     },
-    async removeUser() {
-      console.log('remove user running')
-      var email = this.removeUserEmail.trim();
-      if (email === '') {
-        console.log('email missing')
-        return
-      }
+    async removeUser(_id) {
       try {
-        const { data: [user] } = await this.findUsers({ query: { email } });
-        console.log(user);
-        const _id = user._id
-        const removedUser = await this.deleteUser(_id)
-        this.removeUserEmail = ''
+        const removedUser = await this.deleteUser(_id);
+        this.removeUserEmail = '';
       } catch (e) {
-        console.error('Admin.vue', 'removeUser', 'error', e)
+        console.error('Admin.vue', 'removeUser', 'error', e);
       }
     },
     getLargeIcon (typ) {
