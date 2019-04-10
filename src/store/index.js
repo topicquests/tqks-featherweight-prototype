@@ -1,16 +1,16 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import feathersVuex from "feathers-vuex";
-import Vuelidate from "vuelidate";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import feathersVuex from 'feathers-vuex';
+import Vuelidate from 'vuelidate';
 Vue.use(Vuelidate);
 
 // we first import the module
 // import quests from './quests'
 
 // Initialize Feathers Vuex
-import feathersClient from "../api";
+import feathersClient from '../api';
 const { service, auth, FeathersVuex } = feathersVuex(feathersClient, {
-  idField: "_id"
+  idField: '_id'
 });
 
 Vue.use(Vuex);
@@ -36,8 +36,8 @@ const store = new Vuex.Store({
 
   actions: {
     verifyToken(context, payload) {
-      console.info("Verifying token", { payload });
-      return feathersClient.service("authManagement").create(payload);
+      console.info('Verifying token', { payload });
+      return feathersClient.service('authManagement').create(payload);
     }
   },
   getters: {
@@ -52,17 +52,17 @@ const store = new Vuex.Store({
   },
   mutations: {
     admin(state, t) {
-      console.info("CommitAdmin", t);
+      console.info('CommitAdmin', t);
       state.isAdmin = t;
     },
     authenticate(state, t) {
       state.isAuthenticated = t;
     },
     usr(state, user) {
-      console.info("CommitUser", user);
+      console.info('CommitUser', user);
       state.user = user;
     },
-    
+
     /**
      * @method tree
      * @description saves the tree from the QuestView page and stores it to the state     *
@@ -80,10 +80,13 @@ const store = new Vuex.Store({
     // then we reference it
     //quests
   },
-  plugins: [service("conversation"), 
-    service("tags"), 
-    service("authManagement"), 
-    service("configuration", {
+  plugins: [
+    service('conversation'),
+    service('tags'),
+    service('users'),
+    service('authManagement'),
+    service('invitations'),
+    service('configuration', {
       idField: 'id'
     })]
 });
