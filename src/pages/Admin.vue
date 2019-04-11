@@ -190,10 +190,7 @@ export default {
       customDialogModel: false,
       invites: [],
       inviteEmail: '',
-      removeInviteEmail: '',
       users: [],
-      displayEmail: '',
-      removeUserEmail: '',
       option: '',
       nodeId: '',
       isPrivatePortal: false,
@@ -237,28 +234,17 @@ export default {
     doRadio (event) {
       this.$data.option = event
     },
-    async listInvites() {
-      // alert('List invites')
-      try {
-        const { data } = await this.findInvites({ query: { $limit: 100 } });
-        this.$data.invites = data;
-      } catch (e) {
-        this.$q.notify({type: 'negative', message: 'Error ' + error});
-      }
-    },
 
     async addInvite() {
       // alert('Add invite')
-      var ems = this.$data.inviteEmail.trim()
-      if (ems === '') {
+      const email = this.inviteEmail.trim()
+      if (email === '') {
         return
       }
-      var json = {}
-      json.email = ems
       try {
-        await this.createInvite(json);
+        await this.createInvite({ email });
         this.$q.notify({type: 'positive', message: 'Invitations added'});
-        this.$data.inviteEmail = '';
+        this.inviteEmail = '';
       } catch(e) {
         this.$q.notify({type: 'negative', message: 'Error ' + error});
       }
@@ -283,17 +269,8 @@ export default {
           .catch(() => {
             this.$q.notify('Cancelled...')
           })
-        this.$data.removeInviteEmail = '';
       } catch(e) {
         this.$q.notify({type: 'negative', message: 'Error-2 ' + e});
-      }
-    },
-    async listUsers() {
-      try {
-        const { data } = await this.findUsers({ query: { $limit: 100 } });
-        this.$data.users = data;
-      } catch (e) {
-        this.$q.notify({type: 'negative', message: 'Error-2 ' + error});
       }
     },
     displayUser(email) {
