@@ -1,69 +1,116 @@
 <template>
-    <q-page class="flex flex-left">
+    <q-page class="flex justify-center">
         <div>
-            <h6>Admin</h6>
-            <div class="box">
-                <q-table
-                  title="Open Invitations"
-                  :data="invitationsList"
-                  :columns="inviteColumns"
-                  row-key="name"
-                />
-            </div>
-            <div class="box">
-                <h5>Add One Email to Invitations</h5>
-                <q-input  v-model="inviteEmail" />
-                <q-btn label="Add Invitation" @click="addInvite" />
-            </div>
-            <div class="box">
-                <h5>Remove One Email from Invitations</h5>
-                <q-input  v-model="removeInviteEmail" />
-                <q-btn label="Remove Invitation" @click="removeInvite" />
-            </div>
-            <div class="box">
-                <q-table
-                  title="Current Users"
-                  :data="usersList"
-                  :columns="userColumns"
-                  row-key="name"
+            <h4>Administration Panel</h4>
+            <q-card class="q-pa-sm q-my-sm">
+              <q-card-title class="q-headline q-ma-sm">
+                Open Invitations
+              </q-card-title>
+              <q-table
+                :data="invitationsList"
+                :columns="inviteColumns"
+                row-key="name"
+              >
+                <q-td key="actions" name="actions" slot="body-cell-actions" slot-scope="props">
+                  <q-btn small color="negative" @click.prevent="removeInvite(props.row)">
+                    Delete
+                  </q-btn>
+                </q-td>
+              </q-table>
+            </q-card>
+            <q-card class="q-pa-sm q-my-sm">
+              <q-card-title class="q-headline q-ma-sm">
+                Add Invitations
+              </q-card-title>
+              <div class="row">
+                <q-field
+                  icon="email"
+                  icon-color="dark"
+                  orientation="vertical"
+                  helper="Enter an email"
                 >
-                  <!-- slot name syntax: body-cell-<column_name> -->
-                  <q-td key="actions" name="actions" slot="body-cell-actions" slot-scope="props">
-                    <q-btn small color="negative" @click.prevent="removeUser(props.row._id)">
-                      Delete
-                    </q-btn>
-                    <q-btn small color="primary" @click.prevent="displayUser(props.row.email)">
-                      View
-                    </q-btn>
-                  </q-td>
-                </q-table>
-            </div>
-            <div class="box">
-              <h5>Manage Configuration</h5>
-              <b>Is Private: </b><q-input  v-model="isPrivatePortal" /><br/>
-              <b>Require Invite: </b><q-input  v-model="requiresInvite" /><br/>
-              <b>Admin Email: </b><q-input  v-model="adminEmail" /><br/>
-              <q-btn label="Save Config" @click="saveConfig" />
-            </div>
+                  <q-input v-model="inviteEmail"/>
+                </q-field>
+              </div>
+              <div class="row justify-end">
+                <q-btn color="secondary" icon="email" label="Add" @click="addInvite" />
+              </div>
+            </q-card>
+            <q-card class="q-pa-sm q-my-sm">
+              <q-card-title class="q-headline q-ma-sm">
+                Current Users
+              </q-card-title>
+              <q-table
+                :data="usersList"
+                :columns="userColumns"
+                row-key="name"
+              >
+                <q-td key="actions" name="actions" slot="body-cell-actions" slot-scope="props">
+                  <q-btn small color="negative" @click.prevent="removeUser(props.row)">
+                    Delete
+                  </q-btn>
+                  <q-btn small color="primary" @click.prevent="displayUser(props.row.email)">
+                    View
+                  </q-btn>
+                </q-td>
+              </q-table>
+            </q-card>
+            <q-card class="q-pa-sm q-my-sm">
+              <q-card-title class="q-headline q-ma-sm">
+                Manage Configuration
+              </q-card-title>
+              <div class="row">
+                <q-select v-model="isPrivatePortal" stack-label="Private Portal" :options="selectOptions" />
+              </div>
+              <div class="row">
+                <q-select v-model="requiresInvite" stack-label="Invitation Required" :options="selectOptions"  />
+              </div>
+              <div class="row">
+                <q-input v-model="adminEmail" stack-label="Administrator Email" />
+              </div>
+              <div class="row justify-end">
+                <q-btn color="warning" label="Save Config" @click="saveConfig" />
+              </div>
+            </q-card>
 
-            <div class="box" style="background-color: red;">
-              <h5>Change Node Type</h5>
-              <b>Select New NodeType, Enter NodeId, Submit</b><br/>
-              <q-radio v-model="option" @input="doRadio" val="question" label="Question" />
-              <q-radio v-model="option" @input="doRadio" val="answer" label="Answer/Idea" />
-              <q-radio v-model="option" @input="doRadio" val="pro" label="Pro" />
-              <q-radio v-model="option" @input="doRadio" val="con" label="Con" /><br/>
-              <br/><b>Node ID</b><br/>
-              <q-input   v-model="nodeId" />
-              <q-btn label="Change Node Type" @click="changeNodeType" />
-            </div>
-
+            <q-card class="q-pa-sm q-my-sm" color="negative">
+              <q-card-title class="q-headline q-ma-sm">
+                Change Node Type
+              </q-card-title>
+              <div class="row q-my-sm">
+                Select New NodeType
+              </div>
+              <div class="row">
+                <q-radio v-model="option" @input="doRadio" val="question" label="Question" />
+                <q-radio v-model="option" @input="doRadio" val="answer" label="Answer/Idea" />
+                <q-radio v-model="option" @input="doRadio" val="pro" label="Pro" />
+                <q-radio v-model="option" @input="doRadio" val="con" label="Con" />
+              </div>
+              <div class="row">
+                <q-input stack-label="Enter Node ID" v-model="nodeId" />
+              </div>
+              <div class="row justify-end">
+                <q-btn label="Change Node Type" @click="changeNodeType" />
+              </div>
+            </q-card>
         </div>
+        <q-dialog
+          v-model="customDialogModel"
+          stack-buttons
+          prevent-close
+          @ok="onOk"
+        >
+        </q-dialog>
     </q-page>
 </template>
 
+<style scoped>
+  .q-table-container {
+    box-shadow: 0 0 0 0;
+  }
+</style>
+
 <script>
-import api from 'src/api'
 import { mapGetters, mapActions } from 'vuex'
 const actions = mapActions({
   fetchCurrentConfiguration: 'configuration/get',
@@ -85,6 +132,16 @@ const getters = mapGetters({
 export default {
   data () {
     return {
+      selectOptions: [
+        {
+          label: 'True',
+          value: 'true'
+        },
+        {
+          label: 'False',
+          value: 'false'
+        }
+      ],
       inviteColumns: [
         {
           name: 'email',
@@ -93,6 +150,13 @@ export default {
           align: 'left',
           field: 'email',
           sortable: true,
+          style: 'width: 100%'
+        },
+        {
+          name: 'actions',
+          required: true,
+          label: 'actions',
+          align: 'left',
           style: 'width: 100%'
         },
       ],
@@ -123,6 +187,7 @@ export default {
           style: 'width: 100%'
         },
       ],
+      customDialogModel: false,
       invites: [],
       inviteEmail: '',
       removeInviteEmail: '',
@@ -131,7 +196,7 @@ export default {
       removeUserEmail: '',
       option: '',
       nodeId: '',
-      isPrivatePortal: '',
+      isPrivatePortal: false,
       requiresInvite: true,
       adminEmail: ''
     }
@@ -153,14 +218,21 @@ export default {
   },
   methods: {
     ...actions,
-    saveConfig() {
+    onOk(data) {
+      console.log('ok')
+    },
+    async saveConfig() {
       //var json = {}
-      let config = {};
-      config.isPrivatePortal = this.$data.isPrivatePortal
-      config.requiresInvite = this.$data.requiresInvite
-      config.adminEmail = this.$data.adminEmail
-      console.log("SavingConfig", config, this.$data.isPrivatePortal);
-      this.updateConfiguration([1, config]).then(console.log, console.error);
+      try {
+        let config = this.currentConfig;
+        config.isPrivatePortal = this.$data.isPrivatePortal
+        config.requiresInvite = this.$data.requiresInvite
+        config.adminEmail = this.$data.adminEmail
+        await this.updateConfiguration([1, config])
+        this.$q.notify({type: 'positive', message: 'Successfully updated config'});
+      } catch (e) {
+        this.$q.notify({type: 'negative', message: 'Error ' + e});
+      }
     },
     doRadio (event) {
       this.$data.option = event
@@ -191,19 +263,29 @@ export default {
         this.$q.notify({type: 'negative', message: 'Error ' + error});
       }
     },
-    async removeInvite() {
-      var email = this.removeInviteEmail.trim();
-      if (email === '') {
-        return null;
-      }
+    async removeInvite(user) {
       try {
-        const { data: [invite]} = await this.findInvites({ query: { email } });
-        const _id = invite._id;
-        await this.deleteInvite(_id);
-        this.$q.notify({type: 'positive', message: 'Invitations removed'});
+        this.$q.dialog({
+          title: 'Confirm',
+          message: `Delete invite for ${user.email}?`,
+          ok: 'Yes',
+          cancel: 'No'
+        })
+          .then(() => {
+            this.deleteInvite(user._id)
+              .then(
+                  this.$q.notify(`Deleted invite for ${user.email}!`)
+              )
+              .catch(err => {
+                this.$q.notify({type: 'negative', message: 'Error-2 ' + err});
+              })
+          })
+          .catch(() => {
+            this.$q.notify('Cancelled...')
+          })
         this.$data.removeInviteEmail = '';
       } catch(e) {
-        this.$q.notify({type: 'negative', message: 'Error-2 ' + error});
+        this.$q.notify({type: 'negative', message: 'Error-2 ' + e});
       }
     },
     async listUsers() {
@@ -224,9 +306,26 @@ export default {
           console.error('Admin.vue', 'listUsers', 'error', e);
         })
     },
-    async removeUser(_id) {
+    async removeUser(user) {
       try {
-        const removedUser = await this.deleteUser(_id);
+        this.$q.dialog({
+          title: 'Confirm',
+          message: `Delete: ${user.email}?`,
+          ok: 'Yes',
+          cancel: 'No'
+        })
+          .then(() => {
+            this.deleteUser(user._id)
+              .then(
+                  this.$q.notify(`Deleted user: ${user.email}!`)
+              )
+              .catch(err => {
+                this.$q.notify({type: 'negative', message: 'Error-2 ' + err});
+              })
+            })
+          .catch(() => {
+            this.$q.notify('Cancelled...')
+          });
         this.removeUserEmail = '';
       } catch (e) {
         console.error('Admin.vue', 'removeUser', 'error', e);

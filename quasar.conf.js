@@ -94,10 +94,10 @@ module.exports = function (ctx) {
         'QTooltip',
         'QDialog',
         'QInput',
+        'QField',
         'QChatMessage',
         'QCollapsible',
         'QPageSticky',
-        'QField',
         'QEditor',
         'QScrollArea',
         'QPagination',
@@ -110,12 +110,9 @@ module.exports = function (ctx) {
         'QOptionGroup',
         'QSelect'
       ],
-      directives: [
-        'Ripple'
-      ],
-      directives: ["Ripple"],
+      directives: ['Ripple'],
       // Quasar plugins
-      plugins: ["Notify"]
+      plugins: ['Notify', 'Dialog']
     },
     // animations: 'all' --- includes all animations
     animations: [],
