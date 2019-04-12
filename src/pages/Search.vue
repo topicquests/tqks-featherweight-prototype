@@ -17,7 +17,7 @@
             <img style="margin-right: 4px" :src="quest.imgsm">
             {{ quest.label }}
           </router-link>
-          <router-link v-else :to="{ name: 'questview', params: { id: quest.id }}">
+          <router-link v-else :to="{ name: 'questview', params: { id: quest.nodeId }}">
             <img style="margin-right: 4px" :src="quest.imgsm">
             {{ quest.label }}
           </router-link>

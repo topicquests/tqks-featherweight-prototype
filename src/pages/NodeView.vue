@@ -137,6 +137,20 @@
           </q-list>
         </div>
       </q-collapsible>
+      <q-collapsible image="statics/images/properties.png" label="Properties">
+        <div>
+          <div>
+            <div v-if="isAuthenticated" class="node">
+              <a :href="`/props/${q.nodeId}`">
+                New Property</a>
+            </div>
+          </div>
+          <q-list>
+<q-item class="node" v-for="{value, key} in q.properties" :key="key">
+             <b>Key:</b> {{key}} &nbsp; <b>Value:</b> {{cleanup(value)}}
+   </q-item>          </q-list>
+        </div>
+      </q-collapsible>
     </q-list>    
   </q-page>
 </template>
@@ -159,6 +173,8 @@ export default {
           console.info('Router', 'done')
         })
       }, 500)
+    },
+    computed: {
     },
     mounted () {
       const id = this.$route.params.id
@@ -185,6 +201,18 @@ export default {
       }
     },
     methods: {
+
+      cleanup(val) {
+        const vx  = JSON.stringify(val);
+        if (vx.startsWith("[")) {
+        let x = val.join(', ');
+        
+        return x;
+        } else {
+          return val;
+        }
+      },
+
       // Pass id, or it will take it from current $route context
       async initialize (id = null) {
         //this.$store.commit('questView', true)        
