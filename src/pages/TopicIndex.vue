@@ -111,7 +111,8 @@
       this.$data.isAuthenticated = this.$store.getters.isAuthenticated;
 
       const query = {
-        type: "topic"
+        type: "topic",
+        $limit: 1000
       };
       const conversations = await this.findConversations({ query });
       console.log("Query returned", { conversations });
