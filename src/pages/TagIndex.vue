@@ -69,7 +69,8 @@ export default {
   },
   async mounted () {
     this.$store.commit('questView', false)
-    const tgs = this.findTags({});
+    const tgs = this.findTags({
+        $limit: 1000});
 //      .then((response) => {
         // alert(JSON.stringify(response.data))
 //        this.$data.rawData = response.data

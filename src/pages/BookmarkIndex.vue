@@ -98,7 +98,8 @@ export default {
   async mounted () {
     this.$store.commit('questView', false)
     const query = {
-      type: "bookmark"
+      type: "bookmark",
+      $limit: 1000
     };
     console.log("Finding w query: ", JSON.stringify(query));
     const bookmarks = await this.findBookmarks({ query });

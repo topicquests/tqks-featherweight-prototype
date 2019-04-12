@@ -43,7 +43,7 @@ export default {
       let result = [];
       let q = this.query;
       let options = {
-        $limit: 100,
+        $limit: 1000,
         $or: [
           { details: { $regex: q, $options: "i" } },
           { label: { $regex: q, $options: "i" } }
