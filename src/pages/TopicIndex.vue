@@ -26,8 +26,8 @@
           </q-td>
         </q-tr>
         </template>
-    
-             
+
+
             </q-table>
   </q-page>
 </template>
@@ -107,19 +107,15 @@
         return this.allConversations.filter(c => c.type === "topic");
       }
     },
-    mounted() {
+    async mounted() {
       this.$data.isAuthenticated = this.$store.getters.isAuthenticated;
-      
+
       const query = {
-        sort: {
-          createdAt: -1
-        },
         type: "topic"
       };
-      this.findConversations(query).then(
-        d => console.log("Query returned", { d }),
-        console.error
-      );
+      const conversations = await this.findConversations({ query });
+      console.log("Query returned", { conversations });
+      // this.fill(conversations);
       //turn off conversation tree
       this.$store.commit('questView', false)
 

@@ -137,6 +137,20 @@
           </q-list>
         </div>
       </q-collapsible>
+      <q-collapsible image="statics/images/properties.png" label="Properties">
+        <div>
+          <div>
+            <div v-if="isAuthenticated" class="node">
+              <a :href="`/props/${q.nodeId}`">
+                New Property</a>
+            </div>
+          </div>
+          <q-list>
+<q-item class="node" v-for="{value, key} in q.properties" :key="key">
+             <b>Key:</b> {{key}} &nbsp; <b>Value:</b> {{cleanup(value)}}
+   </q-item>          </q-list>
+        </div>
+      </q-collapsible>
     </q-list>    
   </q-page>
 </template>
@@ -160,32 +174,15 @@ export default {
         })
       }, 500)
     },
+    computed: {
+    },
     mounted () {
       const id = this.$route.params.id
       this.$data.rightDrawerOpen = false
       //turn off conversation tree
       this.$store.commit('questView', false)
 
-      const self = this
-      try {
-        //TODO treeview must look for 'topic' 
-        // rather than 'map' to paint a tree view
-        treeview.get(id)
-          .then(function (tree) {
-            console.info('TopicTreeView', tree)
-            const img = tree.img
-            // only show the tree if the root is a map
-            if (img === 'statics/images/map.png' ||
-                img === 'statics/images/bookmark.png') {
-              const result = []
-              result.push(tree)
-              self.$store.commit('tree', result)
-              self.$store.commit('questView', true)
-            }
-          })     
-      } catch (err) {
-        console.log('QuestViewTreeError', err)
-      }
+      
       this.initialize()
     },
     watch: {
@@ -204,10 +201,21 @@ export default {
       }
     },
     methods: {
+
+      cleanup(val) {
+        const vx  = JSON.stringify(val);
+        if (vx.startsWith("[")) {
+        let x = val.join(', ');
+        
+        return x;
+        } else {
+          return val;
+        }
+      },
+
       // Pass id, or it will take it from current $route context
       async initialize (id = null) {
-        this.$store.commit('questView', true)
-        console.info('QV-1', id)
+        //this.$store.commit('questView', true)        
         const nodeId = id || this.$route.params.id
         console.info('Initialize', 'fetching data for ', nodeId)
         try {
@@ -225,6 +233,27 @@ export default {
           console.info("SINGLE", JSON.stringify(single));
         } catch (e) {
           console.info("Initialize", "fetching data for ", nodeId, "error", e);
+        }
+
+        const self = this
+        try {
+          //TODO treeview must look for 'topic' 
+          // rather than 'map' to paint a tree view
+          treeview.get(nodeId)
+            .then(function (tree) {
+              console.info('TopicTreeView', tree)
+              //const img = tree.img
+              // only show the tree if the root is a map
+              //if (img === 'statics/images/map_sm.png' ||
+              //    img === 'statics/images/bookmark_sm.png') {
+                const result = []
+                result.push(tree)
+                self.$store.commit('tree', result)
+                self.$store.commit('questView', true)
+              //}
+            })     
+        } catch (err) {
+          console.log('QuestViewTreeError', err)
         }
       },
       ...mapActions("conversation", { findConversations: "find" }),

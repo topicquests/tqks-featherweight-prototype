@@ -1,16 +1,20 @@
 <template>
   <q-page :padding="true" v-if="currentTag">
-    <h4>
-      <img style="margin-right:4px;" class="ibis-icon ibis-tag">
-      {{ currentTag.label }}
-    </h4>
-    <q-scroll-area v-if="currentTag.nodes" style="width: 800px; height: 800px;">
-      <q-list  v-for="node in currentTag.nodes" :key="node.nodeId">
-        <q-item>
-          <router-link :to="{ name: 'questview', params: { id: node.nodeId }}">{{ node.label }}</router-link>
-        </q-item>
-      </q-list>
-    </q-scroll-area>
+    <img style="margin-right:4px;" class="ibis-icon ibis-tag">
+    {{ currentTag.label }}
+    <q-table title="Tagged Views" :data="rootHits" :columns="columns">
+      <template slot="body" slot-scope="props">
+        <q-tr :props="props">
+          <q-td key="type" style="width: 30px" :props="props">
+            <i style="display: block;" :class="'ibis-icon ibis-' + props.row.type"/>
+          </q-td>
+          <q-td key="label" :props="props">{{props.row.label}}</q-td>
+          <q-td key="nodeId" auto-width :props="props">
+            <router-link :to="{ name: 'topicview', params: { id:  props.row.nodeId }}">View</router-link>
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
   </q-page>
 </template>
 
@@ -20,10 +24,44 @@ import api from 'src/api'
 const tags = api.service('tags')
 
 export default {
+  data () {
+    return {
+      //props: [ "id" ],
+      columns: [
+        {
+          name: "type",
+          required: true,
+          label: "Type",
+          align: "left",
+          field: "type",
+          sortable: true
+        },
+        {
+          name: "label",
+          required: true,
+          label: "Label",
+          align: "left",
+          field: "label",
+          sortable: true
+        },
+        {
+          name: "nodeId",
+          required: true,
+          label: "Action",
+          align: "left",
+          field: "nodeId",
+          sortable: false
+        }
+      ]
+    }
+  },
   computed: {
     ...mapGetters('tags', {
-      currentTag: 'current'
-    })
+      currentTag: 'current'      
+    }),
+    rootHits() {
+      return this.currentTag.nodes;
+    }
   },
   methods: {
     ...mapActions('tags', {
@@ -31,31 +69,25 @@ export default {
     }),
     ...mapMutations("tags", { setCurrentTag: "setCurrent" })
   },
-  mounted() {
+  async mounted() {
     this.$store.commit("questView", false);
     const nodeId = this.$route.params.id;
           console.info('TagView', 'find', {nodeId});
 
     // console.info("TagView" , "mounted", "Got id from param", this.$data.id);
-    this.findTags({
+    
+    const hits = await this.findTags({ 
       query: { nodeId }
-    }).then( result => {
-      console.info('TagView', 'find', {result});
-      const {
-          data: [single]
-        } = result;
-
-      this.setCurrentTag(single);  
     });
-    /*tags.find({nodeId}).then(response => {
-       console.info("TagView" , "mounted", "Find results", response);
-       //alert(response)
-       this.$data.theTag = response
-       this.$data.label = response.label;
-       this.$data.nodes = response.nodes;
-    });*/
+    console.info('HITS', hits.data[0])
+    //this.$data.serverData = hits;
+    //const {
+    //      data: [single]
+    //    } = hits;
+
+    this.setCurrentTag(hits.data[0]);  
   }
-};
+}
 </script>
 
 <style>

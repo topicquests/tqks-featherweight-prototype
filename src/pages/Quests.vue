@@ -103,19 +103,14 @@ export default {
       this.$data.serverData.push(jsx);
     }
   },
-  mounted() {
+  async mounted() {
     this.$data.isAuthenticated = this.$store.getters.isAuthenticated;
     const query = {
-        sort: {
-          createdAt: -1
-        },
         type: "map"
     };
     console.log("Finding w query: ", JSON.stringify(query));
-    this.findConversations(query).then(
-      d => console.log("Query returned", { d }),
-      console.error
-    );
+    const conversations = await this.findConversations({ query });
+    console.log("Query returned", { conversations });
 
     this.$store.commit("questView", false);
   }

@@ -206,7 +206,7 @@ export default {
   mounted () {
     router = this.$router;
 
-    //alert(this.label)
+    //alert(this.id)
     /////////////////////////
     // Complex behaviors:
     // First mount when a node is chosen for connection
@@ -230,6 +230,7 @@ export default {
           .find({ query: { nodeId: this.id, skippop: true } })
           .then(response => {
         const resp = response.data[0]
+        console.info('CF', JSON.stringify(resp))
         const label = resp.label //*
         let _if = localStorage.getItem('connectionALabel')
         if (_if === null) {
