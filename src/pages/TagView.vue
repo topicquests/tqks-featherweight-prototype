@@ -77,7 +77,8 @@ export default {
     // console.info("TagView" , "mounted", "Got id from param", this.$data.id);
     
     const hits = await this.findTags({ 
-      query: { nodeId }
+      query: { nodeId,
+        $limit: 1000 }
     });
     console.info('HITS', hits.data[0])
     //this.$data.serverData = hits;
