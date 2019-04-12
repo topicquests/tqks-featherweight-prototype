@@ -8,9 +8,7 @@ module.exports = function(app) {
   const baseURL = app.get('baseURL');
 
   async function generateHtml(view, data) {
-    console.log('generating html', { view, data });
     const template = await templates.renderAll(view, data || {});
-    console.log('generated html', { template });
     return template.html;
   }
 
@@ -23,8 +21,6 @@ module.exports = function(app) {
   }
 
   function sendEmail(email) {
-    console.log('email:', email);
-    console.log('email.html:', email.html);
     return app
       .service('mailer')
       .create(email)
@@ -43,9 +39,9 @@ module.exports = function(app) {
       let html;
       switch (type) {
       case 'resendVerifySignup': //sending the user the verification email
-        console.log('resentVerifySignup');
+        console.log('tokenLink:', tokenLink);
         tokenLink = getLink('verify', user.verifyToken, user.email);
-        html = await generateHtml('base', {
+        html = await generateHtml('verify', {
           tokenLink
         }),
         email = {
@@ -56,9 +52,9 @@ module.exports = function(app) {
         };
         return sendEmail(email);
       case 'verifySignup': // confirming verification
-        console.log('verifySignup');
         tokenLink = getLink('verify', user.verifyToken, user.email);
-        html = await generateHtml('base', {
+        console.log('tokenLink:', tokenLink);
+        html = await generateHtml('confirmation', {
           tokenLink
         });
         email = {
