@@ -9,6 +9,7 @@ const {
 } = require('@feathersjs/authentication-local').hooks;
 const commonHooks = require('feathers-hooks-common');
 const gravatar = require('../../hooks/gravatar');
+const isInvited = require('../../hooks/is-invited');
 
 module.exports = {
   before: {
@@ -17,6 +18,7 @@ module.exports = {
     get: [authenticate('jwt')],
     create: [
       lowerCase('email'),
+      isInvited(),
       hashPassword(),
       gravatar(),
       verifyHooks.addVerification()

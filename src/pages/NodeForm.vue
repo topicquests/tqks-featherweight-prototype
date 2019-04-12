@@ -22,17 +22,17 @@
 </template>
 
 <script>
-import Vue from "vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import VueCkeditor from "vue-ckeditor5";
+import Vue from 'vue'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import VueCkeditor from 'vue-ckeditor5'
 const options = {
   editors: {
-    classic: ClassicEditor
+    classic: ClassicEditor,
   },
-  name: "ckeditor"
-};
-
+  name: 'ckeditor'
+}
+ 
 Vue.use(VueCkeditor.plugin, options);
 import { required } from "vuelidate/lib/validators";
 import api from "src/api";
@@ -99,6 +99,7 @@ export default {
         json.handle = this.user.handle;
         json.date = new Date();
         json.type = typ;
+        json.parentId = this.parentId;
         // Add icons
         if (typ === "question") {
           json.img = "statics/images/issue.png";

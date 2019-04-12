@@ -115,6 +115,11 @@
             <q-item-side icon="help"/>
             <q-item-main label="Quests Help"/>
           </q-item>
+          <q-item to="/aboutcons">
+            <q-item-side icon="help"/>
+            <q-item-main label="Connections Help"/>
+          </q-item>
+
           <q-item to="/aboutt">
             <q-item-side icon="help"/>
             <q-item-main label="Tags Help"/>
