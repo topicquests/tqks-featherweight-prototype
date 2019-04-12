@@ -1,7 +1,18 @@
+const emailTemplates = require('email-templates');
+const templates = new emailTemplates();
+
+
 const Console = console;
 module.exports = function(app) {
   const emailConfig = app.get('emailconfig');
   const baseURL = app.get('baseURL');
+
+  async function generateHtml(view, data) {
+    console.log('generating html', { view, data });
+    const template = await templates.renderAll(view, data || {});
+    console.log('generated html', { template });
+    return template.html;
+  }
 
   function getLink(type, hash, email = '') {
     let url = `${baseURL}/token/${type}/${hash}`;
@@ -12,6 +23,8 @@ module.exports = function(app) {
   }
 
   function sendEmail(email) {
+    console.log('email:', email);
+    console.log('email.html:', email.html);
     return app
       .service('mailer')
       .create(email)
@@ -24,26 +37,35 @@ module.exports = function(app) {
   }
 
   return {
-    notifier: function(type, user, notifierOptions) {
+    notifier: async function(type, user, notifierOptions) {
       let tokenLink;
       let email;
+      let html;
       switch (type) {
       case 'resendVerifySignup': //sending the user the verification email
+        console.log('resentVerifySignup');
         tokenLink = getLink('verify', user.verifyToken, user.email);
+        html = await generateHtml('base', {
+          tokenLink
+        }),
         email = {
           from: emailConfig.GMAIL,
           to: user.email,
           subject: 'Verify Signup',
-          html: tokenLink
+          html
         };
         return sendEmail(email);
       case 'verifySignup': // confirming verification
+        console.log('verifySignup');
         tokenLink = getLink('verify', user.verifyToken, user.email);
+        html = await generateHtml('base', {
+          tokenLink
+        });
         email = {
           from: emailConfig.GMAIL,
           to: user.email,
           subject: 'Confirm Signup',
-          html: tokenLink
+          html
         };
         return sendEmail(email);
       case 'sendResetPwd':
