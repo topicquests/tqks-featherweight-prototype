@@ -1,6 +1,6 @@
 {
- "isPrivatePortal": "true",
- "requiresInvite": "false",
+ "isPrivatePortal": true,
+ "requiresInvite": false,
  "adminEmail": "jon@featherweight.com",
  "cms": {
   "site": {

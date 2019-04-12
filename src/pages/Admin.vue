@@ -135,11 +135,11 @@ export default {
       selectOptions: [
         {
           label: 'True',
-          value: 'true'
+          value: true
         },
         {
           label: 'False',
-          value: 'false'
+          value: false
         }
       ],
       inviteColumns: [
