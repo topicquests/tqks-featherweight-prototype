@@ -21,7 +21,7 @@ module.exports = {
       {
         name      : 'fw-api',
         script    : 'npm',
-        args:    'run prod',
+        args:    'start',
         cwd       : 'api',
         env: {
           PORT    : 8081
