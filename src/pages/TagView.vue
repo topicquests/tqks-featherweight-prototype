@@ -6,11 +6,11 @@
       <template slot="body" slot-scope="props">
         <q-tr :props="props">
           <q-td key="type" style="width: 30px" :props="props">
-            <img v-bind:src="'../statics/images/'+ props.row.type+'.png'"/>
+            <i style="display: block;" :class="'ibis-icon ibis-' + props.row.type"/>
           </q-td>
           <q-td key="label" :props="props">{{props.row.label}}</q-td>
           <q-td key="nodeId" auto-width :props="props">
-            <router-link :to="{ name: 'tagview', params: { id:  props.row.nodeId }}">View</router-link>
+            <router-link :to="{ name: 'topicview', params: { id:  props.row.nodeId }}">View</router-link>
           </q-td>
         </q-tr>
       </template>
@@ -77,7 +77,8 @@ export default {
     // console.info("TagView" , "mounted", "Got id from param", this.$data.id);
     
     const hits = await this.findTags({ 
-      query: { nodeId }
+      query: { nodeId,
+        $limit: 1000 }
     });
     console.info('HITS', hits.data[0])
     //this.$data.serverData = hits;

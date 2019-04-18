@@ -1,204 +1,312 @@
 <template>
-    <q-page class="flex flex-left">
+    <q-page class="flex justify-center">
         <div>
-            <h6>Admin</h6>
-            <div class="box">
-                <q-btn label="List Invitations" @click="listInvites" />
-                <q-scroll-area style="width: 200px; height: 100px;">
-                    <q-list v-for="inv in invites" :key="inv.email">
-                        {{ inv.email }}
-                    </q-list>
-                </q-scroll-area>
-            </div>
-            <div class="box">
-                <h5>Add One Email to Invitations</h5>
-                <q-input  v-model="inviteEmail" />
-                <q-btn label="Add Invitation" @click="addInvite" />
-            </div>
-            <div class="box">
-                <h5>Remove One Email from Invitations</h5>
-                <q-input  v-model="removeEmail" />
-                <q-btn label="Remove Invitation" @click="removeInvite" />
-            </div>
-            <div class="box">
-                <q-btn label="List Users" @click="listUsers" /><br/>
-                <q-scroll-area style="width: 200px; height: 100px;">
-                    <q-list v-for="inv in users" :key="inv.email">
-                        {{ inv.email + " " + inv._id }}
-                    </q-list>
-                </q-scroll-area>
-            </div>
-            <div class="box">
-              <h5>Display a User</h5>
-              <q-input  v-model="displayEmail" />
-              <q-btn label="Display User" @click="displayUser" />
-            </div>
-            <div class="box">
-              <h5>Remove a User</h5>
-              <q-input  v-model="removeUserEmail" />
-              <q-btn label="Remove User" @click="removeUser" />
-            </div>
-            <div class="box">
-              <h5>Manage Configuration</h5>
-              <b>Is Private: </b><q-input  v-model="isPrivatePortal" /><br/>
-              <b>Require Invite: </b><q-input  v-model="requiresInvite" /><br/>
-              <b>Admin Email: </b><q-input  v-model="adminEmail" /><br/>
-              <q-btn label="Save Config" @click="saveConfig" />
-            </div>
+            <h4>Administration Panel</h4>
+            <q-card class="q-pa-sm q-my-sm">
+              <q-card-title class="q-headline q-ma-sm">
+                Open Invitations
+              </q-card-title>
+              <q-table
+                :data="invitationsList"
+                :columns="inviteColumns"
+                row-key="name"
+              >
+                <q-td key="actions" name="actions" slot="body-cell-actions" slot-scope="props">
+                  <q-btn small color="negative" @click.prevent="removeInvite(props.row)">
+                    Delete
+                  </q-btn>
+                </q-td>
+              </q-table>
+            </q-card>
+            <q-card class="q-pa-sm q-my-sm">
+              <q-card-title class="q-headline q-ma-sm">
+                Add Invitations
+              </q-card-title>
+              <div class="row">
+                <q-field
+                  icon="email"
+                  icon-color="dark"
+                  orientation="vertical"
+                  helper="Enter an email"
+                >
+                  <q-input v-model="inviteEmail"/>
+                </q-field>
+              </div>
+              <div class="row justify-end">
+                <q-btn color="secondary" icon="email" label="Add" @click="addInvite" />
+              </div>
+            </q-card>
+            <q-card class="q-pa-sm q-my-sm">
+              <q-card-title class="q-headline q-ma-sm">
+                Current Users
+              </q-card-title>
+              <q-table
+                :data="usersList"
+                :columns="userColumns"
+                row-key="name"
+              >
+                <q-td key="actions" name="actions" slot="body-cell-actions" slot-scope="props">
+                  <q-btn small color="negative" @click.prevent="removeUser(props.row)">
+                    Delete
+                  </q-btn>
+                  <q-btn small color="primary" @click.prevent="displayUser(props.row.email)">
+                    View
+                  </q-btn>
+                </q-td>
+              </q-table>
+            </q-card>
+            <q-card class="q-pa-sm q-my-sm">
+              <q-card-title class="q-headline q-ma-sm">
+                Manage Configuration
+              </q-card-title>
+              <div class="row">
+                <q-select v-model="isPrivatePortal" stack-label="Private Portal" :options="selectOptions" />
+              </div>
+              <div class="row">
+                <q-select v-model="requiresInvite" stack-label="Invitation Required" :options="selectOptions"  />
+              </div>
+              <div class="row">
+                <q-input v-model="adminEmail" stack-label="Administrator Email" />
+              </div>
+              <div class="row justify-end">
+                <q-btn color="warning" label="Save Config" @click="saveConfig" />
+              </div>
+            </q-card>
 
-            <div class="box" style="background-color: red;">
-              <h5>Change Node Type</h5>
-              <b>Select New NodeType, Enter NodeId, Submit</b><br/>
-              <q-radio v-model="option" @input="doRadio" val="question" label="Question" />
-              <q-radio v-model="option" @input="doRadio" val="answer" label="Answer/Idea" />
-              <q-radio v-model="option" @input="doRadio" val="pro" label="Pro" />
-              <q-radio v-model="option" @input="doRadio" val="con" label="Con" /><br/>
-              <br/><b>Node ID</b><br/>
-              <q-input   v-model="nodeId" />
-              <q-btn label="Change Node Type" @click="changeNodeType" />
-            </div>
-
+            <q-card class="q-pa-sm q-my-sm" color="negative">
+              <q-card-title class="q-headline q-ma-sm">
+                Change Node Type
+              </q-card-title>
+              <div class="row q-my-sm">
+                Select New NodeType
+              </div>
+              <div class="row">
+                <q-radio v-model="option" @input="doRadio" val="question" label="Question" />
+                <q-radio v-model="option" @input="doRadio" val="answer" label="Answer/Idea" />
+                <q-radio v-model="option" @input="doRadio" val="pro" label="Pro" />
+                <q-radio v-model="option" @input="doRadio" val="con" label="Con" />
+              </div>
+              <div class="row">
+                <q-input stack-label="Enter Node ID" v-model="nodeId" />
+              </div>
+              <div class="row justify-end">
+                <q-btn label="Change Node Type" @click="changeNodeType" />
+              </div>
+            </q-card>
         </div>
+        <q-dialog
+          v-model="customDialogModel"
+          stack-buttons
+          prevent-close
+          @ok="onOk"
+        >
+        </q-dialog>
     </q-page>
 </template>
 
+<style scoped>
+  .q-table-container {
+    box-shadow: 0 0 0 0;
+  }
+</style>
+
 <script>
-import api from 'src/api'
 import { mapGetters, mapActions } from 'vuex'
-const invites = api.service('invitations')
-const users = api.service('users')
-const conversation = api.service('conversation')
-const configuration = api.service('configuration')
+const actions = mapActions({
+  fetchCurrentConfiguration: 'configuration/get',
+  updateConfiguration: 'configuration/update',
+  findInvites: 'invitations/find',
+  createInvite: 'invitations/create',
+  deleteInvite: 'invitations/remove',
+  findUsers: 'users/find',
+  deleteUser: 'users/remove',
+  findConversation: 'conversation/find',
+  updateConversation: 'conversation/update',
+});
+const getters = mapGetters({
+  currentConfig: 'configuration/getCopy',
+  invitationsList: 'invitations/list',
+  usersList: 'users/list',
+});
+
 export default {
   data () {
     return {
+      selectOptions: [
+        {
+          label: 'True',
+          value: true
+        },
+        {
+          label: 'False',
+          value: false
+        }
+      ],
+      inviteColumns: [
+        {
+          name: 'email',
+          required: true,
+          label: 'Email',
+          align: 'left',
+          field: 'email',
+          sortable: true,
+          style: 'width: 100%'
+        },
+        {
+          name: 'actions',
+          required: true,
+          label: 'actions',
+          align: 'left',
+          style: 'width: 100%'
+        },
+      ],
+      userColumns: [
+        {
+          name: 'email',
+          required: true,
+          label: 'Email',
+          align: 'left',
+          field: 'email',
+          sortable: true,
+          style: 'width: 100%'
+        },
+        {
+          name: 'id',
+          required: true,
+          label: 'ID',
+          align: 'left',
+          field: '_id',
+          sortable: true,
+          style: 'width: 100%'
+        },
+        {
+          name: 'actions',
+          required: true,
+          label: 'actions',
+          align: 'left',
+          style: 'width: 100%'
+        },
+      ],
+      customDialogModel: false,
       invites: [],
       inviteEmail: '',
-      removeEmail: '',
       users: [],
-      displayEmail: '',
-      removeUserEmail: '',
       option: '',
       nodeId: '',
-      isPrivatePortal: '',
+      isPrivatePortal: false,
       requiresInvite: true,
       adminEmail: ''
     }
   },
 
   computed:  {
-    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
-
+    ...getters,
   },
-  mounted () {
+  async mounted () {
     this.$store.commit('questView', false)
-    this.fetchCurrentConfiguration(1).then(
-      (data) => {
-        console.log('Got config', data);
-        const { adminEmail, requiresInvite, isPrivatePortal } = data;
-        this.$data.isPrivatePortal = isPrivatePortal;
-        this.$data.requiresInvite = requiresInvite;
-        this.$data.adminEmail = adminEmail;
-      }
-    )
- 
+    const config = await this.fetchCurrentConfiguration(1);
+    await this.findInvites({ query: { $limit: 100 } });
+    await this.findUsers({ query: { $limit: 100 } });
+    console.log('Got config', config);
+    const { adminEmail, requiresInvite, isPrivatePortal } = config;
+    this.$data.isPrivatePortal = isPrivatePortal;
+    this.$data.requiresInvite = requiresInvite;
+    this.$data.adminEmail = adminEmail;
   },
   methods: {
-    ...mapActions('configuration', {
-        fetchCurrentConfiguration: 'get',
-        updateConfiguration: 'update'
-      }),
-    saveConfig() {
+    ...actions,
+    onOk(data) {
+      console.log('ok')
+    },
+    async saveConfig() {
       //var json = {}
-      let config = {};
-      config.isPrivatePortal = this.$data.isPrivatePortal
-      config.requiresInvite = this.$data.requiresInvite
-      config.adminEmail = this.$data.adminEmail
-      console.log("SavingConfig", config, this.$data.isPrivatePortal);
-      this.updateConfiguration([1, config]).then(console.log, console.error);
+      try {
+        let config = this.currentConfig;
+        config.isPrivatePortal = this.$data.isPrivatePortal
+        config.requiresInvite = this.$data.requiresInvite
+        config.adminEmail = this.$data.adminEmail
+        await this.updateConfiguration([1, config])
+        this.$q.notify({type: 'positive', message: 'Successfully updated config'});
+      } catch (e) {
+        this.$q.notify({type: 'negative', message: 'Error ' + e});
+      }
     },
     doRadio (event) {
       this.$data.option = event
     },
-    listInvites () {
-      // alert('List invites')
-      invites.find({ query: { $limit: 100 } })
-        .then((response) => { this.$data.invites = response.data })
-    },
 
-    addInvite () {
+    async addInvite() {
       // alert('Add invite')
-      var ems = this.$data.inviteEmail.trim()
-      if (ems === '') {
+      const email = this.inviteEmail.trim()
+      if (email === '') {
         return
       }
-      var json = {}
-      json.email = ems
-      invites.create(json).then((response) => {
-        this.$q.notify({type: 'positive', message: 'Invitations added'})
-      }).catch((error) => {
-        this.$q.notify({type: 'negative', message: 'Error ' + error})
-      })
-      this.$data.inviteEmail = ''
+      try {
+        await this.createInvite({ email });
+        this.$q.notify({type: 'positive', message: 'Invitations added'});
+        this.inviteEmail = '';
+      } catch(e) {
+        this.$q.notify({type: 'negative', message: 'Error ' + error});
+      }
     },
-    removeInvite () {
-      var ems = this.$data.removeEmail.trim()
-      if (ems === '') {
-        return
-      }
-      var json = {}
-      json.email = ems
-      invites.find({ query: { 'email':ems } }).then((response) => {
-        // console.info('INVITE', JSON.stringify(response))
-        invites.remove(response.data[0]._id).then((response) => {
-          this.$q.notify({type: 'positive', message: 'Invitations removed'})
-        }).catch((error) => {
-          this.$q.notify({type: 'negative', message: 'Error-1 ' + error})
+    async removeInvite(user) {
+      try {
+        this.$q.dialog({
+          title: 'Confirm',
+          message: `Delete invite for ${user.email}?`,
+          ok: 'Yes',
+          cancel: 'No'
         })
-      }).catch((error) => {
-        this.$q.notify({type: 'negative', message: 'Error-2 ' + error})
-      })
-      this.$data.removeEmail = ''
-    },
-    listUsers () {
-      users.find({ query: { $limit: 100 } })
-        .then((response) => { this.$data.users = response.data })
-    },
-    displayUser () {
-      var ems = this.$data.displayEmail.trim()
-      // alert(ems)
-      if (ems === '') {
-        return
+          .then(() => {
+            this.deleteInvite(user._id)
+              .then(
+                  this.$q.notify(`Deleted invite for ${user.email}!`)
+              )
+              .catch(err => {
+                this.$q.notify({type: 'negative', message: 'Error-2 ' + err});
+              })
+          })
+          .catch(() => {
+            this.$q.notify('Cancelled...')
+          })
+      } catch(e) {
+        this.$q.notify({type: 'negative', message: 'Error-2 ' + e});
       }
-      var json = {}
-      var x = {}
-      x.email = ems
-      json.query = x
-      users.find(json).then((response) => {
-        alert(JSON.stringify(response))
-        this.displayEmail = ''
-      })
     },
-    removeUser() {
-      var ems = this.$data.removeUserEmail.trim()
-      // alert(ems)
-      if (ems === '') {
-        return
+    displayUser(email) {
+      this.findUsers({ query: { email }})
+        .then((response) => {
+          alert(JSON.stringify(response));
+          this.displayEmail = '';
+        })
+        .catch(e => {
+          console.error('Admin.vue', 'listUsers', 'error', e);
+        })
+    },
+    async removeUser(user) {
+      try {
+        this.$q.dialog({
+          title: 'Confirm',
+          message: `Delete: ${user.email}?`,
+          ok: 'Yes',
+          cancel: 'No'
+        })
+          .then(() => {
+            this.deleteUser(user._id)
+              .then(
+                  this.$q.notify(`Deleted user: ${user.email}!`)
+              )
+              .catch(err => {
+                this.$q.notify({type: 'negative', message: 'Error-2 ' + err});
+              })
+            })
+          .catch(() => {
+            this.$q.notify('Cancelled...')
+          });
+        this.removeUserEmail = '';
+      } catch (e) {
+        console.error('Admin.vue', 'removeUser', 'error', e);
       }
-      var json = {}
-      var x = {}
-      x.email = ems
-      json.query = x
-      users.find(json).then((response) => {
-        // alert(JSON.stringify(response))
-        const usr = response.data[0]
-        json = {}
-        x._id = usr._id
-        json.query = x
-        users.remove(usr._id).then((foo) => {
-          this.removeUserEmail = ''
-        })       
-      })
     },
     getLargeIcon (typ) {
         if (typ === 'question') {
@@ -229,7 +337,7 @@ export default {
       const choice = this.$data.option
       const newtype = choice+'s'
       //Get that node and perform surgery on it
-      conversation.find({ query: { 'id':nid, skippop:true } })
+      this.findConversation({ query: { 'id':nid, skippop:true } })
         .then ((response) => {
           var child = response.data[0]
           const oldType = child.type+'s'
@@ -250,12 +358,12 @@ export default {
 "type":"question",
 "img":"statics/images/issue.png",
 "imgsm":"statics/images/issue_sm.png","parentId":"bb86153f-6d50-4526-bc10-28f0731d7278","parentLabel":"Jim's Second Quest","_id":"DRWKPMobqL9YscSw"}
-*/          
+*/
           const parentId = child.parentId
-          conversation.update(child.id, child)
+          this.updateConversation(child.id, child)
             .then((resp) => {
               if (parentId) {
-                conversation.find({ query: { 'id':parentId, skippop:true } })
+                this.findConversation({ query: { 'id':parentId, skippop:true } })
                   .then ((response2) => {
                     console.info('XXX', parentId, response2)
                     const parent = response2.data[0]
@@ -289,8 +397,8 @@ export default {
 /*
 {"id":"e64d7264-6a31-44a3-9a99-84ebc904a382","type":"map","label":"Test  Quest","url":"","details":"","img":"statics/images/map.png","imgsm":"statics/images/map_sm.png","creator":"Uyrena5iH2SGdvPY","handle":"sue","date":"2018-07-25T00:52:29.998Z",
 "answers":[],"_id":"B48n0KwxK1y7CXyV",
-"questions":["72d22096-aef8-4e89-9f6d-ddaffd80dc36"]}*/                    
-                    conversation.update(parent.id, parent)
+"questions":["72d22096-aef8-4e89-9f6d-ddaffd80dc36"]}*/
+                    this.updateConversation(parent.id, parent)
                       .then((resp2) => {
                         this.$data.nodeId = ''
                       })

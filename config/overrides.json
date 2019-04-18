@@ -1,54 +1,59 @@
 {
-	"isPrivatePortal": "false",
-	"requiresInvite": "true",
-	"adminEmail": "sue@sixpack.com",
-	"cms": {
-		"site": {
-			"copyright": "2019",
-			"favicon": "statics/icons/favicon-32x32.png",
-			"title": "Featherweight CMS Enhanced"
-		},
-		"nav": {
-			"footer": [{
-					"label": "About",
-					"url": "/about"
-				},
-				{
-					"label": "Facebook",
-					"url": "www.facebook.com/mywebsite",
-					"target": "_blank"
-				},
-				{
-					"label": "Twitter",
-					"url": "https://twitter/mywebsite",
-					"target": "_blank"
-				}
-			],
-			"header": [{
-					"label": "Home",
-					"url": "/home"
-				},
-				{
-					"label": "Product",
-					"url": "/product"
-				},
-				{
-					"label": "Blog",
-					"url": "/blog"
-				}
-			]
-		},
-		"pages": [{
-			"slug": "home",
-			"body": "<img src=\"statics/images/earthrise2.png\" ><h5>\r\n          For a better experience with FeatherWeight, first register your avatar for the email you will use here at <router-link to=\"https:\/\/www.gravatar.com\">https:\/\/www.gravatar.com<\/router-link>\r\n          then signup and go to the <router-link to=\"#\/chat\" class=\"\">Chat<\/router-link><\/h5>",
-			"title": "FeatherWeight Prototype from CMS",
-			"search_enabled": true,
-			"heading": "hello",
-			"tags": [
-				"foo",
-				"bar",
-				"hux"
-			]
-		}]
-	}
+ "isPrivatePortal": true,
+ "requiresInvite": false,
+ "adminEmail": "sue@sixpack.com",
+ "cms": {
+  "site": {
+   "copyright": "2019",
+   "favicon": "statics/icons/favicon-32x32.png",
+   "title": "Featherweight CMS Enhanced"
+  },
+  "nav": {
+   "footer": [
+    {
+     "label": "About",
+     "url": "/about"
+    },
+    {
+     "label": "Facebook",
+     "url": "www.facebook.com/mywebsite",
+     "target": "_blank"
+    },
+    {
+     "label": "Twitter",
+     "url": "https://twitter/mywebsite",
+     "target": "_blank"
+    }
+   ],
+   "header": [
+    {
+     "label": "Home",
+     "url": "/home"
+    },
+    {
+     "label": "Product",
+     "url": "/product"
+    },
+    {
+     "label": "Blog",
+     "url": "/blog"
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "home",
+    "body": "<img src=\"statics/images/earthrise2.png\" ><h5>\r\n          For a better experience with FeatherWeight, first register your avatar for the email you will use here at <router-link to=\"https://www.gravatar.com\">https://www.gravatar.com</router-link>\r\n          then signup and go to the <router-link to=\"#/chat\" class=\"\">Chat</router-link></h5>",
+    "title": "FeatherWeight Prototype from CMS",
+    "search_enabled": true,
+    "heading": "hello",
+    "tags": [
+     "foo",
+     "bar",
+     "hux"
+    ]
+   }
+  ]
+ },
+ "id": 1
 }

@@ -13,6 +13,7 @@ module.exports = function(app) {
       fullname: { type: String },
       avatar: { type: String },
       handle: { type: String },
+      roles: { type: Array },
       isVerified: { type: Boolean },
       verifyToken: { type: String },
       verifyExpires: { type: Date },

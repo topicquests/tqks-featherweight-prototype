@@ -17,7 +17,7 @@
             <img style="margin-right: 4px" :src="quest.imgsm">
             {{ quest.label }}
           </router-link>
-          <router-link v-else :to="{ name: 'questview', params: { id: quest.id }}">
+          <router-link v-else :to="{ name: 'questview', params: { id: quest.nodeId }}">
             <img style="margin-right: 4px" :src="quest.imgsm">
             {{ quest.label }}
           </router-link>
@@ -43,7 +43,7 @@ export default {
       let result = [];
       let q = this.query;
       let options = {
-        $limit: 100,
+        $limit: 1000,
         $or: [
           { details: { $regex: q, $options: "i" } },
           { label: { $regex: q, $options: "i" } }

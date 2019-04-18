@@ -148,6 +148,7 @@ export default {
           this.goHome();
         }).catch((error) => {
           // user must be invited and isn't
+          console.log('HEY! Error!:', { error });
           this.$q.notify({
             type: "negative",
             message: "Cannot register, email not found on invitations list"

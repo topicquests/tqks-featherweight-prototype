@@ -106,7 +106,8 @@ export default {
   async mounted() {
     this.$data.isAuthenticated = this.$store.getters.isAuthenticated;
     const query = {
-        type: "map"
+        type: "map",
+        $limit: 1000
     };
     console.log("Finding w query: ", JSON.stringify(query));
     const conversations = await this.findConversations({ query });

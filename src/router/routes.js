@@ -27,6 +27,7 @@ export default [
       { path: '/bookmarkview/:id', name: 'bookmarkview', component: () => import('pages/NodeView'), props: true },
       { path: '/questview/:id', name: 'questview', component: () => import('pages/NodeView'), props: true },
       { path: '/topicview/:id', name: 'topicview', component: () => import('pages/NodeView'), props: true },
+      { path: '/props/:id', name: 'props', component: () => import('pages/PropertyForm'), props: true },
       { path: '/profile/:id', name: 'profile', component: () => import('pages/ProfileForm'), props: true },
       { path: '/search/:q', name: 'search', component: () => import('pages/Search'), props: true },
       { path: '/userview/:id', name: 'userview', component: () => import('pages/UserView'), props: true },

@@ -1,7 +1,16 @@
+const emailTemplates = require('email-templates');
+const templates = new emailTemplates();
+
+
 const Console = console;
 module.exports = function(app) {
   const emailConfig = app.get('emailconfig');
   const baseURL = app.get('baseURL');
+
+  async function generateHtml(view, data) {
+    const template = await templates.renderAll(view, data || {});
+    return template.html;
+  }
 
   function getLink(type, hash, email = '') {
     let url = `${baseURL}/token/${type}/${hash}`;
@@ -24,26 +33,35 @@ module.exports = function(app) {
   }
 
   return {
-    notifier: function(type, user, notifierOptions) {
+    notifier: async function(type, user, notifierOptions) {
       let tokenLink;
       let email;
+      let html;
       switch (type) {
       case 'resendVerifySignup': //sending the user the verification email
+        console.log('tokenLink:', tokenLink);
         tokenLink = getLink('verify', user.verifyToken, user.email);
+        html = await generateHtml('verify', {
+          tokenLink
+        }),
         email = {
           from: emailConfig.GMAIL,
           to: user.email,
           subject: 'Verify Signup',
-          html: tokenLink
+          html
         };
         return sendEmail(email);
       case 'verifySignup': // confirming verification
         tokenLink = getLink('verify', user.verifyToken, user.email);
+        console.log('tokenLink:', tokenLink);
+        html = await generateHtml('confirmation', {
+          tokenLink
+        });
         email = {
           from: emailConfig.GMAIL,
           to: user.email,
           subject: 'Confirm Signup',
-          html: tokenLink
+          html
         };
         return sendEmail(email);
       case 'sendResetPwd':
