@@ -250,12 +250,12 @@ export default {
       this.$router.push({ name: route });
     },
     signout() {
-      auth
-        .signout()
+      auth.signout()
         .then(() => {
           this.$store.commit("usr", null);
           this.$store.commit("authenticate", false);
           this.$store.commit("admin", false);
+          localStorage.removeItem('tqks-auth');
           this.$q.notify({
             type: "positive",
             message: "You are now logged out, sign in again to continue to work"
