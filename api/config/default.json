@@ -10,8 +10,8 @@
   "emailconfig": {
     "SMTP_HOST": "smtp.mailtrap.io",
     "SMTP_PORT": 2525,
-    "SMTP_USER": "af9a8766d909b7",
-    "SMTP_PASS": "d803d787c8349d"
+    "SMTP_USER": "49cb59570f62de",
+    "SMTP_PASS": "59bb816d4c2cba"
   },
   "mongodb_bak": "mongodb://fw123:121212121a@ds139360.mlab.com:39360/fw",
   "mongodb": "mongodb://featherweight:UQg6qjGL9AmhRKF@ds237574.mlab.com:37574/featherweight",
