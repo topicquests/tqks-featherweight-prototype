@@ -155,23 +155,17 @@
     <q-page-container>
       <router-view :user="user"></router-view>
     </q-page-container>
-    <q-layout-footer>
-      <router-link style="float: left;" to="http://www.topicquests.org/">
+    <q-layout-footer class="footer">
+      <a href="http://www.topicquests.org/">
         <img src="statics/images/TopicQuestsLogo_sm.png">
-      </router-link>
-      <router-link
-        style="float: right;"
-        to="https://github.com/KnowledgeGarden/tqks-featherweight-prototype"
-      >
-        <img src="statics/images/github-1.jpg">
-      </router-link>
-      <router-link
-        style="float: right;"
-        to="https://creativecommons.org/licenses/by-nc/4.0/"
-      >
+      </a>
+      <a href="https://creativecommons.org/licenses/by-nc/4.0/">
         <img src="statics/images/cc-by-nc.png"
           style="height: 46px;">
-      </router-link>
+      </a>
+      <a href="https://github.com/KnowledgeGarden/tqks-featherweight-prototype">
+        <img src="statics/images/github-1.jpg">
+      </a>
     </q-layout-footer>
   </q-layout>
 </template>
@@ -364,5 +358,11 @@ export default {
 }
 img.q-tree-img.q-mr-sm {
   height: 20px;
+}
+.footer {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
 }
 </style>
