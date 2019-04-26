@@ -157,13 +157,20 @@
     </q-page-container>
     <q-layout-footer>
       <router-link style="float: left;" to="http://www.topicquests.org/">
-        <img src="assets/TopicQuestsLogo_sm.png">
+        <img src="statics/images/TopicQuestsLogo_sm.png">
       </router-link>
       <router-link
         style="float: right;"
         to="https://github.com/KnowledgeGarden/tqks-featherweight-prototype"
       >
-        <img src="assets/github-1.jpg">
+        <img src="statics/images/github-1.jpg">
+      </router-link>
+      <router-link
+        style="float: right;"
+        to="https://creativecommons.org/licenses/by-nc/4.0/"
+      >
+        <img src="statics/images/cc-by-nc.png"
+          style="height: 46px;">
       </router-link>
     </q-layout-footer>
   </q-layout>
