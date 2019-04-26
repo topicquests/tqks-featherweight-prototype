@@ -1,5 +1,5 @@
 {
- "isPrivatePortal": true,
+ "isPrivatePortal": false,
  "requiresInvite": false,
  "adminEmail": "sue@sixpack.com",
  "cms": {
