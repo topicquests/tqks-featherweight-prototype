@@ -27,14 +27,14 @@
         </div>
         <div>
           <q-btn class="q-ma-sm" color="primary" label="Login" @click="doLogin"/>
-          <!-- <q-btn
+          <q-btn
             class="q-ma-sm"
             outline
             color="primary"
             :disable="!isForgotPasswordVisible"
             label="Forgot Password"
             @click="forgotPassword"
-          /> -->
+          />
           <q-btn
             class="q-ma-sm"
             outline

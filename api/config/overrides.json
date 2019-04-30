@@ -1,1 +1,5 @@
-{"isPrivatePortal":"1","requiresInvite":"1","adminEmail":"andy.egyud@gmail.com"}
+{
+  "isPrivatePortal": "1",
+  "requiresInvite": "0",
+  "adminEmail": "sue@sixpack.com"
+}
