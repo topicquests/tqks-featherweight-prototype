@@ -38,26 +38,7 @@ export default {
   mounted() {
     const value = this.hash;
     const email = this.email;
-    console.info("Verifying token", {value, email});
-    // this.verifyToken({
-    //   action: "verifySignupLong",
-    //   value
-    // })
-    //   .then(res => {
-    //     console.info("Verified user", res);
-    //     this.showMessage("User verified...redirecting in 3s", "positive");
-
-    //     setTimeout(() => this.$router.push("/signin"), 3000);
-    //   })
-    //   .catch(err => {
-    //     console.error("Error verifying token", err);
-    //     this.showMessage(
-    //       "Error verifying user...redirecting in 3s",
-    //       "negative"
-    //     );
-
-    //     setTimeout(() => this.$router.push("/home"), 3000);
-    //   });
+    console.info("Verifying token", {value, email});   
   },
   data() {
     return {
