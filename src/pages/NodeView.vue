@@ -1,67 +1,81 @@
 <template>
   <q-page :padding="true" v-if="!!q">
-
-    <div  id="topbox">
-      <span style="float:right; font-size:small;"><a :href="`/userview/${q.creator}`">{{q.handle}}</a> {{q.date}}</span>
-      <h4><img style="margin-right:4px;" :src="q.img">{{ q.label }}</h4>
-      <span v-if="q.url"><b>URL:</b> <a :href="q.url">{{ q.url}}</a><br/><br/></span>
+    <div id="topbox">
+      <span style="float:right; font-size:small;">
+        <a :href="`/userview/${q.creator}`">{{q.handle}}</a>
+        {{q.date}}
+      </span>
+      <h4>
+        <img style="margin-right:4px;" :src="q.img">
+        {{ q.label }}
+      </h4>
+      <span v-if="q.url">
+        <b>URL:</b>
+        <a :href="q.url">{{ q.url}}</a>
+        <br>
+        <br>
+      </span>
       <!-- parent refers to type, this node being an instanceOf type -->
-      <span v-if="q.parentLabel"><b>Responds to </b>
+      <span v-if="q.parentLabel">
+        <b>Responds to</b>
         <router-link :to="{ name: 'questview', params: { id: q.parentId }}">{{ q.parentLabel }}</router-link>
       </span>
       <!-- TODO enumerate superclasses if any -->
-      <hr/>
+      <hr>
       <div class="details">
-        <div  v-html="q.details"></div>
+        <div v-html="q.details"></div>
       </div>
     </div>
     <!-- Edit and other controls go here -->
-    <router-link 
-      v-if="canEdit" 
-      style="margin-left:20px;" 
+    <router-link
+      v-if="canEdit"
+      style="margin-left:20px;"
       :to="{ name: 'nodeupdate', params: { type: 'update', id: q.nodeId }}"
     >
       <b>Edit This Node</b>
     </router-link>
     <span v-if="isRelation" style="margen-left:20px;">
-      <br/>
-      <b style="margin-left:20px;">Source Node </b> <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
-        <br/>
-      <b style="margin-left:20px;">Target Node </b> <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
+      <br>
+      <b style="margin-left:20px;">Source Node</b>
+      <router-link :to="{ name: 'questview', params: { id: q.sourceNode }}">{{ q.sourceLabel }}</router-link>
+      <br>
+      <b style="margin-left:20px;">Target Node</b>
+      <router-link :to="{ name: 'questview', params: { id: q.targetNode }}">{{ q.targetLabel }}</router-link>
     </span>
     <!-- What follows is any child nodes and tags around this topic -->
     <q-list>
-      <q-collapsible image="statics/images/issue.png" label="Questions" >
+      <q-collapsible image="statics/images/issue.png" label="Questions">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/nodeedit/question/${q.type}/${q.nodeId}`">
-              New Question</a>
+            <a :href="`/nodeedit/question/${q.type}/${q.nodeId}`">New Question</a>
           </div>
           <q-list>
             <q-item class="node wordwrap" v-for="question in q.questions" :key="question.nodeId">
-              <router-link :to="{ name: 'questview', params: { id: question.nodeId }}">{{ question.label }}</router-link>
+              <router-link
+                :to="{ name: 'questview', params: { id: question.nodeId }}"
+              >{{ question.label }}</router-link>
             </q-item>
           </q-list>
         </div>
       </q-collapsible>
-      <q-collapsible image="statics/images/position.png" label="Answers"      >
+      <q-collapsible image="statics/images/position.png" label="Answers">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/nodeedit/answer/${q.type}/${q.nodeId}`">
-              New Answer</a>
+            <a :href="`/nodeedit/answer/${q.type}/${q.nodeId}`">New Answer</a>
           </div>
         </div>
         <q-list>
           <q-item class="node" v-for="answer in q.answers" :key="answer.nodeId">
-            <router-link :to="{ name: 'questview', params: { id: answer.nodeId }}">{{ answer.label }}</router-link>
+            <router-link
+              :to="{ name: 'questview', params: { id: answer.nodeId }}"
+            >{{ answer.label }}</router-link>
           </q-item>
         </q-list>
       </q-collapsible>
       <q-collapsible image="statics/images/plus.png" label="Pro Arguments">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/nodeedit/pro/${q.type}/${q.nodeId}`">
-              New Pro Argument</a>
+            <a :href="`/nodeedit/pro/${q.type}/${q.nodeId}`">New Pro Argument</a>
           </div>
         </div>
         <q-list>
@@ -73,8 +87,7 @@
       <q-collapsible image="statics/images/minus.png" label="Con Arguments">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/nodeedit/con/${q.type}/${q.nodeId}`">
-              New Con Argument</a>
+            <a :href="`/nodeedit/con/${q.type}/${q.nodeId}`">New Con Argument</a>
           </div>
         </div>
         <q-list>
@@ -86,8 +99,7 @@
       <q-collapsible v-if="isTopic" image="statics/images/cogwheel.png" label="Subclasses">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/topicchild/${q.nodeId}/subclass`">
-              New Subclass Topic</a>
+            <a :href="`/topicchild/${q.nodeId}/subclass`">New Subclass Topic</a>
           </div>
         </div>
         <q-list>
@@ -99,21 +111,19 @@
       <q-collapsible v-if="isTopic" image="statics/images/cogwheel.png" label="Instances">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/topicchild/${q.nodeId}/instance`">
-              New Instance Topic</a>
+            <a :href="`/topicchild/${q.nodeId}/instance`">New Instance Topic</a>
           </div>
-        <q-list>
-          <q-item class="node" v-for="inst in q.instances" :key="inst.nodeId">
-            <router-link :to="{ name: 'topicview', params: { id: inst.nodeId }}">{{ inst.label }}</router-link>
-          </q-item>
-        </q-list>
+          <q-list>
+            <q-item class="node" v-for="inst in q.instances" :key="inst.nodeId">
+              <router-link :to="{ name: 'topicview', params: { id: inst.nodeId }}">{{ inst.label }}</router-link>
+            </q-item>
+          </q-list>
         </div>
       </q-collapsible>
       <q-collapsible image="statics/images/tag.png" label="Tags">
         <div>
           <div v-if="isAuthenticated" class="node">
-            <a :href="`/tagform/${q.nodeId}`">
-              Add Tags</a>
+            <a :href="`/tagform/${q.nodeId}`">Add Tags</a>
           </div>
         </div>
         <q-list>
@@ -126,8 +136,7 @@
         <div>
           <div>
             <div v-if="isAuthenticated" class="node">
-              <a :href="`/connedit/${q.nodeId}`">
-                New Connection</a>
+              <a :href="`/connedit/${q.nodeId}`">New Connection</a>
             </div>
           </div>
           <q-list>
@@ -141,175 +150,173 @@
         <div>
           <div>
             <div v-if="isAuthenticated" class="node">
-              <a :href="`/props/${q.nodeId}`">
-                New Property</a>
+              <a :href="`/props/${q.nodeId}`">New Property</a>
             </div>
           </div>
           <q-list>
-<q-item class="node" v-for="{value, key} in q.properties" :key="key">
-             <b>Key:</b> {{key}} &nbsp; <b>Value:</b> {{cleanup(value)}}
-   </q-item>          </q-list>
+            <q-item class="node" v-for="{value, key} in q.properties" :key="key">
+              <b>Key:</b>
+              {{key}} &nbsp;
+              <b>Value:</b>
+              {{cleanup(value)}}
+            </q-item>
+          </q-list>
         </div>
       </q-collapsible>
-    </q-list>    
+    </q-list>
   </q-page>
 </template>
 <script>
-import api from 'src/api'
+import api from "src/api";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-const treeview = api.service('tree-view')
-console.log('QVTV', treeview)
+const treeview = api.service("tree-view");
+console.log("QVTV", treeview);
 export default {
-  data () {
+  data() {
     return {
       rightDrawerOpen: this.$q.platform.is.desktop
+    };
+  },
+  beforeRouterUpdate() {
+    alert("Tsx");
+    console.info("Router", "start");
+    setTimeout(() => {
+      this.initialize.apply(this).then(() => {
+        console.info("Router", "done");
+      });
+    }, 500);
+  },
+  computed: {},
+  mounted() {
+    const id = this.$route.params.id;
+    this.$data.rightDrawerOpen = false; //turn off conversation tree
+    this.$store.commit("questView", false);
+
+    this.initialize();
+  },
+
+  watch: {
+    $route(to, from) {
+      console.info("Going ", from, "to", to);
+      try {
+        const {
+          name,
+          params: { id }
+        } = to;
+        if (name === "topicview" || (name === "questview" && id)) {
+          this.initialize(id);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      // react to route changes...
     }
   },
-    beforeRouterUpdate () {
-      alert('Tsx')
-      console.info('Router', 'start')
-      setTimeout(() => {
-        this.initialize.apply(this).then(() => {
-          console.info('Router', 'done')
-        })
-      }, 500)
-    },
-    computed: {
-    },
-    mounted () {
-      const id = this.$route.params.id
-      this.$data.rightDrawerOpen = false
-      //turn off conversation tree
-      this.$store.commit('questView', false)
+  methods: {
+    cleanup(val) {
+      const vx = JSON.stringify(val);
+      if (vx.startsWith("[")) {
+        let x = val.join(", ");
 
-      
-      this.initialize()
-    },
-    watch: {
-      '$route' (to, from) {
-        console.info('Going ',from,'to',to)
-        try {
-          const { name, params: { id } } = to
-          if (name === 'topicview' || name === 'questview' && id) {
-            this.initialize(id);
-          }
-
-        } catch (e) {
-          console.error(e)
-        }
-        // react to route changes...
+        return x;
+      } else {
+        return val;
       }
     },
-    methods: {
 
-      cleanup(val) {
-        const vx  = JSON.stringify(val);
-        if (vx.startsWith("[")) {
-        let x = val.join(', ');
-        
-        return x;
-        } else {
-          return val;
-        }
-      },
+    // Pass id, or it will take it from current $route context
+    async initialize(id = null) {
+      //this.$store.commit('questView', true)
+      const nodeId = id || this.$route.params.id;
+      console.info("Initialize", "fetching data for ", nodeId);
+      try {
+        const result = await this.findConversations({
+          query: { nodeId },
+          depth: 1
+        });
+        console.info("Initialize", "result", { result });
+        const {
+          data: [single]
+        } = result;
 
-      // Pass id, or it will take it from current $route context
-      async initialize (id = null) {
-        //this.$store.commit('questView', true)        
-        const nodeId = id || this.$route.params.id
-        console.info('Initialize', 'fetching data for ', nodeId)
-        try {
-          const result = await this.findConversations({
-            query: { nodeId },
-            depth: 1
-          });
-          console.info("Initialize", "result", { result });
-          const {
-            data: [single]
-          } = result;
+        this.setCurrentConversation(single);
+        console.info("Initialize", "fetching data for ", nodeId, "success");
+        console.info("SINGLE", JSON.stringify(single));
+      } catch (e) {
+        console.info("Initialize", "fetching data for ", nodeId, "error", e);
+      }
 
-          this.setCurrentConversation(single);
-          console.info("Initialize", "fetching data for ", nodeId, "success");
-          console.info("SINGLE", JSON.stringify(single));
-        } catch (e) {
-          console.info("Initialize", "fetching data for ", nodeId, "error", e);
-        }
-
-        const self = this
-        try {
-          //TODO treeview must look for 'topic' 
-          // rather than 'map' to paint a tree view
-          treeview.get(nodeId)
-            .then(function (tree) {
-              console.info('TopicTreeView', tree)
-              //const img = tree.img
-              // only show the tree if the root is a map
-              //if (img === 'statics/images/map_sm.png' ||
-              //    img === 'statics/images/bookmark_sm.png') {
-                const result = []
-                result.push(tree)
-                self.$store.commit('tree', result)
-                self.$store.commit('questView', true)
-              //}
-            })     
-        } catch (err) {
-          console.log('QuestViewTreeError', err)
-        }
-      },
-      ...mapActions("conversation", { findConversations: "find" }),
-      ...mapMutations("conversation", { setCurrentConversation: "setCurrent" })
-
+      const self = this;
+      try {
+        //TODO treeview must look for 'topic'
+        // rather than 'map' to paint a tree view
+        treeview.get(nodeId).then(function(tree) {
+          console.info("TopicTreeView", tree);
+          //const img = tree.img
+          // only show the tree if the root is a map
+          //if (img === 'statics/images/map_sm.png' ||
+          //    img === 'statics/images/bookmark_sm.png') {
+          const result = [];
+          result.push(tree);
+          self.$store.commit("tree", result);
+          self.$store.commit("questView", true);
+          //}
+        });
+      } catch (err) {
+        console.log("QuestViewTreeError", err);
+      }
     },
-    computed: {
-      ...mapGetters({q: 'conversation/current'}),
-      isAuthenticated () {
-        return this.$store.getters.isAuthenticated
-      },
-      isRelation () {
-        return (this.q.type === 'relation')
-      },
-      isTopic (){
-        return (this.q.type === 'topic')
-      },
-      notTopic (){
-        return (this.q.type !== 'topic')
-      },
-      canEdit () {
-        let result = this.$store.getters.isAdmin
-        console.info('CE-1', result)
-        let cid
-        let uid
-        let usx = this.$store.getters.user
-        if (usx) {
-          cid = this.$store.getters.node.creator
-          uid = usx._id
-        }
-        console.info('CE-2', cid, uid)
-        if (result) {
-          return result
-        } else if (!usx) {
-          return false
-        } else if (cid === uid) {
-          return true
-        } else {
-          return false
-        }
+    ...mapActions("conversation", { findConversations: "find" }),
+    ...mapMutations("conversation", { setCurrentConversation: "setCurrent" })
+  },
+  computed: {
+    ...mapGetters({ q: "conversation/current" }),
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    },
+    isRelation() {
+      return this.q.type === "relation";
+    },
+    isTopic() {
+      return this.q.type === "topic";
+    },
+    notTopic() {
+      return this.q.type !== "topic";
+    },
+    canEdit() {
+      let result = this.$store.getters.isAdmin;
+      console.info("CE-1", result);
+      let cid;
+      let uid;
+      let usx = this.$store.getters.user;
+      if (usx) {
+        cid = this.$store.getters.node.creator;
+        uid = usx._id;
+      }
+      console.info("CE-2", cid, uid);
+      if (result) {
+        return result;
+      } else if (!usx) {
+        return false;
+      } else if (cid === uid) {
+        return true;
+      } else {
+        return false;
       }
     }
   }
-
+};
 </script>
 
 <style lang="styl">
 .q-item-image {
-    min-width: 20px;
-    max-width: 20px;
+  min-width: 20px;
+  max-width: 20px;
 }
 
 .scroll.relative-position.overflow-hidden.fit.q-touch {
   user-select: auto !important;
 }
-
 
 .details {
   max-width: 960px;
@@ -317,7 +324,6 @@ export default {
   overflow: auto;
   overflow-wrap: normal;
 }
-
 
 .headerimage {
   float: left;
@@ -345,7 +351,6 @@ export default {
 .node:hover {
   background-color: rgba(255, 255, 0, 0.801);
 }
-
 
 /*
  * width: 958px;

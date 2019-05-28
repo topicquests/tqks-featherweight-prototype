@@ -6,6 +6,11 @@ export default [
     children: [
       { path: "/home", name: "home", component: () => import("pages/Home") },
       {
+        path: "/PasswordChange",
+        name: "PasswordChange",
+        component: () => import("pages/PasswordChange")
+      },
+      {
         path: "/aboutb",
         name: "aboutb",
         component: () => import("pages/AboutBookmarks")

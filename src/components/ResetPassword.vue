@@ -38,62 +38,68 @@ export default {
   mounted() {
     const value = this.hash;
     const email = this.email;
-    console.info("Verifying token", {value, email});   
+    console.info("Verifying token", { value, email });
   },
   data() {
     return {
       password: "",
       password_confirm: ""
-    }
+    };
   },
   methods: {
     ...mapActions({ verifyToken: "verifyToken" }),
-    ...mapActions('authManagement', {
-      createPasswordReset: 'create'
+    ...mapActions("authManagement", {
+      createPasswordReset: "create"
     }),
     async doResetPassword() {
       const payload = {
-        "action": "resetPwdLong",
-        "value": {
-          "user": {
-            "email": this.email
+        action: "resetPwdLong",
+        value: {
+          user: {
+            email: this.email
           },
-          "password": this.password,
-          "token": this.hash
+          password: this.password,
+          token: this.hash
         }
       };
 
       try {
-        console.info('ResetPassword', 'doResetPassword');
+        console.info("ResetPassword", "doResetPassword");
         const result = await this.createPasswordReset(payload);
-        console.info('ResetPassword', 'doResetPassword', { result });
+        console.info("ResetPassword", "doResetPassword", { result });
       } catch (e) {
-        console.error('ResetPassword', 'doResetPassword', {e});
+        console.error("ResetPassword", "doResetPassword", { e });
       }
-
     },
     showMessage(message, type) {
       this.$q.notify({ type, message });
     },
     validatePasswords() {
       if (this.password !== this.password_confirm) {
-        console.warn('ResetPassword', 'validatePasswords', 'passwords don\'t match')
+        console.warn(
+          "ResetPassword",
+          "validatePasswords",
+          "passwords don't match"
+        );
         return false;
       }
-      console.info('ResetPassword', 'validatePasswords', 'passwords match');
+      console.info("ResetPassword", "validatePasswords", "passwords match");
       return true;
     },
     async doReset() {
       if (this.validatePasswords()) {
         try {
           await this.doResetPassword();
-          this.showMessage('Password reset successful!, redirecting to login', 'positive');
+          this.showMessage(
+            "Password reset successful!, redirecting to login",
+            "positive"
+          );
           setTimeout(() => this.$router.push("/login"), 3000);
         } catch (e) {
-          this.showMessage('Passwords reset error. ' + e.message, 'negative');
+          this.showMessage("Passwords reset error. " + e.message, "negative");
         }
       } else {
-        this.showMessage('Passwords do not match', 'negative');
+        this.showMessage("Passwords do not match", "negative");
       }
     }
   }

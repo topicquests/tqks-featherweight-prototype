@@ -6,9 +6,7 @@
           <q-icon name="menu"/>
         </q-btn>
 
-        <q-toolbar-title>
-          {{cms.site.title}}
-        </q-toolbar-title>
+        <q-toolbar-title>{{cms.site.title}}</q-toolbar-title>
 
         <q-search style="background-color: white;" v-model="search" v-on:keyup.13="doSearch"/>
 
@@ -80,30 +78,29 @@
           <q-item-main label="Calendar" />
         </q-item>-->
 
-        <q-item to="/history">
+        <q-item v-if="isAuthenticated" to="/history">
           <q-item-side icon="history"/>
           <q-item-main label="Recent Changes"/>
         </q-item>
 
-        <q-item to="/bookmarks">
+        <q-item v-if="isAuthenticated" to="/bookmarks">
           <q-item-side icon="bookmark"/>
           <q-item-main label="Bookmarks"/>
         </q-item>
 
-        <q-item to="/quests">
+        <q-item v-if="isAuthenticated" :to="quests">
           <q-item-side icon="explore"/>
           <q-item-main label="Quests"/>
         </q-item>
 
-
-        <q-item to="/topics">
-          <q-item-side icon="info" />
-          <q-item-main label="Topics" />
+        <q-item v-if="isAuthenticated" to="/topics">
+          <q-item-side icon="info"/>
+          <q-item-main label="Topics"/>
         </q-item>
 
-        <q-item to="/tags">
-          <q-item-side icon="check_box" />
-          <q-item-main label="Tags" />
+        <q-item v-if="isAuthenticated" to="/tags">
+          <q-item-side icon="check_box"/>
+          <q-item-main label="Tags"/>
         </q-item>
 
         <q-collapsible icon="help" label="Help">
@@ -125,8 +122,6 @@
             <q-item-main label="Tags Help"/>
           </q-item>
         </q-collapsible>
-
-
 
         <!--    <q-item to="/ether">
           <q-item-side icon="language" />
@@ -160,8 +155,7 @@
         <img src="statics/images/TopicQuestsLogo_sm.png">
       </a>
       <a href="https://creativecommons.org/licenses/by-nc/4.0/">
-        <img src="statics/images/cc-by-nc.png"
-          style="height: 46px;">
+        <img src="statics/images/cc-by-nc.png" style="height: 46px;">
       </a>
       <a href="https://github.com/KnowledgeGarden/tqks-featherweight-prototype">
         <img src="statics/images/github-1.jpg">
@@ -171,9 +165,9 @@
 </template>
 
 <script>
-import auth from 'src/auth'
-import config from '../../config'
-import { mapGetters, mapActions } from 'vuex'
+import auth from "src/auth";
+import config from "../../config";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "index",
@@ -209,28 +203,33 @@ export default {
       return this.$store.getters.user;
     },
     isQuestView() {
+      if (
+        this.$store.getters.isQuestView == false &&
+        document.getElementById("mySidenav") != null
+      ) {
+        document.getElementById("mySidenav").style.width = "0";
+      }
       return this.$store.getters.isQuestView;
     },
-    simple () {
-      const tre = this.$store.getters.treeView
-      return tre
+    simple() {
+      const tre = this.$store.getters.treeView;
+      return tre;
     },
-    ...mapGetters('configuration', { currentConfig: 'getCopy' } ),
+    ...mapGetters("configuration", { currentConfig: "getCopy" }),
     stillLoading() {
       return !(this.currentConfig && this.currentConfig.cms);
     },
     cms() {
-      if (this.stillLoading)
-        return null;
+      if (this.stillLoading) return null;
       // Get the slug from current route and search for it in the config JSON
       return this.currentConfig.cms;
-    },
+    }
   },
   methods: {
-    ...mapActions('configuration', {
-      fetchCurrentConfiguration: 'get'
+    ...mapActions("configuration", {
+      fetchCurrentConfiguration: "get"
     }),
-    toggleNav () {
+    toggleNav() {
       if (this.rightDrawerOpen) {
         this.closeNav();
       } else {
@@ -251,12 +250,13 @@ export default {
       this.$router.push({ name: route });
     },
     signout() {
-      auth.signout()
+      auth
+        .signout()
         .then(() => {
           this.$store.commit("usr", null);
           this.$store.commit("authenticate", false);
           this.$store.commit("admin", false);
-          localStorage.removeItem('tqks-auth');
+          localStorage.removeItem("tqks-auth");
           this.$q.notify({
             type: "positive",
             message: "You are now logged out, sign in again to continue to work"
@@ -284,31 +284,27 @@ export default {
         this.isAdmin = truth;
       }
     }
-    /*,
-    isQuestView () {
-      alert(this.$state.getters.isQuestView)
-      return this.$state.getters.isQuestView
-    }*/
   },
-  mounted () {
-    this.fetchCurrentConfiguration(1).then(
-      (data) => {
-        console.log('Got config', data);
-      }
-    )
-    
-    console.info('MountingDefault', this.$store.getters.user)
+  mounted() {
+    this.fetchCurrentConfiguration(1).then(data => {
+      console.log("Got config", data);
+    });
+
+    console.info("MountingDefault", this.$store.getters.user);
+
     // Check if there is already a session running
-    auth.authenticate()
-      .then((user) => {
-        
-        this.setUser(user)
-        this.$q.notify({type: 'positive', message: 'Restoring previous session'})
-        this.$store.commit('authenticate', true)
-        this.$store.commit('admin', false)
-        this.isAuthenticated = true
-        this.checkAdmin()
-        
+    auth
+      .authenticate()
+      .then(user => {
+        this.setUser(user);
+        this.$q.notify({
+          type: "positive",
+          message: "Restoring previous session"
+        });
+        this.$store.commit("authenticate", true);
+        this.$store.commit("admin", false);
+        this.isAuthenticated = true;
+        this.checkAdmin();
       })
       .catch(_ => {
         // alert('NotAuth')
@@ -338,8 +334,7 @@ export default {
       this.$data.isAuthenticated = false;
       this.$data.isAdmin = false;
     });
-  },
-  beforeDestroy() {}
+  }
 };
 </script>
 
