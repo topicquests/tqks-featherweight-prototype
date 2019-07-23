@@ -22,18 +22,19 @@ const auth = {
   authenticate() {
     console.log("auth", this.user);
 
-    return api.authenticate()
-      .then((response) => {
-        console.log('auth successful')
-        localStorage.setItem('tqks-auth', response.accessToken)
-        return this.fetchUser(response.accessToken)
+    return api
+      .authenticate()
+      .then(response => {
+        console.log("auth successful");
+        localStorage.setItem("tqks-auth", response.accessToken);
+        return this.fetchUser(response.accessToken);
       })
       .then(user => {
         console.log("got user");
 
-        this.user = user
-  
-        return Promise.resolve(user)
+        this.user = user;
+
+        return Promise.resolve(user);
       })
       .catch(err => {
         console.log("auth failed", err);
@@ -149,6 +150,33 @@ const auth = {
       return true;
     } else {
       notify.warning("Sorry but there was an error updating your password.");
+    }
+  },
+
+  changePassword: async function(email, oldPassword, password) {
+    if (!_.get(auth, "currentUser.email")) {
+      notify.warning("You must be logged in to change your password.");
+      return false;
+    }
+
+    let options = {
+      action: "passwordChange",
+      value: {
+        user: {
+          email: auth.currentUser.email
+        },
+        oldPassword,
+        password
+      }
+    };
+    let [err, result] = await api.authManagement.create(options);
+
+    if (!err) {
+      notify.success(
+        "Your current password has been changed. Next time you log in please use the new password."
+      );
+    } else {
+      notify.error(err.message);
     }
   }
 };
