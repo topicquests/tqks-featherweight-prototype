@@ -52,7 +52,7 @@
     "mongoose": "^5.4.0",
     "nodemailer-smtp-transport": "^2.7.4",
     "npm": "^6.5.0",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "serve-favicon": "^2.5.0",
     "winston": "^3.1.0"
   },
